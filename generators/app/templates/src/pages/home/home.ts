@@ -19,7 +19,12 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.principal.identity().then((account) => {
-      this.account = account;
+      console.log('account', account);
+      if (account === null) {
+        this.navCtrl.push('LoginPage');
+      } else {
+        this.account = account;
+      }
     });
   }
 

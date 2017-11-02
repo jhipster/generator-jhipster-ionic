@@ -27,15 +27,10 @@ module.exports = {
     writeFiles
 };
 
-function writeFiles() {
+function writeFiles(cb) {
+
     // read config from .yo-rc.json
     this.authenticationType = this.jhipsterAppConfig.authenticationType;
-
-    // show all variables
-    this.log('\n--- some config read from config ---');
-    this.log(`appName=${this.ionicAppName}`);
-    this.log(`authenticationType=${this.authenticationType}`);
-    this.log('------\n');
 
     this.template('src/app/_app.component.ts', `${this.ionicAppName}/src/app/app.component.ts`);
     this.template('src/app/_app.module.ts', `${this.ionicAppName}/src/app/app.module.ts`);
@@ -59,7 +54,6 @@ function writeFiles() {
     this.template('src/providers/auth/_login.service.ts', `${this.ionicAppName}/src/providers/auth/login.service.ts`);
     this.template('src/providers/auth/_principal.service.ts', `${this.ionicAppName}/src/providers/auth/principal.service.ts`);
     this.template('src/providers/user/_user.ts', `${this.ionicAppName}/src/providers/user/user.ts`);
-    this.template('_package.json', `${this.ionicAppName}/package.json`);
     this.copy('src/pages/home', `${this.ionicAppName}/src/pages/home`);
 
     // Temporary entity screens
@@ -70,4 +64,6 @@ function writeFiles() {
     shelljs.rm('-rf', `${this.ionicAppName}/src/pages/item-create`);
     shelljs.rm('-rf', `${this.ionicAppName}/src/pages/item-detail`);
     shelljs.rm('-rf', `${this.ionicAppName}/src/pages/list-master`);
+
+    cb();
 }

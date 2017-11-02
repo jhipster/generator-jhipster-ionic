@@ -21,8 +21,8 @@ const shelljs = require('shelljs');
 
 module.exports = {
     confirmInstall,
+    askForAppName,
     askForPath,
-    askForAppName
 };
 
 function confirmInstall(meta) {
@@ -59,7 +59,7 @@ function askForPath(meta) {
         type: 'input',
         name: 'directoryPath',
         message: messageAskForPath,
-        default: this.directoryPath,
+        default: 'backend',
         validate: (input) => {
             const path = this.destinationPath(input);
             if (shelljs.test('-d', path)) {
@@ -91,7 +91,7 @@ function askForAppName(meta) {
         type: 'input',
         name: 'appName',
         message: 'What do you want to name your Ionic application?',
-        default: 'ionic-client'
+        default: 'ionic4j'
     }];
 
     this.prompt(prompts).then((props) => {

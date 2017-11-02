@@ -24,6 +24,7 @@
   "dependencies": {
     "chalk": "2.1.0",
     "generator-jhipster": ">=4.6.0",
+    "jsonfile": "^4.0.0",
     "mkdirp": "0.5.1",
     "semver": "5.3.0",
     "shelljs": "0.5.3",

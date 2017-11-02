@@ -1,5 +1,6 @@
 const chalk = require('chalk');
 const packagejs = require('../../package.json');
+const jsonfile = require('jsonfile');
 const semver = require('semver');
 const shelljs = require('shelljs');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
@@ -28,9 +29,8 @@ module.exports = class extends BaseGenerator {
 
     get prompting() {
         return {
-            confirmInstall: prompts.confirmInstall,
-            askForPath: prompts.askForPath,
-            askForProjectName: prompts.askForAppName
+            askForProjectName: prompts.askForAppName,
+            askForPath: prompts.askForPath
         };
     }
 
@@ -46,14 +46,14 @@ module.exports = class extends BaseGenerator {
 
         const done = this.async();
         if (shelljs.test('-d', this.ionicAppName)) {
+            // todo: prompt to overri
             this.error(`Directory ${this.ionicAppName} already exists, please remove it to continue.`)
         } else {
             this.log(`\nCreating Ionic app with command: ${chalk.yellow(`ionic start ${this.ionicAppName} super`)}`);
             shelljs.exec(`ionic start ${this.ionicAppName} super --no-link --no-deps`, {silent: false}, (code) => {
                 if (code === 0) {
                     this.log(`\nIonic app created, integrating JHipster...`);
-                    writeFiles.call(this);
-                    done();
+                    writeFiles.call(this, done);
                 } else {
                     let msg = 'Ionic app creation failed. Please create an issue for this on GitHub.\n';
                     msg += 'https://github.com/oktadeveloper/generator-jhipster-ionic/issues';
@@ -64,35 +64,28 @@ module.exports = class extends BaseGenerator {
     }
 
     install() {
-        this.log('\nInstalling dependencies...');
-        const done = this.async();
-        shelljs.exec(`cd ${this.ionicAppName} && npm i`, {silent: false}, (code) => {
-            if (code === 0) {
-                done();
-            } else {
-                this.warning(`Failed to run ${chalk.yellow(`npm install`)} in ${this.ionicAppName}!`);
-                this.warning(`Please run it manually before running ${chalk.yellow(`ionic serve`)}`);
-            }
-        })
-        /*
         // update package.json in Ionic app
+        const done = this.async();
         const packagePath = this.ionicAppName + '/package.json';
         const packageJSON = this.fs.readJSON(packagePath);
-        modifyPackage.add(packageJSON, ['ng-jhipster', 'ng2-webstorage'])
-            .then(updatedPackageJson => {
-                console.log('updated package json', updatedPackageJson);
-                this.fs.writeJSON(packagePath);
+        modifyPackage.add(packageJSON, ['generator-jhipster@4.10.2', 'ng-jhipster@0.2.12', 'ng2-webstorage@1.8.0'])
+            .then(dependencies => {
 
-                modifyPackage.addDev(packageJSON, ['@types/node'])
-                    .then(updatedPackageJson => {
-                        console.log('updated package dev json', updatedPackageJson);
-                        this.fs.writeJSON(packagePath);
+                modifyPackage.addDev(dependencies, ['@types/node@^8.0.47'])
+                    .then(devDependencies => {
+                        jsonfile.writeFileSync(packagePath, devDependencies);
 
+                        this.log('\nInstalling dependencies...');
                         shelljs.exec(`cd ${this.ionicAppName} && npm i`, {silent: false}, (code) => {
-                            done();
+                            if (code === 0) {
+                                done();
+                            } else {
+                                this.warning(`Failed to run ${chalk.yellow(`npm install`)} in ${this.ionicAppName}!`);
+                                this.warning(`Please run it manually before running ${chalk.yellow(`ionic serve`)}`);
+                            }
                         });
                     });
-            });*/
+            });
     }
 
     end() {
