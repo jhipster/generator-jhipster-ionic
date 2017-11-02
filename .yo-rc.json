@@ -1,0 +1,10 @@
+{
+  "generator-jhipster-module": {
+    "promptValues": {
+      "githubName": "oktadeveloper",
+      "authorName": "Matt Raible",
+      "authorEmail": "matt.raible@okta.com",
+      "authorUrl": "https://developer.okta.com"
+    }
+  }
+}

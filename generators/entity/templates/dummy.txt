@@ -1,0 +1,2 @@
+hello jhipster-generator-ionic-client:entity sub generator!
+It's dummy.txt
