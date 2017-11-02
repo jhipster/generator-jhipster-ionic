@@ -1,10 +1,10 @@
-# generator-jhipster-jhipster-generator-ionic-client
+# Ionic for JHipster
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 > JHipster module, A JHipster Module that generates an Ionic Client
 
 # Introduction
 
-This is a [JHipster](http://jhipster.github.io/) module, that is meant to be used in a JHipster application.
+This is a [JHipster](http://jhipster.github.io/) module, that is meant to be used to generate an Ionic app that talks to a JHipster backend.
 
 # Prerequisites
 
@@ -19,13 +19,13 @@ As this is a [JHipster](http://jhipster.github.io/) module, we expect you have J
 To install this module:
 
 ```bash
-yarn global add generator-jhipster-jhipster-generator-ionic-client
+yarn global add generator-jhipster-ionic
 ```
 
 To update this module:
 
 ```bash
-yarn global upgrade generator-jhipster-jhipster-generator-ionic-client
+yarn global upgrade generator-jhipster-ionic
 ```
 
 ## With NPM
@@ -33,25 +33,29 @@ yarn global upgrade generator-jhipster-jhipster-generator-ionic-client
 To install this module:
 
 ```bash
-npm install -g generator-jhipster-jhipster-generator-ionic-client
+npm install -g generator-jhipster-ionic
 ```
 
 To update this module:
 
 ```bash
-npm update -g generator-jhipster-jhipster-generator-ionic-client
+npm update -g generator-jhipster-ionic
 ```
 
 # Usage
+
+```bash
+yo jhipster-ionic
+```
 
 # License
 
 Apache-2.0 © [Matt Raible](https://developer.okta.com)
 
 
-[npm-image]: https://img.shields.io/npm/v/generator-jhipster-jhipster-generator-ionic-client.svg
-[npm-url]: https://npmjs.org/package/generator-jhipster-jhipster-generator-ionic-client
-[travis-image]: https://travis-ci.org/oktadeveloper/generator-jhipster-jhipster-generator-ionic-client.svg?branch=master
-[travis-url]: https://travis-ci.org/oktadeveloper/generator-jhipster-jhipster-generator-ionic-client
-[daviddm-image]: https://david-dm.org/oktadeveloper/generator-jhipster-jhipster-generator-ionic-client.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/oktadeveloper/generator-jhipster-jhipster-generator-ionic-client
+[npm-image]: https://img.shields.io/npm/v/generator-jhipster-ionic.svg
+[npm-url]: https://npmjs.org/package/generator-jhipster-ionic
+[travis-image]: https://travis-ci.org/oktadeveloper/generator-jhipster-ionic.svg?branch=master
+[travis-url]: https://travis-ci.org/oktadeveloper/generator-jhipster-ionic
+[daviddm-image]: https://david-dm.org/oktadeveloper/generator-jhipster-ionic.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/oktadeveloper/generator-jhipster-ionic
