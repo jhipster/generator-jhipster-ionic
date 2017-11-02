@@ -48,12 +48,8 @@ module.exports = class extends BaseGenerator {
         if (shelljs.test('-d', this.ionicAppName)) {
             this.error(`Directory ${this.ionicAppName} already exists, please remove it to continue.`)
         } else {
-            // todo: detect if ionic is installed, skip if it is
-            this.log(`\nRunning ${chalk.yellow('npm install -g ionic cordova')}. This could take a while...`);
-            //shelljs.exec('npm install -g ionic cordova', { silent: false }, (code) => {
-            //  if (code === 0) {
             this.log(`\nCreating Ionic app with command: ${chalk.yellow(`ionic start ${this.ionicAppName} super`)}`);
-            shelljs.exec(`ionic start ${this.ionicAppName} super`, {silent: false}, (code) => {
+            shelljs.exec(`ionic start ${this.ionicAppName} super --no-link --no-deps`, {silent: false}, (code) => {
                 if (code === 0) {
                     this.log(`\nIonic app created, integrating JHipster...`);
                     writeFiles.call(this);
@@ -64,13 +60,21 @@ module.exports = class extends BaseGenerator {
                     this.error(msg);
                 }
             });
-            //}
-            //});
         }
     }
 
     install() {
+        this.log('\nInstalling dependencies...');
         const done = this.async();
+        shelljs.exec(`cd ${this.ionicAppName} && npm i`, {silent: false}, (code) => {
+            if (code === 0) {
+                done();
+            } else {
+                this.warning(`Failed to run ${chalk.yellow(`npm install`)} in ${this.ionicAppName}!`);
+                this.warning(`Please run it manually before running ${chalk.yellow(`ionic serve`)}`);
+            }
+        })
+        /*
         // update package.json in Ionic app
         const packagePath = this.ionicAppName + '/package.json';
         const packageJSON = this.fs.readJSON(packagePath);
@@ -88,7 +92,7 @@ module.exports = class extends BaseGenerator {
                             done();
                         });
                     });
-            });
+            });*/
     }
 
     end() {

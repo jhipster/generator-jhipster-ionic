@@ -1,12 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { App, Config, Nav, Platform } from 'ionic-angular';
+import { Config, Nav, Platform } from 'ionic-angular';
 
-import { FirstRunPage, MainPage } from '../pages/pages';
+import { MainPage } from '../pages/pages';
 import { Settings } from '../providers/providers';
-import { Principal } from '../providers/auth/principal.service';
 
 @Component({
   template: `<ion-menu [content]="content">
@@ -44,8 +43,7 @@ export class MyApp {
   ];
 
   constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config,
-              private statusBar: StatusBar, private splashScreen: SplashScreen, private principal: Principal,
-              private app: App) {
+              private statusBar: StatusBar, private splashScreen: SplashScreen) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.

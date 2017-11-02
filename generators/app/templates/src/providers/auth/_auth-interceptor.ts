@@ -9,7 +9,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { LocalStorageService, SessionStorageService } from 'ng2-webstorage';
-import { NavController } from 'ionic-angular';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

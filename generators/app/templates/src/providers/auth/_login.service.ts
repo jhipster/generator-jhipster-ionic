@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { JhiLanguageService } from 'ng-jhipster';
+//import { JhiLanguageService } from 'ng-jhipster';
 
 import { Principal } from './principal.service';
 import { AuthServerProvider } from './auth-jwt.service';
@@ -8,7 +8,7 @@ import { AuthServerProvider } from './auth-jwt.service';
 export class LoginService {
 
   constructor(
-    private languageService: JhiLanguageService,
+    //private languageService: JhiLanguageService,
     private principal: Principal,
     private authServerProvider: AuthServerProvider
   ) {}

@@ -3,8 +3,6 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { LocalStorageService, SessionStorageService } from 'ng2-webstorage';
 import { Api } from '../api/api';
-import { HttpClient } from '@angular/common/http';
-import { buildErrorToJson } from '@ionic/app-scripts';
 
 @Injectable()
 export class AuthServerProvider {

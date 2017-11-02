@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Entities
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let entity of entities" (click)="openPage(entity)">
+      <h2>{{entity.name}}</h2>
+    </ion-item>
+  </ion-list>
+</ion-content>

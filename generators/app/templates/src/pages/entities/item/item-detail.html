@@ -1,0 +1,33 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ item.name }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <div class="item-profile" text-center #profilePic [style.background-image]="'url(' + item.profilePic + ')'"></div>
+  <div class="item-detail" padding *ngIf="!editable">
+    <h2>{{item.name}}</h2>
+    <p>{{item.about}}</p>
+
+    <button ion-button (click)="edit()">Edit</button>
+  </div>
+  <ion-list class="item-detail" *ngIf="editable">
+    <ion-item>
+      <ion-label>{{ 'ITEM_NAME_PLACEHOLDER' | translate }}</ion-label>
+      <ion-input type="text" [(ngModel)]="clone.name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{ 'ITEM_ABOUT_PLACEHOLDER' | translate }}</ion-label>
+      <ion-input type="text" [(ngModel)]="clone.about"></ion-input>
+    </ion-item>
+    <ion-item>
+      <button ion-button (click)="save()">Save</button>
+      <button ion-button (click)="cancel()">Cancel</button>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
