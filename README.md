@@ -1,34 +1,25 @@
 # Ionic for JHipster
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
-> JHipster module, A JHipster Module that generates an Ionic Client
+> A JHipster Module that generates an Ionic Client
 
 # Introduction
 
-This is a [JHipster](http://jhipster.github.io/) module, that is meant to be used to generate an Ionic app that talks to a JHipster backend.
+This is a [JHipster](http://www.jhipster.tech/) module, that is meant to be used to generate an Ionic app that talks to a JHipster backend.
 
 # Prerequisites
 
-As this is a [JHipster](http://jhipster.github.io/) module, we expect you have JHipster and its related tools already installed:
+As this is a [JHipster](http://www.jhipster.tech/) module, we expect you to have an existing JHipster app and Ionic already installed.
 
-- [Installing JHipster](https://jhipster.github.io/installation.html)
+- [Installing JHipster](https://www.jhipster.tech/installation.html)
+- [Installing Ionic](https://ionicframework.com/docs/intro/installation/)
+
+Or simply:
+
+```bash
+npm i -g generator-jhipster ionic cordova
+```
 
 # Installation
-
-## With Yarn
-
-To install this module:
-
-```bash
-yarn global add generator-jhipster-ionic
-```
-
-To update this module:
-
-```bash
-yarn global upgrade generator-jhipster-ionic
-```
-
-## With NPM
 
 To install this module:
 
@@ -44,9 +35,17 @@ npm update -g generator-jhipster-ionic
 
 # Usage
 
+Create a JHipster app using `yo jhipster`, or a backend-only with `yo jhipster:server`. Choose `JWT` as the authentication type since that's the only one supported at this time.
+
+In a directory alongside your JHipster app, run this module. This will create an Ionic app for you and install the necessary JHipster files for it to communicate with the backend.
+
 ```bash
 yo jhipster-ionic
 ```
+
+# TODO
+
+Make it possible to run `yo jhipster:entity` and `yo jhipster:import-jdl` with templates from this module.
 
 # License
 
