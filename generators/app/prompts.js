@@ -54,7 +54,7 @@ function askForPath(meta) {
     if (!meta && this.existingProject) return;
 
     const done = this.async();
-    let messageAskForPath = 'Enter the directory where your JHipster app is located:';
+    const messageAskForPath = 'Enter the directory where your JHipster app is located:';
     const prompts = [{
         type: 'input',
         name: 'directoryPath',
@@ -97,7 +97,7 @@ function askForAppName(meta) {
     this.prompt(prompts).then((props) => {
         this.ionicAppName = props.appName;
         done();
-    })
+    });
 }
 /**
  * Get App Folders
@@ -106,7 +106,6 @@ function askForAppName(meta) {
  */
 function getAppFolder(input) {
     const destinationPath = this.destinationPath(input);
-    const files = shelljs.ls(destinationPath);
     const appsFolders = [];
 
     if (shelljs.test('-f', `${destinationPath}/.yo-rc.json`)) {

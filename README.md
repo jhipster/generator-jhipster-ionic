@@ -43,9 +43,9 @@ In a directory alongside your JHipster app, run this module. This will create an
 yo jhipster-ionic
 ```
 
-# TODO
+# Entity Generator
 
-Make it possible to run `yo jhipster:entity` and `yo jhipster:import-jdl` with templates from this module.
+To generate entities, run `yo jhispter-ionic:entity`. 
 
 # License
 

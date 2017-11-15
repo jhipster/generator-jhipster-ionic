@@ -1,2 +1,0 @@
-hello jhipster-generator-ionic-client!
-It's dummy.txt

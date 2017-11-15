@@ -31,6 +31,15 @@ function writeFiles(cb) {
 
     // read config from .yo-rc.json
     this.authenticationType = this.jhipsterAppConfig.authenticationType;
+    this.serverPort = this.jhipsterAppConfig.serverPort;
+    const configFound = this.jhipsterAppConfig.baseName !== undefined;
+    if (configFound) {
+        this.existingProject = true;
+        // If translation is not defined, it is enabled by default
+        if (this.enableTranslation === undefined) {
+            this.enableTranslation = true;
+        }
+    }
 
     this.template('src/app/_app.component.ts', `${this.ionicAppName}/src/app/app.component.ts`);
     this.template('src/app/_app.module.ts', `${this.ionicAppName}/src/app/app.module.ts`);
@@ -38,8 +47,10 @@ function writeFiles(cb) {
     this.template('src/assets/i18n/en.json', `${this.ionicAppName}/src/assets/i18n/en.json`);
     this.copy('src/assets/img/hipster.png', `${this.ionicAppName}/src/assets/img/hipster.png`);
     this.copy('src/assets/img/hipster2x.png', `${this.ionicAppName}/src/assets/img/hipster2x.png`);
-    this.template('src/pages/login/_login.html', `${this.ionicAppName}/src/pages/login/login.html`);
-    this.template('src/pages/login/_login.ts', `${this.ionicAppName}/src/pages/login/login.ts`);
+    if (this.authenticationType !== 'oauth2') {
+        this.template('src/pages/login/_login.html', `${this.ionicAppName}/src/pages/login/login.html`);
+        this.template('src/pages/login/_login.ts', `${this.ionicAppName}/src/pages/login/login.ts`);
+    }
     this.template('src/pages/menu/_menu.ts', `${this.ionicAppName}/src/pages/menu/menu.ts`);
     this.template('src/pages/signup/_signup.ts', `${this.ionicAppName}/src/pages/signup/signup.ts`);
     this.template('src/pages/tabs/_tabs.html', `${this.ionicAppName}/src/pages/tabs/tabs.html`);
@@ -49,9 +60,15 @@ function writeFiles(cb) {
     this.template('src/pages/_pages.ts', `${this.ionicAppName}/src/pages/pages.ts`);
     this.template('src/providers/api/_api.ts', `${this.ionicAppName}/src/providers/api/api.ts`);
     this.template('src/providers/auth/_account.service.ts', `${this.ionicAppName}/src/providers/auth/account.service.ts`);
-    this.template('src/providers/auth/_auth-interceptor.ts', `${this.ionicAppName}/src/providers/auth/auth-interceptor.ts`);
-    this.template('src/providers/auth/_auth-jwt.service.ts', `${this.ionicAppName}/src/providers/auth/auth-jwt.service.ts`);
-    this.template('src/providers/auth/_login.service.ts', `${this.ionicAppName}/src/providers/auth/login.service.ts`);
+
+    if (this.authenticationType === 'jwt') {
+        this.template('src/providers/auth/_auth-interceptor.ts', `${this.ionicAppName}/src/providers/auth/auth-interceptor.ts`);
+        this.template('src/providers/auth/_auth-jwt.service.ts', `${this.ionicAppName}/src/providers/auth/auth-jwt.service.ts`);
+    } else if (this.authenticationType === 'session' || this.authenticationType === 'oauth2') {
+        this.template('src/providers/auth/_auth-session.service.ts', `${this.ionicAppName}/src/providers/auth/auth-session.service.ts`);
+    }
+
+    this.template('src/providers/login/_login.service.ts', `${this.ionicAppName}/src/providers/login/login.service.ts`);
     this.template('src/providers/auth/_principal.service.ts', `${this.ionicAppName}/src/providers/auth/principal.service.ts`);
     this.template('src/providers/user/_user.ts', `${this.ionicAppName}/src/providers/user/user.ts`);
     this.copy('src/pages/home', `${this.ionicAppName}/src/pages/home`);
