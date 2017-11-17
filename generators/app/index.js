@@ -38,7 +38,7 @@ module.exports = class extends BaseGenerator {
                 // this.printJHipsterLogo();
 
                 // Have Yeoman greet the user.
-                this.log(`\nWelcome to the ${chalk.bold.blue('Ionic JHipster')} generator! ${chalk.yellow(`v${packagejs.version}\n`)}`);
+                this.log(`\nWelcome to the ${chalk.bold.blue('Ionic')} ${chalk.bold.green('J')}${chalk.bold.red('Hipster')} generator! ${chalk.yellow(`v${packagejs.version}\n`)}`);
             }
         };
     }
@@ -50,7 +50,7 @@ module.exports = class extends BaseGenerator {
         };
     }
 
-    get writing() {
+    writing() {
         const fromPath = `${this.directoryPath}/.yo-rc.json`;
         this.jhipsterAppConfig = this.fs.readJSON(fromPath)['generator-jhipster'];
 
@@ -65,8 +65,9 @@ module.exports = class extends BaseGenerator {
             // todo: prompt to override
             this.error(`Directory ${chalk.bold.blue(this.ionicAppName)} already exists, please remove it to continue.`);
         } else {
-            this.log(`\nCreating Ionic app with command: ${chalk.yellow(`ionic start ${this.ionicAppName} super`)}`);
-            shelljs.exec(`ionic start ${this.ionicAppName} oktadeveloper/jhipster --no-link --no-deps --color=always`, { silent: false }, (code, stdout) => {
+            const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster --no-link --no-deps --color=always`;
+            this.log(`\nCreating Ionic app with command: ${chalk.green(`${cmd}`)}`);
+            shelljs.exec(cmd, { silent: false }, (code, stdout) => {
                 if (stdout.indexOf('ionic: command not found') > -1) {
                     let msg = 'You need to install Ionic before generating an app with this module.';
                     msg += `\nPlease run ${chalk.yellow('npm install -g ionic cordova')}, then try again.`;
