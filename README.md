@@ -45,7 +45,7 @@ yo jhipster-ionic
 
 # Entity Generator
 
-To generate entities, run `yo jhispter-ionic:entity`. 
+To generate entities, run `yo jhipster-ionic:entity`. 
 
 # License
 
