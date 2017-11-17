@@ -25,6 +25,7 @@ const shelljs = require('shelljs');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
 const prompts = require('./prompts');
 const modifyPackage = require('modify-package-dependencies');
+const spawn = require('child_process').execFileSync;
 
 module.exports = class extends BaseGenerator {
     get initializing() {
@@ -60,27 +61,9 @@ module.exports = class extends BaseGenerator {
             this.error(`\nYour backend uses an old JHipster version (${currentJhipsterVersion})... you need at least (${minimumJhipsterVersion})\n`);
         }
 
-        const done = this.async();
-        if (shelljs.test('-d', this.ionicAppName)) {
-            // todo: prompt to override
-            this.error(`Directory ${chalk.bold.blue(this.ionicAppName)} already exists, please remove it to continue.`);
-        } else {
-            const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster --no-link --no-deps --color=always`;
-            this.log(`\nCreating Ionic app with command: ${chalk.green(`${cmd}`)}`);
-            shelljs.exec(cmd, { silent: false }, (code, stdout) => {
-                if (stdout.indexOf('ionic: command not found') > -1) {
-                    let msg = 'You need to install Ionic before generating an app with this module.';
-                    msg += `\nPlease run ${chalk.yellow('npm install -g ionic cordova')}, then try again.`;
-                    this.error(msg);
-                }
-                if (code !== 0) {
-                    let msg = 'Ionic app creation failed. Please create an issue for this on GitHub.\n';
-                    msg += 'https://github.com/oktadeveloper/generator-jhipster-ionic/issues';
-                    this.error(msg);
-                }
-                done();
-            });
-        }
+        const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster`;
+        this.log(`\nCreating Ionic app with command: ${chalk.green(`${cmd}`)}`);
+        spawn('ionic', ['start', this.ionicAppName, 'oktadeveloper/jhipster'], {stdio: 'inherit'});
     }
 
     install() {
