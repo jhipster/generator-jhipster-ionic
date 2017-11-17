@@ -4,6 +4,7 @@
   "description": "A JHipster Module that generates an Ionic Client",
   "keywords": [
     "yeoman-generator",
+    "jhipster",
     "jhipster-module",
     "ionic"
   ],

@@ -53,6 +53,7 @@ module.exports = class extends BaseGenerator {
 
     writing() {
         const fromPath = `${this.directoryPath}/.yo-rc.json`;
+        console.log('fromPath', fromPath);
         this.jhipsterAppConfig = this.fs.readJSON(fromPath)['generator-jhipster'];
 
         const currentJhipsterVersion = this.jhipsterAppConfig.jhipsterVersion;
