@@ -220,7 +220,7 @@ Please ensure to run `npm run lint` and `npm test` on the project root before su
 
 ## <a name="templates"></a> Template Guidelines
 
-The template engine used by yeoman is [EJS](http://ejs.co/), its syntax is fairly simple.
+The template engine used by Yeoman is [EJS](http://ejs.co/), its syntax is fairly simple.
 
 ## <a name="commit"></a> Git Commit Guidelines
 
