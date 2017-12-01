@@ -4,7 +4,9 @@
 
 # Introduction
 
-This is a [JHipster](http://www.jhipster.tech/) module, that is meant to be used to generate an Ionic app that talks to a JHipster backend.
+This is a [JHipster](http://www.jhipster.tech/) module. You can use it to generate an Ionic app that talks to a JHipster backend. It uses the [Ionic JHipster Starter](https://github.com/oktadeveloper/ionic-jhipster-starter) as a base template, then applies functionality (e.g. entity generation) on top of it.
+
+The entity generator is in an beta state, see [issue #2](https://github.com/oktadeveloper/generator-jhipster-ionic/issues/2) for progress towards a stable release.
 
 # Prerequisites
 
@@ -45,7 +47,7 @@ yo jhipster-ionic
 
 # Entity Generator
 
-To generate entities, run `yo jhipster-ionic:entity`. 
+To generate entities, run `yo jhipster-ionic:entity <name>`. 
 
 # Contributing
 
