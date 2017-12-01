@@ -198,7 +198,7 @@ To put it in a nutshell, you need to:
 1. run `npm link` or `yarn link` on the `generator-jhipster-ionic` project
 2. run `npm link generator-jhipster-ionic` or `yarn link generator-jhipster-ionic` on the generated application folder (you need to do this for each application you create)
 
-Now, running the 'yo jhipster-ionic' command should use your specific Ionic for JHipster version. You can test it by making a small change in your cloned generator, and running again on an existing Ionic project:
+Now, running the `yo jhipster-ionic` command should use your specific Ionic for JHipster version. You can test it by making a small change in your cloned generator, and running again on an existing Ionic project:
 
 ```shell
 yo jhipster-ionic:entity <name>
