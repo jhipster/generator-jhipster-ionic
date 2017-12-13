@@ -98,33 +98,9 @@ const ionicFiles = {
     // todo: add tests
 };
 
-// todo: move these to starter
-const modelFiles = {
-    client: [
-        {
-            path: MODELS_DIR,
-            templates: [
-                {
-                    file: 'base-entity.ts',
-                    method: 'processHtml',
-                    template: true,
-                    renameTo: generator => `base-entity.ts`
-                },
-                {
-                    file: 'index.ts',
-                    method: 'processHtml',
-                    template: true,
-                    renameTo: generator => `index.ts`
-                }
-            ]
-        }
-    ]
-};
-
 module.exports = {
     writeFiles,
-    ionicFiles,
-    modelFiles
+    ionicFiles
 };
 
 function writeFiles() {
@@ -139,9 +115,7 @@ function writeFiles() {
         writeClientFiles() {
             if (this.skipClient) return;
 
-            // todo: remove once these files are in the starter
-            this.writeFilesToDisk(modelFiles, this, false, CLIENT_IONIC_TEMPLATES_DIR);
-            // write client side files for angular 2.x +
+            // write client side files for angular
             this.writeFilesToDisk(ionicFiles, this, false, CLIENT_IONIC_TEMPLATES_DIR);
             this.addEntityToModule(this.entityInstance, this.entityClass, this.entityAngularName, this.entityFolderName, this.entityFileName, this.enableTranslation);
 
