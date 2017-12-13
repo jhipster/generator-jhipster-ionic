@@ -17,7 +17,7 @@
  limitations under the License.
 -%>
 import { Component } from '@angular/core';
-import { IonicPage, NavParams } from 'ionic-angular';
+import { IonicPage, ModalController, NavParams, ToastController } from 'ionic-angular';
 import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
 import { <%= entityAngularName %>Service } from './<%= entityFileName %>.provider';
 
@@ -29,7 +29,26 @@ import { <%= entityAngularName %>Service } from './<%= entityFileName %>.provide
 export class <%= entityAngularName %>DetailPage {
     <%= entityInstance %>: <%= entityAngularName %>;
 
-    constructor(navParams: NavParams) {
+    constructor(private modalCtrl: ModalController, private navParams: NavParams,
+                private <%= entityInstance %>Service: <%= entityAngularName %>Service, private toastCtrl: ToastController) {
         this.<%= entityInstance %> = navParams.get('<%= entityInstance %>');
+    }
+
+    open(item: <%= entityAngularName %>) {
+        let modal = this.modalCtrl.create('<%= entityAngularName %>DialogPage', {item: item});
+        modal.onDidDismiss(<%= entityInstance %> => {
+            if (<%= entityInstance %>) {
+                this.<%= entityInstance %>Service.update(<%= entityInstance %>).subscribe(data => {
+                    this.<%= entityInstance %> = data;
+                    let toast = this.toastCtrl.create({
+                        message: '<%= entityAngularName %> updated successfully.',
+                        duration: 3000,
+                        position: 'top'
+                    });
+                    toast.present();
+                }, (error) => console.error(error));
+            }
+        });
+        modal.present();
     }
 }
