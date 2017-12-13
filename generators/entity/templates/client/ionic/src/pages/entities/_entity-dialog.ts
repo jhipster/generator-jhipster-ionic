@@ -18,7 +18,7 @@
 -%>
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonicPage, NavController, ViewController } from 'ionic-angular';
+import { IonicPage, ModalController, NavController, NavParams, ViewController } from 'ionic-angular';
 import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
 import { <%= entityAngularName %>Service } from './<%= entityFileName %>.provider';
 
@@ -32,20 +32,19 @@ export class <%= entityAngularName %>DialogPage {
 
     isReadyToSave: boolean;
 
-    <%= entityInstance %>: any;
-
     form: FormGroup;
 
-    constructor(public navCtrl: NavController, public viewCtrl: ViewController, formBuilder: FormBuilder) {
+    constructor(public navCtrl: NavController, public viewCtrl: ViewController, formBuilder: FormBuilder,
+                params: NavParams, private modalCtrl: ModalController) {
         this.form = formBuilder.group({
-            id: [''],
+            id: [params.get('item') ? params.get('item').id : ''],
         <%_ for (idx in fields) {
             const fieldName = fields[idx].fieldName;
             const fieldNameCapitalized = fields[idx].fieldNameCapitalized;
             const fieldNameHumanized = fields[idx].fieldNameHumanized;
             const fieldType = fields[idx].fieldType;
         _%>
-            <%= fieldName %>: ['', <% if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.indexOf('required') !== -1) { %> Validators.required<% } %>]
+            <%= fieldName %>: [params.get('item') ? params.get('item').<%= fieldName %> : '', <% if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.indexOf('required') !== -1) { %> Validators.required<% } %>]<% if (idx !== fields.length -1) { %>,<% } %>
         <%_ } _%>
         });
 

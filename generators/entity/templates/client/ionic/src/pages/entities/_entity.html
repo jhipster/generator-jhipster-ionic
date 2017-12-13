@@ -21,17 +21,17 @@
     <ion-navbar>
         <ion-title><%= entityClassPluralHumanized %></ion-title>
         <ion-buttons end>
-            <button ion-button icon-only (click)="add()">
+            <button ion-button icon-only (click)="open()">
                 <ion-icon name="add"></ion-icon>
             </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
 <!-- todo: add elasticsearch support -->
-<ion-content>
+<ion-content padding>
     <ion-list>
-        <ion-item-sliding *ngFor="let <%=entityInstance %> of <%=entityInstancePlural %>; trackBy: trackId">
-            <button ion-item (click)="open(<%= entityInstance %>)">
+        <ion-item-sliding *ngFor="let <%=entityInstance %> of <%=entityInstancePlural %>; trackBy: trackId" #slidingItem>
+            <button ion-item (click)="detail(<%= entityInstance %>)">
               <%_ for (idx in fields) {
                 const fieldName = fields[idx].fieldName;
                 const fieldNameCapitalized = fields[idx].fieldNameCapitalized;
@@ -43,7 +43,6 @@
                     <span *ngIf="<%= entityInstance %>.<%= fieldName %>">{{<%= entityInstance %>.<%= fieldName %>ContentType}}, {{byteSize(<%= entityInstance %>.<%= fieldName %>)}}</span>
                 </ion-avatar>
                 <!-- todo: what to do when it's a byte[] or ByteBuffer? In normal entity generatory, an open link is rendered -->
-                <!-- todo: figure out how when to wrap in an <h2>, e.g. for title or name fields? -->
                 <%_ } else if (fields[idx].fieldIsEnum) { _%>
                 <!-- todo: special handling for translating enum - {{'<%= fieldType %>.' + <%= entityInstance %>.<%= fieldName %>}}" -->
                 <p>{{<%=entityInstance %>.<%=fieldName%>}}</p>
@@ -52,11 +51,19 @@
                 <%_ } else if (fieldType === 'LocalDate') { _%>
                 <p>{{<%=entityInstance %>.<%=fieldName%> | date:'mediumDate'}}</p>
                 <%_ } else { _%>
+                  <!-- Wrap fields with 'name' or 'title' with an h2 -->
+                  <%_ if (fieldName === 'name' || fieldName === 'title') { _%>
                 <h2>{{<%=entityInstance %>.<%=fieldName%>}}</h2>
+                  <%_ } else { _%>
+                <p>{{<%=entityInstance %>.<%=fieldName%>}}</p>
+                  <%_ } _%>
                 <%_ } _%>
               <%_ } _%>
             </button>
             <ion-item-options>
+                <button ion-button color="primary" (click)="open(slidingItem, blog)">
+                    {{ 'EDIT_BUTTON' | translate }}
+                </button>
                 <button ion-button color="danger" (click)="delete(<%=entityInstance %>)">
                     {{ 'DELETE_BUTTON' | translate }}
                 </button>

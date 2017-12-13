@@ -47,7 +47,7 @@ export class <%= entityAngularName %>Page {
     }
 
     private onSuccess(data) {
-        this.products = data;
+        this.<%= entityInstancePlural %> = data;
     }
 
     private onError(error) {
@@ -59,22 +59,35 @@ export class <%= entityAngularName %>Page {
         return item.id;
     }
 
-    add() {
-        let addModal = this.modalCtrl.create('<%= entityAngularName %>DialogPage');
-        addModal.onDidDismiss(<%= entityInstance %> => {
+    open(slidingItem: any, item: <%= entityAngularName %>) {
+        let modal = this.modalCtrl.create('<%= entityAngularName %>DialogPage', {item: item});
+        modal.onDidDismiss(<%= entityInstance %> => {
             if (<%= entityInstance %>) {
-                this.<%= entityInstance %>Service.create(<%= entityInstance %>).subscribe(data => {
-                    this.<%= entityInstancePlural %>.push(data);
-                    let toast = this.toastCtrl.create({
-                        message: '<%= entityAngularName %> added successfully.',
-                        duration: 3000,
-                        position: 'top'
-                    });
-                    toast.present();
-                }, (error) => console.error(error));
+                if (<%= entityInstance %>.id) {
+                    this.<%= entityInstance %>Service.update(<%= entityInstance %>).subscribe(data => {
+                        this.loadAll();
+                        let toast = this.toastCtrl.create({
+                            message: '<%= entityAngularName %> updated successfully.',
+                            duration: 3000,
+                            position: 'top'
+                        });
+                        toast.present();
+                        slidingItem.close();
+                    }, (error) => console.error(error));
+                } else {
+                    this.<%= entityInstance %>Service.create(<%= entityInstance %>).subscribe(data => {
+                        this.<%= entityInstancePlural %>.push(data);
+                        let toast = this.toastCtrl.create({
+                            message: '<%= entityAngularName %> added successfully.',
+                            duration: 3000,
+                            position: 'top'
+                        });
+                        toast.present();
+                    }, (error) => console.error(error));
+                }
             }
         });
-        addModal.present();
+        modal.present();
     }
 
     delete(<%= entityInstance %>) {
@@ -89,7 +102,7 @@ export class <%= entityAngularName %>Page {
         }, (error) => console.error(error));
     }
 
-    open(<%= entityInstance %>: <%= entityAngularName %>) {
+    detail(<%= entityInstance %>: <%= entityAngularName %>) {
         this.navCtrl.push('<%= entityAngularName %>DetailPage', {
             <%= entityInstance %>: <%= entityInstance %>
         });

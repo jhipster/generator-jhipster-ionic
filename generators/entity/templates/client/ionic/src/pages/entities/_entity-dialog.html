@@ -40,12 +40,12 @@ _%>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
-<ion-content>
+<ion-content padding>
     <form *ngIf="form" [formGroup]="form" (ngSubmit)="save()">
         <ion-list>
             <ion-item [hidden]="!form.id">
                 <ion-label>ID</ion-label>
-                <ion-input type="text" id="id" formControlName="id" readonly></ion-input>
+                <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
             </ion-item>
             <%_ for (idx in fields) {
                 const fieldName = fields[idx].fieldName;
