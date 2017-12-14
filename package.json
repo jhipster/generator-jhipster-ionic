@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "chalk": "2.1.0",
-    "generator-jhipster": ">=4.6.0",
+    "generator-jhipster": ">=4.12.0",
     "jsonfile": "^4.0.0",
     "mkdirp": "0.5.1",
     "modify-package-dependencies": "^1.0.0",
