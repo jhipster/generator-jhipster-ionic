@@ -29,9 +29,9 @@ import { <%= entityAngularName %>Service } from './<%= entityFileName %>.provide
 export class <%= entityAngularName %>DetailPage {
     <%= entityInstance %>: <%= entityAngularName %>;
 
-    constructor(private modalCtrl: ModalController, private navParams: NavParams,
+    constructor(private modalCtrl: ModalController, private params: NavParams,
                 private <%= entityInstance %>Service: <%= entityAngularName %>Service, private toastCtrl: ToastController) {
-        this.<%= entityInstance %> = navParams.get('<%= entityInstance %>');
+        this.<%= entityInstance %> = params.get('<%= entityInstance %>');
     }
 
     open(item: <%= entityAngularName %>) {
