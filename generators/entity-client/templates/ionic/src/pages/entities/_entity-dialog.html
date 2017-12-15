@@ -107,22 +107,22 @@ _%>
             <ion-item>
                 <ion-label><%= relationshipNameHumanized %></ion-label>
                 <%_ if (dto === 'no') { _%>
-                <ion-select id="field_<%= relationshipName %>" formControlName="<%= relationshipName %>" [compareWith]="compare<%=otherEntityNameCapitalized %>" <% if (relationshipRequired) { %> required<% } %>>
+                <ion-select id="field_<%= relationshipName %>" formControlName="<%= relationshipName %>" [compareWith]="compare<%=otherEntityNameCapitalized %>"<% if (relationshipRequired) { %> required<% } %>>
                 <%_ if (!relationshipRequired) { _%>
-                <ion-option [value]="null"></ion-option>
+                    <ion-option [value]="null"></ion-option>
                 <%_ } else { _%>
-                <ion-option *ngIf="!editForm.value.<%= relationshipName %>" [value]="null" selected></ion-option>
+                    <ion-option *ngIf="!editForm.value.<%= relationshipName %>" [value]="null" selected></ion-option>
                 <%_ } _%>
-                <ion-option [value]="<%=otherEntityName %>Option" *ngFor="let <%=otherEntityName %>Option of <%=otherEntityNamePlural.toLowerCase() %>; trackBy: track<%=otherEntityNameCapitalized %>ById">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-option>
+                    <ion-option [value]="<%=otherEntityName %>Option" *ngFor="let <%=otherEntityName %>Option of <%=otherEntityNamePlural.toLowerCase() %>; trackBy: track<%=otherEntityNameCapitalized %>ById">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-option>
                 </ion-select>
                 <%_ } else { _%>
-                <ion-select id="field_<%= relationshipName %>" name="<%= relationshipName %>" [(ngModel)]="<%= entityInstance %>.<%=relationshipFieldName %>Id" <% if (relationshipRequired) { %> required<% } %>>
+                <ion-select id="field_<%= relationshipName %>" formControlName="<%= relationshipName %>" [compareWith]="compare<%=otherEntityNameCapitalized %>"<% if (relationshipRequired) { %> required<% } %>>
                 <%_ if (!relationshipRequired) { _%>
-                <ion-option [value]="null"></ion-option>
+                    <ion-option [value]="null"></ion-option>
                 <%_ } else { _%>
-                <ion-option *ngIf="!editForm.value.<%= relationshipName %>" [value]="null" selected></ion-option>
+                    <ion-option *ngIf="!editForm.value.<%= relationshipName %>" [value]="null" selected></ion-option>
                 <%_ } _%>
-                <ion-option [value]="<%=otherEntityName %>Option.id" *ngFor="let <%=otherEntityName %>Option of <%=otherEntityNamePlural.toLowerCase() %>; trackBy: track<%=otherEntityNameCapitalized %>ById">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-option>
+                    <ion-option [value]="<%=otherEntityName %>Option.id" *ngFor="let <%=otherEntityName %>Option of <%=otherEntityNamePlural.toLowerCase() %>; trackBy: track<%=otherEntityNameCapitalized %>ById">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-option>
                 </ion-select>
                 <%_ } _%>
             </ion-item>
@@ -130,30 +130,30 @@ _%>
             <ion-item>
                 <ion-label><%= relationshipNameHumanized %></ion-label>
                 <%_ if (dto === 'no') { _%>
-                <ion-select id="field_<%= relationshipName %>" formControlName="<%= relationshipName %>"<% if (relationshipRequired) { %> required<% } %>>
+                <ion-select id="field_<%= relationshipName %>" formControlName="<%= relationshipName %>" [compareWith]="compare<%=otherEntityNameCapitalized %>"<% if (relationshipRequired) { %> required<% } %>>
                 <%_ if (!relationshipRequired) { _%>
-                <ion-option [value]="null"></ion-option>
+                    <ion-option [value]="null"></ion-option>
                 <%_ } else { _%>
-                <ion-option *ngIf="!editForm.value.<%= relationshipName %>" [value]="null" selected></ion-option>
+                    <ion-option *ngIf="!editForm.value.<%= relationshipName %>" [value]="null" selected></ion-option>
                 <%_ } _%>
-                <ion-option [value]="<%=otherEntityName %>Option.id === <%= entityInstance %>.<%=relationshipFieldName %>?.id ? <%= entityInstance %>.<%=relationshipFieldName %> : <%=otherEntityName %>Option" *ngFor="let <%=otherEntityName %>Option of <%=relationshipFieldNamePlural.toLowerCase() %>; trackBy: track<%=otherEntityNameCapitalized %>ById">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-option>
+                    <ion-option [value]="<%=otherEntityName %>Option.id === <%= entityInstance %>.<%=relationshipFieldName %>?.id ? <%= entityInstance %>.<%=relationshipFieldName %> : <%=otherEntityName %>Option" *ngFor="let <%=otherEntityName %>Option of <%=relationshipFieldNamePlural.toLowerCase() %>; trackBy: track<%=otherEntityNameCapitalized %>ById">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-option>
                 </ion-select>
                 <%_ } else { _%>
-                <ion-select id="field_<%= relationshipName %>" formControlName="<%= relationshipName %>"<% if (relationshipRequired) { %> required<% } %>>
+                <ion-select id="field_<%= relationshipName %>" formControlName="<%= relationshipName %>" [compareWith]="compare<%=otherEntityNameCapitalized %>"<% if (relationshipRequired) { %> required<% } %>>
                 <%_ if (!relationshipRequired) { _%>
-                <ion-option [value]="null"></ion-option>
+                    <ion-option [value]="null"></ion-option>
                 <%_ } else { _%>
-                <ion-option *ngIf="!editForm.value.<%= relationshipName %>" [value]="null" selected></ion-option>
+                    <ion-option *ngIf="!editForm.value.<%= relationshipName %>" [value]="null" selected></ion-option>
                 <%_ } _%>
-                <ion-option [value]="<%=otherEntityName %>Option.id" *ngFor="let <%=otherEntityName %>Option of <%=relationshipFieldNamePlural.toLowerCase() %>; trackBy: track<%=otherEntityNameCapitalized %>ById">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-option>
+                    <ion-option [value]="<%=otherEntityName %>Option.id" *ngFor="let <%=otherEntityName %>Option of <%=relationshipFieldNamePlural.toLowerCase() %>; trackBy: track<%=otherEntityNameCapitalized %>ById">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-option>
                 </ion-select>
                 <%_ } _%>
             </ion-item>
             <%_ } else if (relationshipType === 'many-to-many' && relationships[idx].ownerSide === true) { _%>
             <ion-item>
                 <ion-label><%= relationshipNameHumanized %></ion-label>
-                <ion-select id="field_<%= relationshipName %>" multiple="true" formControlName="<%= relationshipName %>"<% if (relationshipRequired) { %> required<% } %>>
-                <ion-option [value]="getSelected(<%=entityInstance %>.<%=relationshipFieldNamePlural %>, <%=otherEntityName %>Option)" *ngFor="let <%=otherEntityName %>Option of <%=otherEntityNamePlural.toLowerCase() %>; trackBy: track<%=otherEntityNameCapitalized %>ById">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-option>
+                <ion-select id="field_<%= relationshipName %>" multiple="true" formControlName="<%= relationshipFieldNamePlural %>" [compareWith]="compare<%=otherEntityNameCapitalized %>"<% if (relationshipRequired) { %> required<% } %>>
+                    <ion-option [value]="<%=otherEntityName %>Option" *ngFor="let <%=otherEntityName %>Option of <%=otherEntityNamePlural.toLowerCase() %>; trackBy: track<%=otherEntityNameCapitalized %>ById">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-option>
                 </ion-select>
             </ion-item>
             <%_ } _%>

@@ -66,22 +66,16 @@ export class <%= entityAngularName %>Page {
                 if (<%= entityInstance %>.id) {
                     this.<%= entityInstance %>Service.update(<%= entityInstance %>).subscribe(data => {
                         this.loadAll();
-                        let toast = this.toastCtrl.create({
-                            message: '<%= entityAngularName %> updated successfully.',
-                            duration: 3000,
-                            position: 'top'
-                        });
+                        let toast = this.toastCtrl.create(
+                            {message: '<%= entityAngularName %> updated successfully.', duration: 3000, position: 'middle'});
                         toast.present();
                         slidingItem.close();
                     }, (error) => console.error(error));
                 } else {
                     this.<%= entityInstance %>Service.create(<%= entityInstance %>).subscribe(data => {
                         this.<%= entityInstancePlural %>.push(data);
-                        let toast = this.toastCtrl.create({
-                            message: '<%= entityAngularName %> added successfully.',
-                            duration: 3000,
-                            position: 'top'
-                        });
+                        let toast = this.toastCtrl.create(
+                            {message: '<%= entityAngularName %> added successfully.', duration: 3000, position: 'middle'});
                         toast.present();
                     }, (error) => console.error(error));
                 }
@@ -92,19 +86,14 @@ export class <%= entityAngularName %>Page {
 
     delete(<%= entityInstance %>) {
         this.<%= entityInstance %>Service.delete(<%= entityInstance %>.id).subscribe(() => {
-            let toast = this.toastCtrl.create({
-                message: '<%= entityAngularName %> deleted successfully.',
-                duration: 3000,
-                position: 'top',
-            });
+            let toast = this.toastCtrl.create(
+                {message: '<%= entityAngularName %> deleted successfully.', duration: 3000, position: 'middle'});
             toast.present();
             this.loadAll();
         }, (error) => console.error(error));
     }
 
     detail(<%= entityInstance %>: <%= entityAngularName %>) {
-        this.navCtrl.push('<%= entityAngularName %>DetailPage', {
-            <%= entityInstance %>: <%= entityInstance %>
-        });
+        this.navCtrl.push('<%= entityAngularName %>DetailPage', {id: <%= entityInstance %>.id});
     }
 }

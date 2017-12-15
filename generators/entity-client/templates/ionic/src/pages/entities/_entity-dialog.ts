@@ -26,6 +26,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
+import { <%= entityAngularName %>Service } from './<%= entityFileName %>.provider';
 <%_
 let hasRelationshipQuery = false;
 Object.keys(differentRelationships).forEach(key => {
@@ -74,23 +75,31 @@ export class <%= entityAngularName %>DialogPage {
             }
         });
     _%>
-    ) {
+                private <%= entityInstance %>Service: <%= entityAngularName %>Service) {
         this.<%= entityInstance %> = params.get('item');
+        if (this.<%= entityInstance %>.id) {
+            this.<%= entityInstance %>Service.find(this.<%= entityInstance %>.id).subscribe(data => {
+                this.<%= entityInstance %> = data;
+            });
+        }
+
         this.form = formBuilder.group({
-            id: [params.get('item') ? params.get('item').id : ''],
+            id: [params.get('item') ? this.<%= entityInstance %>.id : ''],
         <%_ for (idx in fields) {
             const fieldName = fields[idx].fieldName;
             const fieldNameCapitalized = fields[idx].fieldNameCapitalized;
             const fieldNameHumanized = fields[idx].fieldNameHumanized;
             const fieldType = fields[idx].fieldType;
         _%>
-            <%= fieldName %>: [params.get('item') ? params.get('item').<%= fieldName %> : '', <% if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.indexOf('required') !== -1) { %> Validators.required<% } %>],
+            <%= fieldName %>: [params.get('item') ? this.<%= entityInstance %>.<%= fieldName %> : '', <% if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.indexOf('required') !== -1) { %> Validators.required<% } %>],
         <%_ } _%>
     <%_ Object.keys(differentRelationships).forEach(key => {
         if (differentRelationships[key].some(rel => rel.relationshipType !== 'one-to-many')) {
             const uniqueRel = differentRelationships[key][0];
+            const relatedFieldName = (uniqueRel.relationshipType === 'many-to-many') ?
+                uniqueRel.otherEntityNamePlural : uniqueRel.otherEntityName;
             if (uniqueRel.otherEntityAngularName !== entityAngularName) { _%>
-            <%= uniqueRel.otherEntityName %>: [params.get('item') ? params.get('item').<%= uniqueRel.otherEntityName %> : '', <%_ if (uniqueRel.relationshipValidate === true) { _%> Validators.required <%_ } _%>],
+            <%= relatedFieldName %>: [params.get('item') ? this.<%= entityInstance %>.<%= relatedFieldName %> : '', <%_ if (uniqueRel.relationshipValidate === true) { _%> Validators.required <%_ } _%>],
             <%_ }
         }
     });
@@ -147,16 +156,4 @@ export class <%= entityAngularName %>DialogPage {
         return item.id;
     }
     <%_ entitiesSeen.push(otherEntityNameCapitalized); } } _%>
-    <%_ if (hasManyToMany) { _%>
-    getSelected(selectedVals: Array<any>, option: any) {
-        if (selectedVals) {
-            for (let i = 0; i < selectedVals.length; i++) {
-                if (option.id === selectedVals[i].id) {
-                    return selectedVals[i];
-                }
-            }
-        }
-        return option;
-    }
-    <%_ } _%>
 }
