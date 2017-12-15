@@ -27,7 +27,7 @@ const INTERPOLATE_REGEX = constants.INTERPOLATE_REGEX;
 const IONIC_DIR = 'src/pages/';
 const MODELS_DIR = 'src/models/';
 
-const CLIENT_IONIC_TEMPLATES_DIR = 'client/ionic';
+const CLIENT_IONIC_TEMPLATES_DIR = 'ionic';
 
 /**
  * The default is to use a file path string. It implies use of the template method.
@@ -90,8 +90,11 @@ const ionicFiles = {
                 {
                     file: 'entities/_entity-dialog.ts',
                     renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-dialog.ts`
+                },
+                {
+                    file: 'entities/_index.ts',
+                    renameTo: generator => `entities/${generator.entityFolderName}/index.ts`
                 }
-
             ]
         }
     ]

@@ -21,7 +21,9 @@ import { IonicPage, ModalController, NavParams, ToastController } from 'ionic-an
 import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
 import { <%= entityAngularName %>Service } from './<%= entityFileName %>.provider';
 
-@IonicPage()
+@IonicPage({
+    segment: '<%= entityFileName %>-detail/:id'
+})
 @Component({
     selector: 'page-<%= entityFileName %>-detail',
     templateUrl: '<%= entityFileName %>-detail.html'
@@ -29,9 +31,14 @@ import { <%= entityAngularName %>Service } from './<%= entityFileName %>.provide
 export class <%= entityAngularName %>DetailPage {
     <%= entityInstance %>: <%= entityAngularName %>;
 
-    constructor(private modalCtrl: ModalController, private navParams: NavParams,
+    constructor(private modalCtrl: ModalController, private params: NavParams,
                 private <%= entityInstance %>Service: <%= entityAngularName %>Service, private toastCtrl: ToastController) {
-        this.<%= entityInstance %> = navParams.get('<%= entityInstance %>');
+        this.<%= entityInstance %> = new <%= entityAngularName %>();
+        this.<%= entityInstance %>.id = params.get('id');
+    }
+
+    ionViewDidLoad() {
+        this.<%= entityInstance %>Service.find(this.<%= entityInstance %>.id).subscribe(data => this.<%= entityInstance %> = data);
     }
 
     open(item: <%= entityAngularName %>) {
@@ -40,11 +47,8 @@ export class <%= entityAngularName %>DetailPage {
             if (<%= entityInstance %>) {
                 this.<%= entityInstance %>Service.update(<%= entityInstance %>).subscribe(data => {
                     this.<%= entityInstance %> = data;
-                    let toast = this.toastCtrl.create({
-                        message: '<%= entityAngularName %> updated successfully.',
-                        duration: 3000,
-                        position: 'top'
-                    });
+                    let toast = this.toastCtrl.create(
+                        {message: '<%= entityAngularName %> updated successfully.', duration: 3000, position: 'middle'});
                     toast.present();
                 }, (error) => console.error(error));
             }

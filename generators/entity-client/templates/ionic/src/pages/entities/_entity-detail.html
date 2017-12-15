@@ -16,7 +16,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-<% const keyPrefix = entityTranslationKey; %>
+<%_ const keyPrefix = entityTranslationKey; _%>
 <ion-header>
     <ion-navbar>
         <ion-title><%= entityClassHumanized %></ion-title>
@@ -29,8 +29,8 @@
         const fieldType = fields[idx].fieldType;
         const fieldTypeBlobContent = fields[idx].fieldTypeBlobContent; _%>
         <ion-item>
-            <label><%= fields[idx].fieldNameHumanized %></label>
-            <p>
+            <ion-label><%= fields[idx].fieldNameHumanized %></ion-label>
+            <div item-content>
                 <%_ if (fields[idx].fieldIsEnum) { _%>
                 <span{{<%= entityInstance %>.<%= fieldName %>}}</span>
                 <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'image') { _%>
@@ -52,7 +52,7 @@
                 <%_ } else { _%>
                 <span>{{<%= entityInstance %>.<%= fieldName %>}}</span>
                 <%_ } _%>
-            </p>
+            </div>
         </ion-item>
         <%_ } _%>
         <%_ for (idx in relationships) {
@@ -70,41 +70,43 @@
         || (relationshipType === 'one-to-one' && ownerSide === true)
         || (relationshipType === 'many-to-many' && ownerSide === true)) { _%>
         <ion-item>
-            <label><%= relationshipNameHumanized %></label>
-            <p>
-                <%_ if (otherEntityName === 'user') { _%>
+            <ion-label><%= relationshipNameHumanized %></ion-label>
+            <%_ if (otherEntityName === 'user') { _%>
                 <%_ if (relationshipType === 'many-to-many') { _%>
+            <div item-content>
                 <span *ngFor="let <%= relationshipFieldName %> of <%= entityInstance %>.<%= relationshipFieldNamePlural %>; let last = last">
                     {{<%= relationshipFieldName %>.<%= otherEntityField %>}}{{last ? '' : ', '}}
                 </span>
+            </div>
                 <%_ } else { _%>
-                <%_ if (dto === 'no') { _%>
-                {{<%= entityInstance + "." + relationshipFieldName + "?." + otherEntityField %>}}
-                <%_ } else { _%>
-                {{<%= entityInstance + "." + relationshipFieldName + otherEntityFieldCapitalized %>}}
+                    <%_ if (dto === 'no') { _%>
+            <div item-content>{{<%= entityInstance + "." + relationshipFieldName + "?." + otherEntityField %>}}</div>
+                    <%_ } else { _%>
+            <div item-content>{{<%= entityInstance + "." + relationshipFieldName + otherEntityFieldCapitalized %>}}</div>
+                    <%_ } _%>
                 <%_ } _%>
-                <%_ } _%>
-                <%_ } else { _%>
+            <%_ } else { _%>
                 <%_ if (relationshipType === 'many-to-many') { _%>
+            <div item-content>
                 <span *ngFor="let <%= relationshipFieldName %> of <%= entityInstance %>.<%= relationshipFieldNamePlural %>; let last = last">
-                    <a [routerLink]="['/<%= otherEntityStateName %>', <%= relationshipFieldName %>?.id ]">{{<%= relationshipFieldName %>.<%= otherEntityField %>}}</a>{{last ? '' : ', '}}
+                    <a>{{<%= relationshipFieldName %>.<%= otherEntityField %>}}</a>{{last ? '' : ', '}}
                 </span>
+            </div>
                 <%_ } else { _%>
-                <%_ if (dto === 'no') { _%>
-                <div *ngIf="<%= entityInstance + '.' + relationshipFieldName %>">
-                    <a [routerLink]="['/<%= otherEntityStateName %>', <%= entityInstance + '.' + relationshipFieldName + '?.id' %>]">{{<%= entityInstance + "." + relationshipFieldName + "?." + otherEntityField %>}}</a>
-                </div>
-                <%_ } else { _%>
-                <div *ngIf="<%= entityInstance + '.' + relationshipFieldName + "Id" %>">
-                    <a [routerLink]="['/<%= otherEntityStateName %>', <%= entityInstance + '.' + relationshipFieldName + "Id" %>]">{{<%= entityInstance + "." + relationshipFieldName + otherEntityFieldCapitalized %>}}</a>
-                </div>
+                    <%_ if (dto === 'no') { _%>
+            <div item-content *ngIf="<%= entityInstance + '.' + relationshipFieldName %>">
+                <a>{{<%= entityInstance + "." + relationshipFieldName + "?." + otherEntityField %>}}</a>
+            </div>
+                    <%_ } else { _%>
+            <div item-content *ngIf="<%= entityInstance + '.' + relationshipFieldName + "Id" %>">
+                <a>{{<%= entityInstance + "." + relationshipFieldName + otherEntityFieldCapitalized %>}}</a>
+            </div>
+                    <%_ } _%>
                 <%_ } _%>
-                <%_ } _%>
-                <%_ } _%>
-            </p>
-            <%_ } _%>
             <%_ } _%>
         </ion-item>
+        <%_ } _%>
+        <%_ } _%>
     </ion-list>
 
     <button ion-button block (click)="open(<%=entityInstance %>)">{{ 'EDIT_BUTTON' | translate }}</button>
