@@ -51,7 +51,6 @@
                 <%_ } else if (fieldType === 'LocalDate') { _%>
                 <p>{{<%=entityInstance %>.<%=fieldName%> | date:'mediumDate'}}</p>
                 <%_ } else { _%>
-                  <!-- Wrap fields with 'name' or 'title' with an h2 -->
                   <%_ if (fieldName === 'name' || fieldName === 'title') { _%>
                 <h2>{{<%=entityInstance %>.<%=fieldName%>}}</h2>
                   <%_ } else { _%>
