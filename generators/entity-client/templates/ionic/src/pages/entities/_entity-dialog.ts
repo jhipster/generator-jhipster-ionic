@@ -22,7 +22,7 @@ const queries = query.queries;
 const variables = query.variables;
 let hasManyToMany = query.hasManyToMany;
 _%>
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
@@ -38,12 +38,12 @@ Object.keys(differentRelationships).forEach(key => {
     }
     if (differentRelationships[key].some(rel => rel.relationshipType !== 'one-to-many')) {
         const uniqueRel = differentRelationships[key][0];
-        if (uniqueRel.otherEntityAngularName === 'User') {_%>
-            import { User } from '../../../models/user.model';
-            import { User as UserService } from '../../../providers/user/user';
-    <%_ } else if (uniqueRel.otherEntityAngularName !== entityAngularName) {_%>
-            import { <%= uniqueRel.otherEntityAngularName %>, <%= uniqueRel.otherEntityAngularName%>Service } from '../<%= uniqueRel.otherEntityModulePath %>';
-     <%_}
+        if (uniqueRel.otherEntityAngularName === 'User') { _%>
+import { User } from '../../../models/user.model';
+import { User as UserService } from '../../../providers/user/user';
+    <%_ } else if (uniqueRel.otherEntityAngularName !== entityAngularName) { _%>
+import { <%= uniqueRel.otherEntityAngularName %>, <%= uniqueRel.otherEntityAngularName%>Service } from '../<%= uniqueRel.otherEntityModulePath %>';
+    <%_}
     }
 }); _%>
 
@@ -53,7 +53,6 @@ Object.keys(differentRelationships).forEach(key => {
     templateUrl: '<%= entityFileName %>-dialog.html'
 })
 export class <%= entityAngularName %>DialogPage {
-    //@ViewChild('fileInput') fileInput;
 
     <%= entityInstance %>: <%= entityAngularName %>;
     <%_ for (const idx in variables) { _%>
@@ -63,14 +62,15 @@ export class <%= entityAngularName %>DialogPage {
 
     form: FormGroup;
 
-    constructor(public navCtrl: NavController, public viewCtrl: ViewController, formBuilder: FormBuilder, params: NavParams,
+    constructor(public navCtrl: NavController, public viewCtrl: ViewController,
+                formBuilder: FormBuilder, params: NavParams,
     <%_ Object.keys(differentRelationships).forEach(key => {
-        if (differentRelationships[key].some(rel => rel.relationshipType !== 'one-to-many')) {
-            const uniqueRel = differentRelationships[key][0];
-            if (uniqueRel.otherEntityAngularName !== entityAngularName) { _%>
+            if (differentRelationships[key].some(rel => rel.relationshipType !== 'one-to-many')) {
+                const uniqueRel = differentRelationships[key][0];
+                if (uniqueRel.otherEntityAngularName !== entityAngularName) { _%>
                 private <%= uniqueRel.otherEntityName %>Service: <%= uniqueRel.otherEntityAngularName %>Service,
-            <%_
-            }
+                <%_
+                }
             }
         });
     _%>
@@ -119,22 +119,6 @@ export class <%= entityAngularName %>DialogPage {
         this.viewCtrl.dismiss();
     }
 
-    <%_
-    const entitiesSeen = [];
-    for (idx in relationships) {
-        const otherEntityNameCapitalized = relationships[idx].otherEntityNameCapitalized;
-        if(relationships[idx].relationshipType !== 'one-to-many' && !entitiesSeen.includes(otherEntityNameCapitalized)) {
-    _%>
-
-    compare<%- otherEntityNameCapitalized -%>(first: <%- relationships[idx].otherEntityAngularName -%>, second: <%- relationships[idx].otherEntityAngularName -%>): boolean {
-        return first && second ? first.id === second.id : first === second;
-    }
-
-    track<%- otherEntityNameCapitalized -%>ById(index: number, item: <%- relationships[idx].otherEntityAngularName -%>) {
-        return item.id;
-    }
-    <%_ entitiesSeen.push(otherEntityNameCapitalized); } } _%>
-
     /**
      * The user is done and wants to create the <%= entityFileName %>, so return it
      * back to the presenter.
@@ -143,4 +127,36 @@ export class <%= entityAngularName %>DialogPage {
         if (!this.form.valid) { return; }
         this.viewCtrl.dismiss(this.form.value);
     }
+
+    private onError(error) {
+        console.error(error);
+        // todo: use toaster, this.jhiAlertService.error(error.message, null, null);
+    }
+
+    <%_
+    const entitiesSeen = [];
+    for (idx in relationships) {
+        const otherEntityNameCapitalized = relationships[idx].otherEntityNameCapitalized;
+        if(relationships[idx].relationshipType !== 'one-to-many' && !entitiesSeen.includes(otherEntityNameCapitalized)) {
+    _%>
+    compare<%- otherEntityNameCapitalized -%>(first: <%- relationships[idx].otherEntityAngularName -%>, second: <%- relationships[idx].otherEntityAngularName -%>): boolean {
+        return first && second ? first.id === second.id : first === second;
+    }
+
+    track<%- otherEntityNameCapitalized -%>ById(index: number, item: <%- relationships[idx].otherEntityAngularName -%>) {
+        return item.id;
+    }
+    <%_ entitiesSeen.push(otherEntityNameCapitalized); } } _%>
+    <%_ if (hasManyToMany) { _%>
+    getSelected(selectedVals: Array<any>, option: any) {
+        if (selectedVals) {
+            for (let i = 0; i < selectedVals.length; i++) {
+                if (option.id === selectedVals[i].id) {
+                    return selectedVals[i];
+                }
+            }
+        }
+        return option;
+    }
+    <%_ } _%>
 }

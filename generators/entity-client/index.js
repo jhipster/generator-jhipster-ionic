@@ -54,7 +54,7 @@ module.exports = class extends BaseGenerator {
      * @param {boolean} enableTranslation - If translations are enabled or not
      */
     addEntityToModule(entityInstance, entityClass, entityAngularName, entityFolderName, entityFileName, enableTranslation) {
-        // workaround for having multiple entries added
+        // workaround method being called on initialization
         if (!entityAngularName) {
             return;
         }
@@ -72,5 +72,70 @@ module.exports = class extends BaseGenerator {
             this.log(`${chalk.yellow('\nUnable to find ') + entityPagePath + chalk.yellow(' or missing required jhipster-needle. Reference to ') + entityAngularName} ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`);
             this.debug('Error:', e);
         }
+    }
+
+    /**
+     * Generate Entity Queries for Ionic Providers
+     *
+     * @param {Array|Object} relationships - array of relationships
+     * @param {string} entityInstance - entity instance
+     * @param {string} dto - dto
+     * @returns {{queries: Array, variables: Array, hasManyToMany: boolean}}
+     */
+    generateEntityQueries(relationships, entityInstance, dto) {
+        // workaround method being called on initialization
+        if (!relationships) {
+            return;
+        }
+        const queries = [];
+        const variables = [];
+        let hasManyToMany = false;
+        relationships.forEach((relationship) => {
+            let query;
+            let variableName;
+            hasManyToMany = hasManyToMany || relationship.relationshipType === 'many-to-many';
+            if (relationship.relationshipType === 'one-to-one' && relationship.ownerSide === true && relationship.otherEntityName !== 'user') {
+                variableName = relationship.relationshipFieldNamePlural.toLowerCase();
+                if (variableName === entityInstance) {
+                    variableName += 'Collection';
+                }
+                const relationshipFieldName = `this.${entityInstance}.${relationship.relationshipFieldName}`;
+                const relationshipFieldNameIdCheck = dto === 'no' ?
+                    `!${relationshipFieldName} || !${relationshipFieldName}.id` :
+                    `!${relationshipFieldName}Id`;
+
+                query =
+                    `this.${relationship.otherEntityName}Service
+            .query({filter: '${relationship.otherEntityRelationshipName.toLowerCase()}-is-null'})
+            .subscribe(data => {
+                if (${relationshipFieldNameIdCheck}) {
+                    this.${variableName} = data;
+                } else {
+                    this.${relationship.otherEntityName}Service
+                        .find(${relationshipFieldName}${dto === 'no' ? '.id' : 'Id'})
+                        .subscribe((subData: ${relationship.otherEntityAngularName}) => {
+                            this.${variableName} = [subData].concat(subData);
+                        }, (error) => this.onError(error));
+                }
+            }, (error) => this.onError(error));`;
+            } else if (relationship.relationshipType !== 'one-to-many') {
+                variableName = relationship.otherEntityNameCapitalizedPlural.toLowerCase();
+                if (variableName === entityInstance) {
+                    variableName += 'Collection';
+                }
+                query =
+                    `this.${relationship.otherEntityName}Service.query()
+            .subscribe(data => { this.${variableName} = data; }, (error) => this.onError(error));`;
+            }
+            if (variableName && !this.contains(queries, query)) {
+                queries.push(query);
+                variables.push(`${variableName}: ${relationship.otherEntityAngularName}[];`);
+            }
+        });
+        return {
+            queries,
+            variables,
+            hasManyToMany
+        };
     }
 };

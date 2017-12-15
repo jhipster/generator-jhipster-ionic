@@ -90,8 +90,11 @@ const ionicFiles = {
                 {
                     file: 'entities/_entity-dialog.ts',
                     renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-dialog.ts`
+                },
+                {
+                    file: 'entities/_index.ts',
+                    renameTo: generator => `entities/${generator.entityFolderName}/index.ts`
                 }
-
             ]
         }
     ]
