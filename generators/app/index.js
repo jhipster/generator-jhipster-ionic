@@ -101,5 +101,10 @@ module.exports = class extends BaseGenerator {
         this.log('Then run the following commands (in separate terminals) to see it working:\n');
         this.log(`${chalk.green(`    cd ${this.directoryPath} && ${this.jhipsterAppConfig.buildTool === 'maven' ? './mvnw' : './gradlew'}`)}`);
         this.log(`${chalk.green(`    cd ${this.ionicAppName} && ionic serve`)}\n`);
+        this.log(`${chalk.red(`\nWARNING: `)} The emulator runs on port 8080, so you will need to change your backend`);
+        this.log(`to run on a different port (e.g., 9080) when running 'ionic cordova emulate'. Port 8080 is specified`);
+        this.log(`in the following files:\n`);
+        this.log(chalk.yellow(`${this.directoryPath}/src/main/resources/config/application-dev.yml`));
+        this.log(chalk.yellow(`src/providers/api/api.ts`));
     }
 };
