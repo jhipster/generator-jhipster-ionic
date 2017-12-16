@@ -25,7 +25,7 @@ const shelljs = require('shelljs');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
 const prompts = require('./prompts');
 const modifyPackage = require('modify-package-dependencies');
-const spawn = require('child_process').execFileSync;
+const spawn = require('cross-spawn');
 
 module.exports = class extends BaseGenerator {
     get initializing() {
@@ -63,7 +63,7 @@ module.exports = class extends BaseGenerator {
 
         const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster`;
         this.log(`\nCreating Ionic app with command: ${chalk.green(`${cmd}`)}`);
-        spawn('ionic', ['start', this.ionicAppName, 'oktadeveloper/jhipster'], {stdio: 'inherit'});
+        spawn.sync('ionic', ['start', this.ionicAppName, 'oktadeveloper/jhipster'], {stdio: 'inherit'});
     }
 
     install() {
