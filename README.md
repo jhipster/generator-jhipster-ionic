@@ -6,8 +6,6 @@
 
 This is a [JHipster](http://www.jhipster.tech/) module. You can use it to generate an Ionic app that talks to a JHipster backend. It uses the [Ionic JHipster Starter](https://github.com/oktadeveloper/ionic-jhipster-starter) as a base template, then applies functionality (e.g. entity generation) on top of it.
 
-The entity generator is in an beta state, see [issue #2](https://github.com/oktadeveloper/generator-jhipster-ionic/issues/2) for progress towards a stable release.
-
 # Prerequisites
 
 As this is a [JHipster](http://www.jhipster.tech/) module, we expect you to have an existing JHipster app and Ionic already installed.
@@ -18,7 +16,7 @@ As this is a [JHipster](http://www.jhipster.tech/) module, we expect you to have
 Or simply:
 
 ```bash
-npm i -g generator-jhipster ionic cordova
+npm i -g generator-jhipster ionic
 ```
 
 # Installation
