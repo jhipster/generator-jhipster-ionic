@@ -77,7 +77,7 @@ export class <%= entityAngularName %>DialogPage {
     _%>
                 private <%= entityInstance %>Service: <%= entityAngularName %>Service) {
         this.<%= entityInstance %> = params.get('item');
-        if (this.<%= entityInstance %>.id) {
+        if (this.<%= entityInstance %> && this.<%= entityInstance %>.id) {
             this.<%= entityInstance %>Service.find(this.<%= entityInstance %>.id).subscribe(data => {
                 this.<%= entityInstance %> = data;
             });
