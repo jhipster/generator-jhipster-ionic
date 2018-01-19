@@ -39,7 +39,7 @@ module.exports = class extends BaseGenerator {
                 // this.printJHipsterLogo();
 
                 // Have Yeoman greet the user.
-                this.log(`\nWelcome to the ${chalk.bold.blue('Ionic')} ${chalk.bold.green('J')}${chalk.bold.red('Hipster')} generator! ${chalk.yellow(`v${packagejs.version}\n`)}`);
+                this.log(`\nWelcome to the ${chalk.bold.blue('Ionic')} Module for ${chalk.bold.green('J')}${chalk.bold.red('Hipster')}! ${chalk.yellow(`v${packagejs.version}\n`)}`);
             }
         };
     }
@@ -71,40 +71,44 @@ module.exports = class extends BaseGenerator {
         const done = this.async();
         const packagePath = `${this.ionicAppName}/package.json`;
         const packageJSON = this.fs.readJSON(packagePath);
-        const dependencies = ['generator-jhipster-ionic'];
+        const devDependencies = ['generator-jhipster-ionic'];
         if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
-            // ionic cordova plugin add cordova-plugin-inappbrowser
-            dependencies.push('cordova-plugin-inappbrowser@1.7.1');
+            devDependencies.push('cordova-plugin-inappbrowser');
         }
-        modifyPackage.addDev(packageJSON, dependencies)
+        jsonfile.writeFileSync(packagePath, devDependencies);
+        modifyPackage.addDev(packageJSON, devDependencies)
             .then((dependencies) => {
                 jsonfile.writeFileSync(packagePath, dependencies);
-
-                this.log('\nInstalling dependencies...');
-                shelljs.exec(`cd ${this.ionicAppName} && npm i --color=always`, { silent: false }, (code) => {
-                    if (code === 0) {
-                        done();
-                    } else {
-                        this.warning(`Failed to run ${chalk.yellow('npm install')} in ${this.ionicAppName}!`);
-                        this.warning(`Please run it manually before running ${chalk.yellow('ionic serve')}`);
-                    }
+                modifyPackage.add(packageJSON, ['angular-oauth2-oidc']).then((giddyup) => {
+                    jsonfile.writeFileSync(packagePath, giddyup);
+                    this.log('Installing dependencies...');
+                    shelljs.exec(`cd ${this.ionicAppName} && npm i --color=always`, { silent: false }, (code) => {
+                        if (code === 0) {
+                            done();
+                        } else {
+                            this.warning(`Failed to run ${chalk.yellow('npm install')} in ${this.ionicAppName}!`);
+                            this.warning(`Please run it manually before running ${chalk.yellow('ionic serve')}`);
+                        }
+                    });
                 });
             });
     }
 
     end() {
-        this.log('\nApp created successfully! 🎉\n');
+        this.log('\nHipster Ionic App created successfully! 🎉\n');
         const configPath = chalk.yellow(`${this.directoryPath}/src/main/resources/config/application.yml`);
-        this.log(`Enable CORS in ${configPath}, and set the allowed-origins:\n`);
+        this.log(`Enable CORS in ${configPath}, and set the allowed-origins to allow Ionic.\n`);
         this.log(`${chalk.green('    cors:')}`);
         this.log(`${chalk.green('        allowed-origins: "http://localhost:8100"')}\n`);
-        this.log('Then run the following commands (in separate terminals) to see it working:\n');
+        this.log('Then run the following commands (in separate terminal windows) to see everything working:\n');
         this.log(`${chalk.green(`    cd ${this.directoryPath} && ${this.jhipsterAppConfig.buildTool === 'maven' ? './mvnw' : './gradlew'}`)}`);
         this.log(`${chalk.green(`    cd ${this.ionicAppName} && ionic serve`)}\n`);
-        this.log(`${chalk.red(`WARNING:`)} The emulator runs on port 8080, so you will need to change your`);
-        this.log(`backend to run on a different port (e.g., 9080) when running ${chalk.green('ionic cordova emulate')}.`);
-        this.log(`Port 8080 is specified in the following files:\n`);
-        this.log(chalk.yellow(`    ${this.directoryPath}/src/main/resources/config/application-dev.yml`));
-        this.log(chalk.yellow(`    ${this.ionicAppName}/src/providers/api/api.ts\n`));
+
+        let portWarning = `${chalk.red(`WARNING:`)} The emulator runs on port 8080, so you will need to change your `;
+        portWarning += `backend to run on a different port (e.g., 9080) when running ${chalk.green('ionic cordova emulate')}. `;
+        portWarning += 'Port 8080 is specified in the following files:\n\n';
+        portWarning += chalk.yellow(`    ${this.directoryPath}/src/main/resources/config/application-dev.yml\n`);
+        portWarning += chalk.yellow(`    ${this.ionicAppName}/src/providers/api/api.ts\n`);
+        this.log(portWarning);
     }
 };
