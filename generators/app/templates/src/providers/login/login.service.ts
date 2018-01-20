@@ -40,7 +40,6 @@ export class LoginService {
             }
             return new Promise((resolve, reject) => {
                 const oauthUrl = this.buildUrl(state, nonce);
-                console.log('oauthUrl', oauthUrl);
                 const browser = window.cordova.InAppBrowser.open(oauthUrl, '_blank',
                     'location=no,clearsessioncache=yes,clearcache=yes');
                 browser.addEventListener('loadstart', (event) => {
