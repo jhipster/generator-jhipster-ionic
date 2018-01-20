@@ -26,6 +26,8 @@ const BaseGenerator = require('generator-jhipster/generators/generator-base');
 const prompts = require('./prompts');
 const modifyPackage = require('modify-package-dependencies');
 const spawn = require('cross-spawn');
+const fs = require('fs');
+const constants = require('generator-jhipster/generators/generator-constants');
 
 module.exports = class extends BaseGenerator {
     get initializing() {
@@ -63,7 +65,7 @@ module.exports = class extends BaseGenerator {
 
         const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster`;
         this.log(`\nCreating Ionic app with command: ${chalk.green(`${cmd}`)}`);
-        spawn.sync('ionic', ['start', this.ionicAppName, 'oktadeveloper/jhipster'], {stdio: 'inherit'});
+        spawn.sync('ionic', ['start', this.ionicAppName, 'oktadeveloper/jhipster'], { stdio: 'inherit' });
     }
 
     install() {
@@ -92,23 +94,94 @@ module.exports = class extends BaseGenerator {
                     });
                 });
             });
+
+        // Copy server files to make API work with Ionic
+        if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
+            this.log('Updating Java and TypeScript classes for OIDC...');
+            this.packageName = this.jhipsterAppConfig.packageName;
+            this.packageFolder = this.jhipsterAppConfig.packageFolder;
+
+            const SERVER_MAIN_SRC_DIR = constants.SERVER_MAIN_SRC_DIR;
+            const CLIENT_MAIN_SRC_DIR = `${this.ionicAppName}/src/`;
+            const JAVA_DIR = `${constants.SERVER_MAIN_SRC_DIR}/${this.packageFolder}/`;
+
+            this.template(`${SERVER_MAIN_SRC_DIR}package/config/ResourceServerConfiguration.java`, `${this.directoryPath}/${JAVA_DIR}config/ResourceServerConfiguration.java`);
+            this.template(`${SERVER_MAIN_SRC_DIR}package/web/rest/AuthInfoResource.java`, `${this.directoryPath}/${JAVA_DIR}web/rest/AuthInfoResource.java`);
+
+            // Update Ionic files to work with OAuth
+            this.template('src/pages/login/login.ts', `${CLIENT_MAIN_SRC_DIR}pages/login/login.ts`);
+            this.template('src/pages/login/login.html', `${CLIENT_MAIN_SRC_DIR}pages/login/login.html`);
+            this.template('src/pages/welcome/welcome.html', `${CLIENT_MAIN_SRC_DIR}pages/welcome/welcome.html`);
+            this.template('src/providers/auth/auth-interceptor.ts', `${CLIENT_MAIN_SRC_DIR}providers/auth/auth-interceptor.ts`);
+            this.template('src/providers/login/login.service.ts', `${CLIENT_MAIN_SRC_DIR}providers/login/login.service.ts`);
+            this.template('src/providers/login/login.service.ts', `${CLIENT_MAIN_SRC_DIR}providers/login/login.service.ts`);
+            this.template('src/providers/user/user.ts', `${CLIENT_MAIN_SRC_DIR}providers/user/user.ts`);
+
+            const DOCKER_DIR = `${this.directoryPath}/${constants.DOCKER_DIR}`;
+            // Update Keycloak realm to add http://localhost:8100 as a redirectUri and enable implicit flow
+            this.replaceContent(`${DOCKER_DIR}realm-config/jhipster-realm.json`, '"implicitFlowEnabled" : false,', '"implicitFlowEnabled" : true,');
+            this.replaceContent(`${DOCKER_DIR}realm-config/jhipster-realm.json`, '"http://localhost:9000/*"', '"http://localhost:9000/*", "http:d/localhost:8100/*"');
+
+            // Delete files no longer used
+            const filesToDelete = [
+                `${CLIENT_MAIN_SRC_DIR}pages/signup`,
+                `${CLIENT_MAIN_SRC_DIR}providers/auth/auth-jwt.service.ts`
+            ];
+
+            filesToDelete.forEach((path) => {
+                if (path.endsWith('.ts') || path.endsWith('.html')) {
+                    fs.unlinkSync(path);
+                } else {
+                    this.removeDirectory(path);
+                }
+            });
+        }
+    }
+
+    removeDirectory(path) {
+        if (fs.existsSync(path)) {
+            fs.readdirSync(path).forEach((file, index) => {
+                const curPath = `${path}/${file}`;
+                if (fs.lstatSync(curPath).isDirectory()) { // recurse
+                    this.removeDirectory(curPath);
+                } else { // delete file
+                    // check to see if the file exists before deleting
+                    try {
+                        fs.unlinkSync(curPath);
+                    } catch (e) {
+                        console.error("UNLINK FAILED: " + e);
+                        // file already deleted
+                    }
+                }
+            });
+            fs.rmdirSync(path);
+        }
     }
 
     end() {
         this.log('\nHipster Ionic App created successfully! 🎉\n');
-        const configPath = chalk.yellow(`${this.directoryPath}/src/main/resources/config/application.yml`);
-        this.log(`Enable CORS in ${configPath}, and set the allowed-origins to allow Ionic.\n`);
+        // application-dev.yml has CORS enabled by default, so don't warn on install. Too noisy.
+        /* const configPath = chalk.yellow(`${this.directoryPath}/src/main/resources/config/application.yml`);
+        this.log(`Enable CORS in ${configPath}, and set the allowed-origins to allow Ionic in production.\n`);
         this.log(`${chalk.green('    cors:')}`);
-        this.log(`${chalk.green('        allowed-origins: "http://localhost:8100"')}\n`);
-        this.log('Then run the following commands (in separate terminal windows) to see everything working:\n');
+        this.log(`${chalk.green('        allowed-origins: "http://localhost:8100"')}\n`); */
+        this.log('Run the following commands (in separate terminal windows) to see everything working:\n');
         this.log(`${chalk.green(`    cd ${this.directoryPath} && ${this.jhipsterAppConfig.buildTool === 'maven' ? './mvnw' : './gradlew'}`)}`);
         this.log(`${chalk.green(`    cd ${this.ionicAppName} && ionic serve`)}\n`);
 
-        let portWarning = `${chalk.red(`WARNING:`)} The emulator runs on port 8080, so you will need to change your `;
+        let portWarning = `${chalk.red('WARNING:')} The emulator runs on port 8080, so you will need to change your `;
         portWarning += `backend to run on a different port (e.g., 9080) when running ${chalk.green('ionic cordova emulate')}. `;
         portWarning += 'Port 8080 is specified in the following files:\n\n';
         portWarning += chalk.yellow(`    ${this.directoryPath}/src/main/resources/config/application-dev.yml\n`);
         portWarning += chalk.yellow(`    ${this.ionicAppName}/src/providers/api/api.ts\n`);
         this.log(portWarning);
+
+        if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
+            let resourceServerWarning = `${chalk.yellow('NOTE:')} To integrate OIDC into Ionic, I added a ResourceServerConfiguration class `;
+            resourceServerWarning += `to your ${this.directoryPath} project. This will cause the Angular client on your server to stop `;
+            resourceServerWarning += 'functioning. Please check this project\'s documentation to learn more: ';
+            resourceServerWarning += `${chalk.cyan('https://github.com/oktadeveloper/generator-jhipster-ionic\n')}`;
+            this.log(resourceServerWarning);
+        }
     }
 };
