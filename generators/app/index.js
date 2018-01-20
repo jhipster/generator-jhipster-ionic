@@ -75,7 +75,8 @@ module.exports = class extends BaseGenerator {
         const packageJSON = this.fs.readJSON(packagePath);
         const devDependencies = ['generator-jhipster-ionic'];
         if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
-            devDependencies.push('cordova-plugin-inappbrowser');
+            // install the inappbrowser plugin for implicit flow
+            shelljs.exec(`cd ${this.ionicAppName} && cordova plugin add cordova-plugin-inappbrowser`);
         }
         jsonfile.writeFileSync(packagePath, devDependencies);
         modifyPackage.addDev(packageJSON, devDependencies)
@@ -109,18 +110,14 @@ module.exports = class extends BaseGenerator {
             this.template(`${SERVER_MAIN_SRC_DIR}package/web/rest/AuthInfoResource.java`, `${this.directoryPath}/${JAVA_DIR}web/rest/AuthInfoResource.java`);
 
             // Update Ionic files to work with OAuth
-            this.template('src/pages/login/login.ts', `${CLIENT_MAIN_SRC_DIR}pages/login/login.ts`);
+            this.template('src/app/app.component.ts', `${CLIENT_MAIN_SRC_DIR}app/app.component.ts`);
+            this.template('src/app/app.module.ts', `${CLIENT_MAIN_SRC_DIR}app/app.module.ts`);
             this.template('src/pages/login/login.html', `${CLIENT_MAIN_SRC_DIR}pages/login/login.html`);
+            this.template('src/pages/login/login.ts', `${CLIENT_MAIN_SRC_DIR}pages/login/login.ts`);
             this.template('src/pages/welcome/welcome.html', `${CLIENT_MAIN_SRC_DIR}pages/welcome/welcome.html`);
             this.template('src/providers/auth/auth-interceptor.ts', `${CLIENT_MAIN_SRC_DIR}providers/auth/auth-interceptor.ts`);
             this.template('src/providers/login/login.service.ts', `${CLIENT_MAIN_SRC_DIR}providers/login/login.service.ts`);
-            this.template('src/providers/login/login.service.ts', `${CLIENT_MAIN_SRC_DIR}providers/login/login.service.ts`);
             this.template('src/providers/user/user.ts', `${CLIENT_MAIN_SRC_DIR}providers/user/user.ts`);
-
-            const DOCKER_DIR = `${this.directoryPath}/${constants.DOCKER_DIR}`;
-            // Update Keycloak realm to add http://localhost:8100 as a redirectUri and enable implicit flow
-            this.replaceContent(`${DOCKER_DIR}realm-config/jhipster-realm.json`, '"implicitFlowEnabled" : false,', '"implicitFlowEnabled" : true,');
-            this.replaceContent(`${DOCKER_DIR}realm-config/jhipster-realm.json`, '"http://localhost:9000/*"', '"http://localhost:9000/*", "http:d/localhost:8100/*"');
 
             // Delete files no longer used
             const filesToDelete = [
@@ -130,11 +127,20 @@ module.exports = class extends BaseGenerator {
 
             filesToDelete.forEach((path) => {
                 if (path.endsWith('.ts') || path.endsWith('.html')) {
-                    fs.unlinkSync(path);
+                    this.deleteFile(path);
                 } else {
                     this.removeDirectory(path);
                 }
             });
+        }
+    }
+
+    deleteFile(path) {
+        // check to see if the file exists before deleting
+        try {
+            fs.unlinkSync(path);
+        } catch (e) {
+            // file already deleted
         }
     }
 
@@ -145,13 +151,7 @@ module.exports = class extends BaseGenerator {
                 if (fs.lstatSync(curPath).isDirectory()) { // recurse
                     this.removeDirectory(curPath);
                 } else { // delete file
-                    // check to see if the file exists before deleting
-                    try {
-                        fs.unlinkSync(curPath);
-                    } catch (e) {
-                        console.error("UNLINK FAILED: " + e);
-                        // file already deleted
-                    }
+                    this.deleteFile(curPath);
                 }
             });
             fs.rmdirSync(path);
@@ -180,7 +180,7 @@ module.exports = class extends BaseGenerator {
             let resourceServerWarning = `${chalk.yellow('NOTE:')} To integrate OIDC into Ionic, I added a ResourceServerConfiguration class `;
             resourceServerWarning += `to your ${this.directoryPath} project. This will cause the Angular client on your server to stop `;
             resourceServerWarning += 'functioning. Please check this project\'s documentation to learn more: ';
-            resourceServerWarning += `${chalk.cyan('https://github.com/oktadeveloper/generator-jhipster-ionic\n')}`;
+            resourceServerWarning += `${chalk.bold('https://github.com/oktadeveloper/generator-jhipster-ionic\n')}`;
             this.log(resourceServerWarning);
         }
     }
