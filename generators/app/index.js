@@ -63,9 +63,14 @@ module.exports = class extends BaseGenerator {
             this.error(`\nYour backend uses an old JHipster version (${currentJhipsterVersion})... you need at least (${minimumJhipsterVersion})\n`);
         }
 
+        const applicationType = this.jhipsterAppConfig.applicationType;
+        if (applicationType !== 'monolith' && applicationType !== 'gateway') {
+            this.error(`\nYour backend project must be a monolith or a gateway to work with this module! Found application type: ${applicationType}.\n`);
+        }
+
         const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster`;
         this.log(`\nCreating Ionic app with command: ${chalk.green(`${cmd}`)}`);
-        spawn.sync('ionic', ['start', this.ionicAppName, 'oktadeveloper/jhipster'], { stdio: 'inherit' });
+        spawn.sync('ionic', ['start', this.ionicAppName, 'oktadeveloper/jhipster'], {stdio: 'inherit'});
     }
 
     install() {
@@ -77,8 +82,8 @@ module.exports = class extends BaseGenerator {
         // todo: Don't install Inappbrowser if user said No to Cordova
         if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
             // install the inappbrowser plugin for implicit flow
-            this.log(`Adding Cordova's Inappbrowser plugin: ${chalk.green('cordova plugin add cordova-plugin-inappbrowser')}`);
-            shelljs.exec(`cd ${this.ionicAppName} && cordova plugin add cordova-plugin-inappbrowser`);
+            this.log(`Adding Cordova's Inappbrowser plugin: ${chalk.green('ionic cordova plugin add cordova-plugin-inappbrowser')}`);
+            shelljs.exec(`cd ${this.ionicAppName} && ionic cordova plugin add cordova-plugin-inappbrowser`);
         }
         jsonfile.writeFileSync(packagePath, devDependencies);
         modifyPackage.addDev(packageJSON, devDependencies)
@@ -87,7 +92,7 @@ module.exports = class extends BaseGenerator {
                 modifyPackage.add(packageJSON, ['angular-oauth2-oidc']).then((giddyup) => {
                     jsonfile.writeFileSync(packagePath, giddyup);
                     this.log('Installing dependencies...');
-                    shelljs.exec(`cd ${this.ionicAppName} && npm i --color=always`, { silent: false }, (code) => {
+                    shelljs.exec(`cd ${this.ionicAppName} && npm i --color=always`, {silent: false}, (code) => {
                         if (code === 0) {
                             done();
                         } else {
@@ -107,12 +112,19 @@ module.exports = class extends BaseGenerator {
             const SERVER_MAIN_SRC_DIR = constants.SERVER_MAIN_SRC_DIR;
             const CLIENT_MAIN_SRC_DIR = `${this.ionicAppName}/src/`;
             const JAVA_DIR = `${constants.SERVER_MAIN_SRC_DIR}${this.packageFolder}/`;
+            const applicationType = this.jhipsterAppConfig.applicationType;
 
-            this.template(`${SERVER_MAIN_SRC_DIR}package/config/ResourceServerConfiguration.java`, `${this.directoryPath}/${JAVA_DIR}config/ResourceServerConfiguration.java`);
+            const securityConfigFile = (applicationType === 'monolith') ? 'SecurityConfiguration' : 'OAuth2SsoConfiguration';
+
+            if (applicationType === 'monolith') {
+                this.template(`${SERVER_MAIN_SRC_DIR}package/config/ResourceServerConfiguration.java`, `${this.directoryPath}/${JAVA_DIR}config/ResourceServerConfiguration.java`);
+            } else {
+                this.template(`${SERVER_MAIN_SRC_DIR}package/config/OAuth2SsoConfiguration.java`, `${this.directoryPath}/${JAVA_DIR}config/OAuth2SsoConfiguration.java`);
+            }
+
             this.template(`${SERVER_MAIN_SRC_DIR}package/web/rest/AuthInfoResource.java`, `${this.directoryPath}/${JAVA_DIR}web/rest/AuthInfoResource.java`);
-
             // Update security configuration to allow /api/auth-info
-            this.replaceContent(`${this.directoryPath}/${JAVA_DIR}config/SecurityConfiguration.java`,
+            this.replaceContent(`${this.directoryPath}/${JAVA_DIR}config/${securityConfigFile}.java`,
                 '("/api/profile-info")',
                 '("/api/auth-info", "/api/profile-info")');
 
