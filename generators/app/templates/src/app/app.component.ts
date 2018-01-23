@@ -45,7 +45,7 @@ export class MyApp {
     ];
 
     constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config,
-                private statusBar: StatusBar, private splashScreen: SplashScreen, oauthService: OAuthService, api: Api) {
+                private statusBar: StatusBar, private splashScreen: SplashScreen, private oauthService: OAuthService, private api: Api) {
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
@@ -54,27 +54,35 @@ export class MyApp {
         });
 
         this.initTranslate();
+        this.initAuthentication();
+    }
 
+    initAuthentication() {
         // Try to get the oauth settings from the server
-        api.get('auth-info').subscribe((data: any) => {
+        this.api.get('auth-info').subscribe((data: any) => {
                 data.redirectUri = 'http://localhost:8100';
-                oauthService.configure(data);
-                oauthService.tokenValidationHandler = new JwksValidationHandler();
-                oauthService.loadDiscoveryDocumentAndTryLogin().catch(error => {
-                    if (error.params.error === 'unsupported_response_type') {
-                        let problem = 'You need to enable implicit flow for this app in your identity provider!';
-                        problem += '\nError from IdP: ' + error.params.error_description.replace(/\+/g, ' ');
-                        console.error(problem);
-                    }
-                })
+                this.oauthService.configure(data);
+                this.tryLogin();
             }, error => {
                 console.error('ERROR fetching authentication information, defaulting to Keycloak settings');
-                oauthService.redirectUri = 'http://localhost:8100';
-                oauthService.clientId = 'web_app';
-                oauthService.scope = 'openid profile email';
-                oauthService.issuer = 'http://localhost:9080/auth/realms/jhipster';
+                this.oauthService.redirectUri = 'http://localhost:8100';
+                this.oauthService.clientId = 'web_app';
+                this.oauthService.scope = 'openid profile email';
+                this.oauthService.issuer = 'http://localhost:9080/auth/realms/jhipster';
+                this.tryLogin();
             }
         );
+    }
+
+    tryLogin() {
+        this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+        this.oauthService.loadDiscoveryDocumentAndTryLogin().catch(error => {
+            if (error.params.error === 'unsupported_response_type') {
+                let problem = 'You need to enable implicit flow for this app in your identity provider!';
+                problem += '\nError from IdP: ' + error.params.error_description.replace(/\+/g, ' ');
+                console.error(problem);
+            }
+        })
     }
 
     initTranslate() {
