@@ -104,10 +104,15 @@ module.exports = class extends BaseGenerator {
 
             const SERVER_MAIN_SRC_DIR = constants.SERVER_MAIN_SRC_DIR;
             const CLIENT_MAIN_SRC_DIR = `${this.ionicAppName}/src/`;
-            const JAVA_DIR = `${constants.SERVER_MAIN_SRC_DIR}/${this.packageFolder}/`;
+            const JAVA_DIR = `${constants.SERVER_MAIN_SRC_DIR}${this.packageFolder}/`;
 
             this.template(`${SERVER_MAIN_SRC_DIR}package/config/ResourceServerConfiguration.java`, `${this.directoryPath}/${JAVA_DIR}config/ResourceServerConfiguration.java`);
             this.template(`${SERVER_MAIN_SRC_DIR}package/web/rest/AuthInfoResource.java`, `${this.directoryPath}/${JAVA_DIR}web/rest/AuthInfoResource.java`);
+
+            // Update security configuration to allow /api/auth-info
+            this.replaceContent(`${this.directoryPath}/${JAVA_DIR}config/SecurityConfiguration.java`,
+                '("/api/profile-info")',
+                '("/api/auth-info", "/api/profile-info")');
 
             // Update Ionic files to work with OAuth
             this.template('src/app/app.component.ts', `${CLIENT_MAIN_SRC_DIR}app/app.component.ts`);
@@ -175,13 +180,5 @@ module.exports = class extends BaseGenerator {
         portWarning += chalk.yellow(`    ${this.directoryPath}/src/main/resources/config/application-dev.yml\n`);
         portWarning += chalk.yellow(`    ${this.ionicAppName}/src/providers/api/api.ts\n`);
         this.log(portWarning);
-
-        if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
-            let resourceServerWarning = `${chalk.yellow('NOTE:')} To integrate OIDC into Ionic, I added a ResourceServerConfiguration class `;
-            resourceServerWarning += `to your ${this.directoryPath} project. This will cause the Angular client on your server to stop `;
-            resourceServerWarning += 'functioning. Please check this project\'s documentation to learn more: ';
-            resourceServerWarning += `${chalk.bold('https://github.com/oktadeveloper/generator-jhipster-ionic\n')}`;
-            this.log(resourceServerWarning);
-        }
     }
 };

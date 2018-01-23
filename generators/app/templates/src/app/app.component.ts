@@ -60,9 +60,15 @@ export class MyApp {
                 data.redirectUri = 'http://localhost:8100';
                 oauthService.configure(data);
                 oauthService.tokenValidationHandler = new JwksValidationHandler();
-                oauthService.loadDiscoveryDocumentAndTryLogin();
+                oauthService.loadDiscoveryDocumentAndTryLogin().catch(error => {
+                    if (error.params.error === 'unsupported_response_type') {
+                        let problem = 'You need to enable implicit flow for this app in your identity provider!';
+                        problem += '\nError from IdP: ' + error.params.error_description.replace(/\+/g, ' ');
+                        console.error(problem);
+                    }
+                })
             }, error => {
-                console.error("ERROR fetching authentication information, defaulting to Keycloak");
+                console.error('ERROR fetching authentication information, defaulting to Keycloak settings');
                 oauthService.redirectUri = 'http://localhost:8100';
                 oauthService.clientId = 'web_app';
                 oauthService.scope = 'openid profile email';

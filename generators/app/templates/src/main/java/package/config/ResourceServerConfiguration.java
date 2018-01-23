@@ -24,6 +24,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestHeaderRequestMatcher;
 import org.springframework.web.filter.CorsFilter;
 
 @Configuration
@@ -41,11 +43,9 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         http
             .csrf().disable()
             .addFilterBefore(corsFilter, CsrfFilter.class)
+            .requestMatcher(new RequestHeaderRequestMatcher("Authorization"))
             .authorizeRequests()
-            .antMatchers("/api/auth-info").permitAll()
-            .antMatchers("/api/profile-info").permitAll()
             .antMatchers("/api/**").authenticated()
-            .antMatchers("/management/health").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN);
     }
 }
