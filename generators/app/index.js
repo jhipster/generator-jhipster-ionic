@@ -74,8 +74,10 @@ module.exports = class extends BaseGenerator {
         const packagePath = `${this.ionicAppName}/package.json`;
         const packageJSON = this.fs.readJSON(packagePath);
         const devDependencies = ['generator-jhipster-ionic'];
+        // todo: Don't install Inappbrowser if user said No to Cordova
         if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
             // install the inappbrowser plugin for implicit flow
+            this.log(`Adding Cordova's Inappbrowser plugin: ${chalk.green('cordova plugin add cordova-plugin-inappbrowser')}`);
             shelljs.exec(`cd ${this.ionicAppName} && cordova plugin add cordova-plugin-inappbrowser`);
         }
         jsonfile.writeFileSync(packagePath, devDependencies);
