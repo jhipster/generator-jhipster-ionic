@@ -137,11 +137,6 @@ export class <%= entityAngularName %>DialogPage {
         this.viewCtrl.dismiss(this.form.value);
     }
 
-    private onError(error) {
-        console.error(error);
-        // todo: use toaster, this.jhiAlertService.error(error.message, null, null);
-    }
-
     <%_
     const entitiesSeen = [];
     for (idx in relationships) {
