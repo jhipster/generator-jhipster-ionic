@@ -29,6 +29,10 @@
 </ion-header>
 <!-- todo: add elasticsearch support -->
 <ion-content padding>
+    <ion-refresher *ngIf="<%=entityInstancePlural %>.length" (ionRefresh)="loadAll($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
     <ion-list>
         <ion-item-sliding *ngFor="let <%=entityInstance %> of <%=entityInstancePlural %>; trackBy: trackId" #slidingItem>
             <button ion-item (click)="detail(<%= entityInstance %>)">

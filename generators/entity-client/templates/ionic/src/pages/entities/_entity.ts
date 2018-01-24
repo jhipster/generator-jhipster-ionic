@@ -40,19 +40,19 @@ export class <%= entityAngularName %>Page {
         this.loadAll();
     }
 
-    loadAll() {
+    loadAll(refresher?) {
         this.<%= entityInstance %>Service.query().subscribe(
-            (response) => this.onSuccess(response),
-            (error) => this.onError(error));
-    }
-
-    private onSuccess(data) {
-        this.<%= entityInstancePlural %> = data;
-    }
-
-    private onError(error) {
-        console.error(error);
-        // todo: use toaster, this.jhiAlertService.error(error.message, null, null);
+            (response) => {
+                this.<%= entityInstancePlural %> = response;
+                if (typeof(refresher) !== 'undefined') {
+                    refresher.complete();
+                }
+            },
+            (error) => {
+                console.error(error);
+                let toast = this.toastCtrl.create({message: 'Failed to load data', duration: 2000, position: 'middle'});
+                toast.present();
+            });
     }
 
     trackId(index: number, item: <%= entityAngularName %>) {
