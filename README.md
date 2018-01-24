@@ -35,7 +35,7 @@ npm update -g generator-jhipster-ionic
 
 # Usage
 
-Create a JHipster app using `yo jhipster`, or a backend-only with `yo jhipster:server`. Choose `JWT` as the authentication type since that's the only one supported at this time.
+Create a JHipster app using `yo jhipster`, or a backend-only with `yo jhipster:server`. Choose `JWT` or `OAuth 2.0` as the authentication type. 
 
 In a directory alongside your JHipster app, run this module. This will create an Ionic app for you and install the necessary JHipster files for it to communicate with the backend.
 
