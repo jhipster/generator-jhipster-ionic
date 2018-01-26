@@ -24,7 +24,7 @@ let hasManyToMany = query.hasManyToMany;
 _%>
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
 import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
 import { <%= entityAngularName %>Service } from './<%= entityFileName %>.provider';
 <%_
@@ -63,7 +63,7 @@ export class <%= entityAngularName %>DialogPage {
 
     form: FormGroup;
 
-    constructor(public navCtrl: NavController, public viewCtrl: ViewController,
+    constructor(public navCtrl: NavController, public viewCtrl: ViewController, public toastCtrl: ToastController,
                 formBuilder: FormBuilder, params: NavParams,
     <%_ Object.keys(differentRelationships).forEach(key => {
             if (differentRelationships[key].some(rel => rel.relationshipType !== 'one-to-many')) {
@@ -115,7 +115,7 @@ export class <%= entityAngularName %>DialogPage {
     ionViewDidLoad() {
     <%_ for (idx in queries) {
         if (queries[idx].indexOf('userService') > -1) { _%>
-        this.userService.findAll().subscribe(data => this.users = data);
+        this.userService.findAll().subscribe(data => this.users = data, (error) => this.onError(error));
         <%_ } else { _%>
         <%- queries[idx] %>
     <%_ } } _%>
@@ -135,6 +135,12 @@ export class <%= entityAngularName %>DialogPage {
     done() {
         if (!this.form.valid) { return; }
         this.viewCtrl.dismiss(this.form.value);
+    }
+
+    onError(error) {
+        console.error(error);
+        let toast = this.toastCtrl.create({message: 'Failed to load data', duration: 2000, position: 'middle'});
+        toast.present();
     }
 
     <%_

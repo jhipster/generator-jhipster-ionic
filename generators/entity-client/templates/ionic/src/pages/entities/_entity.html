@@ -29,7 +29,7 @@
 </ion-header>
 <!-- todo: add elasticsearch support -->
 <ion-content padding>
-    <ion-refresher *ngIf="<%=entityInstancePlural %>.length" (ionRefresh)="loadAll($event)">
+    <ion-refresher (ionRefresh)="loadAll($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
