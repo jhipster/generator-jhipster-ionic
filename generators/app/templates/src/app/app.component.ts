@@ -6,7 +6,7 @@ import { Config, Nav, Platform } from 'ionic-angular';
 
 import { MainPage } from '../pages/pages';
 import { Settings } from '../providers/providers';
-import { JwksValidationHandler, OAuthService } from 'angular-oauth2-oidc';
+import { AuthConfig, JwksValidationHandler, OAuthService } from 'angular-oauth2-oidc';
 import { Api } from '../providers/api/api';
 
 @Component({
@@ -58,20 +58,31 @@ export class MyApp {
     }
 
     initAuthentication() {
-        // Try to get the oauth settings from the server
-        this.api.get('auth-info').subscribe((data: any) => {
-                data.redirectUri = 'http://localhost:8100';
-                this.oauthService.configure(data);
-                this.tryLogin();
-            }, error => {
-                console.error('ERROR fetching authentication information, defaulting to Keycloak settings');
-                this.oauthService.redirectUri = 'http://localhost:8100';
-                this.oauthService.clientId = 'web_app';
-                this.oauthService.scope = 'openid profile email';
-                this.oauthService.issuer = 'http://localhost:9080/auth/realms/jhipster';
-                this.tryLogin();
-            }
-        );
+        const AUTH_CONFIG: string = 'authConfig';
+        // use local storage to optimize authentication config
+        if (localStorage.getItem(AUTH_CONFIG)) {
+            const authConfig: AuthConfig = JSON.parse(localStorage.getItem(AUTH_CONFIG));
+            this.oauthService.configure(authConfig);
+            localStorage.removeItem(AUTH_CONFIG);
+            this.tryLogin();
+        } else {
+            // Try to get the oauth settings from the server
+            this.api.get('auth-info').subscribe((data: any) => {
+                    data.redirectUri = 'http://localhost:8100';
+                    // save in localStorage so redirect back gets config immediately
+                    localStorage.setItem(AUTH_CONFIG, JSON.stringify(data));
+                    this.oauthService.configure(data);
+                    this.tryLogin();
+                }, error => {
+                    console.error('ERROR fetching authentication information, defaulting to Keycloak settings');
+                    this.oauthService.redirectUri = 'http://localhost:8100';
+                    this.oauthService.clientId = 'web_app';
+                    this.oauthService.scope = 'openid profile email';
+                    this.oauthService.issuer = 'http://localhost:9080/auth/realms/jhipster';
+                    this.tryLogin();
+                }
+            );
+        }
     }
 
     tryLogin() {
