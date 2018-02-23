@@ -4,7 +4,9 @@
 
 # Introduction
 
-This is a [JHipster](http://www.jhipster.tech/) module. You can use it to generate an Ionic app that talks to a JHipster backend. It uses the [Ionic JHipster Starter](https://github.com/oktadeveloper/ionic-jhipster-starter) as a base template, then applies functionality (e.g. entity generation) on top of it.
+This is a [JHipster](http://www.jhipster.tech/) module. You can use it to generate an Ionic app that talks to a JHipster backend. It uses the [Ionic JHipster Starter](https://github.com/oktadeveloper/ionic-jhipster-starter) as a base template, then applies functionality (e.g. entity generation) on top of it. 
+
+To learn more about this module, see [Use Ionic for JHipster to Create Mobile Apps with OIDC Authentication](https://developer.okta.com/blog/2018/01/30/jhipster-ionic-with-oidc-authentication).
 
 # Prerequisites
 
