@@ -23,16 +23,16 @@
     "url": "git+https://github.com/oktadeveloper/generator-jhipster-ionic.git"
   },
   "dependencies": {
-    "chalk": "2.1.0",
+    "chalk": "2.3.2",
     "cross-spawn": "^5.1.0",
     "generator-jhipster": ">=4.13.3",
     "jsonfile": "^4.0.0",
     "mkdirp": "0.5.1",
     "modify-package-dependencies": "^1.0.0",
-    "semver": "5.3.0",
-    "shelljs": "0.5.3",
+    "semver": "5.5.0",
+    "shelljs": "0.8.1",
     "yeoman-environment": "2.0.5",
-    "yeoman-generator": "2.0.1"
+    "yeoman-generator": "2.0.3"
   },
   "devDependencies": {
     "chai": "4.1.2",
