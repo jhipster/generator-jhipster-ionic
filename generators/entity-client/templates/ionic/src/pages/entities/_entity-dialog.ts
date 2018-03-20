@@ -1,5 +1,5 @@
 <%#
- Copyright 2013-2017 the original author or authors from the JHipster project.
+ Copyright 2013-2018 the original author or authors from the JHipster project.
 
  This file is part of the JHipster project, see http://www.jhipster.tech/
  for more information.
@@ -84,7 +84,7 @@ export class <%= entityAngularName %>DialogPage {
         }
 
         this.form = formBuilder.group({
-            id: [params.get('item') ? this.<%= entityInstance %>.id : ''],
+            id: [params.get('item') ? this.<%= entityInstance %>.id : null],
         <%_ for (idx in fields) {
             const fieldName = fields[idx].fieldName;
             const fieldNameCapitalized = fields[idx].fieldNameCapitalized;

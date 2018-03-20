@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2017 the original author or authors from the JHipster project.
+ * Copyright 2013-2018 the original author or authors from the JHipster project.
  *
  * This file is part of the JHipster project, see http://www.jhipster.tech/
  * for more information.
@@ -70,7 +70,7 @@ module.exports = class extends BaseGenerator {
 
         const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster`;
         this.log(`\nCreating Ionic app with command: ${chalk.green(`${cmd}`)}`);
-        spawn.sync('ionic', ['start', this.ionicAppName, 'oktadeveloper/jhipster'], {stdio: 'inherit'});
+        spawn.sync('ionic', ['start', this.ionicAppName, 'oktadeveloper/jhipster'], { stdio: 'inherit' });
     }
 
     install() {
@@ -92,7 +92,7 @@ module.exports = class extends BaseGenerator {
                 modifyPackage.add(packageJSON, ['angular-oauth2-oidc']).then((giddyup) => {
                     jsonfile.writeFileSync(packagePath, giddyup);
                     this.log('Installing dependencies...');
-                    shelljs.exec(`cd ${this.ionicAppName} && npm i --color=always`, {silent: false}, (code) => {
+                    shelljs.exec(`cd ${this.ionicAppName} && npm i --color=always`, { silent: false }, (code) => {
                         if (code === 0) {
                             done();
                         } else {
@@ -124,9 +124,11 @@ module.exports = class extends BaseGenerator {
 
             this.template(`${SERVER_MAIN_SRC_DIR}package/web/rest/AuthInfoResource.java`, `${this.directoryPath}/${JAVA_DIR}web/rest/AuthInfoResource.java`);
             // Update security configuration to allow /api/auth-info
-            this.replaceContent(`${this.directoryPath}/${JAVA_DIR}config/${securityConfigFile}.java`,
+            this.replaceContent(
+                `${this.directoryPath}/${JAVA_DIR}config/${securityConfigFile}.java`,
                 '("/api/profile-info")',
-                '("/api/auth-info", "/api/profile-info")');
+                '("/api/auth-info", "/api/profile-info")'
+            );
 
             // Update Ionic files to work with OAuth
             this.template('src/app/app.component.ts', `${CLIENT_MAIN_SRC_DIR}app/app.component.ts`);

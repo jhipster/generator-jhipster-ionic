@@ -1,5 +1,5 @@
 <%#
- Copyright 2013-2017 the original author or authors from the JHipster project.
+ Copyright 2013-2018 the original author or authors from the JHipster project.
 
  This file is part of the JHipster project, see http://www.jhipster.tech/
  for more information.
@@ -31,7 +31,7 @@ import { <%= entityAngularName %>Service } from './<%= entityFileName %>.provide
 export class <%= entityAngularName %>DetailPage {
     <%= entityInstance %>: <%= entityAngularName %>;
 
-    constructor(private modalCtrl: ModalController, private params: NavParams,
+    constructor(private modalCtrl: ModalController, params: NavParams,
                 private <%= entityInstance %>Service: <%= entityAngularName %>Service, private toastCtrl: ToastController) {
         this.<%= entityInstance %> = new <%= entityAngularName %>();
         this.<%= entityInstance %>.id = params.get('id');
