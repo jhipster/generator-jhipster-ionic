@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2017 the original author or authors from the JHipster project.
+ * Copyright 2013-2018 the original author or authors from the JHipster project.
  *
  * This file is part of the JHipster project, see http://www.jhipster.tech/
  * for more information.
@@ -82,6 +82,16 @@ function askForBackendJson() {
             context.useConfigurationFile = true;
             context.useBackendJson = true;
             this.loadEntityJson();
+
+            // this.loadEntityJson() has a gateway check, which won't work here, so simplify
+            if (context.useMicroserviceJson) {
+                context.microserviceName = context.fileData.microserviceName;
+                if (!context.microserviceName) {
+                    this.error(chalk.red('Microservice name for the entity is not found. Entity cannot be generated!'));
+                }
+                context.microserviceAppName = this.getMicroserviceAppName(context.microserviceName);
+                context.skipServer = true;
+            }
         }
         done();
     });

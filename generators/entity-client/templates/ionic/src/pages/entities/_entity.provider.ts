@@ -1,5 +1,5 @@
 <%#
- Copyright 2013-2017 the original author or authors from the JHipster project.
+ Copyright 2013-2018 the original author or authors from the JHipster project.
 
  This file is part of the JHipster project, see http://www.jhipster.tech/
  for more information.
@@ -34,7 +34,7 @@ import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
 
 @Injectable()
 export class <%= entityAngularName %>Service {
-    private resourceUrl = Api.API_URL + '/<%= entityApiUrl %>';
+    private resourceUrl = Api.API_URL<% if (locals.microserviceName) { %>.replace('api', '<%= microserviceName.toLowerCase() %>/api')<% } %> + '/<%= entityApiUrl %>';
 
     constructor(private http: HttpClient) { }
     <%_ if (entityAngularName.length <= 30) { _%>
