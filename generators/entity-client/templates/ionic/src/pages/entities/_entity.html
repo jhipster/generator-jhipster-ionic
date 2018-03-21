@@ -64,7 +64,7 @@
               <%_ } _%>
             </button>
             <ion-item-options>
-                <button ion-button color="primary" (click)="open(slidingItem, blog)">
+                <button ion-button color="primary" (click)="open(slidingItem, <%=entityInstance %>)">
                     {{ 'EDIT_BUTTON' | translate }}
                 </button>
                 <button ion-button color="danger" (click)="delete(<%=entityInstance %>)">
