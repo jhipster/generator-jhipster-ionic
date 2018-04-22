@@ -32,7 +32,7 @@
             <ion-label><%= fields[idx].fieldNameHumanized %></ion-label>
             <div item-content>
                 <%_ if (fields[idx].fieldIsEnum) { _%>
-                <span{{<%= entityInstance %>.<%= fieldName %>}}</span>
+                <span>{{<%= entityInstance %>.<%= fieldName %>}}</span>
                 <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'image') { _%>
                 <div *ngIf="<%= entityInstance %>.<%= fieldName %>">
                     <a (click)="openFile(<%= entityInstance %>.<%= fieldName %>ContentType, <%= entityInstance %>.<%= fieldName %>)">
