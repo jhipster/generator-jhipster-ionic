@@ -31,7 +31,7 @@
     "travis": true,
     "messageBroker": false,
     "serviceDiscoveryType": false,
-    "clientPackageManager": "yarn",
+    "clientPackageManager": "npm",
     "clientFramework": "angularX"
   }
 }
