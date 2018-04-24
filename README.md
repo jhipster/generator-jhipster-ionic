@@ -47,7 +47,23 @@ yo jhipster-ionic
 
 # Entity Generator
 
-To generate entities, run `yo jhipster-ionic:entity <name>`. 
+To generate entities, run `yo jhipster-ionic:entity <name>`.
+
+# Testing
+
+You can run unit tests with:
+
+```
+npm test
+```
+
+And e2e tests with:
+
+```
+npm run build --prod && npm run e2e
+```
+
+See the [testing section](https://github.com/oktadeveloper/ionic-jhipster-starter#testing) of the Ionic JHipster Starter for more information.
 
 # Contributing
 
@@ -55,7 +71,7 @@ Please read our [guidelines](/CONTRIBUTING.md#submitting-an-issue) before submit
 
 # License
 
-Apache-2.0 © [Matt Raible](https://developer.okta.com)
+Apache-2.0 © [Okta](https://developer.okta.com)
 
 [npm-image]: https://img.shields.io/npm/v/generator-jhipster-ionic.svg
 [npm-url]: https://npmjs.org/package/generator-jhipster-ionic
