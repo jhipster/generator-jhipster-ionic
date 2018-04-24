@@ -4,10 +4,10 @@ set -e
 #-------------------------------------------------------------------------------
 # Force no insight
 #-------------------------------------------------------------------------------
-#if [ "$APP_FOLDER" == "$HOME/backend" ]; then
-#    mkdir -p "$HOME"/.config/configstore/
-#    cp "$JHIPSTER_TRAVIS"/configstore/*.json "$HOME"/.config/configstore/
-#fi
+if [ "$APP_FOLDER" == "$HOME/backend" ]; then
+    mkdir -p "$HOME"/.config/configstore/
+    cp "$JHIPSTER_TRAVIS"/configstore/*.json "$HOME"/.config/configstore/
+fi
 
 #-------------------------------------------------------------------------------
 # Generate the project with jhipster

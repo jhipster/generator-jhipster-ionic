@@ -27,6 +27,5 @@
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "clientRootFolder": "",
-    "applications": "*",
-    "microserviceName": "blog"
+    "applications": "*"
 }
