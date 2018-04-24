@@ -4,20 +4,19 @@ set -e
 #-------------------------------------------------------------------------------
 # Force no insight
 #-------------------------------------------------------------------------------
-mkdir -p "$HOME"/.config/configstore/
-mv "$JHIPSTER_TRAVIS"/configstore/*.json "$HOME"/.config/configstore/
+if [ "$APP_FOLDER" == "$HOME/backend" ]; then
+    mkdir -p "$HOME"/.config/configstore/
+    cp "$JHIPSTER_TRAVIS"/configstore/*.json "$HOME"/.config/configstore/
+fi
 
 #-------------------------------------------------------------------------------
-# Generate the project with yo jhipster
+# Generate the project with jhipster
 #-------------------------------------------------------------------------------
-
 mkdir -p "$APP_FOLDER"
-mv -f "$JHIPSTER_SAMPLES"/"$JHIPSTER"/.yo-rc.json "$APP_FOLDER"/
+cp -f "$JHIPSTER_SAMPLES"/"$JHIPSTER"/.yo-rc.json "$APP_FOLDER"/
 cd "$APP_FOLDER"
-# Generate the project
-jhipster --force --no-insight --with-entities
+jhipster --force --no-insight --skip-checks --with-entities --skip-git --skip-commit-hook
 ls -al "$APP_FOLDER"
-npm link generator-jhipster
 
 #-------------------------------------------------------------------------------
 # Generate an Ionic app with yo jhipster-ionic
