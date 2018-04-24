@@ -16,7 +16,7 @@ mv -f "$JHIPSTER_SAMPLES"/"$JHIPSTER"/.yo-rc.json "$APP_FOLDER"/
 cd "$APP_FOLDER"
 npm link generator-jhipster
 # Generate the project
-jhipster --force --no-insight --skip-checks --with-entities --debug
+jhipster --force --no-insight --with-entities
 ls -al "$APP_FOLDER"
 
 #-------------------------------------------------------------------------------
