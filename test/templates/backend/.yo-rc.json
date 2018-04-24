@@ -1,36 +1,40 @@
 {
-  "generator-jhipster": {
-    "promptValues": {
-      "packageName": "com.mycompany.myapp",
-      "nativeLanguage": "en"
-    },
-    "baseName": "sampleMysql",
-    "packageName": "com.mycompany.myapp",
-    "packageFolder": "com/mycompany/myapp",
-    "serverPort": "8080",
-    "authenticationType": "jwt",
-    "hibernateCache": "ehcache",
-    "clusteredHttpSession": false,
-    "websocket": false,
-    "databaseType": "sql",
-    "devDatabaseType": "h2Disk",
-    "prodDatabaseType": "mysql",
-    "searchEngine": false,
-    "messageBroker": false,
-    "serviceDiscoveryType": false,
-    "buildTool": "maven",
-    "enableSocialSignIn": false,
-    "jwtSecretKey": "0dd28f2f65d1860f1068b9fbefb3973c54f22f7a",
-    "clientFramework": "angular2",
-    "useSass": false,
-    "clientPackageManager": "yarn",
-    "applicationType": "monolith",
-    "testFrameworks": [],
-    "jhiPrefix": "jhi",
-    "enableTranslation": true,
-    "nativeLanguage": "en",
-    "languages": [
-      "en"
-    ]
-  }
+    "generator-jhipster": {
+        "promptValues": {
+            "packageName": "com.okta.developer",
+            "nativeLanguage": "en"
+        },
+        "jhipsterVersion": "5.0.0-beta.0",
+        "baseName": "backend",
+        "reactive": false,
+        "packageName": "com.okta.developer",
+        "packageFolder": "com/okta/developer",
+        "serverPort": "8080",
+        "authenticationType": "jwt",
+        "cacheProvider": "ehcache",
+        "enableHibernateCache": true,
+        "websocket": false,
+        "databaseType": "sql",
+        "devDatabaseType": "h2Disk",
+        "prodDatabaseType": "mysql",
+        "searchEngine": false,
+        "messageBroker": false,
+        "serviceDiscoveryType": false,
+        "buildTool": "maven",
+        "enableSwaggerCodegen": false,
+        "jwtSecretKey": "812296929ed3a9243f29e7bd0829e89d7760a2e2",
+        "clientFramework": "angularX",
+        "useSass": false,
+        "clientPackageManager": "yarn",
+        "applicationType": "monolith",
+        "testFrameworks": [
+            "protractor"
+        ],
+        "jhiPrefix": "jhi",
+        "enableTranslation": true,
+        "nativeLanguage": "en",
+        "languages": [
+            "en"
+        ]
+    }
 }
