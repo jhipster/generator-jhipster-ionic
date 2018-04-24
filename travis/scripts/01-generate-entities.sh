@@ -6,7 +6,7 @@ set -e
 #-------------------------------------------------------------------------------
 moveEntity() {
     local entity="$1"
-    cp "$JHIPSTER_SAMPLES"/.jhipster/"$entity".json "$HOME"/app/.jhipster/
+    cp "$JHIPSTER_SAMPLES"/.jhipster/"$entity".json "$APP_FOLDER"/.jhipster/
 }
 
 #-------------------------------------------------------------------------------
