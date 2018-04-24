@@ -29,7 +29,7 @@
         const fieldType = fields[idx].fieldType;
         const fieldTypeBlobContent = fields[idx].fieldTypeBlobContent; _%>
         <ion-item>
-            <ion-label><%= fields[idx].fieldNameHumanized %></ion-label>
+            <ion-label fixed><%= fields[idx].fieldNameHumanized %></ion-label>
             <div item-content>
                 <%_ if (fields[idx].fieldIsEnum) { _%>
                 <span>{{<%= entityInstance %>.<%= fieldName %>}}</span>

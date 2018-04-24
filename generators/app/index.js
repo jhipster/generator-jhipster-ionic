@@ -59,7 +59,7 @@ module.exports = class extends BaseGenerator {
 
         const currentJhipsterVersion = this.jhipsterAppConfig.jhipsterVersion;
         const minimumJhipsterVersion = packagejs.dependencies['generator-jhipster'];
-        if (!semver.satisfies(currentJhipsterVersion, minimumJhipsterVersion)) {
+        if (!currentJhipsterVersion.includes('5.0.0-beta') && !semver.satisfies(currentJhipsterVersion, minimumJhipsterVersion)) {
             this.error(`\nYour backend uses an old JHipster version (${currentJhipsterVersion})... you need at least (${minimumJhipsterVersion})\n`);
         }
 
@@ -89,7 +89,8 @@ module.exports = class extends BaseGenerator {
         modifyPackage.addDev(packageJSON, devDependencies)
             .then((dependencies) => {
                 jsonfile.writeFileSync(packagePath, dependencies);
-                modifyPackage.add(packageJSON, ['angular-oauth2-oidc']).then((giddyup) => {
+                const extraDeps = (this.jhipsterAppConfig.authenticationType === 'oauth2') ? ['angular-oauth2-oidc'] : [];
+                modifyPackage.add(packageJSON, extraDeps).then((giddyup) => {
                     jsonfile.writeFileSync(packagePath, giddyup);
                     this.log('Installing dependencies...');
                     shelljs.exec(`cd ${this.ionicAppName} && npm i --color=always`, { silent: false }, (code) => {
@@ -191,9 +192,10 @@ module.exports = class extends BaseGenerator {
         this.log(`${chalk.green(`    cd ${this.ionicAppName} && ionic serve`)}\n`);
 
         let portWarning = `${chalk.red('WARNING:')} The emulator runs on port 8080, so you will need to change your `;
-        portWarning += `backend to run on a different port (e.g., 9080) when running ${chalk.green('ionic cordova emulate')}. `;
-        portWarning += 'Port 8080 is specified in the following files:\n\n';
+        portWarning += `backend to run on a different port (e.g., 8888) when running ${chalk.green('ionic cordova emulate')}. `;
+        portWarning += 'Port 8888 is specified in the following files:\n\n';
         portWarning += chalk.yellow(`    ${this.directoryPath}/src/main/resources/config/application-dev.yml\n`);
+        portWarning += chalk.yellow(`    ${this.directoryPath}/webpack/webpack.dev.js\n`);
         portWarning += chalk.yellow(`    ${this.ionicAppName}/src/providers/api/api.ts\n`);
         this.log(portWarning);
     }

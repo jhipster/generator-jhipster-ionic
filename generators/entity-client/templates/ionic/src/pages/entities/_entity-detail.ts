@@ -18,11 +18,15 @@
 -%>
 import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavParams, ToastController } from 'ionic-angular';
+<%_ if (fieldsContainBlob) { _%>
+import { JhiDataUtils } from 'ng-jhipster';
+<%_ } _%>
 import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
 import { <%= entityAngularName %>Service } from './<%= entityFileName %>.provider';
 
 @IonicPage({
-    segment: '<%= entityFileName %>-detail/:id'
+    segment: '<%= entityFileName %>-detail/:id',
+    defaultHistory: ['EntityPage', '<%= entityFileName %>Page']
 })
 @Component({
     selector: 'page-<%= entityFileName %>-detail',
@@ -31,7 +35,7 @@ import { <%= entityAngularName %>Service } from './<%= entityFileName %>.provide
 export class <%= entityAngularName %>DetailPage {
     <%= entityInstance %>: <%= entityAngularName %>;
 
-    constructor(private modalCtrl: ModalController, params: NavParams,
+    constructor(<% if (fieldsContainBlob) { %>private dataUtils: JhiDataUtils, <% } %>private modalCtrl: ModalController, params: NavParams,
                 private <%= entityInstance %>Service: <%= entityAngularName %>Service, private toastCtrl: ToastController) {
         this.<%= entityInstance %> = new <%= entityAngularName %>();
         this.<%= entityInstance %>.id = params.get('id');
@@ -55,4 +59,14 @@ export class <%= entityAngularName %>DetailPage {
         });
         modal.present();
     }
+
+    <%_ if (fieldsContainBlob) { _%>
+    byteSize(field) {
+        return this.dataUtils.byteSize(field);
+    }
+
+    openFile(contentType, field) {
+        return this.dataUtils.openFile(contentType, field);
+    }
+    <%_ } _%>
 }

@@ -32,10 +32,10 @@ _%>
         </ion-buttons>
         <ion-buttons end>
             <button ion-button (click)="done()" [disabled]="!isReadyToSave" strong>
-            <span color="primary" showWhen="ios">
-              {{ 'DONE_BUTTON' | translate }}
-            </span>
-            <ion-icon name="md-checkmark" showWhen="core,android,windows"></ion-icon>
+                <span color="primary" showWhen="ios">
+                    {{ 'DONE_BUTTON' | translate }}
+                </span>
+                <ion-icon name="md-checkmark" showWhen="core,android,windows"></ion-icon>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -79,6 +79,31 @@ _%>
                         <ion-option value="<%= value %>"><% if (enableTranslation) { %>{{'<%=enumPrefix%>.<%=value%>' | translate}}<% } else { %><%=value%><% } %></ion-option>
                     <%_ } _%>
                 </ion-select>
+                <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent !== 'text') { _%>
+                <div>
+                    <%_ if (fieldTypeBlobContent === 'image') { _%>
+                    <img [src]="'data:' + <%=entityInstance %>.<%=fieldName%>ContentType + ';base64,' + <%=entityInstance %>.<%=fieldName%>" style="max-height: 100px;" *ngIf="<%= entityInstance %>?.<%= fieldName %>" alt="<%=entityInstance %> image"/>
+                    <%_ } _%>
+                    <div *ngIf="<%= entityInstance %>.<%= fieldName %>">
+                        <p>{{<%= entityInstance %>.<%= fieldName %>ContentType}}, {{byteSize(<%= entityInstance %>.<%= fieldName %>)}}</p>
+                        <%_ if (fieldTypeBlobContent === 'image') { _%>
+                        <button type="button" class="trash" (click)="clearInputImage('<%= fieldName %>', '<%= fieldName %>ContentType', 'fileImage')">
+                            <ion-icon name="trash"></ion-icon>
+                        </button>
+                        <%_ } else { _%>
+                        <button type="button" class="trash" (click)="<%= entityInstance %>.<%= fieldName %>=null;<%= entityInstance %>.<%= fieldName %>ContentType=null;">
+                            <ion-icon name="trash"></ion-icon>
+                        </button>
+                        <%_ } _%>
+                    </div>
+                    <input type="file" #fileInput style="display: none" (change)="setFileData($event, <%= entityInstance %>, '<%= fieldName %>', <% if (fieldTypeBlobContent === 'image') { %>true)" accept="image/*"<% } else { %>false)"<% } %>/>
+                    <%_ if (fieldTypeBlobContent === 'image') { _%>
+                    <div *ngIf="!<%= entityInstance %>?.<%= fieldName %>" (click)="getPicture('<%= fieldName %>')" ion-button icon-start>
+                        <ion-icon name="add-circle"></ion-icon>
+                        {{ 'ITEM_CREATE_CHOOSE_IMAGE' | translate }}
+                    </div>
+                    <%_ } _%>
+                </div>
                 <%_ } else if (fieldType === 'LocalDate' || ['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
                 <ion-label><%= fieldNameHumanized %></ion-label>
                 <ion-datetime displayFormat="MM/DD/YYYY" formControlName="<%= fieldName %>" id="field_<%= fieldName %>"></ion-datetime>

@@ -22,7 +22,13 @@ const queries = query.queries;
 const variables = query.variables;
 let hasManyToMany = query.hasManyToMany;
 _%>
-import { Component } from '@angular/core';
+import { Component<% if (fieldsContainImageBlob) { %>, ElementRef, ViewChild<% } %> } from '@angular/core';
+<%_ if (fieldsContainBlob) { _%>
+import { JhiDataUtils } from 'ng-jhipster';
+<%_ } _%>
+<%_ if (fieldsContainImageBlob) { _%>
+import { Camera, CameraOptions } from '@ionic-native/camera';
+<%_ } _%>
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
 import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
@@ -59,12 +65,28 @@ export class <%= entityAngularName %>DialogPage {
     <%_ for (const idx in variables) { _%>
     <%- variables[idx] %>
     <%_ } _%>
+    <%_ if (fieldsContainImageBlob) { _%>
+    @ViewChild('fileInput') fileInput;
+    cameraOptions: CameraOptions;
+    <%_ } _%>
+    <%_ for ( idx in fields ) {
+        const fieldName = fields[idx].fieldName;
+        const fieldType = fields[idx].fieldType;
+        if ( fieldType === 'LocalDate' ) { _%>
+    <%= fieldName %>Dp: any;
+        <%_ } else if ( ['Instant', 'ZonedDateTime'].includes(fieldType) ) { _%>
+    <%= fieldName %>: string;
+        <%_ } _%>
+    <%_ } _%>
     isReadyToSave: boolean;
 
     form: FormGroup;
 
     constructor(public navCtrl: NavController, public viewCtrl: ViewController, public toastCtrl: ToastController,
                 formBuilder: FormBuilder, params: NavParams,
+                <%_ if (fieldsContainBlob) { _%>
+                private dataUtils: JhiDataUtils, <% } %><% if (fieldsContainImageBlob) { %>private elementRef: ElementRef, private camera: Camera,
+                <%_ } _%>
     <%_ Object.keys(differentRelationships).forEach(key => {
             if (differentRelationships[key].some(rel => rel.relationshipType !== 'one-to-many')) {
                 const uniqueRel = differentRelationships[key][0];
@@ -81,6 +103,8 @@ export class <%= entityAngularName %>DialogPage {
             this.<%= entityInstance %>Service.find(this.<%= entityInstance %>.id).subscribe(data => {
                 this.<%= entityInstance %> = data;
             });
+        } else {
+            this.<%= entityInstance %> = new <%= entityAngularName %>();
         }
 
         this.form = formBuilder.group({
@@ -92,6 +116,9 @@ export class <%= entityAngularName %>DialogPage {
             const fieldType = fields[idx].fieldType;
         _%>
             <%= fieldName %>: [params.get('item') ? this.<%= entityInstance %>.<%= fieldName %> : '', <% if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.indexOf('required') !== -1) { %> Validators.required<% } %>],
+            <%_ if (['byte[]', 'ByteBuffer'].includes(fieldType) && fields[idx].fieldTypeBlobContent !== 'text') { _%>
+            <%= fieldName %>ContentType: [params.get('item') ? this.<%= entityInstance %>.<%= fieldName %>ContentType : ''],
+            <%_ } _%>
         <%_ } _%>
     <%_ Object.keys(differentRelationships).forEach(key => {
         if (differentRelationships[key].some(rel => rel.relationshipType !== 'one-to-many')) {
@@ -110,6 +137,21 @@ export class <%= entityAngularName %>DialogPage {
         this.form.valueChanges.subscribe((v) => {
             this.isReadyToSave = this.form.valid;
         });
+
+        <%_ if (fieldsContainImageBlob) { _%>
+        // Set the Camera options
+        this.cameraOptions = {
+            quality: 100,
+            targetWidth: 900,
+            targetHeight: 600,
+            destinationType: this.camera.DestinationType.DATA_URL,
+            encodingType: this.camera.EncodingType.JPEG,
+            mediaType: this.camera.MediaType.PICTURE,
+            saveToPhotoAlbum: false,
+            allowEdit: true,
+            sourceType: 1
+        };
+        <%_ } _%>
     }
 
     ionViewDidLoad() {
@@ -143,7 +185,56 @@ export class <%= entityAngularName %>DialogPage {
         toast.present();
     }
 
-    <%_
+    <%_ if (fieldsContainBlob) { _%>
+    byteSize(field) {
+        return this.dataUtils.byteSize(field);
+    }
+
+    openFile(contentType, field) {
+        return this.dataUtils.openFile(contentType, field);
+    }
+
+    setFileData(event, entity, field, isImage) {
+        this.dataUtils.setFileData(event, entity, field, isImage);
+        <% if (fieldsContainImageBlob) { %>this.processWebImage(event, field);<% } %>
+    }
+
+    <%_ } if (fieldsContainImageBlob) { _%>
+    getPicture(fieldName) {
+        if (Camera['installed']()) {
+            this.camera.getPicture(this.cameraOptions).then((data) => {
+                this.<%= entityInstance %>[fieldName] = data;
+                this.<%= entityInstance %>[fieldName + 'ContentType'] = 'image/jpeg';
+                this.form.patchValue({ [fieldName]: 'data:image/jpg;base64,' + data });
+                this.form.patchValue({ [fieldName + 'ContentType']: 'image/jpeg' });
+            }, (err) => {
+                alert('Unable to take photo');
+            })
+        } else {
+            this.fileInput.nativeElement.click();
+        }
+    }
+
+    processWebImage(event, fieldName) {
+        let reader = new FileReader();
+        reader.onload = (readerEvent) => {
+
+            let imageData = (readerEvent.target as any).result;
+            const imageType = event.target.files[0].type;
+            imageData = imageData.substring(imageData.indexOf(',') + 1);
+
+            this.form.patchValue({ [fieldName]: imageData });
+            this.form.patchValue({ [fieldName + 'ContentType']: imageType });
+        };
+
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+    clearInputImage(field: string, fieldContentType: string, idInput: string) {
+        this.dataUtils.clearInputImage(this.<%= entityInstance %>, this.elementRef, field, fieldContentType, idInput);
+        this.form.patchValue( {[field]: ''} );
+    }
+    <%_ }
     const entitiesSeen = [];
     for (idx in relationships) {
         const otherEntityNameCapitalized = relationships[idx].otherEntityNameCapitalized;
