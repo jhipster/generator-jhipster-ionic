@@ -27,6 +27,7 @@ const modifyPackage = require('modify-package-dependencies');
 const spawn = require('cross-spawn');
 const fs = require('fs');
 const constants = require('generator-jhipster/generators/generator-constants');
+const utils = require('./utils');
 
 module.exports = class extends BaseGenerator {
     constructor(args, opts) {
@@ -91,7 +92,7 @@ module.exports = class extends BaseGenerator {
                 validate: (input) => {
                     const path = this.destinationPath(input);
                     if (shelljs.test('-d', path)) {
-                        const appsFolders = this.getAppFolder.call(this, input);
+                        const appsFolders = utils.getAppFolder.call(this, input);
                         if (appsFolders.length === 0) {
                             return `No application found in ${path}`;
                         }
@@ -109,7 +110,6 @@ module.exports = class extends BaseGenerator {
             this.prompt(prompts).then((props) => {
                 this.ionicAppName = props.appName;
                 this.directoryPath = props.directoryPath;
-                this.appFolder = this.getAppFolder.call(this, this.directoryPath);
                 done();
             });
         }
@@ -141,7 +141,7 @@ module.exports = class extends BaseGenerator {
             params.push('--no-deps');
             params.push('--no-git');
         }
-        spawn.sync('ionic', params, {stdio: 'inherit'});
+        spawn.sync('ionic', params, { stdio: 'inherit' });
     }
 
     install() {
@@ -275,29 +275,5 @@ module.exports = class extends BaseGenerator {
         portWarning += chalk.yellow(`    ${this.directoryPath}/webpack/webpack.dev.js\n`);
         portWarning += chalk.yellow(`    ${this.ionicAppName}/src/providers/api/api.ts\n`);
         this.log(portWarning);
-    }
-
-    /**
-     * Get App Folders
-     * @param input path to join to destination path
-     * @returns {Array} array of string representing app folders
-     */
-    getAppFolder(input) {
-        const destinationPath = this.destinationPath(input);
-        const appsFolders = [];
-
-        if (shelljs.test('-f', `${destinationPath}/.yo-rc.json`)) {
-            try {
-                const fileData = this.fs.readJSON(`${destinationPath}/.yo-rc.json`);
-                if (fileData['generator-jhipster'].baseName !== undefined) {
-                    appsFolders.push(destinationPath);
-                }
-            } catch (err) {
-                this.log(chalk.red(`The .yo-rc.json in ${destinationPath} can't be read!`));
-                this.debug('Error:', err);
-            }
-        }
-
-        return appsFolders;
     }
 };
