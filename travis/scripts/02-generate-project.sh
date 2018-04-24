@@ -14,10 +14,10 @@ mv "$JHIPSTER_TRAVIS"/configstore/*.json "$HOME"/.config/configstore/
 mkdir -p "$APP_FOLDER"
 mv -f "$JHIPSTER_SAMPLES"/"$JHIPSTER"/.yo-rc.json "$APP_FOLDER"/
 cd "$APP_FOLDER"
-npm link generator-jhipster
 # Generate the project
 jhipster --force --no-insight --with-entities
 ls -al "$APP_FOLDER"
+npm link generator-jhipster
 
 #-------------------------------------------------------------------------------
 # Generate an Ionic app with yo jhipster-ionic
