@@ -20,7 +20,7 @@ xdescribe('JHipster generator jhipster-generator-ionic', () => {
                 .on('end', done);
         });
 
-        it('generate package.json file', () => {
+        it('generates a package.json file', () => {
             assert.file([
                 'package.json'
             ]);
