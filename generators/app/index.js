@@ -59,7 +59,7 @@ module.exports = class extends BaseGenerator {
 
         const currentJhipsterVersion = this.jhipsterAppConfig.jhipsterVersion;
         const minimumJhipsterVersion = packagejs.dependencies['generator-jhipster'];
-        if (!semver.satisfies(currentJhipsterVersion, minimumJhipsterVersion)) {
+        if (!currentJhipsterVersion.includes('5.0.0-beta') && !semver.satisfies(currentJhipsterVersion, minimumJhipsterVersion)) {
             this.error(`\nYour backend uses an old JHipster version (${currentJhipsterVersion})... you need at least (${minimumJhipsterVersion})\n`);
         }
 

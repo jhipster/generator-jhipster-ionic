@@ -18,10 +18,15 @@
 -%>
 import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavController, ToastController } from 'ionic-angular';
+<%_ if (fieldsContainBlob) { _%>
+import { JhiDataUtils } from 'ng-jhipster';
+<%_ } _%>
 import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
 import { <%= entityAngularName %>Service } from './<%= entityFileName %>.provider';
 
-@IonicPage()
+@IonicPage({
+    defaultHistory: ['EntityPage']
+})
 @Component({
     selector: 'page-<%= entityFileName %>',
     templateUrl: '<%= entityFileName %>.html'
@@ -31,7 +36,7 @@ export class <%= entityAngularName %>Page {
 
     // todo: add pagination
 
-    constructor(private navCtrl: NavController, private <%= entityInstance %>Service: <%= entityAngularName %>Service,
+    constructor(<% if (fieldsContainBlob) { %>private dataUtils: JhiDataUtils, <%_ } _%>private navCtrl: NavController, private <%= entityInstance %>Service: <%= entityAngularName %>Service,
                 private modalCtrl: ModalController, private toastCtrl: ToastController) {
         this.<%= entityInstancePlural %> = [];
     }
@@ -58,6 +63,16 @@ export class <%= entityAngularName %>Page {
     trackId(index: number, item: <%= entityAngularName %>) {
         return item.id;
     }
+    <%_ if (fieldsContainBlob) { _%>
+
+    byteSize(field) {
+        return this.dataUtils.byteSize(field);
+    }
+
+    openFile(contentType, field) {
+        return this.dataUtils.openFile(contentType, field);
+    }
+    <%_ } _%>
 
     open(slidingItem: any, item: <%= entityAngularName %>) {
         let modal = this.modalCtrl.create('<%= entityAngularName %>DialogPage', {item: item});
