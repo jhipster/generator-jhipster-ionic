@@ -32,7 +32,6 @@ cd "$TRAVIS_BUILD_DIR"
 npm link generator-jhipster
 npm install
 npm link
-npm run lint
 
 #-------------------------------------------------------------------------------
 # Clone Ionic for JHipster
