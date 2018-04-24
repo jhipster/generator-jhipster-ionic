@@ -22,15 +22,6 @@ elif [ "$JHIPSTER_BRANCH" != "master" ]; then
     git checkout -b $JHIPSTER_BRANCH origin/$JHIPSTER_BRANCH
 fi
 git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-npm install
-npm link
-
-#-------------------------------------------------------------------------------
-# Install JHipster
-#-------------------------------------------------------------------------------
-cd "$TRAVIS_BUILD_DIR"
-npm link generator-jhipster
-npm install
 npm link
 
 #-------------------------------------------------------------------------------
@@ -46,5 +37,4 @@ elif [ "$IONIC4J_BRANCH" != "master" ]; then
     git checkout -b $IONIC4J_BRANCH origin/$IONIC4J_BRANCH
 fi
 git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-npm install
 npm link
