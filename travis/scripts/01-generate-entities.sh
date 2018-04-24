@@ -16,9 +16,9 @@ moveEntity() {
 rm -Rf "$APP_FOLDER"
 mkdir -p "$APP_FOLDER"/.jhipster/
 
-moveEntity Blog
-moveEntity Entry
-moveEntity Tag
-moveEntity Product
+    moveEntity Blog
+    moveEntity Entry
+    moveEntity Tag
+    moveEntity Product
 
 ls -l "$APP_FOLDER"/.jhipster/

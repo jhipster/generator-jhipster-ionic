@@ -22,6 +22,6 @@ ls -al "$APP_FOLDER"
 #-------------------------------------------------------------------------------
 # Generate an Ionic app with yo jhipster-ionic
 #-------------------------------------------------------------------------------
-cd $HOME
+cd "$HOME"
 yo jhipster-ionic default --force --no-insight
 
