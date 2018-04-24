@@ -15,6 +15,9 @@ set -e
 mkdir -p "$APP_FOLDER"
 cp -f "$JHIPSTER_SAMPLES"/"$JHIPSTER"/.yo-rc.json "$APP_FOLDER"/
 cd "$APP_FOLDER"
+echo "$APP_FOLDER"
+echo pwd
+ls -al .
 jhipster --force --no-insight --skip-checks --with-entities --skip-git --skip-commit-hook
 ls -al "$APP_FOLDER"
 
