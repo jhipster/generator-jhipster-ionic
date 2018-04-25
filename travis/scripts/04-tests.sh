@@ -9,11 +9,24 @@ npm i
 npm test
 
 #-------------------------------------------------------------------------------
+# Launch JHipster tests
+#-------------------------------------------------------------------------------
+cd "$APP_FOLDER"
+if [ -f "mvnw" ]; then
+    ./mvnw test \
+        -Dlogging.level.io.github.jhipster.sample=ERROR \
+        -Dlogging.level.io.github.jhipster.travis=ERROR
+elif [ -f "gradlew" ]; then
+    ./gradlew test \
+        -Dlogging.level.io.github.jhipster.sample=ERROR \
+        -Dlogging.level.io.github.jhipster.travis=ERROR
+fi
+
+npm test
+
+#-------------------------------------------------------------------------------
 # Launch Ionic tests
 #-------------------------------------------------------------------------------
-echo pwd
-echo "$IONIC_FOLDER"
 cd "$IONIC_FOLDER"
-ls -la
 npm test
-npm e2e
+npm run e2e
