@@ -29,4 +29,5 @@ npm test
 #-------------------------------------------------------------------------------
 cd "$IONIC_FOLDER"
 npm test
+npm run build --prod
 npm run e2e
