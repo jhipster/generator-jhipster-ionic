@@ -22,10 +22,8 @@ const packagejs = require('../../package.json');
 const semver = require('semver');
 const shelljs = require('shelljs');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
-const modifyPackage = require('modify-package-dependencies');
 const spawn = require('cross-spawn');
 const fs = require('fs');
-const path = require('path');
 const constants = require('generator-jhipster/generators/generator-constants');
 const utils = require('./utils');
 
