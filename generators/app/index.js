@@ -19,13 +19,13 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
 const packagejs = require('../../package.json');
-const jsonfile = require('jsonfile');
 const semver = require('semver');
 const shelljs = require('shelljs');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
 const modifyPackage = require('modify-package-dependencies');
 const spawn = require('cross-spawn');
 const fs = require('fs');
+const path = require('path');
 const constants = require('generator-jhipster/generators/generator-constants');
 const utils = require('./utils');
 
@@ -148,8 +148,13 @@ module.exports = class extends BaseGenerator {
         // update package.json in Ionic app
         const done = this.async();
         const packagePath = `${this.ionicAppName}/package.json`;
-        const packageJSON = this.fs.readJSON(packagePath);
-        const devDependencies = [`generator-jhipster-ionic@${packagejs.version}`];
+        const devDependencies = {
+            devDependencies: {
+                'generator-jhipster-ionic': packagejs.version
+            }
+        };
+        this.fs.extendJSON(packagePath, devDependencies);
+
         // todo: Don't install Inappbrowser if user said No to Cordova
         if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
             // install the inappbrowser plugin for implicit flow
@@ -158,27 +163,40 @@ module.exports = class extends BaseGenerator {
                 shelljs.exec(`cd ${this.ionicAppName} && ionic cordova plugin add cordova-plugin-inappbrowser`);
             }
         }
-        jsonfile.writeFileSync(packagePath, devDependencies);
-        // todo: modifyPackage runs `npm install`; figure out a better way to bypass for tests
+
+        if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
+            const dependencies = {
+                dependencies: {
+                    'angular-oauth2-oidc': '3.1.4',
+                    'cordova-plugin-browsertab': '0.2.0',
+                    'cordova-plugin-customurlscheme': '4.3.0'
+                }
+            };
+            this.fs.extendJSON(packagePath, dependencies);
+
+            // Update package.json to have config for custom url scheme
+            const customUrlScheme = {
+                cordova: {
+                    plugins: {
+                        'cordova-plugin-customurlscheme': {
+                            URL_SCHEME: 'ionic4j'
+                        }
+                    }
+                }
+            };
+            this.fs.extendJSON(packagePath, customUrlScheme);
+        }
+
         if (this.installDeps) {
-            modifyPackage.addDev(packageJSON, devDependencies)
-                .then((dependencies) => {
-                    jsonfile.writeFileSync(packagePath, dependencies);
-                    const extraDeps = (this.jhipsterAppConfig.authenticationType === 'oauth2') ?
-                        ['angular-oauth2-oidc@3.1.4', 'cordova-plugin-browsertab@0.2.0', 'cordova-plugin-customurlscheme@4.3.0']] : [];
-                    modifyPackage.add(packageJSON, extraDeps).then((giddyup) => {
-                        jsonfile.writeFileSync(packagePath, giddyup);
-                        this.log('Installing dependencies...');
-                        shelljs.exec(`cd ${this.ionicAppName} && npm i --color=always`, { silent: false }, (code) => {
-                            if (code === 0) {
-                                done();
-                            } else {
-                                this.warning(`Failed to run ${chalk.yellow('npm install')} in ${this.ionicAppName}!`);
-                                this.warning(`Please run it manually before running ${chalk.yellow('ionic serve')}`);
-                            }
-                        });
-                    });
-                });
+            this.log('Installing dependencies...');
+            shelljs.exec(`cd ${this.ionicAppName} && npm i --color=always`, { silent: false }, (code) => {
+                if (code === 0) {
+                    done();
+                } else {
+                    this.warning(`Failed to run ${chalk.yellow('npm install')} in ${this.ionicAppName}!`);
+                    this.warning(`Please run it manually before running ${chalk.yellow('ionic serve')}`);
+                }
+            });
         }
 
         // Copy server files to make API work with Ionic
@@ -207,23 +225,6 @@ module.exports = class extends BaseGenerator {
                 '("/api/profile-info")',
                 '("/api/auth-info", "/api/profile-info")'
             );
-
-            // Update package.json to have config for custom url scheme
-            const currentJSON = jsonfile.readFileSync(packagePath);
-            const customUrlScheme = {
-                cordova: {
-                    plugins: {
-                        'cordova-plugin-customurlscheme': {
-                            URL_SCHEME: 'ionic4j'
-                        }
-                    }
-                }
-            };
-            const updatedJson = {
-                ...currentJSON,
-                ...customUrlScheme
-            };
-            jsonfile.writeFileSync(packagePath, updatedJson);
 
             // Update Ionic files to work with OAuth
             this.template('src/app/app.component.ts', `${CLIENT_MAIN_SRC_DIR}app/app.component.ts`);
