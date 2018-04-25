@@ -23,15 +23,43 @@ const jsonfile = require('jsonfile');
 const semver = require('semver');
 const shelljs = require('shelljs');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
-const prompts = require('./prompts');
 const modifyPackage = require('modify-package-dependencies');
 const spawn = require('cross-spawn');
 const fs = require('fs');
 const constants = require('generator-jhipster/generators/generator-constants');
+const utils = require('./utils');
 
 module.exports = class extends BaseGenerator {
+    constructor(args, opts) {
+        super(args, opts);
+
+        this.configOptions = {};
+        // This adds support for a `--interactive` flag
+        this.option('interactive', {
+            desc: 'Don\'t prompt user when running ionic start',
+            type: Boolean,
+            defaults: true
+        });
+
+        // This adds support for a `--install` flag
+        this.option('installDeps', {
+            desc: 'Don\'t install dependencies when running ionic start',
+            type: Boolean,
+            defaults: true
+        });
+
+        this.interactive = this.options.interactive;
+        this.installDeps = this.options.installDeps;
+    }
+
     get initializing() {
         return {
+            init(args) {
+                if (args === 'default') {
+                    this.defaultApp = true;
+                    this.interactive = false;
+                }
+            },
             readConfig() {
                 this.jhipsterAppConfig = this.getJhipsterAppConfig();
             },
@@ -46,11 +74,45 @@ module.exports = class extends BaseGenerator {
         };
     }
 
-    get prompting() {
-        return {
-            askForProjectName: prompts.askForAppName,
-            askForPath: prompts.askForPath
-        };
+    prompting() {
+        const done = this.async();
+        const messageAskForPath = 'Enter the directory where your JHipster app is located:';
+        const prompts = [
+            {
+                type: 'input',
+                name: 'appName',
+                message: 'What do you want to name your Ionic application?',
+                default: 'ionic4j'
+            },
+            {
+                type: 'input',
+                name: 'directoryPath',
+                message: messageAskForPath,
+                default: 'backend',
+                validate: (input) => {
+                    const path = this.destinationPath(input);
+                    if (shelljs.test('-d', path)) {
+                        const appsFolders = utils.getAppFolder.call(this, input);
+                        if (appsFolders.length === 0) {
+                            return `No application found in ${path}`;
+                        }
+                        return true;
+                    }
+                    return `${path} is not a directory or doesn't exist`;
+                }
+            }];
+
+        if (this.defaultApp) {
+            this.ionicAppName = 'ionic4j';
+            this.directoryPath = 'backend';
+            done();
+        } else {
+            this.prompt(prompts).then((props) => {
+                this.ionicAppName = props.appName;
+                this.directoryPath = props.directoryPath;
+                done();
+            });
+        }
     }
 
     writing() {
@@ -68,9 +130,18 @@ module.exports = class extends BaseGenerator {
             this.error(`\nYour backend project must be a monolith or a gateway to work with this module! Found application type: ${applicationType}.\n`);
         }
 
-        const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster`;
+        const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster${(this.interactive) ? '' : ' --no-interactive'}`;
         this.log(`\nCreating Ionic app with command: ${chalk.green(`${cmd}`)}`);
-        spawn.sync('ionic', ['start', this.ionicAppName, 'oktadeveloper/jhipster'], { stdio: 'inherit' });
+        const params = ['start', this.ionicAppName, 'oktadeveloper/jhipster'];
+        if (!this.interactive) {
+            params.push('--no-interactive');
+            params.push('--quiet');
+        }
+        if (!this.installDeps) {
+            params.push('--no-deps');
+            params.push('--no-git');
+        }
+        spawn.sync('ionic', params, { stdio: 'inherit' });
     }
 
     install() {
@@ -83,28 +154,32 @@ module.exports = class extends BaseGenerator {
         if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
             // install the inappbrowser plugin for implicit flow
             this.log(`Adding Cordova's Inappbrowser plugin: ${chalk.green('ionic cordova plugin add cordova-plugin-inappbrowser')}`);
-            shelljs.exec(`cd ${this.ionicAppName} && ionic cordova plugin add cordova-plugin-inappbrowser`);
+            if (this.installDeps) {
+                shelljs.exec(`cd ${this.ionicAppName} && ionic cordova plugin add cordova-plugin-inappbrowser`);
+            }
         }
         jsonfile.writeFileSync(packagePath, devDependencies);
         // todo: modifyPackage runs `npm install`; figure out a better way to bypass for tests
-        modifyPackage.addDev(packageJSON, devDependencies)
-            .then((dependencies) => {
-                jsonfile.writeFileSync(packagePath, dependencies);
-                const extraDeps = (this.jhipsterAppConfig.authenticationType === 'oauth2') ?
-                    ['angular-oauth2-oidc@3.1.4', 'cordova-plugin-browsertab@0.2.0', 'cordova-plugin-customurlscheme@4.3.0'] : [];
-                modifyPackage.add(packageJSON, extraDeps).then((giddyup) => {
-                    jsonfile.writeFileSync(packagePath, giddyup);
-                    this.log('Installing dependencies...');
-                    shelljs.exec(`cd ${this.ionicAppName} && npm i --color=always`, { silent: false }, (code) => {
-                        if (code === 0) {
-                            done();
-                        } else {
-                            this.warning(`Failed to run ${chalk.yellow('npm install')} in ${this.ionicAppName}!`);
-                            this.warning(`Please run it manually before running ${chalk.yellow('ionic serve')}`);
-                        }
+        if (this.installDeps) {
+            modifyPackage.addDev(packageJSON, devDependencies)
+                .then((dependencies) => {
+                    jsonfile.writeFileSync(packagePath, dependencies);
+                    const extraDeps = (this.jhipsterAppConfig.authenticationType === 'oauth2') ?
+                        ['angular-oauth2-oidc@3.1.4', 'cordova-plugin-browsertab@0.2.0', 'cordova-plugin-customurlscheme@4.3.0']] : [];
+                    modifyPackage.add(packageJSON, extraDeps).then((giddyup) => {
+                        jsonfile.writeFileSync(packagePath, giddyup);
+                        this.log('Installing dependencies...');
+                        shelljs.exec(`cd ${this.ionicAppName} && npm i --color=always`, { silent: false }, (code) => {
+                            if (code === 0) {
+                                done();
+                            } else {
+                                this.warning(`Failed to run ${chalk.yellow('npm install')} in ${this.ionicAppName}!`);
+                                this.warning(`Please run it manually before running ${chalk.yellow('ionic serve')}`);
+                            }
+                        });
                     });
                 });
-            });
+        }
 
         // Copy server files to make API work with Ionic
         if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
@@ -174,6 +249,7 @@ module.exports = class extends BaseGenerator {
                 }
             });
         }
+        done();
     }
 
     deleteFile(path) {

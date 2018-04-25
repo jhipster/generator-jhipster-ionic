@@ -114,8 +114,12 @@ export class <%= entityAngularName %>DialogPage {
             const fieldNameCapitalized = fields[idx].fieldNameCapitalized;
             const fieldNameHumanized = fields[idx].fieldNameHumanized;
             const fieldType = fields[idx].fieldType;
-        _%>
+        _%> 
+            <%_ if (fieldType === 'Boolean') { _%>
+            <%= fieldName %>: [params.get('item') ? this.<%= entityInstance %>.<%= fieldName %> : 'false', <% if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.indexOf('required') !== -1) { %> Validators.required<% } %>],
+            <%_ } else { _%>
             <%= fieldName %>: [params.get('item') ? this.<%= entityInstance %>.<%= fieldName %> : '', <% if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.indexOf('required') !== -1) { %> Validators.required<% } %>],
+            <%_ } _%>
             <%_ if (['byte[]', 'ByteBuffer'].includes(fieldType) && fields[idx].fieldTypeBlobContent !== 'text') { _%>
             <%= fieldName %>ContentType: [params.get('item') ? this.<%= entityInstance %>.<%= fieldName %>ContentType : ''],
             <%_ } _%>

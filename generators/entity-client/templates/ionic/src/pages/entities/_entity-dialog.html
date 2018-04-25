@@ -107,6 +107,9 @@ _%>
                 <%_ } else if (fieldType === 'LocalDate' || ['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
                 <ion-label><%= fieldNameHumanized %></ion-label>
                 <ion-datetime displayFormat="MM/DD/YYYY" formControlName="<%= fieldName %>" id="field_<%= fieldName %>"></ion-datetime>
+                <%_ } else if (fieldType === 'Boolean') { _%>
+                <ion-label><%= fieldNameHumanized %></ion-label>
+                <ion-checkbox formControlName="<%= fieldName %>"></ion-checkbox>
                 <%_ } else if (fieldTypeBlobContent === 'text') { _%>
                 <ion-textarea placeholder="<%= fieldNameHumanized %>" formControlName="<%= fieldName %>" id="field_<%= fieldName %>"></ion-textarea>
                 <%_ } else { _%>
