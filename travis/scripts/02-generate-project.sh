@@ -23,4 +23,5 @@ ls -al "$APP_FOLDER"
 #-------------------------------------------------------------------------------
 cd "$HOME"
 yo jhipster-ionic default --force --no-insight
+ls -al "$IONIC_FOLDER"
 
