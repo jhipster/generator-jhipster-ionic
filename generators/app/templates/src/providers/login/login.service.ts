@@ -7,7 +7,8 @@ declare const window: any;
 @Injectable()
 export class LoginService {
 
-    constructor(private oauthService: OAuthService, private platform: Platform) {}
+    constructor(private oauthService: OAuthService, private platform: Platform) {
+    }
 
     redirectLogin() {
         this.oauthService.initImplicitFlow();
@@ -20,11 +21,13 @@ export class LoginService {
             const keyValuePair = `#id_token=${encodeURIComponent(idToken)}&access_token=${encodeURIComponent(accessToken)}`;
             this.oauthService.tryLogin({
                 customHashFragment: keyValuePair,
-                disableOAuth2StateCheck: true
+                disableOAuth2StateCheck: true,
+                onTokenReceived: context => {
+                    const claims: any = this.oauthService.getIdentityClaims();
+                    // this.translate.use(account.langKey);
+                    return cb(claims);
+                }
             });
-            const claims: any = this.oauthService.getIdentityClaims();
-            // this.translate.use(account.langKey);
-            return cb(claims);
         }, (error) => {
             return fail(error);
         });
@@ -40,32 +43,40 @@ export class LoginService {
             }
             return new Promise((resolve, reject) => {
                 const oauthUrl = this.buildUrl(state, nonce);
-                const browser = window.cordova.InAppBrowser.open(oauthUrl, '_blank',
-                    'location=no,clearsessioncache=yes,clearcache=yes');
-                browser.addEventListener('loadstart', (event) => {
-                    if ((event.url).indexOf('http://localhost:8100') === 0) {
-                        browser.removeEventListener('exit', () => {
+                this.isBrowserTabAvailable().then((result) => {
+                    if (result) {
+                        window.cordova.plugins.browsertab.openUrl(oauthUrl, (success) => {},
+                            (error) => {
+                                reject('Problem authenticating with OAuth');
+                            });
+                    } else {
+                        const browser = window.cordova.InAppBrowser.open(oauthUrl, '_blank',
+                            'location=no,clearsessioncache=yes,clearcache=yes');
+                        browser.addEventListener('loadstart', (event) => {
+                            if ((event.url).indexOf('http://localhost:8100') === 0) {
+                                browser.removeEventListener('exit', () => {});
+                                browser.close();
+                                const responseParameters = ((event.url).split('#')[1]).split('&');
+                                const parsedResponse = {};
+                                for (let i = 0; i < responseParameters.length; i++) {
+                                    parsedResponse[responseParameters[i].split('=')[0]] =
+                                        responseParameters[i].split('=')[1];
+                                }
+                                const defaultError = 'Problem authenticating with OAuth';
+                                if (parsedResponse['state'] !== state) {
+                                    reject(defaultError);
+                                } else if (parsedResponse['access_token'] !== undefined &&
+                                    parsedResponse['access_token'] !== null) {
+                                    resolve(parsedResponse);
+                                } else {
+                                    reject(defaultError);
+                                }
+                            }
                         });
-                        browser.close();
-                        const responseParameters = ((event.url).split('#')[1]).split('&');
-                        const parsedResponse = {};
-                        for (let i = 0; i < responseParameters.length; i++) {
-                            parsedResponse[responseParameters[i].split('=')[0]] =
-                                responseParameters[i].split('=')[1];
-                        }
-                        const defaultError = 'Problem authenticating with OAuth';
-                        if (parsedResponse['state'] !== state) {
-                            reject(defaultError);
-                        } else if (parsedResponse['access_token'] !== undefined &&
-                            parsedResponse['access_token'] !== null) {
-                            resolve(parsedResponse);
-                        } else {
-                            reject(defaultError);
-                        }
+                        browser.addEventListener('exit', (event) => {
+                            reject('The OAuth sign in flow was canceled');
+                        });
                     }
-                });
-                browser.addEventListener('exit', function (event) {
-                    reject('The OAuth sign in flow was canceled');
                 });
             });
         });
@@ -88,5 +99,17 @@ export class LoginService {
             // don't redirect to global logout in app
             this.oauthService.logOut(true);
         }
+    }
+
+    isBrowserTabAvailable() {
+        return new Promise((resolve) => {
+            if (this.platform.is('core')) {
+                resolve(false);
+            } else {
+                window.cordova.plugins.browsertab.isAvailable((result) => {
+                    resolve(result);
+                });
+            }
+        });
     }
 }
