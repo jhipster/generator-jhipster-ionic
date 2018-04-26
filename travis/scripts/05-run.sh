@@ -36,8 +36,10 @@ launchCurlOrProtractor() {
         result=$?
         [ $result -eq 0 ] && break
         #---- run ionic e2e tests ----
-        cd ../ionic4j
+        cd "$IONIC_FOLDER"
+        result=0
         npm run build --prod && npm run e2e
+        result=$?
         [ $result -eq 0 ] && break
         #---- end of ionic tests ----
         retryCount=$((retryCount+1))
