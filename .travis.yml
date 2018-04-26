@@ -33,6 +33,7 @@ env:
     - SPRING_JPA_SHOW_SQL=false
   matrix:
     - JHIPSTER=ngx-mysql PROFILE=prod PROTRACTOR=1
+    - JHIPSTER=ngx-oauth2 PROFILE=prod PROTRACTOR=1
 before_install:
   - export TZ=America/Denver
   - date

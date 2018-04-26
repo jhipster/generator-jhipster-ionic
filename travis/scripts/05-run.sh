@@ -35,6 +35,11 @@ launchCurlOrProtractor() {
         npm run e2e
         result=$?
         [ $result -eq 0 ] && break
+        #---- run ionic e2e tests ----
+        cd ../ionic4j
+        npm run build --prod && npm run e2e
+        [ $result -eq 0 ] && break
+        #---- end of ionic tests ----
         retryCount=$((retryCount+1))
         echo "e2e tests failed... retryCount =" $retryCount "/" $maxRetry
         sleep 15
