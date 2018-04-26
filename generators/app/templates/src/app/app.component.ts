@@ -64,6 +64,8 @@ export class MyApp {
             const authConfig: AuthConfig = JSON.parse(localStorage.getItem(AUTH_CONFIG));
             this.oauthService.configure(authConfig);
             localStorage.removeItem(AUTH_CONFIG);
+            // remove the line below if you don't wish to get a new access token when it expires
+            this.oauthService.setupAutomaticSilentRefresh();
             this.tryLogin();
         } else {
             // Try to get the oauth settings from the server
@@ -88,7 +90,7 @@ export class MyApp {
     tryLogin() {
         this.oauthService.tokenValidationHandler = new JwksValidationHandler();
         this.oauthService.loadDiscoveryDocumentAndTryLogin().catch(error => {
-            if (error.params.error === 'unsupported_response_type') {
+            if (error.params && error.params.error === 'unsupported_response_type') {
                 let problem = 'You need to enable implicit flow for this app in your identity provider!';
                 problem += '\nError from IdP: ' + error.params.error_description.replace(/\+/g, ' ');
                 console.error(problem);

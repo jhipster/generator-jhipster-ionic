@@ -23,7 +23,6 @@ const jsonfile = require('jsonfile');
 const semver = require('semver');
 const shelljs = require('shelljs');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
-const modifyPackage = require('modify-package-dependencies');
 const spawn = require('cross-spawn');
 const fs = require('fs');
 const constants = require('generator-jhipster/generators/generator-constants');
@@ -149,35 +148,35 @@ module.exports = class extends BaseGenerator {
         const done = this.async();
         const packagePath = `${this.ionicAppName}/package.json`;
         const packageJSON = this.fs.readJSON(packagePath);
-        const devDependencies = ['generator-jhipster-ionic'];
-        // todo: Don't install Inappbrowser if user said No to Cordova
+
+        // add some branding 🤓
+        packageJSON.author = 'Ionic Framework + JHipster';
+        packageJSON.homepage = 'https://www.jhipster.tech';
+        packageJSON.description = 'A hipster Ionic project, made with 💙 by @oktadev!';
+        packageJSON.devDependencies['generator-jhipster-ionic'] = packagejs.version;
+        jsonfile.writeFileSync(packagePath, packageJSON);
+
         if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
+            packageJSON.dependencies['angular-oauth2-oidc'] = '3.1.4';
+            jsonfile.writeFileSync(packagePath, packageJSON);
+
             // install the inappbrowser plugin for implicit flow
-            this.log(`Adding Cordova's Inappbrowser plugin: ${chalk.green('ionic cordova plugin add cordova-plugin-inappbrowser')}`);
+            this.log('Adding Cordova plugins for OIDC...');
             if (this.installDeps) {
-                shelljs.exec(`cd ${this.ionicAppName} && ionic cordova plugin add cordova-plugin-inappbrowser`);
+                shelljs.exec(`cd ${this.ionicAppName} && ionic cordova plugin add cordova-plugin-inappbrowser@3.0.0`);
             }
         }
-        jsonfile.writeFileSync(packagePath, devDependencies);
-        // todo: modifyPackage runs `npm install`; figure out a better way to bypass for tests
+
         if (this.installDeps) {
-            modifyPackage.addDev(packageJSON, devDependencies)
-                .then((dependencies) => {
-                    jsonfile.writeFileSync(packagePath, dependencies);
-                    const extraDeps = (this.jhipsterAppConfig.authenticationType === 'oauth2') ? ['angular-oauth2-oidc'] : [];
-                    modifyPackage.add(packageJSON, extraDeps).then((giddyup) => {
-                        jsonfile.writeFileSync(packagePath, giddyup);
-                        this.log('Installing dependencies...');
-                        shelljs.exec(`cd ${this.ionicAppName} && npm i --color=always`, {silent: false}, (code) => {
-                            if (code === 0) {
-                                done();
-                            } else {
-                                this.warning(`Failed to run ${chalk.yellow('npm install')} in ${this.ionicAppName}!`);
-                                this.warning(`Please run it manually before running ${chalk.yellow('ionic serve')}`);
-                            }
-                        });
-                    });
-                });
+            this.log('Installing dependencies...');
+            shelljs.exec(`cd ${this.ionicAppName} && npm i --color=always`, { silent: false }, (code) => {
+                if (code === 0) {
+                    done();
+                } else {
+                    this.warning(`Failed to run ${chalk.yellow('npm install')} in ${this.ionicAppName}!`);
+                    this.warning(`Please run it manually before running ${chalk.yellow('ionic serve')}`);
+                }
+            });
         }
 
         // Copy server files to make API work with Ionic
@@ -203,8 +202,8 @@ module.exports = class extends BaseGenerator {
             // Update security configuration to allow /api/auth-info
             this.replaceContent(
                 `${this.directoryPath}/${JAVA_DIR}config/${securityConfigFile}.java`,
-                '("/api/profile-info")',
-                '("/api/auth-info", "/api/profile-info")'
+                '.antMatchers("/api/**").authenticated()',
+                '.antMatchers("/api/auth-info").permitAll()\n            .antMatchers("/api/**").authenticated()'
             );
 
             // Update Ionic files to work with OAuth
@@ -231,6 +230,12 @@ module.exports = class extends BaseGenerator {
                 }
             });
         }
+
+        // Add e2e tests
+        this.authenticationType = this.jhipsterAppConfig.authenticationType;
+        this.template('e2e/pages/login.po.ts', `${this.ionicAppName}/e2e/pages/login.po.ts`);
+        this.template('e2e/spec/login.e2e-spec.ts', `${this.ionicAppName}/e2e/spec/login.e2e-spec.ts`);
+
         done();
     }
 
