@@ -19,6 +19,7 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
 const packagejs = require('../../package.json');
+const jsonfile = require('jsonfile');
 const semver = require('semver');
 const shelljs = require('shelljs');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
@@ -146,43 +147,33 @@ module.exports = class extends BaseGenerator {
         // update package.json in Ionic app
         const done = this.async();
         const packagePath = `${this.ionicAppName}/package.json`;
-        const devDependencies = {
-            devDependencies: {
-                'generator-jhipster-ionic': packagejs.version
-            }
-        };
-        this.fs.extendJSON(packagePath, devDependencies);
+        const packageJSON = this.fs.readJSON(packagePath);
 
-        // todo: Don't install Inappbrowser if user said No to Cordova
-        if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
-            // install the inappbrowser plugin for implicit flow
-            this.log(`Adding Cordova's Inappbrowser plugin: ${chalk.green('ionic cordova plugin add cordova-plugin-inappbrowser')}`);
-            if (this.installDeps) {
-                shelljs.exec(`cd ${this.ionicAppName} && ionic cordova plugin add cordova-plugin-inappbrowser`);
-            }
-        }
+        // add some branding 🤓
+        packageJSON.author = 'Ionic Framework + JHipster';
+        packageJSON.homepage = 'https://www.jhipster.tech';
+        packageJSON.description = 'A hipster Ionic project, made with 💙 by @oktadev!';
+        packageJSON.devDependencies['generator-jhipster-ionic'] = packagejs.version;
+        jsonfile.writeFileSync(packagePath, packageJSON);
 
         if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
-            const dependencies = {
-                dependencies: {
-                    'angular-oauth2-oidc': '3.1.4',
-                    'cordova-plugin-browsertab': '0.2.0',
-                    'cordova-plugin-customurlscheme': '4.3.0'
-                }
-            };
-            this.fs.extendJSON(packagePath, dependencies);
+            packageJSON.dependencies['angular-oauth2-oidc'] = '3.1.4';
+            packageJSON.dependencies['cordova-plugin-browsertab'] = '0.2.0';
+            packageJSON.dependencies['cordova-plugin-customurlscheme'] = '4.3.0';
 
             // Update package.json to have config for custom url scheme
-            const customUrlScheme = {
-                cordova: {
-                    plugins: {
-                        'cordova-plugin-customurlscheme': {
-                            URL_SCHEME: 'ionic4j'
-                        }
-                    }
-                }
+            packageJSON.cordova.plugins['cordova-plugin-customurlscheme'] = {
+                URL_SCHEME: 'ionic4j'
             };
-            this.fs.extendJSON(packagePath, customUrlScheme);
+            jsonfile.writeFileSync(packagePath, packageJSON);
+
+            // install the inappbrowser plugin for implicit flow
+            this.log('Adding Cordova plugins for OIDC...');
+            if (this.installDeps) {
+                shelljs.exec(`cd ${this.ionicAppName} && ionic cordova plugin add cordova-plugin-inappbrowser@3.0.0`);
+                // I tried adding cordova-plugin-browsertab@0.2.0 cordova-plugin-customurlscheme@4.30 --variable URL_SCHEME=ionic4j
+                // Unfortunately, it still doesn't work.
+            }
         }
 
         if (this.installDeps) {
@@ -220,8 +211,8 @@ module.exports = class extends BaseGenerator {
             // Update security configuration to allow /api/auth-info
             this.replaceContent(
                 `${this.directoryPath}/${JAVA_DIR}config/${securityConfigFile}.java`,
-                '("/api/profile-info")',
-                '("/api/auth-info", "/api/profile-info")'
+                '.antMatchers("/api/**").authenticated()',
+                '.antMatchers("/api/auth-info").permitAll()\n            .antMatchers("/api/**").authenticated()'
             );
 
             // Update Ionic files to work with OAuth

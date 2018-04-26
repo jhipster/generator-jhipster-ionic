@@ -7,8 +7,7 @@ declare const window: any;
 @Injectable()
 export class LoginService {
 
-    constructor(private oauthService: OAuthService, private platform: Platform) {
-    }
+    constructor(private oauthService: OAuthService, private platform: Platform) {}
 
     redirectLogin() {
         this.oauthService.initImplicitFlow();

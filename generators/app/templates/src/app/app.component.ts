@@ -9,6 +9,8 @@ import { Settings } from '../providers/providers';
 import { AuthConfig, JwksValidationHandler, OAuthService } from 'angular-oauth2-oidc';
 import { Api } from '../providers/api/api';
 
+declare const window: any;
+
 @Component({
     template: `
     <ion-menu [content]="content">
@@ -29,9 +31,6 @@ import { Api } from '../providers/api/api';
     </ion-menu>
     <ion-nav #content [root]="rootPage"></ion-nav>`
 })
-
-declare const window: any;
-
 export class MyApp {
     rootPage = MainPage;
 
@@ -47,7 +46,7 @@ export class MyApp {
         {title: 'Entities', component: 'EntityPage'}
     ];
 
-    constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config,
+    constructor(private translate: TranslateService, private platform: Platform, settings: Settings, private config: Config,
                 private statusBar: StatusBar, private splashScreen: SplashScreen, private oauthService: OAuthService, private api: Api) {
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
