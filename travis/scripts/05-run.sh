@@ -63,7 +63,7 @@ launchCurlOrProtractor() {
 cd "$APP_FOLDER"
 
 if [ -f "mvnw" ]; then
-    ./mvnw package -DskipTests=true -P"$PROFILE"
+    ./mvnw -q package -DskipTests=true -P"$PROFILE"
     mv target/*.war app.war
 elif [ -f "gradlew" ]; then
     ./gradlew bootRepackage -P"$PROFILE" -x test
