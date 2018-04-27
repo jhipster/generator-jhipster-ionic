@@ -50,6 +50,7 @@ describe('Login', () => {
         loginPage.loginButton.click();
 
         browser.waitForAngular();
+        browser.driver.sleep(500);
 
         const welcome = /Welcome, Admin<% if (authenticationType === 'jwt') { %>istrator<% } %>/;
         browser.wait(ec.visibilityOf(loginPage.logoutButton), 10000).then(() => {
