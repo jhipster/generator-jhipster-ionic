@@ -50,10 +50,9 @@ describe('Login', () => {
         loginPage.loginButton.click();
 
         browser.waitForAngular();
-        browser.driver.sleep(500);
 
         const welcome = /Welcome, Admin<% if (authenticationType === 'jwt') { %>istrator<% } %>/;
-        browser.wait(ec.visibilityOf(loginPage.logoutButton), 10000).then(() => {
+        browser.wait(ec.visibilityOf(loginPage.logoutButton), 5000).then(() => {
             <%_ if (authenticationType === 'oauth2') { _%>
             expect(element.all(by.css('ion-title')).get(2).getText()).toMatch(welcome);
             <%_ } else { _%>

@@ -236,11 +236,6 @@ module.exports = class extends BaseGenerator {
         this.template('e2e/pages/login.po.ts', `${this.ionicAppName}/e2e/pages/login.po.ts`);
         this.template('e2e/spec/login.e2e-spec.ts', `${this.ionicAppName}/e2e/spec/login.e2e-spec.ts`);
 
-        // Change default timeout from 30 seconds to 60 seconds for Travis
-        this.replaceContent(`${this.ionicAppName}/test/protractor.conf.js`, 'defaultTimeoutInterval: 30000',
-            'defaultTimeoutInterval: 60000'
-        );
-
         done();
     }
 
