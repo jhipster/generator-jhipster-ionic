@@ -28,8 +28,26 @@ describe('JHipster generator jhipster-generator-ionic', () => {
             assert.file(['ionic4j-oauth2/package.json']);
         });
 
+        it('deletes files that only apply to JWT', () => {
+            assert.noFile([
+                'ionic4j-oauth2/src/pages/signup',
+                'ionic4j-oauth2/src/providers/auth/auth-jwt.service.ts'
+            ]);
+        });
+
+        it('adds oauth dependencies to package.json', () => {
+            assert.fileContent('ionic4j-oauth2/package.json', /angular-oauth2-oidc/);
+        });
+
+        it('keeps cordova-plugin-camera config in package.json', () => {
+            assert.fileContent('ionic4j-oauth2/package.json', /CAMERA_USAGE_DESCRIPTION/);
+        });
+
         it('adds a AuthInfoResource.java file to backend-oauth2', () => {
-            assert.file(['backend-oauth2/src/main/java/com/okta/developer/web/rest/AuthInfoResource.java']);
+            assert.file([
+                'backend-oauth2/src/main/java/com/okta/developer/web/rest/AuthInfoResource.java',
+                'backend-oauth2/src/main/java/com/okta/developer/config/ResourceServerConfiguration.java'
+            ]);
         });
     });
 });
