@@ -32,7 +32,8 @@ env:
     - SPRING_OUTPUT_ANSI_ENABLED=ALWAYS
     - SPRING_JPA_SHOW_SQL=false
   matrix:
-    - JHIPSTER=ngx-mysql PROFILE=prod PROTRACTOR=1
+    - JHIPSTER=ngx-mysql PROFILE=dev PROTRACTOR=1
+    - JHIPSTER=ngx-oauth2 PROFILE=dev PROTRACTOR=1
 before_install:
   - export TZ=America/Denver
   - date
@@ -44,7 +45,7 @@ before_install:
   - chmod +x $JHIPSTER_INSTALL/*.sh
   - chmod +x $JHIPSTER_SCRIPTS/*.sh
   - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
-  - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH"
+  - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$TRAVIS_PULL_REQUEST, BRANCH=$BRANCH"
 install:
   - $JHIPSTER_INSTALL/01-install-jhipster-stack.sh
   - $JHIPSTER_INSTALL/02-checkVersion.sh

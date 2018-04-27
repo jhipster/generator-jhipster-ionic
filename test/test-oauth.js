@@ -37,14 +37,18 @@ describe('JHipster generator jhipster-generator-ionic', () => {
 
         it('adds oauth dependencies to package.json', () => {
             assert.fileContent('ionic4j-oauth2/package.json', /angular-oauth2-oidc/);
+        });
+
+        it('adds oauth-related cordova plugins to package.json', () => {
             assert.fileContent('ionic4j-oauth2/package.json', /cordova-plugin-browsertab/);
             assert.fileContent('ionic4j-oauth2/package.json', /cordova-plugin-customurlscheme/);
         });
 
-        it('adds cordova-plugin-customurlscheme to package.json', () => {
-            // keeps camera config
+        it('keeps cordova-plugin-camera config in package.json', () => {
             assert.fileContent('ionic4j-oauth2/package.json', /CAMERA_USAGE_DESCRIPTION/);
-            // adds customurlschemeconfig
+        });
+
+        it('adds cordova-plugin-customurlscheme to package.json', () => {
             assert.fileContent('ionic4j-oauth2/package.json', /URL_SCHEME/);
         });
 

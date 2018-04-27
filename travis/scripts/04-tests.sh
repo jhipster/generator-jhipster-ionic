@@ -13,7 +13,7 @@ npm test
 #-------------------------------------------------------------------------------
 cd "$APP_FOLDER"
 if [ -f "mvnw" ]; then
-    ./mvnw test \
+    ./mvnw -q test \
         -Dlogging.level.io.github.jhipster.sample=ERROR \
         -Dlogging.level.io.github.jhipster.travis=ERROR
 elif [ -f "gradlew" ]; then
@@ -29,5 +29,3 @@ npm test
 #-------------------------------------------------------------------------------
 cd "$IONIC_FOLDER"
 npm test
-npm run build --prod
-npm run e2e

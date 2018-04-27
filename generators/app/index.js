@@ -217,6 +217,7 @@ module.exports = class extends BaseGenerator {
 
             // Update Ionic files to work with OAuth
             this.template('src/app/app.component.ts', `${CLIENT_MAIN_SRC_DIR}app/app.component.ts`);
+            this.template('src/app/app.component.spec.ts', `${CLIENT_MAIN_SRC_DIR}app/app.component.spec.ts`);
             this.template('src/app/app.module.ts', `${CLIENT_MAIN_SRC_DIR}app/app.module.ts`);
             this.template('src/pages/login/login.html', `${CLIENT_MAIN_SRC_DIR}pages/login/login.html`);
             this.template('src/pages/login/login.ts', `${CLIENT_MAIN_SRC_DIR}pages/login/login.ts`);
@@ -239,6 +240,12 @@ module.exports = class extends BaseGenerator {
                 }
             });
         }
+
+        // Add e2e tests
+        this.authenticationType = this.jhipsterAppConfig.authenticationType;
+        this.template('e2e/pages/login.po.ts', `${this.ionicAppName}/e2e/pages/login.po.ts`);
+        this.template('e2e/spec/login.e2e-spec.ts', `${this.ionicAppName}/e2e/spec/login.e2e-spec.ts`);
+
         done();
     }
 

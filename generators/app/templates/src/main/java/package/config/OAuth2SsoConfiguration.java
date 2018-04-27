@@ -68,7 +68,7 @@ public class OAuth2SsoConfiguration extends WebSecurityConfigurerAdapter {
         .and()
             .requestMatcher(new NegatedRequestMatcher(authorizationHeaderRequestMatcher))
             .authorizeRequests()
-            .antMatchers("/api/auth-info", "/api/profile-info").permitAll()
+            .antMatchers("/api/auth-info").permitAll()
             .antMatchers("/api/**").authenticated()
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
