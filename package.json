@@ -1,6 +1,6 @@
 {
   "name": "generator-jhipster-ionic",
-  "version": "3.1.2",
+  "version": "3.2.0",
   "description": "A JHipster Module that generates an Ionic Client",
   "keywords": [
     "yeoman-generator",
@@ -23,23 +23,22 @@
     "url": "git+https://github.com/oktadeveloper/generator-jhipster-ionic.git"
   },
   "dependencies": {
-    "chalk": "2.3.2",
-    "cross-spawn": "^5.1.0",
+    "chalk": "2.4.1",
+    "cross-spawn": "6.0.5",
     "generator-jhipster": ">=4.13.3",
-    "jsonfile": "^4.0.0",
+    "jsonfile": "4.0.0",
     "mkdirp": "0.5.1",
-    "modify-package-dependencies": "^1.0.0",
     "semver": "5.5.0",
     "shelljs": "0.8.1",
-    "yeoman-environment": "2.0.5",
-    "yeoman-generator": "2.0.3"
+    "yeoman-environment": "2.0.6",
+    "yeoman-generator": "2.0.4"
   },
   "devDependencies": {
     "chai": "4.1.2",
-    "eslint": "4.10.0",
+    "eslint": "4.19.1",
     "eslint-config-airbnb-base": "12.1.0",
-    "eslint-plugin-import": "2.8.0",
-    "fs-extra": "4.0.2",
+    "eslint-plugin-import": "2.11.0",
+    "fs-extra": "5.0.0",
     "gulp": "^3.9.1",
     "gulp-bump": "^3.1.0",
     "gulp-eslint": "^4.0.2",
@@ -51,12 +50,12 @@
     "gulp-sequence": "^1.0.0",
     "gulp-shell": "^0.6.5",
     "jsdoc": "3.5.5",
-    "mocha": "4.0.1",
-    "yeoman-assert": "3.1.0",
+    "mocha": "5.1.1",
+    "yeoman-assert": "3.1.1",
     "yeoman-test": "1.7.0"
   },
   "scripts": {
-    "test": "mocha test/*"
+    "test": "mocha --timeout 10000 test/*"
   },
   "license": "Apache-2.0",
   "bugs": {

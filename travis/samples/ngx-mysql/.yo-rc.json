@@ -1,36 +1,36 @@
 {
   "generator-jhipster": {
-    "promptValues": {
-      "packageName": "com.mycompany.myapp",
-      "nativeLanguage": "en"
-    },
-    "baseName": "sampleMysql",
-    "packageName": "com.mycompany.myapp",
-    "packageFolder": "com/mycompany/myapp",
+    "baseName": "travisNg",
+    "packageName": "io.github.jhipster.travis",
+    "packageFolder": "io/github/jhipster/travis",
     "serverPort": "8080",
     "authenticationType": "jwt",
     "hibernateCache": "ehcache",
     "clusteredHttpSession": false,
     "websocket": false,
     "databaseType": "sql",
-    "devDatabaseType": "h2Disk",
+    "devDatabaseType": "mysql",
     "prodDatabaseType": "mysql",
     "searchEngine": false,
     "messageBroker": false,
-    "serviceDiscoveryType": false,
     "buildTool": "maven",
     "enableSocialSignIn": false,
-    "jwtSecretKey": "0dd28f2f65d1860f1068b9fbefb3973c54f22f7a",
-    "clientFramework": "angular2",
+    "rememberMeKey": "448f9a67a8a292c4905a733ec22cc3b78e493c56",
     "useSass": false,
-    "clientPackageManager": "yarn",
     "applicationType": "monolith",
-    "testFrameworks": [],
-    "jhiPrefix": "jhi",
+    "testFrameworks": [
+      "gatling",
+      "protractor"
+    ],
+    "jhiPrefix": "custom",
     "enableTranslation": true,
     "nativeLanguage": "en",
     "languages": [
       "en"
-    ]
+    ],
+    "travis": true,
+    "serviceDiscoveryType": false,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX"
   }
 }
