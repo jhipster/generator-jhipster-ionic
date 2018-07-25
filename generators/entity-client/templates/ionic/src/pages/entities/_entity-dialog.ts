@@ -118,7 +118,7 @@ export class <%= entityAngularName %>DialogPage {
             <%_ if (fieldType === 'Boolean') { _%>
             <%= fieldName %>: [params.get('item') ? this.<%= entityInstance %>.<%= fieldName %> : 'false', <% if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.indexOf('required') !== -1) { %> Validators.required<% } %>],
             <%_ } else { _%>
-            <%= fieldName %>: [params.get('item') ? this.<%= entityInstance %>.<%= fieldName %> : '', <% if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.indexOf('required') !== -1) { %> Validators.required<% } %>],
+            <%= fieldName %>: [params.get('item') ? this.<%= entityInstance %>.<%= fieldName %> : null, <% if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.indexOf('required') !== -1) { %> Validators.required<% } %>],
             <%_ } _%>
             <%_ if (['byte[]', 'ByteBuffer'].includes(fieldType) && fields[idx].fieldTypeBlobContent !== 'text') { _%>
             <%= fieldName %>ContentType: [params.get('item') ? this.<%= entityInstance %>.<%= fieldName %>ContentType : ''],
