@@ -9,6 +9,8 @@ import { Settings } from '../providers/providers';
 import { AuthConfig, JwksValidationHandler, OAuthService } from 'angular-oauth2-oidc';
 import { Api } from '../providers/api/api';
 
+declare const window: any;
+
 @Component({
     template: `
     <ion-menu [content]="content">
@@ -44,7 +46,7 @@ export class MyApp {
         {title: 'Entities', component: 'EntityPage'}
     ];
 
-    constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config,
+    constructor(private translate: TranslateService, private platform: Platform, settings: Settings, private config: Config,
                 private statusBar: StatusBar, private splashScreen: SplashScreen, private oauthService: OAuthService, private api: Api) {
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
@@ -54,6 +56,7 @@ export class MyApp {
         });
 
         this.initTranslate();
+        this.initHandleOpenURL();
         this.initAuthentication();
     }
 
@@ -70,20 +73,53 @@ export class MyApp {
         } else {
             // Try to get the oauth settings from the server
             this.api.get('auth-info').subscribe((data: any) => {
-                    data.redirectUri = 'http://localhost:8100';
+                this.resolveRedirectUri().then((redirectUri) => {
+                    data.redirectUri = redirectUri;
                     // save in localStorage so redirect back gets config immediately
                     localStorage.setItem(AUTH_CONFIG, JSON.stringify(data));
                     this.oauthService.configure(data);
+                    // remove the line below if you don't wish to get a new access token when it expires
+                    this.oauthService.setupAutomaticSilentRefresh();
                     this.tryLogin();
-                }, error => {
-                    console.error('ERROR fetching authentication information, defaulting to Keycloak settings');
-                    this.oauthService.redirectUri = 'http://localhost:8100';
-                    this.oauthService.clientId = 'web_app';
-                    this.oauthService.scope = 'openid profile email';
-                    this.oauthService.issuer = 'http://localhost:9080/auth/realms/jhipster';
-                    this.tryLogin();
+                });
+            }, error => {
+                console.error('ERROR fetching authentication information, defaulting to Keycloak settings');
+                this.oauthService.redirectUri = 'http://localhost:8100';
+                this.oauthService.clientId = 'web_app';
+                this.oauthService.scope = 'openid profile email';
+                this.oauthService.issuer = 'http://localhost:9080/auth/realms/jhipster';
+                this.tryLogin();
+            });
+        }
+    }
+
+    initHandleOpenURL() {
+        const that = this;
+        window.handleOpenURL = (url) => {
+            setTimeout(() => {
+                const responseParameters = (url.split('#')[1]).split('&');
+                const parsedResponse = {};
+                for (let i = 0; i < responseParameters.length; i++) {
+                    parsedResponse[responseParameters[i].split('=')[0]] =
+                        responseParameters[i].split('=')[1];
                 }
-            );
+                if (parsedResponse['access_token'] !== undefined &&
+                    parsedResponse['access_token'] !== null) {
+                    const idToken = parsedResponse['id_token'];
+                    const accessToken = parsedResponse['access_token'];
+                    const keyValuePair = `#id_token=${encodeURIComponent(idToken)}&access_token=${encodeURIComponent(accessToken)}`;
+                    that.oauthService.tryLogin({
+                        customHashFragment: keyValuePair,
+                        disableOAuth2StateCheck: true,
+                        onTokenReceived: context => {
+                            const claims = that.oauthService.getIdentityClaims();
+                            if (claims) {
+                                // that.events.publish('LOGIN_SUCCESS', claims);
+                            }
+                        }
+                    });
+                }
+            });
         }
     }
 
@@ -117,5 +153,21 @@ export class MyApp {
         // Reset the content nav to have just this page
         // we wouldn't want the back button to show in this scenario
         this.nav.setRoot(page.component);
+    }
+
+    resolveRedirectUri(): Promise<string> {
+        return new Promise((resolve) => {
+            if (this.platform.is('core')) {
+                resolve('http://localhost:8100');
+            } else {
+                window.cordova.plugins.browsertab.isAvailable((result) => {
+                    if (result) {
+                        resolve('ionic4j://oauth2redirect');
+                    } else {
+                        resolve('http://localhost:8100');
+                    }
+                });
+            }
+        });
     }
 }

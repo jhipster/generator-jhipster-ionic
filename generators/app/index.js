@@ -158,12 +158,21 @@ module.exports = class extends BaseGenerator {
 
         if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
             packageJSON.dependencies['angular-oauth2-oidc'] = '3.1.4';
+            packageJSON.dependencies['cordova-plugin-browsertab'] = '0.2.0';
+            packageJSON.dependencies['cordova-plugin-customurlscheme'] = '4.3.0';
+
+            // Update package.json to have config for custom url scheme
+            packageJSON.cordova.plugins['cordova-plugin-customurlscheme'] = {
+                URL_SCHEME: 'ionic4j'
+            };
             jsonfile.writeFileSync(packagePath, packageJSON);
 
             // install the inappbrowser plugin for implicit flow
             this.log('Adding Cordova plugins for OIDC...');
             if (this.installDeps) {
                 shelljs.exec(`cd ${this.ionicAppName} && ionic cordova plugin add cordova-plugin-inappbrowser@3.0.0`);
+                // I tried adding cordova-plugin-browsertab@0.2.0 cordova-plugin-customurlscheme@4.30 --variable URL_SCHEME=ionic4j
+                // Unfortunately, it still doesn't work.
             }
         }
 
