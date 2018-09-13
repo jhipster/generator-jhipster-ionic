@@ -1,6 +1,6 @@
 {
   "name": "generator-jhipster-ionic",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "A JHipster Module that generates an Ionic Client",
   "keywords": [
     "yeoman-generator",
@@ -30,7 +30,7 @@
     "mkdirp": "0.5.1",
     "semver": "5.5.0",
     "shelljs": "0.8.1",
-    "yeoman-environment": "2.0.6",
+    "yeoman-environment": "2.3.3",
     "yeoman-generator": "2.0.4"
   },
   "devDependencies": {

@@ -192,19 +192,21 @@ module.exports = class extends BaseGenerator {
 
             const securityConfigFile = (applicationType === 'monolith') ? 'SecurityConfiguration' : 'OAuth2SsoConfiguration';
 
-            if (applicationType === 'monolith') {
-                this.template(`${SERVER_MAIN_SRC_DIR}package/config/ResourceServerConfiguration.java`, `${this.directoryPath}/${JAVA_DIR}config/ResourceServerConfiguration.java`);
-            } else {
+            this.template(`${SERVER_MAIN_SRC_DIR}package/web/rest/AuthInfoResource.java`, `${this.directoryPath}/${JAVA_DIR}web/rest/AuthInfoResource.java`);
+            this.template(`${SERVER_MAIN_SRC_DIR}package/config/ResourceServerConfiguration.java`, `${this.directoryPath}/${JAVA_DIR}config/ResourceServerConfiguration.java`);
+
+            if (applicationType === 'gateway') {
                 this.template(`${SERVER_MAIN_SRC_DIR}package/config/OAuth2SsoConfiguration.java`, `${this.directoryPath}/${JAVA_DIR}config/OAuth2SsoConfiguration.java`);
             }
 
-            this.template(`${SERVER_MAIN_SRC_DIR}package/web/rest/AuthInfoResource.java`, `${this.directoryPath}/${JAVA_DIR}web/rest/AuthInfoResource.java`);
-            // Update security configuration to allow /api/auth-info
-            this.replaceContent(
-                `${this.directoryPath}/${JAVA_DIR}config/${securityConfigFile}.java`,
-                '.antMatchers("/api/**").authenticated()',
-                '.antMatchers("/api/auth-info").permitAll()\n            .antMatchers("/api/**").authenticated()'
-            );
+            if (applicationType === 'monolith') {
+                // Update security configuration to allow /api/auth-info
+                this.replaceContent(
+                    `${this.directoryPath}/${JAVA_DIR}config/${securityConfigFile}.java`,
+                    '.antMatchers("/api/**").authenticated()',
+                    '.antMatchers("/api/auth-info").permitAll()\n            .antMatchers("/api/**").authenticated()'
+                );
+            }
 
             // Update Ionic files to work with OAuth
             this.template('src/app/app.component.ts', `${CLIENT_MAIN_SRC_DIR}app/app.component.ts`);
