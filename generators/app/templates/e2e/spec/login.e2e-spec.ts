@@ -34,7 +34,7 @@ describe('Login', () => {
             } else {
                 // Okta
                 const error = element.all(by.css('.infobox-error')).first();
-                browser.wait(ec.visibilityOf(error), 2000).then(() => {
+                browser.wait(ec.visibilityOf(error), 5000).then(() => {
                     expect(error.getText()).toMatch('Sign in failed!');
                 });
             }
