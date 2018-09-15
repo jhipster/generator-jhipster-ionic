@@ -41,7 +41,7 @@ before_install:
   - sudo /etc/init.d/postgresql stop
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-  - npm -g install yo ionic
+  - npm -g install yo ionic cordova
   - chmod +x $JHIPSTER_INSTALL/*.sh
   - chmod +x $JHIPSTER_SCRIPTS/*.sh
   - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
