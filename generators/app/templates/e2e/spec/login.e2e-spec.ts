@@ -29,18 +29,13 @@ describe('Login', () => {
         // Keycloak
         browser.driver.sleep(1000);
         const alert = element.all(by.css('.alert-error'));
-        console.log("alert: ", alert);
-        console.log("alert.isPresent(): ", alert.isPresent());
         alert.isPresent().then((result) => {
             if (result) {
-                console.log("result exists: ", result);
-                console.log("alert value: " + alert.first().getText());
                 expect(alert.first().getText()).toMatch('Invalid username or password.');
             } else {
                 // Okta
                 console.log("trying with Okta...");
                 const error = element.all(by.css('.infobox-error')).first();
-                console.log("error is: ", error);
                 browser.wait(ec.visibilityOf(error), 5000).then(() => {
                     expect(error.getText()).toMatch('Sign in failed!');
                 });
