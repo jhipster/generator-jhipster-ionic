@@ -30,7 +30,7 @@
     "mkdirp": "0.5.1",
     "semver": "5.5.0",
     "shelljs": "0.8.1",
-    "yeoman-environment": "2.0.6",
+    "yeoman-environment": "2.3.3",
     "yeoman-generator": "2.0.4"
   },
   "devDependencies": {
