@@ -25,13 +25,13 @@
   "dependencies": {
     "chalk": "2.4.1",
     "cross-spawn": "6.0.5",
-    "generator-jhipster": ">=4.13.3",
+    "generator-jhipster": "^5.3.1",
     "jsonfile": "4.0.0",
     "mkdirp": "0.5.1",
     "semver": "5.5.0",
     "shelljs": "0.8.1",
     "yeoman-environment": "2.3.3",
-    "yeoman-generator": "2.0.4"
+    "yeoman-generator": "^3.1.1"
   },
   "devDependencies": {
     "chai": "4.1.2",
@@ -39,7 +39,7 @@
     "eslint-config-airbnb-base": "12.1.0",
     "eslint-plugin-import": "2.11.0",
     "fs-extra": "5.0.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-bump": "^3.1.0",
     "gulp-eslint": "^4.0.2",
     "gulp-git": "^2.5.2",
@@ -52,7 +52,7 @@
     "jsdoc": "3.5.5",
     "mocha": "5.1.1",
     "yeoman-assert": "3.1.1",
-    "yeoman-test": "1.7.0"
+    "yeoman-test": "^2.0.0"
   },
   "scripts": {
     "test": "mocha --timeout 10000 test/*"
