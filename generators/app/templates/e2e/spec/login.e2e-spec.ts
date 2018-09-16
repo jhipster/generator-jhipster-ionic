@@ -27,9 +27,10 @@ describe('Login', () => {
         });
         <%_ } else { _%>
         // Keycloak
+        browser.driver.sleep(1000);
         const alert = element.all(by.css('.alert-error'));
         console.log("alert: ", alert);
-        console.log("alert.sPresent(): ", alert.isPresent());
+        console.log("alert.isPresent(): ", alert.isPresent());
         alert.isPresent().then((result) => {
             if (result) {
                 console.log("result exists: ", result);
