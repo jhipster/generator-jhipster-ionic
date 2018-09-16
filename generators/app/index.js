@@ -278,7 +278,7 @@ module.exports = class extends BaseGenerator {
 
         let portWarning = `${chalk.red('WARNING:')} The emulator runs on port 8080, so you will need to change your `;
         portWarning += `backend to run on a different port (e.g., 8888) when running ${chalk.green('ionic cordova emulate')}. `;
-        portWarning += 'Port 8888 is specified in the following files:\n\n';
+        portWarning += 'Port 8080 is specified in the following files:\n\n';
         portWarning += chalk.yellow(`    ${this.directoryPath}/src/main/resources/config/application-dev.yml\n`);
         portWarning += chalk.yellow(`    ${this.directoryPath}/webpack/webpack.dev.js\n`);
         portWarning += chalk.yellow(`    ${this.ionicAppName}/src/providers/api/api.ts\n`);
