@@ -26,7 +26,7 @@ npm i -g generator-jhipster ionic
 To install this module:
 
 ```bash
-npm install -g generator-jhipster-ionic
+npm install -g generator-jhipster-ionic yo
 ```
 
 To update this module:
