@@ -536,8 +536,9 @@ module.exports = class extends BaseGenerator {
                     }
 
                     const otherEntityName = relationship.otherEntityName;
-                    const otherEntityData = this.getEntityJson(otherEntityName);
+                    const otherEntityData = this.fs.readJSON(`${context.backendPath}/${context.jhipsterConfigDirectory}/${_.upperFirst(otherEntityName)}.json`);
                     const jhiTablePrefix = context.jhiTablePrefix;
+                    const otherEntityAngularSuffix = otherEntityData ? otherEntityData.angularJSSuffix || '' : '';
 
                     if (context.dto && context.dto === 'mapstruct') {
                         if (otherEntityData && (!otherEntityData.dto || otherEntityData.dto !== 'mapstruct')) {
@@ -568,7 +569,6 @@ module.exports = class extends BaseGenerator {
 
                     if (_.isUndefined(relationship.otherEntityAngularName)) {
                         if (relationship.otherEntityNameCapitalized !== 'User') {
-                            const otherEntityAngularSuffix = otherEntityData ? otherEntityData.angularJSSuffix || '' : '';
                             relationship.otherEntityAngularName = _.upperFirst(relationship.otherEntityName) + _.upperFirst(_.camelCase(otherEntityAngularSuffix));
                         } else {
                             relationship.otherEntityAngularName = 'User';
@@ -589,7 +589,7 @@ module.exports = class extends BaseGenerator {
                     if (_.isUndefined(relationship.otherEntityModuleName)) {
                         if (relationship.otherEntityNameCapitalized !== 'User') {
                             relationship.otherEntityModuleName = `${context.angularXAppName + relationship.otherEntityNameCapitalized}Module`;
-                            relationship.otherEntityModulePath = _.kebabCase(_.lowerFirst(relationship.otherEntityName));
+                            relationship.otherEntityModulePath = _.kebabCase(_.lowerFirst(relationship.otherEntityName)) + '-' + otherEntityAngularSuffix;
                         } else {
                             relationship.otherEntityModuleName = `${context.angularXAppName}SharedModule`;
                             relationship.otherEntityModulePath = '../shared';
