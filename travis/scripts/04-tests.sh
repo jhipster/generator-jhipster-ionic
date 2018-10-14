@@ -13,7 +13,7 @@ npm test
 #-------------------------------------------------------------------------------
 cd "$APP_FOLDER"
 if [ -f "mvnw" ]; then
-    ./mvnw -q test \
+    ./mvnw -e test \
         -Dlogging.level.io.github.jhipster.sample=ERROR \
         -Dlogging.level.io.github.jhipster.travis=ERROR
 elif [ -f "gradlew" ]; then
