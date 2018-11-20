@@ -44,7 +44,8 @@ describe('Login', () => {
 
     it('should login successfully with admin account', () => {
         loginPage.clearUserName();
-        loginPage.setUserName('admin'); // use process.env.E2E_USERNAME if you want to use env variables
+        // element.clear() not working, so don't try to reset username
+        // loginPage.setUserName('admin'); // use process.env.E2E_USERNAME if you want to use env variables
         loginPage.clearPassword();
         loginPage.setPassword('admin');
         loginPage.loginButton.click();
