@@ -15,7 +15,6 @@
     "messageBroker": false,
     "buildTool": "maven",
     "enableSocialSignIn": false,
-    "rememberMeKey": "448f9a67a8a292c4905a733ec22cc3b78e493c56",
     "useSass": false,
     "applicationType": "monolith",
     "testFrameworks": [
@@ -31,6 +30,11 @@
     "travis": true,
     "serviceDiscoveryType": false,
     "clientPackageManager": "npm",
-    "clientFramework": "angularX"
+    "clientFramework": "angularX",
+    "jhipsterVersion": "5.7.0",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "jwtSecretKey": "NmRmODkwOTg3M2Q3NGZjZTVlODI1YjJmYWIxOWFhM2M1NWVkMzgzNjRiZDYzZTg2ZjBkNzI2NDY1ZmJjYTBhMDI5NWUzMzQzNGRhMjEwZTMyNTQwYjEwZjFjZjQzZDBlNDBlYmU2MDA1YmNmNTdhYTVjZTc2MDBmNDFjMzc0YmQ=",
+    "otherModules": []
   }
 }
