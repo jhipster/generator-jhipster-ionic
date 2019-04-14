@@ -120,8 +120,13 @@ module.exports = class extends BaseGenerator {
 
         const currentJhipsterVersion = this.jhipsterAppConfig.jhipsterVersion;
         const minimumJhipsterVersion = packagejs.dependencies['generator-jhipster'];
-        if (currentJhipsterVersion != undefined && !semver.satisfies(currentJhipsterVersion, minimumJhipsterVersion)) {
+        if (currentJhipsterVersion !== undefined && !semver.satisfies(currentJhipsterVersion, minimumJhipsterVersion)) {
             this.error(`\nYour backend uses an old JHipster version (${currentJhipsterVersion})... you need at least (${minimumJhipsterVersion})\n`);
+        }
+
+        this.isIonicV3 = this._isIonicV3();
+        if (this.isIonicV3) {
+            this.log(`\n${chalk.bold.red('You are not using the latest version of Ionic. Run npm install -g ionic')}`);
         }
 
         const applicationType = this.jhipsterAppConfig.applicationType;
@@ -141,6 +146,13 @@ module.exports = class extends BaseGenerator {
             params.push('--no-git');
         }
         spawn.sync('ionic', params, { stdio: 'inherit' });
+    }
+
+    _isIonicV3() {
+        const currentIonicVersion = shelljs.exec('ionic version --no-interactive', { silent: true }).stdout.replace(/\n/g, '');
+        const minimumIonicVersion = '<4.0.0';
+
+        return semver.satisfies(currentIonicVersion, minimumIonicVersion);
     }
 
     install() {

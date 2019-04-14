@@ -1,0 +1,111 @@
+<%#
+ Copyright 2013-2018 the original author or authors from the JHipster project.
+
+ This file is part of the JHipster project, see http://www.jhipster.tech/
+ for more information.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-%>
+import { NgModule, Injectable } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { Routes, RouterModule, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { UserRouteAccessService } from 'src/app/services/auth/user-route-access.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Observable, of } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
+import { filter, map } from 'rxjs/operators';
+
+import { <%= entityAngularName %>Page } from './<%=entityFileName %>';
+import { <%= entityAngularName %>UpdatePage } from './<%=entityFileName %>-update';
+import { <%= entityAngularName %>, <%= entityAngularName %>Service, <%= entityAngularName %>DetailPage } from '.';
+
+@Injectable({ providedIn: 'root' })
+export class <%= entityAngularName %>Resolve implements Resolve<<%= entityAngularName %>> {
+  constructor(private service: <%= entityAngularName %>Service) {}
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<<%= entityAngularName %>> {
+    const id = route.params['id'] ? route.params['id'] : null;
+    if (id) {
+      return this.service.find(id).pipe(
+        filter((response: HttpResponse<<%= entityAngularName %>>) => response.ok),
+        map((<%= entityInstance %>: HttpResponse<<%= entityAngularName %>>) => <%= entityInstance %>.body)
+      );
+    }
+    return of(new <%= entityAngularName %>());
+  }
+}
+
+const routes: Routes = [
+    {
+      path: '',
+      component: <%= entityAngularName %>Page,
+      data: {
+        authorities: ['ROLE_USER']
+      },
+      canActivate: [UserRouteAccessService]
+    },
+    {
+      path: 'new',
+      component: <%= entityAngularName %>UpdatePage,
+      resolve: {
+        includedInPrice: <%= entityAngularName %>Resolve
+      },
+      data: {
+        authorities: ['ROLE_USER']
+      },
+      canActivate: [UserRouteAccessService]
+    },
+    {
+      path: ':id/view',
+      component: <%= entityAngularName %>DetailPage,
+      resolve: {
+        includedInPrice: <%= entityAngularName %>Resolve
+      },
+      data: {
+        authorities: ['ROLE_USER']
+      },
+      canActivate: [UserRouteAccessService]
+    },
+    {
+      path: ':id/edit',
+      component: <%= entityAngularName %>UpdatePage,
+      resolve: {
+        includedInPrice: <%= entityAngularName %>Resolve
+      },
+      data: {
+        authorities: ['ROLE_USER']
+      },
+      canActivate: [UserRouteAccessService]
+    }
+  ];
+
+
+@NgModule({
+    declarations: [
+        <%= entityAngularName %>Page,
+        <%= entityAngularName %>UpdatePage,
+        <%= entityAngularName %>DetailPage
+    ],
+    imports: [
+        IonicModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule,
+        TranslateModule,
+        RouterModule.forChild(routes)
+    ]
+})
+export class <%= entityAngularName %>PageModule {
+}

@@ -647,7 +647,9 @@ module.exports = class extends BaseGenerator {
                 const context = this.context;
                 if (context.skipClient) return;
 
-                this.composeWith(require.resolve('../entity-client'), {
+                const entityClientDirectory = (context.isIonicV3) ? '../entity-client' : '../entity-client4';
+
+                this.composeWith(require.resolve(entityClientDirectory), {
                     context,
                     'skip-install': context.options['skip-install'],
                     force: context.options.force,
