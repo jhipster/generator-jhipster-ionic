@@ -1,0 +1,18 @@
+{
+  "name": "ionic4j-oauth2",
+  "version": "0.0.1",
+  "author": {
+    "name": "Matt Raible",
+    "email": "matt.raible@okta.com",
+    "url": "https://developer.okta.com"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "scripts": {
+  },
+  "phonegap-plugin-barcodescanner": {
+    "CAMERA_USAGE_DESCRIPTION": "Use at your own risk!"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "ionic4j-jwt",
+  "version": "0.0.1",
+  "author": {
+    "name": "Matt Raible",
+    "email": "matt.raible@okta.com",
+    "url": "https://developer.okta.com"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "scripts": {
+  }
+}
