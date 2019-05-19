@@ -5,7 +5,7 @@ set -ev
 # Choose the repo
 #-------------------------------------------------------------------------------
 export JHIPSTER_REPO=https://github.com/jhipster/generator-jhipster.git
-export JHIPSTER_BRANCH=master
+export JHIPSTER_BRANCH=v4
 export IONIC4J_REPO=https://github.com/oktadeveloper/generator-jhipster-ionic.git
 export IONIC4J_BRANCH=$BRANCH
 
@@ -18,6 +18,11 @@ cd generator-jhipster
 if [ "$JHIPSTER_BRANCH" == "latest" ]; then
     LATEST=$(git describe --abbrev=0)
     git checkout -b $LATEST $LATEST
+
+# FIXME: after fixing e2e tests
+elif [ "$JHIPSTER_BRANCH" == "v4" ]; then
+    git checkout tags/v4.14.5 -b $JHIPSTER_BRANCH
+
 elif [ "$JHIPSTER_BRANCH" != "master" ]; then
     git checkout -b $JHIPSTER_BRANCH origin/$JHIPSTER_BRANCH
 fi
