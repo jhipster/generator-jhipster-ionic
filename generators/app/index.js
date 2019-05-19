@@ -116,11 +116,15 @@ module.exports = class extends BaseGenerator {
 
     writing() {
         const fromPath = `${this.directoryPath}/.yo-rc.json`;
-        this.jhipsterAppConfig = this.fs.readJSON(fromPath)['generator-jhipster'];
+        const yoRcJson = this.fs.readJSON(fromPath);
+        if (!yoRcJson) {
+            this.error(`\nUnable to find ${fromPath} \n`);
+        }
+        this.jhipsterAppConfig = yoRcJson['generator-jhipster'];
 
         const currentJhipsterVersion = this.jhipsterAppConfig.jhipsterVersion;
         const minimumJhipsterVersion = packagejs.dependencies['generator-jhipster'];
-        if (currentJhipsterVersion != undefined && !semver.satisfies(currentJhipsterVersion, minimumJhipsterVersion)) {
+        if (!semver.satisfies(currentJhipsterVersion, minimumJhipsterVersion)) {
             this.error(`\nYour backend uses an old JHipster version (${currentJhipsterVersion})... you need at least (${minimumJhipsterVersion})\n`);
         }
 
@@ -148,6 +152,9 @@ module.exports = class extends BaseGenerator {
         const done = this.async();
         const packagePath = `${this.ionicAppName}/package.json`;
         const packageJSON = this.fs.readJSON(packagePath);
+        if (!packageJSON) {
+            this.error(`Unable to find ${packagePath}.`);
+        }
 
         // add some branding 🤓
         packageJSON.author = 'Ionic Framework + JHipster';

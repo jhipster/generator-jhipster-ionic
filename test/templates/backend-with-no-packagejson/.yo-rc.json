@@ -1,0 +1,40 @@
+{
+    "generator-jhipster": {
+        "promptValues": {
+            "packageName": "com.okta.developer",
+            "nativeLanguage": "en"
+        },
+        "jhipsterVersion": "5.1.0",
+        "baseName": "backend",
+        "reactive": false,
+        "packageName": "com.okta.developer",
+        "packageFolder": "com/okta/developer",
+        "serverPort": "8080",
+        "authenticationType": "jwt",
+        "cacheProvider": "ehcache",
+        "enableHibernateCache": true,
+        "websocket": false,
+        "databaseType": "sql",
+        "devDatabaseType": "h2Disk",
+        "prodDatabaseType": "mysql",
+        "searchEngine": false,
+        "messageBroker": false,
+        "serviceDiscoveryType": false,
+        "buildTool": "maven",
+        "enableSwaggerCodegen": false,
+        "jwtSecretKey": "812296929ed3a9243f29e7bd0829e89d7760a2e2",
+        "clientFramework": "angularX",
+        "useSass": false,
+        "clientPackageManager": "yarn",
+        "applicationType": "monolith",
+        "testFrameworks": [
+            "protractor"
+        ],
+        "jhiPrefix": "jhi",
+        "enableTranslation": true,
+        "nativeLanguage": "en",
+        "languages": [
+            "en"
+        ]
+    }
+}
