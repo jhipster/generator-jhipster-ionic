@@ -65,7 +65,7 @@ describe('Error conditions', () => {
                     directoryPath: 'backend-with-old-version'
                 })
                 .on('error', (error) => {
-                    const expectedErrorMessage = /Your backend uses an old JHipster version \(1.0.0\)... you need at least \(>=4.13.3\)/;
+                    const expectedErrorMessage = /Your backend uses an old JHipster version \(1.0.0\)... you need at least \(>=4.13.3 <5\)/;
                     assert.match(error.message, expectedErrorMessage);
                     done();
                 })
