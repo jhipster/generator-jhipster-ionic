@@ -5,7 +5,7 @@ const fse = require('fs-extra');
 const assert = require('yeoman-assert');
 const helpers = require('yeoman-test');
 
-xdescribe('JHipster generator jhipster-generator-ionic', () => {
+describe('JHipster generator jhipster-generator-ionic', () => {
     describe('Test Generating Ionic App with OAuth', () => {
         beforeEach((done) => {
             helpers
@@ -35,8 +35,8 @@ xdescribe('JHipster generator jhipster-generator-ionic', () => {
             ]);
         });
 
-        it('adds ionic-appauth to package.json', () => {
-            assert.fileContent('ionic4j-oauth2/package.json', /ionic-appauth/);
+        it('adds @oktadev/schematics to package.json', () => {
+            assert.fileContent('ionic4j-oauth2/package.json', /@oktadev\/schematics/);
         });
 
         it('keeps cordova-plugin-camera config in package.json', () => {

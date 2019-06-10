@@ -45,6 +45,77 @@ In a directory alongside your JHipster app, run this module. This will create an
 yo jhipster-ionic
 ```
 
+# Okta for Authentication
+
+If you choose OAuth 2.0 / OIDC for authentication, you can use Okta for authentication. See [JHipster's security docs](https://www.jhipster.tech/security/#-oauth2-and-openid-connect) to see how to configure JHipster for Okta. You should be able to use the same OIDC app for Ionic for JHipster. However, you'll need to add a few redirect URIs:
+
+## Create an Application in Okta
+
+Log in to your Okta Developer account (or [sign up](https://developer.okta.com/signup/) if you don't have an account).
+
+From the **Applications** page, choose **Add Application**. On the Create New Application page, select **Native**. Give your app a memorable name, and configure it as follows:
+ 
+* Login redirect URIs: 
+  * `http://localhost:8100/implicit/callback`
+  * `dev.localhost.ionic:/callback`
+* Logout redirect URIs:
+  * `http://localhost:8100/implicit/logout`
+  * `dev.localhost.ionic:/logout`
+  
+**NOTE:** `dev.localhost.ionic` is the default scheme, but you can also use something more traditional like `com.okta.dev-737523` (where `dev-737523.okta.com` is your Okta Org URL). If you'd like to change it, be sure to update the `URL_SCHEME` in `package.json`.
+
+```json
+"cordova-plugin-customurlscheme": {
+    "URL_SCHEME": "com.okta.dev-737523"
+},
+```
+
+# iOS 
+
+Generate a native project with the following command:
+
+```
+ionic cordova prepare ios
+```
+
+Open your project in Xcode, configure code signing, and run your app.
+
+```
+open platforms/ios/MyApp.xcworkspace
+```
+
+# Android
+
+Generate a native project with the following command:
+
+```
+ionic cordova prepare android
+```
+
+Set the launchMode to `singleTask` so the URL does not trigger a new instance of the app in `platforms/android/app/src/main/AndroidManifest.xml`:
+
+```xml
+<activity
+      android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
+      android:name="com.mydomain.app.MainActivity"
+      android:label="@string/title_activity_main"
+      android:launchMode="singleTask"
+      android:theme="@style/AppTheme.NoActionBarLaunch">
+```
+
+Open your project in Android Studio and run your app.
+
+```
+studio platforms/android
+```
+
+You'll need to run a couple commands to allow the emulator to communicate with your API and Keycloak.
+
+```
+adb reverse tcp:8080 tcp:8080
+adb reverse tcp:9080 tcp:9080
+```
+
 # Entity Generator
 
 To generate entities, run `yo jhipster-ionic:entity <name>`.
