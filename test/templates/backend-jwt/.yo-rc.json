@@ -4,7 +4,7 @@
             "packageName": "com.okta.developer",
             "nativeLanguage": "en"
         },
-        "jhipsterVersion": "5.1.0",
+        "jhipsterVersion": "6.0.1",
         "baseName": "backend",
         "reactive": false,
         "packageName": "com.okta.developer",

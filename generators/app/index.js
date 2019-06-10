@@ -60,7 +60,7 @@ module.exports = class extends BaseGenerator {
                 }
             },
             readConfig() {
-                this.jhipsterAppConfig = this.getJhipsterAppConfig();
+                this.jhipsterAppConfig = this.getAllJhipsterConfig();
             },
             displayLogo() {
                 // it's here to show that you can use functions from generator-jhipster
@@ -100,7 +100,6 @@ module.exports = class extends BaseGenerator {
                     return `${path} is not a directory or doesn't exist`;
                 }
             }];
-
         if (this.defaultApp) {
             this.ionicAppName = 'ionic4j';
             this.directoryPath = 'backend';
@@ -169,14 +168,8 @@ module.exports = class extends BaseGenerator {
         jsonfile.writeFileSync(packagePath, packageJSON);
 
         if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
-            packageJSON.dependencies['angular-oauth2-oidc'] = '3.1.4';
+            packageJSON.devDependencies['@oktadev/schematics'] = '0.8.0';
             jsonfile.writeFileSync(packagePath, packageJSON);
-
-            // install the inappbrowser plugin for implicit flow
-            this.log('Adding Cordova plugins for OIDC...');
-            if (this.installDeps) {
-                shelljs.exec(`cd ${this.ionicAppName} && ionic cordova plugin add cordova-plugin-inappbrowser@3.0.0`);
-            }
         }
 
         if (this.installDeps) {
@@ -197,30 +190,26 @@ module.exports = class extends BaseGenerator {
             this.packageName = this.jhipsterAppConfig.packageName;
             this.packageFolder = this.jhipsterAppConfig.packageFolder;
 
+            // todo: add config-uri parameter to oktadev schematics
+            // todo: get Ionic schematic working with Keycloak
+            shelljs.exec(`cd ${this.ionicAppName} && ng add @oktadev/schematics --issuer=https://dev-133320.okta.com/oauth2/default --clientId=foo`, { silent: false }, (code) => {
+                if (code === 0) {
+                    done();
+                } else {
+                    this.warning(`Failed to run ${chalk.yellow('ng add @oktadev/schematics')} in ${this.ionicAppName}!`);
+                }
+            });
+
+            // todo: cleanup
+
             const SERVER_MAIN_SRC_DIR = constants.SERVER_MAIN_SRC_DIR;
             const CLIENT_MAIN_SRC_DIR = `${this.ionicAppName}/src/`;
             const JAVA_DIR = `${constants.SERVER_MAIN_SRC_DIR}${this.packageFolder}/`;
             const applicationType = this.jhipsterAppConfig.applicationType;
 
-            const securityConfigFile = (applicationType === 'monolith') ? 'SecurityConfiguration' : 'OAuth2SsoConfiguration';
-
-            this.template(`${SERVER_MAIN_SRC_DIR}package/web/rest/AuthInfoResource.java`, `${this.directoryPath}/${JAVA_DIR}web/rest/AuthInfoResource.java`);
-            this.template(`${SERVER_MAIN_SRC_DIR}package/config/ResourceServerConfiguration.java`, `${this.directoryPath}/${JAVA_DIR}config/ResourceServerConfiguration.java`);
-
-            if (applicationType === 'gateway') {
-                this.template(`${SERVER_MAIN_SRC_DIR}package/config/OAuth2SsoConfiguration.java`, `${this.directoryPath}/${JAVA_DIR}config/OAuth2SsoConfiguration.java`);
-            }
-
-            if (applicationType === 'monolith') {
-                // Update security configuration to allow /api/auth-info
-                this.replaceContent(
-                    `${this.directoryPath}/${JAVA_DIR}config/${securityConfigFile}.java`,
-                    '.antMatchers("/api/**").authenticated()',
-                    '.antMatchers("/api/auth-info").permitAll()\n            .antMatchers("/api/**").authenticated()'
-                );
-            }
-
+            /*
             // Update Ionic files to work with OAuth
+            //
             this.template('src/app/app.component.ts', `${CLIENT_MAIN_SRC_DIR}app/app.component.ts`);
             this.template('src/app/app.component.spec.ts', `${CLIENT_MAIN_SRC_DIR}app/app.component.spec.ts`);
             this.template('src/app/app.module.ts', `${CLIENT_MAIN_SRC_DIR}app/app.module.ts`);
@@ -230,11 +219,12 @@ module.exports = class extends BaseGenerator {
             this.template('src/providers/auth/auth-interceptor.ts', `${CLIENT_MAIN_SRC_DIR}providers/auth/auth-interceptor.ts`);
             this.template('src/providers/login/login.service.ts', `${CLIENT_MAIN_SRC_DIR}providers/login/login.service.ts`);
             this.template('src/providers/user/user.ts', `${CLIENT_MAIN_SRC_DIR}providers/user/user.ts`);
+            */
 
             // Delete files no longer used
             const filesToDelete = [
                 `${CLIENT_MAIN_SRC_DIR}pages/signup`,
-                `${CLIENT_MAIN_SRC_DIR}providers/auth/auth-jwt.service.ts`
+                `${CLIENT_MAIN_SRC_DIR}services/auth/auth-jwt.service.ts`
             ];
 
             filesToDelete.forEach((path) => {
@@ -278,22 +268,9 @@ module.exports = class extends BaseGenerator {
     }
 
     end() {
-        this.log('\nHipster Ionic App created successfully! 🎉\n');
-        // application-dev.yml has CORS enabled by default, so don't warn on install. Too noisy.
-        /* const configPath = chalk.yellow(`${this.directoryPath}/src/main/resources/config/application.yml`);
-        this.log(`Enable CORS in ${configPath}, and set the allowed-origins to allow Ionic in production.\n`);
-        this.log(`${chalk.green('    cors:')}`);
-        this.log(`${chalk.green('        allowed-origins: "http://localhost:8100"')}\n`); */
+        this.log('Ionic for JHipster App created successfully! 🎉\n');
         this.log('Run the following commands (in separate terminal windows) to see everything working:\n');
         this.log(`${chalk.green(`    cd ${this.directoryPath} && ${this.jhipsterAppConfig.buildTool === 'maven' ? './mvnw' : './gradlew'}`)}`);
         this.log(`${chalk.green(`    cd ${this.ionicAppName} && ionic serve`)}\n`);
-
-        let portWarning = `${chalk.red('WARNING:')} The emulator runs on port 8080, so you will need to change your `;
-        portWarning += `backend to run on a different port (e.g., 8888) when running ${chalk.green('ionic cordova emulate')}. `;
-        portWarning += 'Port 8080 is specified in the following files:\n\n';
-        portWarning += chalk.yellow(`    ${this.directoryPath}/src/main/resources/config/application-dev.yml\n`);
-        portWarning += chalk.yellow(`    ${this.directoryPath}/webpack/webpack.dev.js\n`);
-        portWarning += chalk.yellow(`    ${this.ionicAppName}/src/providers/api/api.ts\n`);
-        this.log(portWarning);
     }
 };
