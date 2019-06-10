@@ -83,7 +83,7 @@ fi
 if [ "$RUN_APP" == 1 ]; then
 
     cd "$APP_FOLDER"
-    java -jar app.war \
+    java -jar app.jar \
         --spring.profiles.active="$PROFILE" &
     sleep 40
 
