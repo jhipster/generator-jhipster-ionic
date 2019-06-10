@@ -43,6 +43,8 @@ before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - npm -g install yo ionic
+  - git clone git@github.com:jhipster/jhipster.git
+  - cd jhipster && ./mvnw clean install -Dgpg.skip=true
   - chmod +x $JHIPSTER_INSTALL/*.sh
   - chmod +x $JHIPSTER_SCRIPTS/*.sh
   - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
