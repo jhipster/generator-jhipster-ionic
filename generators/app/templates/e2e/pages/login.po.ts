@@ -46,10 +46,11 @@ export class LoginPage extends Page {
   }
 
   async login(username: string, password: string) {
-    this.signInButton.click();
     <%_ if (authenticationType === 'oauth2') { _%>
     // Entering non angular site, tell webdriver to switch to synchronous mode.
     await browser.waitForAngularEnabled(false);
+    await browser.sleep(500);
+
     if (await this.username.isPresent()) {
       await this.username.sendKeys(username);
       await this.password.sendKeys(password);
@@ -69,6 +70,6 @@ export class LoginPage extends Page {
   }
 
   async logout() {
-    await return this.logoutButton.click();
+    await this.logoutButton.click();
   }
 }
