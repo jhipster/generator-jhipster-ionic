@@ -34,6 +34,8 @@
     "yeoman-generator": "4.0.1"
   },
   "devDependencies": {
+    "@angular-devkit/schematics-cli": "^0.800.2",
+    "@oktadev/schematics": "^0.8.3",
     "chai": "4.2.0",
     "eslint": "5.16.0",
     "eslint-config-airbnb-base": "13.1.0",
@@ -55,7 +57,7 @@
     "yeoman-test": "2.0.0"
   },
   "scripts": {
-    "test": "mocha --timeout 40000 test/*"
+    "test": "mocha --timeout 10000 test/*"
   },
   "license": "Apache-2.0",
   "bugs": {

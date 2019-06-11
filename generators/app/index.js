@@ -168,29 +168,27 @@ module.exports = class extends BaseGenerator {
     jsonfile.writeFileSync(packagePath, packageJSON);
 
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
+      this.packageName = this.jhipsterAppConfig.packageName;
+      this.packageFolder = this.jhipsterAppConfig.packageFolder;
 
-      //if (this.installDeps) {
-      this.log('Installing @oktadev/schematics...');
-      if (shelljs.exec(`cd ${this.ionicAppName} && npm i -D @oktadev/schematics@0.8.3 --color=always`).code !== 0) {
-        this.warning(`Failed to install ${chalk.yellow('@oktadev/schematics')} in ${this.ionicAppName}!`);
-        this.warning('Please report this as an issue on GitHub:');
-        this.warning('  ' + chalk.blueBright('https://github.com/oktadeveloper/generator-jhipster-ionic/issues/new'));
+      let installAuthCmd;
+      let params = '--configUri=http://localhost:8080/api/auth-info --issuer=null --clientId=null';
+
+      // use `schematics` when testing and expect it to be installed
+      if (this.installDeps) {
+        installAuthCmd = `ng add @oktadev/schematics ${params}`;
+      } else {
+        packageJSON.devDependencies['@oktadev/schematics'] = '0.8.3';
+        jsonfile.writeFileSync(packagePath, packageJSON);
+        installAuthCmd = `schematics @oktadev/schematics:add-auth ${params} --skipPackageJson=true`;
+      }
+
+      if (shelljs.exec(`cd ${this.ionicAppName} && ${installAuthCmd}`).code !== 0) {
+        this.error(installAuthCmd);
         shelljs.exit(1);
       }
 
       this.log('Updating Java and TypeScript classes for OIDC...');
-      this.packageName = this.jhipsterAppConfig.packageName;
-      this.packageFolder = this.jhipsterAppConfig.packageFolder;
-
-      let installAuthCmd = 'npx @angular-devkit/schematics-cli@0.800.2 @oktadev/schematics:add-auth --configUri=http://localhost:8080/api/auth-info';
-      installAuthCmd += ' --issuer=null --clientId=null';
-      installAuthCmd += `${!this.installDeps ? ' --skipPackageJson=true' : ''}`;
-
-      if (shelljs.exec(`cd ${this.ionicAppName} && ${installAuthCmd}`).code !== 0) {
-        this.warning(`Failed to run ${chalk.yellow(installAuthCmd)} in ${this.ionicAppName}!`);
-        shelljs.exit(1);
-      }
-
       const CLIENT_MAIN_SRC_DIR = `${this.ionicAppName}/src/`;
 
       // Update Ionic files to work with JHipster

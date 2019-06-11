@@ -42,7 +42,7 @@ before_install:
   - sudo /etc/init.d/postgresql stop
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-  - npm -g install yo ionic
+  - npm -g install yo ionic @angular-devkit/schematics-cli
   - git clone https://github.com/jhipster/jhipster.git
   - cd jhipster && ./mvnw clean install -Dgpg.skip=true
   - chmod +x $JHIPSTER_INSTALL/*.sh
