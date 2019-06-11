@@ -1,5 +1,5 @@
 <%#
- Copyright 2013-2018 the original author or authors from the JHipster project.
+ Copyright 2013-2019 the original author or authors from the JHipster project.
 
  This file is part of the JHipster project, see http://www.jhipster.tech/
  for more information.
@@ -77,8 +77,8 @@ relationships.forEach(relationship => {
     variables[fieldName] = fieldName + '?: ' + fieldType;
 });
 _%>
-import { BaseEntity<% if (hasUserRelationship) { %>, User<% } %> } from 'src/model/base-entity';
-
+import { BaseEntity } from 'src/model/base-entity';
+<% if (hasUserRelationship) { %>import { User } from '../../../services/user/user.model';<% } %>
 <%_ const enumsAlreadyDeclared = [];
 fields.forEach(field => {
     if (field.fieldIsEnum && enumsAlreadyDeclared.indexOf(field.fieldType) === -1) {

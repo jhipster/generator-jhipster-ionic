@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2018 the original author or authors from the JHipster project.
+ * Copyright 2013-2019 the original author or authors from the JHipster project.
  *
  * This file is part of the JHipster project, see http://www.jhipster.tech/
  * for more information.
@@ -212,13 +212,15 @@ module.exports = class extends BaseGenerator {
       this.template('src/app/services/auth/user-route-access.service.ts', `${CLIENT_MAIN_SRC_DIR}app/services/auth/user-route-access.service.ts`);
       this.template('src/app/services/login/login.service.spec.ts', `${CLIENT_MAIN_SRC_DIR}app/services/login/login.service.spec.ts`);
       this.template('src/app/services/login/login.service.ts', `${CLIENT_MAIN_SRC_DIR}app/services/login/login.service.ts`);
+      this.template('src/app/services/user/user.model.ts', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.model.ts`);
+      this.template('src/app/services/user/user.service.spec.ts', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.service.spec.ts`);
+      this.template('src/app/services/user/user.service.ts', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.service.ts`);
 
       // Delete files no longer used
       const filesToDelete = [
         `${CLIENT_MAIN_SRC_DIR}app/login`,
         `${CLIENT_MAIN_SRC_DIR}app/tab1`,
         `${CLIENT_MAIN_SRC_DIR}app/pages/signup`,
-        `${CLIENT_MAIN_SRC_DIR}app/services/user`,
         `${CLIENT_MAIN_SRC_DIR}app/services/auth/auth.jwt.service.ts`,
         `${CLIENT_MAIN_SRC_DIR}app/services/auth/auth.jwt.service.spec.ts`,
       ];

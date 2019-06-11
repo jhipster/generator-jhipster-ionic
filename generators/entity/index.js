@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2018 the original author or authors from the JHipster project.
+ * Copyright 2013-2019 the original author or authors from the JHipster project.
  *
  * This file is part of the JHipster project, see http://www.jhipster.tech/
  * for more information.
@@ -625,9 +625,9 @@ module.exports = class extends BaseGenerator {
                 context.pkType = this.getPkType(context.databaseType);
             },
 
-            insight() {
+            /*insight() {
                 // track insights
-                const insight = this.insight();
+                const insight = this.context.insight();
                 const context = this.context;
                 insight.trackWithEvent('generator', 'entity');
                 insight.track('entity/fields', context.fields.length);
@@ -636,7 +636,7 @@ module.exports = class extends BaseGenerator {
                 insight.track('entity/dto', context.dto);
                 insight.track('entity/service', context.service);
                 insight.track('entity/fluentMethods', context.fluentMethods);
-            }
+            }*/
         };
     }
 

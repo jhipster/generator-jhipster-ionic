@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2018 the original author or authors from the JHipster project.
+ * Copyright 2013-2019 the original author or authors from the JHipster project.
  *
  * This file is part of the JHipster project, see http://www.jhipster.tech/
  * for more information.
@@ -39,7 +39,7 @@ module.exports = class extends BaseGenerator {
 
     end() {
         if (useBlueprint) return;
-        this.log(chalk.bold.green('Entity generation completed. You may have to stop/start "ionic serve" to see your new entity.'));
+        this.log(chalk.bold.green('\nEntity generation completed!'));
     }
 
 
