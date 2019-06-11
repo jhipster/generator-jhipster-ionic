@@ -174,14 +174,11 @@ module.exports = class extends BaseGenerator {
 
     if (this.installDeps) {
       this.log('Installing dependencies...');
-      shelljs.exec(`cd ${this.ionicAppName} && npm i --color=always`, {silent: false}, (code) => {
-        if (code === 0) {
-          done();
-        } else {
-          this.warning(`Failed to run ${chalk.yellow('npm install')} in ${this.ionicAppName}!`);
-          this.warning(`Please run it manually before running ${chalk.yellow('ionic serve')}`);
-        }
-      });
+      if (shelljs.exec(`cd ${this.ionicAppName} && npm i --color=always`).code !== 0) {
+        this.warning(`Failed to run ${chalk.yellow('npm install')} in ${this.ionicAppName}!`);
+        this.warning(`Please run it manually before running ${chalk.yellow('ionic serve')}`);
+        shelljs.exit(1);
+      }
     }
 
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
