@@ -7,7 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { Ng2Webstorage } from 'ngx-webstorage';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthExpiredInterceptor } from './interceptors/auth-expired.interceptor';
@@ -33,7 +33,7 @@ export function createTranslateLoader(http: HttpClient) {
       }
     }),
     IonicModule.forRoot(),
-    Ng2Webstorage.forRoot({prefix: 'jhi', separator: '-'}),
+    NgxWebstorageModule.forRoot({prefix: 'jhi', separator: '-'}),
     AppRoutingModule,
     AuthModule,
     IonicStorageModule.forRoot()

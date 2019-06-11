@@ -9,8 +9,8 @@ export class LoginPage extends Page {
   loginButton = element(by.css('input[type=submit]'));
   <%_ } else { _%>
   // todo: figure out why more than one element exists
-  username = element(by.name('username'));
-  password = element(by.name('password'));
+  username = element.all(by.name('username')).get(1);
+  password = element.all(by.name('password')).get(1);
   loginButton = element(by.id('login'));
   <%_ } _%>
   signInButton = element(by.id('signIn'));

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WelcomePage } from './welcome.page';
 import { TranslateModule } from '@ngx-translate/core';
-import { Ng2Webstorage } from 'ngx-webstorage';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { IonicStorageModule } from '@ionic/storage';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -16,7 +16,7 @@ describe('WelcomePage', () => {
     TestBed.configureTestingModule({
       declarations: [WelcomePage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [TranslateModule.forRoot(), Ng2Webstorage.forRoot(), HttpClientTestingModule, IonicStorageModule.forRoot(), RouterTestingModule]
+      imports: [TranslateModule.forRoot(), NgxWebstorageModule.forRoot(), HttpClientTestingModule, IonicStorageModule.forRoot(), RouterTestingModule]
     }).compileComponents();
   }));
 

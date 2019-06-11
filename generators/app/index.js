@@ -186,11 +186,11 @@ module.exports = class extends BaseGenerator {
       this.packageName = this.jhipsterAppConfig.packageName;
       this.packageFolder = this.jhipsterAppConfig.packageFolder;
 
-      let installAuthCmd = 'schematics @oktadev/schematics:add-auth --configUri=http://localhost:8080/api/auth-info --issuer=null --clientId=null';
+      let installAuthCmd = 'npx @angular-devkit/schematics-cli @oktadev/schematics:add-auth --configUri=http://localhost:8080/api/auth-info --issuer=null --clientId=null';
       installAuthCmd += `${!this.installDeps ? ' --skipPackageJson=true' : ''}`;
 
       if (shelljs.exec(`cd ${this.ionicAppName} && ${installAuthCmd}`).code !== 0) {
-        this.warning(`Failed to run ${chalk.yellow('schematics @oktadev/schematics:add-auth')} in ${this.ionicAppName}!`);
+        this.warning(`Failed to run ${chalk.yellow(installAuthCmd)} in ${this.ionicAppName}!`);
         shelljs.exit(1);
       }
 
