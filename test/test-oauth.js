@@ -30,6 +30,8 @@ describe('JHipster generator jhipster-generator-ionic', () => {
 
         it('deletes files that only apply to JWT', () => {
             assert.noFile([
+                'ionic4j-oauth2/src/login',
+                'ionic4j-oauth2/src/tab1',
                 'ionic4j-oauth2/src/pages/signup',
                 'ionic4j-oauth2/src/services/auth/auth-jwt.service.ts'
             ]);

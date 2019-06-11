@@ -168,7 +168,7 @@ module.exports = class extends BaseGenerator {
     jsonfile.writeFileSync(packagePath, packageJSON);
 
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
-      packageJSON.devDependencies['@oktadev/schematics'] = '0.8.0';
+      packageJSON.devDependencies['@oktadev/schematics'] = '0.8.2';
       jsonfile.writeFileSync(packagePath, packageJSON);
     }
 
@@ -184,20 +184,17 @@ module.exports = class extends BaseGenerator {
       });
     }
 
-    // Copy server files to make API work with Ionic
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
       this.log('Updating Java and TypeScript classes for OIDC...');
       this.packageName = this.jhipsterAppConfig.packageName;
       this.packageFolder = this.jhipsterAppConfig.packageFolder;
 
-      if (this.installDeps) {
-        shelljs.exec(`cd ${this.ionicAppName} && ng add @oktadev/schematics --configUri=http://localhost:8080/api/auth-info --issuer=null --clientId=null`, {silent: false}, (code) => {
-          if (code === 0) {
-            done();
-          } else {
-            this.warning(`Failed to run ${chalk.yellow('ng add @oktadev/schematics')} in ${this.ionicAppName}!`);
-          }
-        });
+      let installAuthCmd = 'schematics @oktadev/schematics:add-auth --configUri=http://localhost:8080/api/auth-info --issuer=null --clientId=null';
+      installAuthCmd += `${!this.installDeps ? ' --skipPackageJson=true' : ''}`;
+
+      if (shelljs.exec(`cd ${this.ionicAppName} && ${installAuthCmd}`).code !== 0) {
+        this.warning(`Failed to run ${chalk.yellow('schematics @oktadev/schematics:add-auth')} in ${this.ionicAppName}!`);
+        shelljs.exit(1);
       }
 
       const CLIENT_MAIN_SRC_DIR = `${this.ionicAppName}/src/`;
@@ -274,7 +271,7 @@ module.exports = class extends BaseGenerator {
   }
 
   end() {
-    this.log('Ionic for JHipster App created successfully! 🎉\n');
+    this.log('\nIonic for JHipster App created successfully! 🎉\n');
     this.log('Run the following commands (in separate terminal windows) to see everything working:\n');
     this.log(`${chalk.green(`    cd ${this.directoryPath} && ${this.jhipsterAppConfig.buildTool === 'maven' ? './mvnw' : './gradlew'}`)}`);
     this.log(`${chalk.green(`    cd ${this.ionicAppName} && ionic serve`)}\n`);
