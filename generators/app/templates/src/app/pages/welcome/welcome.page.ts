@@ -27,7 +27,7 @@ export class WelcomePage implements OnInit {
     // todo: figure out why access denied is happening
     this.router.events.subscribe(e => {
       if (e instanceof NavigationEnd) {
-        console.log('url', e.url);
+        // console.log('url', e.url);
       }
     });
   }

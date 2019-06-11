@@ -1,4 +1,3 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SessionStorageService } from 'ngx-webstorage';
 import { Observable, Subject } from 'rxjs';
@@ -13,7 +12,7 @@ export class AccountService {
   private authenticated = false;
   private authenticationState = new Subject<any>();
 
-  constructor(private sessionStorage: SessionStorageService, private http: HttpClient, private authService: AuthService) {}
+  constructor(private sessionStorage: SessionStorageService, private authService: AuthService) {}
 
   async fetch(): Promise<IUserInfo> {
     return await this.authService.getUserInfo<IUserInfo>();
@@ -108,10 +107,6 @@ export class AccountService {
 
   getImageUrl(): string {
     return this.isIdentityResolved() ? this.userIdentity.imageUrl : null;
-  }
-
-  private addHeaders(token) {
-    return new HttpHeaders({Authorization: `${token.tokenType} ${token.accessToken}`});
   }
 
   private userInfoToAccount(user) {
