@@ -172,13 +172,14 @@ module.exports = class extends BaseGenerator {
       this.packageFolder = this.jhipsterAppConfig.packageFolder;
 
       let installAuthCmd;
-      let params = '--configUri=http://localhost:8080/api/auth-info --issuer=null --clientId=null';
+      const params = '--configUri=http://localhost:8080/api/auth-info --issuer=null --clientId=null';
+      const schematicsVersion = '0.8.3';
 
       // use `schematics` when testing and expect it to be installed
       if (this.installDeps) {
-        installAuthCmd = `ng add @oktadev/schematics ${params}`;
+        installAuthCmd = `ng add @oktadev/schematics${schematicsVersion} ${params}`;
       } else {
-        packageJSON.devDependencies['@oktadev/schematics'] = '0.8.3';
+        packageJSON.devDependencies['@oktadev/schematics'] = schematicsVersion;
         jsonfile.writeFileSync(packagePath, packageJSON);
         installAuthCmd = `schematics @oktadev/schematics:add-auth ${params} --skipPackageJson=true`;
       }
