@@ -24,10 +24,6 @@ describe('JHipster generator jhipster-generator-ionic', () => {
                 .on('end', done);
         });
 
-        it('generates a ionic4j-oauth2/package.json file', () => {
-            assert.file(['ionic4j-oauth2/package.json']);
-        });
-
         it('deletes files that only apply to JWT', () => {
             assert.noFile([
                 'ionic4j-oauth2/src/login',
@@ -37,11 +33,8 @@ describe('JHipster generator jhipster-generator-ionic', () => {
             ]);
         });
 
-        it('adds @oktadev/schematics to package.json', () => {
+        it('adds @oktadev/schematics and keeps cordova-plugin-camera', () => {
             assert.fileContent('ionic4j-oauth2/package.json', /@oktadev\/schematics/);
-        });
-
-        it('keeps cordova-plugin-camera config in package.json', () => {
             assert.fileContent('ionic4j-oauth2/package.json', /CAMERA_USAGE_DESCRIPTION/);
         });
     });

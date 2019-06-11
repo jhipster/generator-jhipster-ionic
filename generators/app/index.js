@@ -168,25 +168,22 @@ module.exports = class extends BaseGenerator {
     jsonfile.writeFileSync(packagePath, packageJSON);
 
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
-      packageJSON.devDependencies['@oktadev/schematics'] = '0.8.3';
-      jsonfile.writeFileSync(packagePath, packageJSON);
-    }
 
-    if (this.installDeps) {
-      this.log('Installing dependencies...');
-      if (shelljs.exec(`cd ${this.ionicAppName} && npm i --color=always`).code !== 0) {
-        this.warning(`Failed to run ${chalk.yellow('npm install')} in ${this.ionicAppName}!`);
-        this.warning(`Please run it manually before running ${chalk.yellow('ionic serve')}`);
+      //if (this.installDeps) {
+      this.log('Installing @oktadev/schematics...');
+      if (shelljs.exec(`cd ${this.ionicAppName} && npm i -D @oktadev/schematics@0.8.3 --color=always`).code !== 0) {
+        this.warning(`Failed to install ${chalk.yellow('@oktadev/schematics')} in ${this.ionicAppName}!`);
+        this.warning('Please report this as an issue on GitHub:');
+        this.warning('  ' + chalk.blueBright('https://github.com/oktadeveloper/generator-jhipster-ionic/issues/new'));
         shelljs.exit(1);
       }
-    }
 
-    if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
       this.log('Updating Java and TypeScript classes for OIDC...');
       this.packageName = this.jhipsterAppConfig.packageName;
       this.packageFolder = this.jhipsterAppConfig.packageFolder;
 
-      let installAuthCmd = 'npx @angular-devkit/schematics-cli @oktadev/schematics:add-auth --configUri=http://localhost:8080/api/auth-info --issuer=null --clientId=null';
+      let installAuthCmd = 'npx @angular-devkit/schematics-cli@0.800.2 @oktadev/schematics:add-auth --configUri=http://localhost:8080/api/auth-info';
+      installAuthCmd += ' --issuer=null --clientId=null';
       installAuthCmd += `${!this.installDeps ? ' --skipPackageJson=true' : ''}`;
 
       if (shelljs.exec(`cd ${this.ionicAppName} && ${installAuthCmd}`).code !== 0) {
@@ -235,6 +232,7 @@ module.exports = class extends BaseGenerator {
         }
       });
     }
+
 
     // Add e2e tests
     this.authenticationType = this.jhipsterAppConfig.authenticationType;
