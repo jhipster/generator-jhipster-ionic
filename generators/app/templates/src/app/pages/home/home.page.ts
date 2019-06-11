@@ -30,7 +30,6 @@ export class HomePage implements OnInit {
 
   logout() {
     this.loginService.logout();
-    this.goBackToHomePage();
   }
 
   private goBackToHomePage(): void {
