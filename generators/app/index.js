@@ -168,7 +168,7 @@ module.exports = class extends BaseGenerator {
     jsonfile.writeFileSync(packagePath, packageJSON);
 
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
-      packageJSON.devDependencies['@oktadev/schematics'] = '0.8.2';
+      packageJSON.devDependencies['@oktadev/schematics'] = '0.8.3';
       jsonfile.writeFileSync(packagePath, packageJSON);
     }
 
