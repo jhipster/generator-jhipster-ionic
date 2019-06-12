@@ -128,12 +128,6 @@ You can run unit tests with:
 npm test
 ```
 
-And e2e tests with:
-
-```
-npm run build --prod && npm run e2e
-```
-
 See the [testing section](https://github.com/oktadeveloper/ionic-jhipster-starter#testing) of the Ionic JHipster Starter for more information.
 
 ## Contributing
