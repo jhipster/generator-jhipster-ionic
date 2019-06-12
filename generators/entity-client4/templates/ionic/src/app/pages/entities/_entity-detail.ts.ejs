@@ -33,9 +33,9 @@ export class <%= entityAngularName %>DetailPage implements OnInit {
     <%= entityInstance %>: <%= entityAngularName %>;
 
     constructor(
-    <% if (fieldsContainBlob) { %>
+    <%_ if (fieldsContainBlob) { _%>
         private dataUtils: JhiDataUtils,
-    <% } %>
+    <%_ } _%>
         private navController: NavController,
         private <%= entityInstance %>Service: <%= entityAngularName %>Service,
         private activatedRoute: ActivatedRoute,
@@ -43,8 +43,8 @@ export class <%= entityAngularName %>DetailPage implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.activatedRoute.data.subscribe(({<%= entityInstance %>}) => {
-            this.<%= entityInstance %> = <%= entityInstance %>;
+        this.activatedRoute.data.subscribe((response) => {
+            this.<%= entityInstance %> = response.data;
         });
     }
 

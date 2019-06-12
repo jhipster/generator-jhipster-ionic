@@ -36,7 +36,7 @@ export class <%= entityAngularName %>Page implements OnInit {
     // todo: add pagination
 
     constructor(
-<% if (fieldsContainBlob) { %>
+<%_ if (fieldsContainBlob) { _%>
         private dataUtils: JhiDataUtils,
 <%_ } _%>
         private navController: NavController,

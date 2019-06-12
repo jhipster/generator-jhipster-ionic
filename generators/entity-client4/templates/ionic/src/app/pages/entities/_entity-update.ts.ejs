@@ -107,7 +107,7 @@ export class <%= entityAngularName %>UpdatePage implements OnInit {
             const relatedFieldName = (uniqueRel.relationshipType === 'many-to-many') ?
                 uniqueRel.otherEntityNamePlural : uniqueRel.otherEntityName;
             if (uniqueRel.otherEntityAngularName !== entityAngularName) { _%>
-            <%= relatedFieldName %>: ['', [<%_ if (uniqueRel.relationshipValidate === true) { _%>Validators.required <%_ } _%>]],
+            <%= relatedFieldName %>: [null, [<%_ if (uniqueRel.relationshipValidate === true) { _%>Validators.required <%_ } _%>]],
             <%_ }
         }
     });
@@ -118,10 +118,11 @@ _%>
         protected activatedRoute: ActivatedRoute,
         public navController: NavController,
         protected formBuilder: FormBuilder,
+        protected platform: Platform,
         protected toastCtrl: ToastController,
 <%_ if (fieldsContainBlob) { _%>
         private dataUtils: JhiDataUtils,
-<% } %>
+<%_ } _%>
 <% if (fieldsContainImageBlob) { %>
         private elementRef: ElementRef,
         private camera: Camera,
@@ -167,12 +168,11 @@ _%>
         <%_ } else { _%>
         <%- queries[idx] %>
     <%_ } } _%>
-        this.activatedRoute.data.subscribe(({<%= entityInstance %>}) => {
-            this.updateForm(<%= entityInstance %>);
-            this.<%= entityInstance %> = <%= entityInstance %>;
+        this.activatedRoute.data.subscribe((response) => {
+            this.updateForm(response.data);
+            this.<%= entityInstance %> = response.data;
             this.isNew = this.<%= entityInstance %>.id === null || this.<%= entityInstance %>.id === undefined;
         });
-
     }
 
     updateForm(<%= entityInstance %>: <%= entityAngularName %>) {
@@ -183,7 +183,17 @@ _%>
         _%>
             <%= fieldName %>: <%= entityInstance %>.<%= fieldName %>,
         <%_ } _%>
-
+<%_ Object.keys(differentRelationships).forEach(key => {
+        if (differentRelationships[key].some(rel => rel.relationshipType !== 'one-to-many')) {
+            const uniqueRel = differentRelationships[key][0];
+            const relatedFieldName = (uniqueRel.relationshipType === 'many-to-many') ?
+                uniqueRel.otherEntityNamePlural : uniqueRel.otherEntityName;
+            if (uniqueRel.otherEntityAngularName !== entityAngularName) { _%>
+            <%= relatedFieldName %>: this.<%= entityInstance %>.<%= relatedFieldName %>,
+            <%_ }
+        }
+    });
+_%>
         });
     }
 
@@ -198,11 +208,17 @@ _%>
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<<%= entityAngularName %>>>) {
-        result.subscribe((res: HttpResponse<<%= entityAngularName %>>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+        result.subscribe((res: HttpResponse<<%= entityAngularName %>>) => this.onSaveSuccess(res), (res: HttpErrorResponse) => this.onSaveError());
     }
 
-    protected onSaveSuccess() {
+    async onSaveSuccess(response) {
+        let action = 'updated';
+        if (response.status === 201) {
+          action = 'created';
+        }
         this.isSaving = false;
+        const toast = await this.toastCtrl.create({message: `<%= entityAngularName %> ${action} successfully.`, duration: 2000, position: 'middle'});
+        toast.present();
         this.navController.navigateBack('/tabs/entities/<%= entityFileName %>');
     }
 
@@ -225,7 +241,17 @@ _%>
         _%>
             <%= fieldName %>: this.form.get(['<%= fieldName %>']).value,
         <%_ } _%>
-
+<%_ Object.keys(differentRelationships).forEach(key => {
+        if (differentRelationships[key].some(rel => rel.relationshipType !== 'one-to-many')) {
+            const uniqueRel = differentRelationships[key][0];
+            const relatedFieldName = (uniqueRel.relationshipType === 'many-to-many') ?
+                uniqueRel.otherEntityNamePlural : uniqueRel.otherEntityName;
+            if (uniqueRel.otherEntityAngularName !== entityAngularName) { _%>
+            <%= relatedFieldName %>: this.form.get(['<%= relatedFieldName %>']).value,
+            <%_ }
+        }
+    });
+_%>
         };
         return entity;
     }

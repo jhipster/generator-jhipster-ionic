@@ -38,7 +38,6 @@ export class <%= entityAngularName %>Service {
     private resourceUrl = ApiService.API_URL<% if (locals.microserviceName) { %>.replace('api', '<%= microserviceName.toLowerCase() %>/api')<% } %> + '/<%= entityApiUrl %>';
 
     constructor(protected http: HttpClient) { }
-
     <%_ if (entityAngularName.length <= 30) { _%>
 
     create(<%= entityInstance %>: <%= entityAngularName %>): Observable<HttpResponse<<%= entityAngularName %>>> {

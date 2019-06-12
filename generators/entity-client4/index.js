@@ -39,7 +39,7 @@ module.exports = class extends BaseGenerator {
 
     end() {
         if (useBlueprint) return;
-        this.log(chalk.bold.green('\nEntity generation completed!'));
+        this.log(chalk.bold.green('\nEntity generation complete !'));
     }
 
 
