@@ -42,6 +42,7 @@ launchCurlOrProtractor() {
     #---- run ionic e2e tests ----
     cd "$IONIC_FOLDER"
     ionic serve &
+    sleep 20
     retryCount=0
     until [ "$retryCount" -ge "$maxRetry" ]
     do
