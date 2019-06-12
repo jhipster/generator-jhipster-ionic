@@ -164,7 +164,7 @@ _%>
     ngOnInit() {
     <%_ for (idx in queries) {
         if (queries[idx].indexOf('userService') > -1) { _%>
-        this.userService.findAll().subscribe(data => this.users = data, (error) => console.error(error));
+        this.userService.findAll().subscribe(data => this.users = data, (error) => this.onError(error));
         <%_ } else { _%>
         <%- queries[idx] %>
     <%_ } } _%>
@@ -208,7 +208,7 @@ _%>
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<<%= entityAngularName %>>>) {
-        result.subscribe((res: HttpResponse<<%= entityAngularName %>>) => this.onSaveSuccess(res), (res: HttpErrorResponse) => this.onSaveError());
+        result.subscribe((res: HttpResponse<<%= entityAngularName %>>) => this.onSaveSuccess(res), (res: HttpErrorResponse) => this.onError(res.error));
     }
 
     async onSaveSuccess(response) {
@@ -226,8 +226,9 @@ _%>
         window.history.back();
     }
 
-    async onSaveError() {
+    async onError(error) {
         this.isSaving = false;
+        console.error(error);
         const toast = await this.toastCtrl.create({message: 'Failed to load data', duration: 2000, position: 'middle'});
         toast.present();
     }
