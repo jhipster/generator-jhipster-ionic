@@ -30,7 +30,7 @@ import { JhiDataUtils } from 'ng-jhipster';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 <%_ } _%>
 import { FormBuilder, Validators } from '@angular/forms';
-import { NavController, ToastController } from '@ionic/angular';
+import { NavController, Platform, ToastController } from '@ionic/angular';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -107,7 +107,7 @@ export class <%= entityAngularName %>UpdatePage implements OnInit {
             const relatedFieldName = (uniqueRel.relationshipType === 'many-to-many') ?
                 uniqueRel.otherEntityNamePlural : uniqueRel.otherEntityName;
             if (uniqueRel.otherEntityAngularName !== entityAngularName) { _%>
-            <%= relatedFieldName %>: [null, [<%_ if (uniqueRel.relationshipValidate === true) { _%>Validators.required <%_ } _%>]],
+        <%= relatedFieldName %>: [null, [<%_ if (uniqueRel.relationshipValidate === true) { _%>Validators.required <%_ } _%>]],
             <%_ }
         }
     });
@@ -116,7 +116,7 @@ _%>
 
     constructor(
         protected activatedRoute: ActivatedRoute,
-        public navController: NavController,
+        protected navController: NavController,
         protected formBuilder: FormBuilder,
         protected platform: Platform,
         protected toastCtrl: ToastController,
@@ -189,7 +189,7 @@ _%>
             const relatedFieldName = (uniqueRel.relationshipType === 'many-to-many') ?
                 uniqueRel.otherEntityNamePlural : uniqueRel.otherEntityName;
             if (uniqueRel.otherEntityAngularName !== entityAngularName) { _%>
-            <%= relatedFieldName %>: this.<%= entityInstance %>.<%= relatedFieldName %>,
+            <%= relatedFieldName %>: <%= entityInstance %>.<%= relatedFieldName %>,
             <%_ }
         }
     });
@@ -233,7 +233,7 @@ _%>
     }
 
     private createFromForm(): <%= entityAngularName %> {
-        const entity = {
+        return {
             ...new <%= entityAngularName %>(),
             id: this.form.get(['id']).value,
         <%_ for ( idx in fields ) {
@@ -253,7 +253,6 @@ _%>
     });
 _%>
         };
-        return entity;
     }
 
     <%_ if (fieldsContainBlob) { _%>
