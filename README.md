@@ -2,13 +2,13 @@
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 > A JHipster Module that generates an Ionic Client
 
-# Introduction
+## Introduction
 
 This is a [JHipster](http://www.jhipster.tech/) module. You can use it to generate an Ionic app that talks to a JHipster backend. It uses the [Ionic JHipster Starter](https://github.com/oktadeveloper/ionic-jhipster-starter) as a base template, then applies functionality (e.g. entity generation) on top of it. 
 
 To learn more about this module, see [Use Ionic for JHipster to Create Mobile Apps with OIDC Authentication](https://developer.okta.com/blog/2018/01/30/jhipster-ionic-with-oidc-authentication).
 
-# Prerequisites
+## Prerequisites
 
 As this is a [JHipster](http://www.jhipster.tech/) module, we expect you to have an existing JHipster app and Ionic already installed.
 
@@ -21,7 +21,7 @@ Or simply:
 npm i -g generator-jhipster ionic
 ```
 
-# Installation
+## Installation
 
 To install this module:
 
@@ -35,7 +35,7 @@ To update this module:
 npm update -g generator-jhipster-ionic
 ```
 
-# Usage
+## Usage
 
 Create a JHipster app using `yo jhipster`, or a backend-only with `yo jhipster:server`. Choose `JWT` or `OAuth 2.0` as the authentication type. 
 
@@ -45,11 +45,11 @@ In a directory alongside your JHipster app, run this module. This will create an
 yo jhipster-ionic
 ```
 
-# Okta for Authentication
+### Okta for Authentication
 
 If you choose OAuth 2.0 / OIDC for authentication, you can use Okta for authentication. See [JHipster's security docs](https://www.jhipster.tech/security/#-oauth2-and-openid-connect) to see how to configure JHipster for Okta. You should be able to use the same OIDC app for Ionic for JHipster. However, you'll need to add a few redirect URIs:
 
-## Create an Application in Okta
+#### Create an Application in Okta
 
 Log in to your Okta Developer account (or [sign up](https://developer.okta.com/signup/) if you don't have an account).
 
@@ -70,7 +70,7 @@ From the **Applications** page, choose **Add Application**. On the Create New Ap
 },
 ```
 
-# iOS 
+### iOS 
 
 Generate a native project with the following command:
 
@@ -84,7 +84,7 @@ Open your project in Xcode, configure code signing, and run your app.
 open platforms/ios/MyApp.xcworkspace
 ```
 
-# Android
+### Android
 
 Generate a native project with the following command:
 
@@ -116,11 +116,11 @@ adb reverse tcp:8080 tcp:8080
 adb reverse tcp:9080 tcp:9080
 ```
 
-# Entity Generator
+### Entity Generator
 
 To generate entities, run `yo jhipster-ionic:entity <name>`.
 
-# Testing
+## Testing
 
 You can run unit tests with:
 
@@ -136,11 +136,11 @@ npm run build --prod && npm run e2e
 
 See the [testing section](https://github.com/oktadeveloper/ionic-jhipster-starter#testing) of the Ionic JHipster Starter for more information.
 
-# Contributing
+## Contributing
 
 Please read our [guidelines](/CONTRIBUTING.md#submitting-an-issue) before submitting an issue. If your issue is a bug, please use the bug template pre populated [here](https://github.com/jhipster/generator-jhipster-ionic/issues/new). For feature requests and queries you can use [this template][feature-template].
 
-# License
+## License
 
 Apache-2.0 © [Okta](https://developer.okta.com)
 
