@@ -1,74 +1,64 @@
-import { async, TestBed } from '@angular/core/testing';
-import { Config, IonicModule, Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { ConfigMock, PlatformMock, SplashScreenMock, StatusBarMock } from 'ionic-mocks-jest';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { MyApp } from './app.component';
-import { IonicStorageModule, Storage } from '@ionic/storage';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { TestBed, async } from '@angular/core/testing';
 
-import * as en from '../assets/i18n/en.json';
-import { provideSettings } from './app.module';
-import { Settings } from '../providers/providers';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import { OAuthService } from 'angular-oauth2-oidc';
-import { Api } from '../providers/api/api';
+import { Platform } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+
+import { AppComponent } from './app.component';
+import Mock = jest.Mock;
+import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { IonicStorageModule } from '@ionic/storage';
 
-const TRANSLATIONS = {
-  EN: en
-};
+describe('AppComponent', () => {
+  let statusBarSpy, splashScreenSpy, platformReadySpy, platformSpy;
 
-class JsonTranslationLoader implements TranslateLoader {
-  getTranslation(code: string = ''): Observable<object> {
-    const uppercased = code.toUpperCase();
-    return of(TRANSLATIONS[uppercased]);
-  }
-}
+  beforeEach(async(() => {
+    statusBarSpy = createSpyObj('StatusBar', ['styleDefault']);
+    splashScreenSpy = createSpyObj('SplashScreen', ['hide']);
+    platformReadySpy = Promise.resolve();
+    platformSpy = createSpyObj('Platform', [{ready: platformReadySpy}, 'is']);
 
-describe('MyApp Component', () => {
-  let fixture;
-  let component;
-  let oauthService = {};
+    TestBed.configureTestingModule({
+      declarations: [AppComponent],
+      imports: [TranslateModule.forRoot(), HttpClientTestingModule, IonicStorageModule.forRoot()],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        { provide: StatusBar, useValue: statusBarSpy },
+        { provide: SplashScreen, useValue: splashScreenSpy },
+        { provide: Platform, useValue: platformSpy }
+      ]
+    }).compileComponents();
+  }));
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        declarations: [MyApp],
-        imports: [
-          IonicModule.forRoot(MyApp),
-          TranslateModule.forRoot({
-            loader: { provide: TranslateLoader, useClass: JsonTranslationLoader }
-          }),
-          HttpClientTestingModule,
-          IonicStorageModule.forRoot({
-            name: 'storage',
-            driverOrder: ['localstorage'],
-          })],
-        providers: [
-          {provide: StatusBar, useFactory: () => StatusBarMock.instance()},
-          {provide: SplashScreen, useFactory: () => SplashScreenMock.instance()},
-          {provide: Platform, useFactory: () => PlatformMock.instance()},
-          {provide: Config, useFactory: () => ConfigMock.instance()},
-          {provide: Settings, useFactory: provideSettings, deps: [Storage]},
-          {provide: OAuthService, useValue: oauthService},
-          Api
-        ]
-      });
-    })
-  );
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(MyApp);
-    component = fixture.componentInstance;
+  it('should create the app', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.debugElement.componentInstance;
+    expect(app).toBeTruthy();
   });
 
-  it('should be created', () => {
-    expect(component instanceof MyApp).toBe(true);
+  it('should initialize the app', async () => {
+    TestBed.createComponent(AppComponent);
+    expect(platformSpy.ready).toHaveBeenCalled();
+    await platformReadySpy;
+    expect(statusBarSpy.styleDefault).toHaveBeenCalled();
+    expect(splashScreenSpy.hide).toHaveBeenCalled();
   });
 
-  it('should show tabs page', () => {
-    expect(component.rootPage).toEqual('TabsPage');
-  });
+  // TODO: add more tests!
 });
+
+export const createSpyObj = (baseName, methodNames): { [key: string]: Mock<any> } => {
+  const obj: any = {};
+
+  for (const m of methodNames) {
+    if (typeof m === 'string') {
+      obj[m] = jest.fn();
+    } else {
+      obj[Object.keys(m)[0]] = jest.fn().mockImplementation(() => Object.values(m)[0]);
+    }
+  }
+
+  return obj;
+};

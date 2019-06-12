@@ -41,7 +41,8 @@ launchCurlOrProtractor() {
     done
     #---- run ionic e2e tests ----
     cd "$IONIC_FOLDER"
-    npm run build --prod
+    ionic serve &
+    sleep 20
     retryCount=0
     until [ "$retryCount" -ge "$maxRetry" ]
     do
@@ -64,10 +65,10 @@ cd "$APP_FOLDER"
 
 if [ -f "mvnw" ]; then
     ./mvnw -q package -DskipTests=true -P"$PROFILE"
-    mv target/*.war app.war
+    mv target/*.jar app.jar
 elif [ -f "gradlew" ]; then
     ./gradlew bootRepackage -P"$PROFILE" -x test
-    mv build/libs/*.war app.war
+    mv build/libs/*.jar app.jar
 else
     echo "No mvnw or gradlew"
     exit 0
@@ -83,7 +84,7 @@ fi
 if [ "$RUN_APP" == 1 ]; then
 
     cd "$APP_FOLDER"
-    java -jar app.war \
+    java -jar app.jar \
         --spring.profiles.active="$PROFILE" &
     sleep 40
 

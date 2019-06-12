@@ -28,8 +28,8 @@ describe('JHipster generator jhipster-generator-ionic', () => {
             assert.file(['ionic4j-jwt/package.json']);
         });
 
-        it('does not delete providers/auth/auth-jwt.service.ts', () => {
-            assert.file('ionic4j-jwt/src/providers/auth/auth-jwt.service.ts');
+        it('does not delete app/services/auth/auth-jwt.service.ts', () => {
+            assert.file('ionic4j-jwt/src/app/services/auth/auth-jwt.service.ts');
         });
     });
 });
