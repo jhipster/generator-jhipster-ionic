@@ -27,11 +27,9 @@
     "cross-spawn": "6.0.5",
     "generator-jhipster": ">=6.1.0",
     "jsonfile": "5.0.0",
-    "mkdirp": "0.5.1",
+    "pluralize": "^8.0.0",
     "semver": "6.1.1",
-    "shelljs": "0.8.3",
-    "yeoman-environment": "2.3.4",
-    "yeoman-generator": "4.0.1"
+    "shelljs": "0.8.3"
   },
   "devDependencies": {
     "@angular-devkit/schematics-cli": "^0.800.2",
