@@ -27,13 +27,13 @@
     "cross-spawn": "6.0.5",
     "generator-jhipster": ">=6.1.0",
     "jsonfile": "5.0.0",
-    "pluralize": "^8.0.0",
+    "pluralize": "8.0.0",
     "semver": "6.1.1",
     "shelljs": "0.8.3"
   },
   "devDependencies": {
-    "@angular-devkit/schematics-cli": "^0.800.2",
-    "@oktadev/schematics": "^0.8.3",
+    "@angular-devkit/schematics-cli": "0.800.2",
+    "@oktadev/schematics": "0.8.3",
     "chai": "4.2.0",
     "eslint": "5.16.0",
     "eslint-config-airbnb-base": "13.1.0",
