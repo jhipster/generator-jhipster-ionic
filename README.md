@@ -47,9 +47,9 @@ yo jhipster-ionic
 
 ### Okta for Authentication
 
-If you choose OAuth 2.0 / OIDC for authentication, you can use Okta for authentication. See [JHipster's security docs](https://www.jhipster.tech/security/#-oauth2-and-openid-connect) to see how to configure JHipster for Okta. You should be able to use the same OIDC app for Ionic for JHipster. However, you'll need to add a few redirect URIs:
+If you choose OAuth 2.0 / OIDC for authentication, you can use Okta for authentication. See [JHipster's security docs](https://www.jhipster.tech/security/#-oauth2-and-openid-connect) to see how to configure JHipster for Okta. You should be able to use the same OIDC app for Ionic for JHipster, but you can also create a Native app.
 
-#### Create an Application in Okta
+#### Create a Native Application in Okta
 
 Log in to your Okta Developer account (or [sign up](https://developer.okta.com/signup/) if you don't have an account).
 
@@ -62,7 +62,7 @@ From the **Applications** page, choose **Add Application**. On the Create New Ap
   * `http://localhost:8100/implicit/logout`
   * `dev.localhost.ionic:/logout`
   
-**NOTE:** `dev.localhost.ionic` is the default scheme, but you can also use something more traditional like `com.okta.dev-737523` (where `dev-737523.okta.com` is your Okta Org URL). If you'd like to change it, be sure to update the `URL_SCHEME` in `package.json`.
+**NOTE:** `dev.localhost.ionic` is the default scheme, but you can also use something more traditional like `com.okta.dev-737523` (where `dev-737523.okta.com` is your Okta Org URL). If you change it, be sure to update the `URL_SCHEME` in `package.json` and the redirect URIs `src/app/auth/auth.service.ts`.
 
 ```json
 "cordova-plugin-customurlscheme": {
