@@ -206,8 +206,6 @@ module.exports = class extends BaseGenerator {
       this.template('src/app/pages/welcome/welcome.page.html', `${CLIENT_MAIN_SRC_DIR}app/pages/welcome/welcome.page.html`);
       this.template('src/app/pages/welcome/welcome.page.spec.ts', `${CLIENT_MAIN_SRC_DIR}app/pages/welcome/welcome.page.spec.ts`);
       this.template('src/app/pages/welcome/welcome.page.ts', `${CLIENT_MAIN_SRC_DIR}app/pages/welcome/welcome.page.ts`);
-      this.template('src/app/services/auth/account.service.spec.ts', `${CLIENT_MAIN_SRC_DIR}app/services/auth/account.service.spec.ts`);
-      this.template('src/app/services/auth/account.service.ts', `${CLIENT_MAIN_SRC_DIR}app/services/auth/account.service.ts`);
       this.template('src/app/services/auth/user-route-access.service.spec.ts', `${CLIENT_MAIN_SRC_DIR}app/services/auth/user-route-access.service.spec.ts`);
       this.template('src/app/services/auth/user-route-access.service.ts', `${CLIENT_MAIN_SRC_DIR}app/services/auth/user-route-access.service.ts`);
       this.template('src/app/services/login/login.service.spec.ts', `${CLIENT_MAIN_SRC_DIR}app/services/login/login.service.spec.ts`);
@@ -221,8 +219,8 @@ module.exports = class extends BaseGenerator {
         `${CLIENT_MAIN_SRC_DIR}app/login`,
         `${CLIENT_MAIN_SRC_DIR}app/tab1`,
         `${CLIENT_MAIN_SRC_DIR}app/pages/signup`,
-        `${CLIENT_MAIN_SRC_DIR}app/services/auth/auth.jwt.service.ts`,
-        `${CLIENT_MAIN_SRC_DIR}app/services/auth/auth.jwt.service.spec.ts`,
+        `${CLIENT_MAIN_SRC_DIR}app/services/auth/auth-jwt.service.ts`,
+        `${CLIENT_MAIN_SRC_DIR}app/services/auth/auth-jwt.service.spec.ts`,
       ];
 
       filesToDelete.forEach((path) => {
