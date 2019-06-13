@@ -36,7 +36,8 @@
 
     <ion-list>
         <ion-item-sliding *ngFor="let <%=entityInstance %> of <%=entityInstancePlural %>; trackBy: trackId" #slidingItem>
-            <ion-button (click)="detail(<%= entityInstance %>)">
+            <ion-item (click)="view(<%= entityInstance %>)">
+              <ion-label text-wrap>
               <%_ for (idx in fields) {
                 const fieldName = fields[idx].fieldName;
                 const fieldNameCapitalized = fields[idx].fieldNameCapitalized;
@@ -56,20 +57,21 @@
                 <p>{{<%=entityInstance %>.<%=fieldName%> | date:'mediumDate'}}</p>
                 <%_ } else { _%>
                   <%_ if (fieldName === 'name' || fieldName === 'title') { _%>
-                <h2>{{<%=entityInstance %>.<%=fieldName%>}}</h2>
+                <ion-text color="primary"><h2>{{<%=entityInstance %>.<%=fieldName%>}}</h2></ion-text>
                   <%_ } else { _%>
                 <p>{{<%=entityInstance %>.<%=fieldName%>}}</p>
                   <%_ } _%>
                 <%_ } _%>
               <%_ } _%>
-            </ion-button>
+              </ion-label>
+            </ion-item>
             <ion-item-options side="end">
-                <ion-button color="primary" (click)="open(slidingItem, <%=entityInstance %>)">
+                <ion-item-option color="primary" (click)="edit(slidingItem, <%=entityInstance %>)">
                     {{ 'EDIT_BUTTON' | translate }}
-                </ion-button>
-                <ion-button color="danger" (click)="delete(<%=entityInstance %>)">
+                </ion-item-option>
+                <ion-item-option color="danger" (click)="delete(<%=entityInstance %>)">
                     {{ 'DELETE_BUTTON' | translate }}
-                </ion-button>
+                </ion-item-option>
             </ion-item-options>
         </ion-item-sliding>
     </ion-list>
@@ -80,7 +82,7 @@
     </ion-item>
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button (click)="open()">
+        <ion-fab-button (click)="new()">
             <ion-icon name="add"></ion-icon>
         </ion-fab-button>
     </ion-fab>

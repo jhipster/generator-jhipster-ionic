@@ -16,8 +16,8 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-import { Component, OnInit } from '@angular/core';
-import { NavController, ToastController, Platform } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { NavController, ToastController, Platform, IonItemSliding } from '@ionic/angular';
 import { filter, map } from 'rxjs/operators';
 import { HttpResponse } from '@angular/common/http';
 <%_ if (fieldsContainBlob) { _%>
@@ -30,7 +30,7 @@ import { <%= entityAngularName %>Service } from './<%= entityFileName %>.service
     selector: 'page-<%= entityFileName %>',
     templateUrl: '<%= entityFileName %>.html'
 })
-export class <%= entityAngularName %>Page implements OnInit {
+export class <%= entityAngularName %>Page {
     <%= entityInstancePlural %>: <%= entityAngularName %>[];
 
     // todo: add pagination
@@ -47,7 +47,7 @@ export class <%= entityAngularName %>Page implements OnInit {
         this.<%= entityInstancePlural %> = [];
     }
 
-    ngOnInit() {
+    ionViewWillEnter() {
         this.loadAll();
     }
 
@@ -86,8 +86,13 @@ export class <%= entityAngularName %>Page implements OnInit {
     }
 <%_ } _%>
 
-    open(slidingItem: any, item: <%= entityAngularName %>) {
+    new() {
         this.navController.navigateForward('/tabs/entities/<%= entityFileName %>/new');
+    }
+
+    edit(item: IonItemSliding, <%= entityInstance %>: <%= entityAngularName %>) {
+        this.navController.navigateForward('/tabs/entities/<%= entityFileName %>/' + <%= entityInstance %>.id + '/edit');
+        item.close();
     }
 
     async delete(<%= entityInstance %>) {
@@ -99,7 +104,7 @@ export class <%= entityAngularName %>Page implements OnInit {
         }, (error) => console.error(error));
     }
 
-    detail(<%= entityInstance %>: <%= entityAngularName %>) {
+    view(<%= entityInstance %>: <%= entityAngularName %>) {
         this.navController.navigateForward('/tabs/entities/<%= entityFileName %>/' + <%= entityInstance %>.id + '/view');
     }
 }
