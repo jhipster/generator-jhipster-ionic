@@ -47,7 +47,13 @@ yo jhipster-ionic
 
 ### Okta for Authentication
 
-If you choose OAuth 2.0 / OIDC for authentication, you can use Okta for authentication. See [JHipster's security docs](https://www.jhipster.tech/security/#-oauth2-and-openid-connect) to see how to configure JHipster for Okta. You should be able to use the same OIDC app for Ionic for JHipster, but you can also create a Native app.
+Choosing OAuth 2.0 / OIDC for authentication will allow you to use Keycloak or Okta for identity. In theory, you should be able to use any OIDC-compliant identity provider, and these are the only ones we've tested against. JHipster ships with Keycloak configured and ready to go by default. You simply have to start it in your JHipster backend.
+
+```bash
+docker-compose -f src/main/docker/keycloak up
+```
+
+See [JHipster's security docs](https://www.jhipster.tech/security/#-oauth2-and-openid-connect) to see how to configure JHipster for Okta. You should be able to use the same OIDC app for Ionic, but you can also create a Native app.
 
 #### Create a Native Application in Okta
 
@@ -136,7 +142,7 @@ Please read our [guidelines](/CONTRIBUTING.md#submitting-an-issue) before submit
 
 ## License
 
-Apache-2.0 © [Okta](https://developer.okta.com)
+Apache-2.0 © [Okta, Inc](https://developer.okta.com)
 
 [npm-image]: https://img.shields.io/npm/v/generator-jhipster-ionic.svg
 [npm-url]: https://npmjs.org/package/generator-jhipster-ionic
