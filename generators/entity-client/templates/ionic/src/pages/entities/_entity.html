@@ -44,7 +44,6 @@
                 <%_ if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'image') { _%>
                 <ion-avatar<% if (idx === 0) { %>item-start<% } %> *ngIf="<%= entityInstance %>.<%= fieldName %>">
                     <img [src]="'data:' + <%=entityInstance %>.<%=fieldName%>ContentType + ';base64,' + <%=entityInstance %>.<%=fieldName%>" />
-                    <p *ngIf="<%= entityInstance %>.<%= fieldName %>">{{<%= entityInstance %>.<%= fieldName %>ContentType}}, {{byteSize(<%= entityInstance %>.<%= fieldName %>)}}</p>
                 </ion-avatar>
                 <%_ } else if (fields[idx].fieldIsEnum) { _%>
                 <!-- todo: special handling for translating enum - {{'<%= fieldType %>.' + <%= entityInstance %>.<%= fieldName %>}}" -->
