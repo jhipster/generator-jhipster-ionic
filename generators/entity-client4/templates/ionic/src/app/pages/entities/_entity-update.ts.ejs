@@ -27,7 +27,7 @@ import { Component, OnInit<% if (fieldsContainImageBlob) { %>, ElementRef, ViewC
 import { JhiDataUtils } from 'ng-jhipster';
 <%_ } _%>
 <%_ if (fieldsContainImageBlob) { _%>
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 <%_ } _%>
 import { FormBuilder, Validators } from '@angular/forms';
 import { NavController, Platform, ToastController } from '@ionic/angular';
@@ -98,7 +98,7 @@ export class <%= entityAngularName %>UpdatePage implements OnInit {
         <%= fieldName %>: [null, [<% if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.indexOf('required') !== -1) { %>Validators.required<% } %>]],
         <%_ } _%>
         <%_ if (['byte[]', 'ByteBuffer'].includes(fieldType) && fields[idx].fieldTypeBlobContent !== 'text') { _%>
-        <%= fieldName %>ContentType: [ContentType : ''],
+        <%= fieldName %>ContentType: [null, []],
         <%_ } _%>
     <%_ } _%>
 <%_ Object.keys(differentRelationships).forEach(key => {
@@ -180,8 +180,16 @@ _%>
             id: <%= entityInstance %>.id,
         <%_ for ( idx in fields ) {
             const fieldName = fields[idx].fieldName;
+            const fieldType = fields[idx].fieldType;
         _%>
+          <%_ if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
+            <%= fieldName %>: (this.isNew) ? new Date().toISOString() : <%= entityInstance %>.<%= fieldName %>,
+          <%_ } else { _%>
             <%= fieldName %>: <%= entityInstance %>.<%= fieldName %>,
+          <%_ } _%>
+          <%_ if (['byte[]', 'ByteBuffer'].includes(fieldType) && fields[idx].fieldTypeBlobContent !== 'text') { _%>
+            <%= fieldName %>ContentType: <%= entityInstance %>.<%= fieldName %>ContentType,
+          <%_ } _%>
         <%_ } _%>
 <%_ Object.keys(differentRelationships).forEach(key => {
         if (differentRelationships[key].some(rel => rel.relationshipType !== 'one-to-many')) {
@@ -239,8 +247,16 @@ _%>
             id: this.form.get(['id']).value,
         <%_ for ( idx in fields ) {
             const fieldName = fields[idx].fieldName;
+            const fieldType = fields[idx].fieldType;
         _%>
+          <%_ if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
+            <%= fieldName %>: new Date(this.form.get(['<%= fieldName %>']).value),
+          <%_ } else { _%>
             <%= fieldName %>: this.form.get(['<%= fieldName %>']).value,
+          <%_ } _%>
+          <%_ if (['byte[]', 'ByteBuffer'].includes(fieldType) && fields[idx].fieldTypeBlobContent !== 'text') { _%>
+            <%= fieldName %>ContentType: this.form.get(['<%= fieldName %>ContentType']).value,
+          <%_ } _%>
         <%_ } _%>
 <%_ Object.keys(differentRelationships).forEach(key => {
         if (differentRelationships[key].some(rel => rel.relationshipType !== 'one-to-many')) {
@@ -267,27 +283,29 @@ _%>
 
     setFileData(event, entity, field, isImage) {
         this.dataUtils.setFileData(event, entity, field, isImage);
-        <% if (fieldsContainImageBlob) { %>this.processWebImage(event, field);<% } %>
+        <%_ if (fieldsContainImageBlob) { _%>
+        this.processWebImage(event, field);
+        <%_ } _%>
     }
 
     <%_ } if (fieldsContainImageBlob) { _%>
     getPicture(fieldName) {
-        if (Camera['installed']()) {
+        if (Camera.installed()) {
             this.camera.getPicture(this.cameraOptions).then((data) => {
                 this.<%= entityInstance %>[fieldName] = data;
                 this.<%= entityInstance %>[fieldName + 'ContentType'] = 'image/jpeg';
-                this.form.patchValue({ [fieldName]: 'data:image/jpg;base64,' + data });
+                this.form.patchValue({ [fieldName]: data });
                 this.form.patchValue({ [fieldName + 'ContentType']: 'image/jpeg' });
             }, (err) => {
                 alert('Unable to take photo');
-            })
+            });
         } else {
             this.fileInput.nativeElement.click();
         }
     }
 
     processWebImage(event, fieldName) {
-        let reader = new FileReader();
+        const reader = new FileReader();
         reader.onload = (readerEvent) => {
 
             let imageData = (readerEvent.target as any).result;

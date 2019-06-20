@@ -85,21 +85,21 @@ _%>
                     <div *ngIf="<%= entityInstance %>.<%= fieldName %>">
                         <p>{{<%= entityInstance %>.<%= fieldName %>ContentType}}, {{byteSize(<%= entityInstance %>.<%= fieldName %>)}}</p>
                         <%_ if (fieldTypeBlobContent === 'image') { _%>
-                        <button type="button" class="trash" (click)="clearInputImage('<%= fieldName %>', '<%= fieldName %>ContentType', 'fileImage')">
-                            <ion-icon name="trash"></ion-icon>
-                        </button>
+                        <ion-button color="danger" (click)="clearInputImage('<%= fieldName %>', '<%= fieldName %>ContentType', 'fileImage')">
+                            <ion-icon name="trash" slot="icon-only"></ion-icon>
+                        </ion-button>
                         <%_ } else { _%>
-                        <button type="button" class="trash" (click)="<%= entityInstance %>.<%= fieldName %>=null;<%= entityInstance %>.<%= fieldName %>ContentType=null;">
-                            <ion-icon name="trash"></ion-icon>
-                        </button>
+                        <ion-button color="danger" (click)="<%= entityInstance %>.<%= fieldName %>=null;<%= entityInstance %>.<%= fieldName %>ContentType=null;">
+                            <ion-icon name="trash" slot="icon-only"></ion-icon>
+                        </ion-button>
                         <%_ } _%>
                     </div>
                     <input type="file" #fileInput style="display: none" (change)="setFileData($event, <%= entityInstance %>, '<%= fieldName %>', <% if (fieldTypeBlobContent === 'image') { %>true)" accept="image/*"<% } else { %>false)"<% } %>/>
                     <%_ if (fieldTypeBlobContent === 'image') { _%>
-                    <div *ngIf="!<%= entityInstance %>?.<%= fieldName %>" (click)="getPicture('<%= fieldName %>')" ion-button icon-start>
-                        <ion-icon name="add-circle"></ion-icon>
+                    <ion-button *ngIf="!<%= entityInstance %>?.<%= fieldName %>" (click)="getPicture('<%= fieldName %>')">
+                        <ion-icon name="add-circle" slot="start"></ion-icon>
                         {{ 'ITEM_CREATE_CHOOSE_IMAGE' | translate }}
-                    </div>
+                    </ion-button>
                     <%_ } _%>
                 </div>
                 <%_ } else if (fieldType === 'LocalDate' || ['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>

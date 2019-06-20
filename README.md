@@ -53,7 +53,9 @@ Choosing OAuth 2.0 / OIDC for authentication will allow you to use Keycloak or O
 docker-compose -f src/main/docker/keycloak up
 ```
 
-See [JHipster's security docs](https://www.jhipster.tech/security/#-oauth2-and-openid-connect) to see how to configure JHipster for Okta. You should be able to use the same OIDC app for Ionic, but you can also create a Native app.
+See [JHipster's security docs](https://www.jhipster.tech/security/#-oauth2-and-openid-connect) to see how to configure JHipster for Okta. 
+
+In addition to having a OIDC app for your JHipster backend, you'll need to create a Native app too.
 
 #### Create a Native Application in Okta
 
@@ -68,13 +70,38 @@ From the **Applications** page, choose **Add Application**. On the Create New Ap
   * `http://localhost:8100/implicit/logout`
   * `dev.localhost.ionic:/logout`
   
-**NOTE:** `dev.localhost.ionic` is the default scheme, but you can also use something more traditional like `com.okta.dev-737523` (where `dev-737523.okta.com` is your Okta Org URL). If you change it, be sure to update the `URL_SCHEME` in `package.json` and the redirect URIs `src/app/auth/auth.service.ts`.
+**NOTE:** `dev.localhost.ionic` is the default scheme, but you can also use something more traditional like `com.okta.dev-737523` (where `dev-737523.okta.com` is your Okta Org URL). If you change it, be sure to update the `URL_SCHEME` in `package.json` and the redirect URIs in `src/app/auth/auth.service.ts`.
 
 ```json
 "cordova-plugin-customurlscheme": {
     "URL_SCHEME": "com.okta.dev-737523"
 },
 ```
+
+Open `src/app/auth/auth.service.ts` in an editor, search for `data.clientId` and replace it with the client ID from your Native app.
+
+```ts
+// try to get the oauth settings from the server
+this.requestor.xhr({method: 'GET', url: AUTH_CONFIG_URI}).then(async (data: any) => {
+  this.authConfig = {
+    identity_client: '{yourClientId}',
+    identity_server: data.issuer,
+    redirect_url: redirectUri,
+    end_session_redirect_url: logoutRedirectUri,
+    scopes,
+    usePkce: true
+  };
+  ...
+}
+```
+
+#### Add Claims to Access Token
+
+In order to authentication successfully with your Ionic app, you have to do a bit more configuration in Okta. Since the Ionic client will only send an access token to JHipster, you need to 1) add a `groups` claim to the access token and 2) add a couple more claims so the user's name will be available in JHipster.
+
+Navigate to **API** > **Authorization Servers**, click the **Authorization Servers** tab and edit the **default** one. Click the **Claims** tab and **Add Claim**. Name it "groups" and include it in the Access Token. Set the value type to "Groups" and set the filter to be a Regex of `.*`. Click **Create**.
+
+Add another claim, name it `given_name`, include it in the access token, use `Expression` in the value type, and set the value to `user.firstName`. Optionally, include it in the `profile` scope. Perform the same actions to create a `family_name` claim and use expression `user.lastName`.
 
 ### iOS 
 
