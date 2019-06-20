@@ -19,6 +19,9 @@
 import { NgModule, Injectable } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { IonicModule } from '@ionic/angular';
+<%_ if (fieldsContainImageBlob) { _%>
+import { Camera } from '@ionic-native/camera/ngx';
+<%_ } _%>
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { UserRouteAccessService } from '../../../services/auth/user-route-access.service';
@@ -105,7 +108,8 @@ const routes: Routes = [
         CommonModule,
         TranslateModule,
         RouterModule.forChild(routes)
-    ]
+    ]<% if (fieldsContainImageBlob) { %>,
+    providers: [Camera]<% } %>
 })
 export class <%= entityAngularName %>PageModule {
 }
