@@ -189,7 +189,7 @@ module.exports = class extends BaseGenerator {
         shelljs.exit(1);
       }
 
-      this.log('Updating Java and TypeScript classes for OIDC...');
+      this.log('Updating for OIDC...');
       const CLIENT_MAIN_SRC_DIR = `${this.ionicAppName}/src/`;
 
       // Update Ionic files to work with JHipster
