@@ -4,7 +4,7 @@
             "packageName": "com.okta.developer",
             "nativeLanguage": "en"
         },
-        "jhipsterVersion": "6.1.0",
+        "jhipsterVersion": "6.1.1",
         "baseName": "backend",
         "reactive": false,
         "packageName": "com.okta.developer",
@@ -22,7 +22,7 @@
         "serviceDiscoveryType": false,
         "buildTool": "maven",
         "enableSwaggerCodegen": false,
-        "clientFramework": "angularX",
+        "clientFramework": "angular",
         "useSass": false,
         "clientPackageManager": "yarn",
         "applicationType": "monolith",

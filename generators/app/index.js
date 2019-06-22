@@ -189,7 +189,10 @@ module.exports = class extends BaseGenerator {
         shelljs.exit(1);
       }
 
-      this.log('Updating for OIDC...');
+      // force overwriting of files since prompting will confuse developers on initial install
+      this.conflicter.force = true;
+
+      this.log('Updating Ionic AppAuth to work with JHipster...');
       const CLIENT_MAIN_SRC_DIR = `${this.ionicAppName}/src/`;
 
       // Update Ionic files to work with JHipster
@@ -268,5 +271,7 @@ module.exports = class extends BaseGenerator {
     this.log('Run the following commands (in separate terminal windows) to see everything working:\n');
     this.log(`${chalk.green(`    cd ${this.directoryPath} && ${this.jhipsterAppConfig.buildTool === 'maven' ? './mvnw' : './gradlew'}`)}`);
     this.log(`${chalk.green(`    cd ${this.ionicAppName} && ionic serve`)}\n`);
+    // force quit; needed because of this.conflicter.force = true
+    process.exit(0);
   }
 };
