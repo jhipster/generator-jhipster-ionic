@@ -50,6 +50,7 @@ module.exports = class extends BaseGenerator {
 
     this.interactive = this.options.interactive;
     this.installDeps = this.options.installDeps;
+    this.registerPrettierTransform();
   }
 
   get initializing() {
