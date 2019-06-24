@@ -570,6 +570,7 @@ module.exports = class extends BaseGenerator {
                         if (relationship.otherEntityNameCapitalized !== 'User') {
                             const otherEntityAngularSuffix = otherEntityData ? otherEntityData.angularJSSuffix || '' : '';
                             relationship.otherEntityAngularName = _.upperFirst(relationship.otherEntityName) + _.upperFirst(_.camelCase(otherEntityAngularSuffix));
+                            relationship.otherEntityFileName = _.kebabCase(relationship.otherEntityAngularName);
                         } else {
                             relationship.otherEntityAngularName = 'User';
                         }

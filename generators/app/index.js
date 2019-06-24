@@ -233,6 +233,9 @@ module.exports = class extends BaseGenerator {
           this.removeDirectory(path);
         }
       });
+    } else {
+      this.log('Adding User model for entities...');
+      this.template('src/app/services/user/user.model.ts', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.model.ts`);
     }
 
     // Add e2e tests
