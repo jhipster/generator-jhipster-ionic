@@ -25,7 +25,7 @@
   "dependencies": {
     "chalk": "2.4.2",
     "cross-spawn": "6.0.5",
-    "generator-jhipster": ">=6.1.1",
+    "generator-jhipster": ">=6.1.2",
     "jsonfile": "5.0.0",
     "pluralize": "8.0.0",
     "semver": "6.1.1",

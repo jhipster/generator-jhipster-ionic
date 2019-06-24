@@ -236,6 +236,7 @@ module.exports = class extends BaseGenerator {
     }
 
     // Add e2e tests
+    this.log('Adding e2e tests...');
     this.authenticationType = this.jhipsterAppConfig.authenticationType;
     this.template('e2e/pages/login.po.ts', `${this.ionicAppName}/e2e/pages/login.po.ts`);
     this.template('e2e/spec/login.e2e-spec.ts', `${this.ionicAppName}/e2e/spec/login.e2e-spec.ts`);
