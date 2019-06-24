@@ -127,9 +127,7 @@ _%>
             const relationshipFieldName = relationships[idx].relationshipFieldName;
             const relationshipFieldNamePlural = relationships[idx].relationshipFieldNamePlural;
             const otherEntityField = relationships[idx].otherEntityField;
-            const otherEntityFieldCapitalized = relationships[idx].otherEntityFieldCapitalized;
-            const relationshipRequired = relationships[idx].relationshipRequired;
-            const translationKey = keyPrefix + relationshipName; _%>
+            const relationshipRequired = relationships[idx].relationshipRequired; _%>
             <%_ if (relationshipType === 'many-to-one' || (relationshipType === 'one-to-one' && ownerSide === true && otherEntityName === 'user')) { _%>
             <ion-item>
                 <ion-label><%= relationshipNameHumanized %></ion-label>
@@ -140,7 +138,7 @@ _%>
                 <%_ } else { _%>
                     <ion-select-option *ngIf="!form.value.<%= relationshipName %>" [value]="null" selected></ion-select-option>
                 <%_ } _%>
-                    <ion-select-option [value]="<%=otherEntityName %>Option" *ngFor="let <%=otherEntityName %>Option of <%=otherEntityNamePlural.toLowerCase() %>; trackBy: track<%=otherEntityNameCapitalized %>ById">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-select-option>
+                    <ion-select-option [value]="<%=otherEntityName %>Option" *ngFor="let <%=otherEntityName %>Option of <%=otherEntityNamePlural%>; trackBy: track<%=otherEntityNameCapitalized %>ById">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-select-option>
                 </ion-select>
                 <%_ } else { _%>
                 <ion-select id="field_<%= relationshipName %>" formControlName="<%= relationshipName %>" [compareWith]="compare<%=otherEntityNameCapitalized %>"<% if (relationshipRequired) { %> required<% } %>>
@@ -149,7 +147,7 @@ _%>
                 <%_ } else { _%>
                     <ion-select-option *ngIf="!form.value.<%= relationshipName %>" [value]="null" selected></ion-select-option>
                 <%_ } _%>
-                    <ion-select-option [value]="<%=otherEntityName %>Option.id" *ngFor="let <%=otherEntityName %>Option of <%=otherEntityNamePlural.toLowerCase() %>; trackBy: track<%=otherEntityNameCapitalized %>ById">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-select-option>
+                    <ion-select-option [value]="<%=otherEntityName %>Option.id" *ngFor="let <%=otherEntityName %>Option of <%=otherEntityNamePlural%>; trackBy: track<%=otherEntityNameCapitalized %>ById">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-select-option>
                 </ion-select>
                 <%_ } _%>
             </ion-item>
