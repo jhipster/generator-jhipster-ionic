@@ -167,6 +167,8 @@ module.exports = class extends BaseGenerator {
     packageJSON.devDependencies['generator-jhipster-ionic'] = packagejs.version;
     jsonfile.writeFileSync(packagePath, packageJSON);
 
+    const CLIENT_MAIN_SRC_DIR = `${this.ionicAppName}/src/`;
+
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
       this.packageName = this.jhipsterAppConfig.packageName;
       this.packageFolder = this.jhipsterAppConfig.packageFolder;
@@ -193,7 +195,6 @@ module.exports = class extends BaseGenerator {
       this.conflicter.force = true;
 
       this.log('Updating Ionic AppAuth to work with JHipster...');
-      const CLIENT_MAIN_SRC_DIR = `${this.ionicAppName}/src/`;
 
       // Update Ionic files to work with JHipster
       this.template('src/app/app.component.ts', `${CLIENT_MAIN_SRC_DIR}app/app.component.ts`);
