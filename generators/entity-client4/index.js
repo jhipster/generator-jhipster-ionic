@@ -18,6 +18,7 @@
  */
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
+const _ = require('lodash');
 const writeFiles = require('./files').writeFiles;
 const utils = require('generator-jhipster/generators/utils');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
@@ -129,7 +130,7 @@ module.exports = class extends BaseGenerator {
             let variableName;
             hasManyToMany = hasManyToMany || relationship.relationshipType === 'many-to-many';
             if (relationship.relationshipType === 'one-to-one' && relationship.ownerSide === true && relationship.otherEntityName !== 'user') {
-                variableName = relationship.relationshipFieldNamePlural.toLowerCase();
+                variableName = _.camelCase(relationship.otherEntityNameCapitalizedPlural);
                 if (variableName === entityInstance) {
                     variableName += 'Collection';
                 }
@@ -153,7 +154,7 @@ module.exports = class extends BaseGenerator {
                 }
             }, (error) => this.onError(error));`;
             } else if (relationship.relationshipType !== 'one-to-many') {
-                variableName = relationship.otherEntityNameCapitalizedPlural.toLowerCase();
+                variableName = _.camelCase(relationship.otherEntityNameCapitalizedPlural);
                 if (variableName === entityInstance) {
                     variableName += 'Collection';
                 }

@@ -159,6 +159,7 @@ module.exports = class extends BaseGenerator {
     const done = this.async();
     const packagePath = `${this.ionicAppName}/package.json`;
     const packageJSON = this.fs.readJSON(packagePath);
+    const CLIENT_MAIN_SRC_DIR = `${this.ionicAppName}/src/`;
 
     // add some branding 🤓
     packageJSON.author = 'Ionic Framework + JHipster';
@@ -193,7 +194,6 @@ module.exports = class extends BaseGenerator {
       this.conflicter.force = true;
 
       this.log('Updating Ionic AppAuth to work with JHipster...');
-      const CLIENT_MAIN_SRC_DIR = `${this.ionicAppName}/src/`;
 
       // Update Ionic files to work with JHipster
       this.template('src/app/app.component.ts', `${CLIENT_MAIN_SRC_DIR}app/app.component.ts`);
@@ -233,6 +233,9 @@ module.exports = class extends BaseGenerator {
           this.removeDirectory(path);
         }
       });
+    } else {
+      this.log('Adding User model and e2e tests...');
+      this.template('src/app/services/user/user.model.ts', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.model.ts`);
     }
 
     // Add e2e tests
