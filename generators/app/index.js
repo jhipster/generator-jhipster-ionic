@@ -159,6 +159,7 @@ module.exports = class extends BaseGenerator {
     const done = this.async();
     const packagePath = `${this.ionicAppName}/package.json`;
     const packageJSON = this.fs.readJSON(packagePath);
+    const CLIENT_MAIN_SRC_DIR = `${this.ionicAppName}/src/`;
 
     // add some branding 🤓
     packageJSON.author = 'Ionic Framework + JHipster';
@@ -166,8 +167,6 @@ module.exports = class extends BaseGenerator {
     packageJSON.description = 'A hipster Ionic project, made with 💙 by @oktadev!';
     packageJSON.devDependencies['generator-jhipster-ionic'] = packagejs.version;
     jsonfile.writeFileSync(packagePath, packageJSON);
-
-    const CLIENT_MAIN_SRC_DIR = `${this.ionicAppName}/src/`;
 
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
       this.packageName = this.jhipsterAppConfig.packageName;
