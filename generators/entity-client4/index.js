@@ -144,12 +144,12 @@ module.exports = class extends BaseGenerator {
             .query({filter: '${relationship.otherEntityRelationshipName.toLowerCase()}-is-null'})
             .subscribe(data => {
                 if (${relationshipFieldNameIdCheck}) {
-                    this.${variableName} = data;
+                    this.${variableName} = data.body;
                 } else {
                     this.${relationship.otherEntityName}Service
                         .find(${relationshipFieldName}${dto === 'no' ? '.id' : 'Id'})
-                        .subscribe((subData: ${relationship.otherEntityAngularName}) => {
-                            this.${variableName} = [subData].concat(subData);
+                        .subscribe((subData: HttpResponse<${relationship.otherEntityAngularName}>) => {
+                            this.${variableName} = [subData.body].concat(subData.body);
                         }, (error) => this.onError(error));
                 }
             }, (error) => this.onError(error));`;
