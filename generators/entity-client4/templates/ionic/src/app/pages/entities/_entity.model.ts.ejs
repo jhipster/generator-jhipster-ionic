@@ -79,7 +79,7 @@ relationships.forEach(relationship => {
             if (otherEntityFieldCapitalized !== 'Id' && otherEntityFieldCapitalized !== '') {
                 fieldType = 'string';
                 fieldName = `${relationshipFieldName}${otherEntityFieldCapitalized}`;
-                variables.push(`${fieldName}?: ${fieldType}`);
+                variables[fieldName] = fieldName + '?: ' + fieldType;
             }
             fieldType = tsKeyType; // review: added for mongodb-with-relations
             fieldName = `${relationshipFieldName}Id`;
