@@ -274,7 +274,9 @@ module.exports = class extends BaseGenerator {
     this.log('Run the following commands (in separate terminal windows) to see everything working:\n');
     this.log(`${chalk.green(`    cd ${this.directoryPath} && ${this.jhipsterAppConfig.buildTool === 'maven' ? './mvnw' : './gradlew'}`)}`);
     this.log(`${chalk.green(`    cd ${this.ionicAppName} && ionic serve`)}\n`);
-    // force quit; needed because of this.conflicter.force = true
-    process.exit(0);
+    if (this.interactive) {
+      // force quit; needed because of this.conflicter.force = true
+      process.exit(0);
+    }
   }
 };
