@@ -6,8 +6,10 @@ set -ev
 #-------------------------------------------------------------------------------
 export JHIPSTER_REPO=https://github.com/jhipster/generator-jhipster.git
 export JHIPSTER_BRANCH=master
-export IONIC4J_REPO=https://github.com/oktadeveloper/generator-jhipster-ionic.git
+export IONIC4J_REPO=https://github.com/${TRAVIS_PULL_REQUEST_SLUG:-$TRAVIS_REPO_SLUG}.git
 export IONIC4J_BRANCH=$BRANCH
+echo $IONIC4J_REPO
+echo $IONIC4J_BRANCH
 
 #-------------------------------------------------------------------------------
 # Clone JHipster
