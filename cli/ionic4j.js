@@ -19,12 +19,10 @@
  */
 const spawn = require('cross-spawn');
 
-let cmd = 'jhipster-ionic';
-const entity = process.argv.filter(arg => arg.indexOf('entity') !== -1);
+let cmd = process.argv[0].replace('ionic4j', 'jhipster-ionic');
 
-// Append entity if included in command
-if (entity.length) {
-  cmd += ':entity';
+if (process.argv[1] === 'entity') {
+  cmd += ':entity'
 }
 
 // Path to the yo cli script in generator-jhipster-ionic's node_modules
