@@ -19,7 +19,7 @@
  */
 const spawn = require('cross-spawn');
 
-let cmd = process.argv[0].replace('ionic4j', 'jhipster-ionic');
+let cmd = 'jhipster-ionic';
 
 if (process.argv[1] === 'entity') {
   cmd += ':entity'
