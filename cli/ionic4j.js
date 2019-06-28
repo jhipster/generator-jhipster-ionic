@@ -19,13 +19,14 @@
  */
 const spawn = require('cross-spawn');
 
-let cmd = 'jhipster-ionic';
+let commands = ['jhipster-ionic'];
 
-if (process.argv[1] === 'entity') {
-  cmd += ':entity'
+if (process.argv[1].includes('entity')) {
+  commands = [commands[0].replace('ionic', 'ionic:entity')];
+  commands.push(process.argv[2]);
 }
 
 // Path to the yo cli script in generator-jhipster-ionic's node_modules
 const yoInternalCliPath = `${__dirname}/../node_modules/yo/lib/cli.js`;
 
-spawn.sync(yoInternalCliPath, [cmd], { stdio: 'inherit' });
+spawn.sync(yoInternalCliPath, commands, { stdio: 'inherit' });
