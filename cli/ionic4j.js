@@ -27,4 +27,7 @@ if (entity.length) {
   cmd += ':entity';
 }
 
-spawn.sync('yo', [cmd], { stdio: 'inherit' });
+// Path to the yo cli script in generator-jhipster-ionic's node_modules
+const yoInternalCliPath = `${__dirname}/../node_modules/yo/lib/cli.js`;
+
+spawn.sync(yoInternalCliPath, [cmd], { stdio: 'inherit' });

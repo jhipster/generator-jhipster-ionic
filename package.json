@@ -47,7 +47,8 @@
     "jsdoc": "3.6.2",
     "mocha": "6.1.4",
     "yeoman-assert": "3.1.1",
-    "yeoman-test": "2.0.0"
+    "yeoman-test": "2.0.0",
+    "yo": "2.0.6"
   },
   "scripts": {
     "test": "mocha --timeout 10000 test/*"
