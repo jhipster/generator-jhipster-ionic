@@ -121,7 +121,7 @@ export class <%= entityAngularName %>UpdatePage implements OnInit {
         protected activatedRoute: ActivatedRoute,
         protected navController: NavController,
         protected formBuilder: FormBuilder,
-        protected platform: Platform,
+        public platform: Platform,
         protected toastCtrl: ToastController,
 <%_ if (fieldsContainBlob) { _%>
         private dataUtils: JhiDataUtils,
