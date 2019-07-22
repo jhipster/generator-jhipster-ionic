@@ -8,15 +8,20 @@
     "jhipster-module",
     "ionic"
   ],
-  "homepage": "https://github.com/oktadeveloper/generator-jhipster-ionic",
+  "homepage": "https://github.com/oktadeveloper/generator-jhipster-ionic#readme",
   "author": {
     "name": "Matt Raible",
     "email": "matt.raible@okta.com",
     "url": "https://developer.okta.com"
   },
   "files": [
-    "generators"
+    "generators",
+    "cli"
   ],
+  "bin": {
+    "ionic4j": "./cli/ionic4j.js",
+    "ionic4j:entity": "./cli/ionic4j.js"
+  },
   "main": "generators/app/index.js",
   "repository": {
     "type": "git",
@@ -42,10 +47,15 @@
     "jsdoc": "3.6.2",
     "mocha": "6.1.4",
     "yeoman-assert": "3.1.1",
-    "yeoman-test": "2.0.0"
+    "yeoman-test": "2.0.0",
+    "yo": "2.0.6"
   },
   "scripts": {
     "test": "mocha --timeout 10000 test/*"
+  },
+  "engines": {
+    "node": ">=8.10.0",
+    "npm": ">=5.6.0"
   },
   "license": "Apache-2.0",
   "bugs": {
