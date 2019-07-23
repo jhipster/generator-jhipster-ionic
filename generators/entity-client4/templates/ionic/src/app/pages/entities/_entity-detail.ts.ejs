@@ -30,7 +30,7 @@ import { ActivatedRoute } from '@angular/router';
     templateUrl: '<%= entityFileName %>-detail.html'
 })
 export class <%= entityAngularName %>DetailPage implements OnInit {
-    <%= entityInstance %>: <%= entityAngularName %>;
+    <%= entityInstance %>: <%= entityAngularName %> = {};
 
     constructor(
     <%_ if (fieldsContainBlob) { _%>
