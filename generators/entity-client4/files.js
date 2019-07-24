@@ -72,10 +72,6 @@ const ionicFiles = {
                     renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.html`
                 },
                 {
-                    file: 'entities/_entity-detail.module.ts',
-                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.module.ts`
-                },
-                {
                     file: 'entities/_entity-detail.ts',
                     renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.ts`
                 },
@@ -83,10 +79,6 @@ const ionicFiles = {
                     file: 'entities/_entity-update.html',
                     renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.html`
                 },
-                // {
-                //     file: 'entities/_entity-dialog.module.ts',
-                //     renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-dialog.module.ts`
-                // },
                 {
                     file: 'entities/_entity-update.ts',
                     renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.ts`
