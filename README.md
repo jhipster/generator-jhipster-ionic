@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This is a [JHipster](http://www.jhipster.tech/) module. You can use it to generate an Ionic app that talks to a JHipster backend. It uses the [Ionic JHipster Starter](https://github.com/oktadeveloper/ionic-jhipster-starter) as a base template, then applies functionality (e.g. entity generation) on top of it. 
+This is a [JHipster](http://www.jhipster.tech/) module. You can use it to generate an Ionic 4 app that talks to a JHipster 6 backend. It uses the [Ionic JHipster Starter](https://github.com/oktadeveloper/ionic-jhipster-starter) as a base template, then applies functionality (e.g. entity generation) on top of it. 
 
 To learn more about this module, see [Build Mobile Apps with Angular, Ionic 4, and Spring Boot](https://developer.okta.com/blog/2019/06/24/ionic-4-angular-spring-boot-jhipster).
 
@@ -12,8 +12,8 @@ To learn more about this module, see [Build Mobile Apps with Angular, Ionic 4, a
 
 As this is a [JHipster](http://www.jhipster.tech/) module, we expect you to have an existing JHipster app and Ionic already installed.
 
-- [Installing JHipster](https://www.jhipster.tech/installation.html)
-- [Installing Ionic](https://ionicframework.com/docs/intro/installation/)
+- [Installing JHipster](https://www.jhipster.tech/installation/)
+- [Installing Ionic](https://ionicframework.com/docs/installation/cli)
 
 Or simply:
 
@@ -37,7 +37,7 @@ npm update -g generator-jhipster-ionic
 
 ## Usage
 
-Create a JHipster app using `yo jhipster`, or a backend-only with `yo jhipster:server`. Choose `JWT` or `OAuth 2.0` as the authentication type. 
+Create a JHipster app using `jhipster`, or a backend-only with `yo jhipster:server`. Choose `JWT` or `OAuth 2.0` as the authentication type. 
 
 In a directory alongside your JHipster app, run this module. This will create an Ionic app for you and install the necessary JHipster files for it to communicate with the backend.
 
@@ -50,7 +50,7 @@ yo jhipster-ionic
 Choosing OAuth 2.0 / OIDC for authentication will allow you to use Keycloak or Okta for identity. In theory, you should be able to use any OIDC-compliant identity provider, and these are the only ones we've tested against. JHipster ships with Keycloak configured and ready to go by default. You simply have to start it in your JHipster backend.
 
 ```bash
-docker-compose -f src/main/docker/keycloak up
+docker-compose -f src/main/docker/keycloak up -d
 ```
 
 See [JHipster's security docs](https://www.jhipster.tech/security/#-oauth2-and-openid-connect) to see how to configure JHipster for Okta. 
