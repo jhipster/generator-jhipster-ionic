@@ -32,7 +32,9 @@ import { filter, map } from 'rxjs/operators';
 
 import { <%= entityAngularName %>Page } from './<%=entityFileName %>';
 import { <%= entityAngularName %>UpdatePage } from './<%=entityFileName %>-update';
-import { <%= entityAngularName %>, <%= entityAngularName %>Service, <%= entityAngularName %>DetailPage } from '.';
+import { <%= entityAngularName %>ListPage } from './<%=entityFileName %>-list';
+import { <%= entityAngularName %>ListEditPage } from './<%=entityFileName %>-list-edit';
+import { <%= entityAngularName %>, <%= entityAngularName %>Service, <%= entityAngularName %>DetailPage} from '.';
 
 @Injectable({ providedIn: 'root' })
 export class <%= entityAngularName %>Resolve implements Resolve<<%= entityAngularName %>> {
@@ -91,6 +93,33 @@ const routes: Routes = [
         authorities: ['ROLE_USER']
       },
       canActivate: [UserRouteAccessService]
+    },
+    {
+      path: 'edit/:id',
+      component: <%= entityAngularName %>Page,
+      resolve: {
+        data: <%= entityAngularName %>Resolve
+      },
+      data: {
+        authorities: ['ROLE_USER']
+      },
+      canActivate: [UserRouteAccessService]
+    },
+    {
+      path: 'list',
+      component: <%= entityAngularName %>ListPage,
+      data: {
+        authorities: ['ROLE_USER']
+      },
+      canActivate: [UserRouteAccessService]
+    },
+    {
+      path: 'listEdit',
+      component: <%= entityAngularName %>ListEditPage,
+      data: {
+        authorities: ['ROLE_USER']
+      },
+      canActivate: [UserRouteAccessService]
     }
   ];
 
@@ -99,7 +128,9 @@ const routes: Routes = [
     declarations: [
         <%= entityAngularName %>Page,
         <%= entityAngularName %>UpdatePage,
-        <%= entityAngularName %>DetailPage
+        <%= entityAngularName %>DetailPage,
+        <%= entityAngularName %>ListPage,
+        <%= entityAngularName %>ListEditPage
     ],
     imports: [
         IonicModule,

@@ -17,64 +17,81 @@
  limitations under the License.
 -%>
 <%_ const keyPrefix = entityTranslationKey; _%>
-<ion-header>
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-back-button></ion-back-button>
-        </ion-buttons>
-        <ion-title>
-            <%= entityClassPluralHumanized %>
-        </ion-title>
-    </ion-toolbar>
-</ion-header>
+<!-- <app-header title='<%= entityClassPluralHumanized %>'></app-header> -->
+            
+<ion-content >
+  <ion-segment small [(ngModel)]="usersActive" (ionChange)="loadAll($event)">
+    <ion-segment-button small value=true>
+      <ion-label>{{'Active' | translate}}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button small value=false>
+      <ion-label>{{'Inactive' | translate}}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
-<!-- todo: add elasticsearch support -->
-<ion-content padding>
+  <ion-searchbar (ionInput)="search($event)"></ion-searchbar>
+  <ion-refresher (ionRefresh)="loadAll($event)">
+    <ion-refresher-content>
+      {{ 'LOADING'| translate}}
+    </ion-refresher-content>
+  </ion-refresher>
+
     <ion-refresher [disabled]="plt.is('desktop')" slot="fixed" (ionRefresh)="loadAll($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
-    <ion-list>
-        <ion-item-sliding *ngFor="let <%=entityInstance %> of <%=entityInstancePlural %>; trackBy: trackId" #slidingItem>
-            <ion-item (click)="view(<%= entityInstance %>)">
-              <ion-label text-wrap>
+    <table>
+    <thead>
+    <!-- you can hide rows according to screen-size changing md by (xs,sm,lg,xl) -->
+      <tr> 
+         <%_ for (idx in fields) { _%>
+         <th class='hidden-md-down'><%_ fields[idx].fieldNameCapitalized _%>
+
+            <ion-icon name="arrow-up" (click)="loadAll('<%_ fields[idx].fieldName _%>', true)"></ion-icon>
+            <ion-icon name="arrow-down" (click)="loadAll('<%_ fields[idx].fieldName _%>', false)"></ion-icon>
+         </th>
+        <%_ } _%>
+        <th></th>
+      </tr>
+      <tbody>
+        <tr *ngFor="let <%=entityInstance %> of <%=entityInstancePlural %>; trackBy: trackId" >
               <%_ for (idx in fields) {
                 const fieldName = fields[idx].fieldName;
                 const fieldNameCapitalized = fields[idx].fieldNameCapitalized;
                 const fieldType = fields[idx].fieldType;
                 const fieldTypeBlobContent = fields[idx].fieldTypeBlobContent; _%>
                 <%_ if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'image') { _%>
+                <td>
                 <ion-avatar<% if (idx === 0) { %>item-start<% } %> *ngIf="<%= entityInstance %>.<%= fieldName %>">
                     <img [src]="'data:' + <%=entityInstance %>.<%=fieldName%>ContentType + ';base64,' + <%=entityInstance %>.<%=fieldName%>" />
                     <p *ngIf="<%= entityInstance %>.<%= fieldName %>">{{<%= entityInstance %>.<%= fieldName %>ContentType}}, {{byteSize(<%= entityInstance %>.<%= fieldName %>)}}</p>
                 </ion-avatar>
+                </td>
                 <%_ } else if (fields[idx].fieldIsEnum) { _%>
                 <!-- todo: special handling for translating enum - {{'<%= fieldType %>.' + <%= entityInstance %>.<%= fieldName %>}}" -->
-                <p>{{<%=entityInstance %>.<%=fieldName%>}}</p>
+                <td class='hidden-md-down'>{{<%=entityInstance %>.<%=fieldName%>}}</td>
                 <%_ } else if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
-                <p>{{<%=entityInstance %>.<%=fieldName%> | date:'medium'}}</p>
+                <td class='hidden-md-down'>{{<%=entityInstance %>.<%=fieldName%> | date:'medium'}}</td>
                 <%_ } else if (fieldType === 'LocalDate') { _%>
-                <p>{{<%=entityInstance %>.<%=fieldName%> | date:'mediumDate'}}</p>
+                <td class='hidden-md-down'>{{<%=entityInstance %>.<%=fieldName%> | date:'mediumDate'}}</td>
                 <%_ } else { _%>
                   <%_ if (fieldName === 'name' || fieldName === 'title') { _%>
                 <ion-text color="primary"><h2>{{<%=entityInstance %>.<%=fieldName%>}}</h2></ion-text>
                   <%_ } else { _%>
-                <p>{{<%=entityInstance %>.<%=fieldName%>}}</p>
+                <td class='hidden-md-down'>{{<%=entityInstance %>.<%=fieldName%>}}</td>
                   <%_ } _%>
                 <%_ } _%>
               <%_ } _%>
-              </ion-label>
-            </ion-item>
-            <ion-item-options side="end">
-                <ion-item-option color="primary" (click)="edit(slidingItem, <%=entityInstance %>)">
-                    {{ 'EDIT_BUTTON' | translate }} 
-                </ion-item-option>
-                <ion-item-option color="danger" (click)="delete(<%=entityInstance %>)">
-                    {{ 'DELETE_BUTTON' | translate }}
-                </ion-item-option>
-            </ion-item-options>
-        </ion-item-sliding>
-    </ion-list>
+             
+        <td>
+          <ion-button size='small' [routerLink]="['/entities/<%=entityFileName %>/edit',<%=entityInstance %>.id ]">
+            <ion-icon slot="start" name="create"> </ion-icon>
+            {{ 'EDIT' | translate }}
+          </ion-button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
     <ion-item *ngIf="!<%=entityInstancePlural %>?.length">
         <ion-label>
             No <%= entityClassPluralHumanized %> found.

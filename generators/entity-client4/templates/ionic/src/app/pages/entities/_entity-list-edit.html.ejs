@@ -29,7 +29,7 @@
 </ion-header>
 
 <!-- todo: add elasticsearch support -->
-<ion-content padding>
+<ion-content padding> LIST EDIT
     <ion-refresher [disabled]="plt.is('desktop')" slot="fixed" (ionRefresh)="loadAll($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
@@ -67,7 +67,7 @@
             </ion-item>
             <ion-item-options side="end">
                 <ion-item-option color="primary" (click)="edit(slidingItem, <%=entityInstance %>)">
-                    {{ 'EDIT_BUTTON' | translate }} 
+                    {{ 'EDIT_BUTTON' | translate }}
                 </ion-item-option>
                 <ion-item-option color="danger" (click)="delete(<%=entityInstance %>)">
                     {{ 'DELETE_BUTTON' | translate }}
