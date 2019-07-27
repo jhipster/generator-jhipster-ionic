@@ -29,11 +29,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { filter, map } from 'rxjs/operators';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 import { <%= entityAngularName %>Page } from './<%=entityFileName %>';
 import { <%= entityAngularName %>UpdatePage } from './<%=entityFileName %>-update';
 import { <%= entityAngularName %>ListPage } from './<%=entityFileName %>-list';
 import { <%= entityAngularName %>ListEditPage } from './<%=entityFileName %>-list-edit';
+import { <%= entityAngularName %>EditPage } from './<%=entityFileName %>-edit';
 import { <%= entityAngularName %>, <%= entityAngularName %>Service, <%= entityAngularName %>DetailPage} from '.';
 
 @Injectable({ providedIn: 'root' })
@@ -73,6 +75,17 @@ const routes: Routes = [
       canActivate: [UserRouteAccessService]
     },
     {
+      path: 'new0',
+      component: NmsTenantEditPage,
+      resolve: {
+        data: NmsTenantResolve
+      },
+      data: {
+        authorities: ['ROLE_USER']
+      },
+      canActivate: [UserRouteAccessService]
+    },
+    {
       path: ':id/view',
       component: <%= entityAngularName %>DetailPage,
       resolve: {
@@ -96,7 +109,7 @@ const routes: Routes = [
     },
     {
       path: 'edit/:id',
-      component: <%= entityAngularName %>Page,
+      component: <%= entityAngularName %>EditPage,
       resolve: {
         data: <%= entityAngularName %>Resolve
       },
@@ -130,11 +143,13 @@ const routes: Routes = [
         <%= entityAngularName %>UpdatePage,
         <%= entityAngularName %>DetailPage,
         <%= entityAngularName %>ListPage,
-        <%= entityAngularName %>ListEditPage
+        <%= entityAngularName %>ListEditPage,
+        <%= entityAngularName %>EditPage
     ],
     imports: [
         IonicModule,
         FormsModule,
+        ComponentsModule,
         ReactiveFormsModule,
         CommonModule,
         TranslateModule,

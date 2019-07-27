@@ -19,12 +19,13 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController, Platform, IonItemSliding } from '@ionic/angular';
 import { filter, map } from 'rxjs/operators';
-import { HttpResponse } from '@angular/common/http';
+import { HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 <%_ if (fieldsContainBlob) { _%>
 import { JhiDataUtils } from 'ng-jhipster';
 <%_ } _%>
 import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
 import { <%= entityAngularName %>Service } from './<%= entityFileName %>.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'page-<%= entityFileName %>-list',
@@ -32,8 +33,10 @@ import { <%= entityAngularName %>Service } from './<%= entityFileName %>.service
 })
 export class <%= entityAngularName %>ListPage {
     <%= entityInstancePlural %>: <%= entityAngularName %>[];
-
-    // todo: add pagination
+    itemsPerPage: number;
+    page=0;
+    totalItems: number;
+    <%=entityInstance %>Active = true;
 
     constructor(
 <%_ if (fieldsContainBlob) { _%>
@@ -45,66 +48,69 @@ export class <%= entityAngularName %>ListPage {
         public plt: Platform
     ) {
         this.<%= entityInstancePlural %> = [];
+         this.itemsPerPage = environment.ITEMS_PER_PAGE;
     }
 
     ionViewWillEnter() {
         this.loadAll();
     }
 
-    async loadAll(refresher?) {
-        this.<%= entityInstance %>Service.query().pipe(
-            filter((res: HttpResponse<<%= entityAngularName %>[]>) => res.ok),
-            map((res: HttpResponse<<%= entityAngularName %>[]>) => res.body)
-        )
-        .subscribe(
-            (response: <%= entityAngularName %>[]) => {
-                this.<%= entityInstancePlural %> = response;
-                if (typeof(refresher) !== 'undefined') {
-                    setTimeout(() => {
-                        refresher.target.complete();
-                    }, 750);
-                }
-            },
-            async (error) => {
-                console.error(error);
-                const toast = await this.toastCtrl.create({message: 'Failed to load data', duration: 2000, position: 'middle'});
-                toast.present();
+    loadAll(predicate = 'id', reverse = true) {
+        this.<%= entityInstance %>Service.query({
+                page: this.page,
+                size: this.itemsPerPage,
+                sort: this.sort(predicate, reverse)
+            }).subscribe(
+                (res: HttpResponse<<%= entityAngularName %>[]>) => this.paginate(res.body, res.headers),
+                (res: HttpErrorResponse) => console.log('LoadError:', res.message)
+            );
+    }
+
+   sort(predicate, reverse) {
+        const result = [predicate + ',' + (reverse ? 'asc' : 'desc')];
+        if (predicate !== 'id') {
+            result.push('id');
+        }
+        console.log(result);
+        return result;
+    }
+
+    reset() {
+        this.page = 0;
+        this.<%= entityInstancePlural %> = [];
+        this.loadAll();
+    }
+
+    loadPage(page) {
+        this.page = page;
+        this.loadAll();
+    }
+
+    protected paginate(data: <%= entityAngularName %>[], headers: HttpHeaders) {
+        this.<%= entityInstancePlural %> = data;
+        this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
+    }
+
+    // todo: item.field1 or item.field2 ... instead of 'name' or find javascript searchArray
+    search(ev: any) {
+        const val = ev.target.value;
+        if (val && val.trim() !== '') {
+            this.<%= entityInstancePlural %>  = this.<%= entityInstancePlural %>.filter((item) => {
+                return ((item.name.toLowerCase().indexOf(val.toLowerCase()) > -1)
+                    || (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1));
             });
+        } else {
+            this.loadAll();
+        }
     }
 
-    trackId(index: number, item: <%= entityAngularName %>) {
-        return item.id;
-    }
 <%_ if (fieldsContainBlob) { _%>
-
     byteSize(field) {
         return this.dataUtils.byteSize(field);
     }
-
     openFile(contentType, field) {
         return this.dataUtils.openFile(contentType, field);
     }
 <%_ } _%>
 
-    new() {
-        this.navController.navigateForward('/tabs/entities/<%= entityFileName %>/new');
-    }
-
-    edit(item: IonItemSliding, <%= entityInstance %>: <%= entityAngularName %>) {
-        this.navController.navigateForward('/tabs/entities/<%= entityFileName %>/' + <%= entityInstance %>.id + '/edit');
-        item.close();
-    }
-
-    async delete(<%= entityInstance %>) {
-        this.<%= entityInstance %>Service.delete(<%= entityInstance %>.id).subscribe(async () => {
-            const toast = await this.toastCtrl.create(
-                {message: '<%= entityAngularName %> deleted successfully.', duration: 3000, position: 'middle'});
-            toast.present();
-            this.loadAll();
-        }, (error) => console.error(error));
-    }
-
-    view(<%= entityInstance %>: <%= entityAngularName %>) {
-        this.navController.navigateForward('/tabs/entities/<%= entityFileName %>/' + <%= entityInstance %>.id + '/view');
-    }
 }

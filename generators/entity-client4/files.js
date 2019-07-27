@@ -84,6 +84,16 @@ const ionicFiles = {
                     renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.ts`
                 },
                 {
+                    file: 'entities/_entity-edit.html',
+                    method: 'processHtml',
+                    template: true,
+                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-edit.html`
+                },
+                {
+                    file: 'entities/_entity-edit.ts',
+                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-edit.ts`
+                },
+                {
                     file: 'entities/_entity-list-edit.html',
                     method: 'processHtml',
                     template: true,
