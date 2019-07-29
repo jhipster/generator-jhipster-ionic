@@ -23,7 +23,7 @@ _%>
 <app-header title='<%= entityClassPluralHumanized %>'></app-header> 
 
 <ion-content padding>
-    <form *ngIf="form" name="form" [formGroup]="form" (ngSubmit)="save()">
+    <form *ngIf="form" name="form" [formGroup]="form" >
       <ion-grid fixed>
       <ion-row>
          <ion-col size="12" size-xs='12' size-sm='10' size-md='6' size-lg='6' size-xl='6'>
@@ -187,4 +187,37 @@ _%>
       </ion-row>
     </ion-grid>
     </form>
+
+    <div text-center class='hidden-xs-down'>
+        <ion-button [disabled]="!isReadyToSave" size='small' (click)="save()">
+            <ion-icon slot='start' name="md-checkmark"></ion-icon>
+            {{ 'SAVE' | translate }}
+        </ion-button>&nbsp;
+        <ion-button color='medium' size='small' (click)="cancel()">
+            <ion-icon slot='start' name="md-close"></ion-icon>
+            {{ 'CANCEL' | translate }}
+        </ion-button>
+        <br>
+    </div>
+
+    <div class='hidden-sm-up'>
+        <p><br><br></p>
+    </div>
+    <ion-fab class='hidden-sm-up' vertical="bottom" horizontal="end" slot="fixed">
+        <ion-row>
+            <ion-col width-50>
+                <ion-fab-button (click)="save()">
+                    <ion-icon name="md-checkmark"></ion-icon>
+                    {{ 'SAVE' | translate }}
+                </ion-fab-button>
+            </ion-col>
+            <ion-col width-50>
+                <ion-fab-button color='medium' (click)="previousState()">
+                    <ion-icon slot='start' name="md-close"></ion-icon>
+                    {{ 'CANCEL' | translate }}
+                </ion-fab-button>
+            </ion-col>
+        </ion-row>
+    </ion-fab>
+
 </ion-content>
