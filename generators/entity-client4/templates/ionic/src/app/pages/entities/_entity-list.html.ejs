@@ -20,6 +20,16 @@
 <app-header title='<%= entityClassPluralHumanized %>'></app-header> 
             
 <ion-content padding>
+  <ion-button class='hidden-xs-down' size='small' float-right [routerLink]="['/entities/<%=entityFileName %>/new0']">
+    <ion-icon slot="start" name="add"> </ion-icon>
+    {{ 'New' | translate }} {{ 'User' | translate }}
+  </ion-button>
+  <ion-fab class='hidden-sm-up' vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['/entities/<%=entityFileName %>/new0']">
+        <ion-icon name="add"></ion-icon>
+     </ion-fab-button>
+  </ion-fab>
+  
   <ion-segment small [(ngModel)]="<%=entityInstance %>Active" (ionChange)="loadAll($event)">
     <ion-segment-button small value=true>
       <ion-label>{{'Active' | translate}}</ion-label>
@@ -103,11 +113,5 @@
             No <%= entityClassPluralHumanized %> found.
         </ion-label>
     </ion-item>
-
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button [routerLink]="['/entities/nms-tenant/new0']">
-            <ion-icon name="add"></ion-icon>
-        </ion-fab-button>
-    </ion-fab>
 
 </ion-content>

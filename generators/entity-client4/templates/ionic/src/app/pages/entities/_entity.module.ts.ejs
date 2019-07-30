@@ -76,9 +76,9 @@ const routes: Routes = [
     },
     {
       path: 'new0',
-      component: Nms<%= entityAngularName %>EditPage,
+      component: <%= entityAngularName %>EditPage,
       resolve: {
-        data: Nms<%= entityAngularName %>Resolve
+        data: <%= entityAngularName %>Resolve
       },
       data: {
         authorities: ['ROLE_USER']
