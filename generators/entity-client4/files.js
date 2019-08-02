@@ -114,6 +114,10 @@ const ionicFiles = {
                     renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-list.ts`
                 },
                 {
+                    file: 'entities/_en.json',
+                    renameTo: generator => `../../assets/i18n/en_${generator.entityFileName}.json`
+                },
+                {
                     file: 'entities/_index.ts',
                     renameTo: generator => `entities/${generator.entityFolderName}/index.ts`
                 }

@@ -1,0 +1,117 @@
+<%#
+ Copyright 2013-2019 the original author or authors from the JHipster project.
+
+ This file is part of the JHipster project, see http://www.jhipster.tech/
+ for more information.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-%>
+import { Component } from '@angular/core';
+import { NavController, ToastController, Platform, IonItemSliding } from '@ionic/angular';
+import { filter, map } from 'rxjs/operators';
+import { HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+<%_ if (fieldsContainBlob) { _%>
+import { JhiDataUtils } from 'ng-jhipster';
+<%_ } _%>
+import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
+import { <%= entityAngularName %>Service } from './<%= entityFileName %>.service';
+import { environment } from 'src/environments/environment';
+
+@Component({
+    selector: 'page-<%= entityFileName %>-list',
+    templateUrl: '<%= entityFileName %>-list.html',
+    styleUrls: ['../entities.page.scss']
+})
+export class <%= entityAngularName %>ListPage {
+    <%= entityInstancePlural %>: <%= entityAngularName %>[];
+    itemsPerPage: number;
+    page=0;
+    totalItems: number;
+    <%=entityInstance %>Active = true;
+
+    constructor(
+<%_ if (fieldsContainBlob) { _%>
+        private dataUtils: JhiDataUtils,
+<%_ } _%>
+        private navController: NavController,
+        private <%= entityInstance %>Service: <%= entityAngularName %>Service,
+        private toastCtrl: ToastController,
+        public plt: Platform
+    ) {
+        this.<%= entityInstancePlural %> = [];
+         this.itemsPerPage = environment.ITEMS_PER_PAGE;
+    }
+
+    ionViewWillEnter() {
+        this.loadAll();
+    }
+
+    loadAll(predicate = 'id', reverse = true) {
+        this.<%= entityInstance %>Service.query({
+                page: this.page,
+                size: this.itemsPerPage,
+                sort: this.sort(predicate, reverse)
+            }).subscribe(
+                (res: HttpResponse<<%= entityAngularName %>[]>) => this.paginate(res.body, res.headers),
+                (res: HttpErrorResponse) => console.log('LoadError:', res.message)
+            );
+    }
+
+   sort(predicate, reverse) {
+        const result = [predicate + ',' + (reverse ? 'asc' : 'desc')];
+        if (predicate !== 'id') {
+            result.push('id');
+        }
+        console.log(result);
+        return result;
+    }
+
+    reset() {
+        this.page = 0;
+        this.<%= entityInstancePlural %> = [];
+        this.loadAll();
+    }
+
+    loadPage(page) {
+        this.page = page;
+        this.loadAll();
+    }
+
+    protected paginate(data: <%= entityAngularName %>[], headers: HttpHeaders) {
+        this.<%= entityInstancePlural %> = data;
+        this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
+    }
+
+    // todo: item.field1 or item.field2 ... instead of 'name' or find javascript searchArray
+    search(ev: any) {
+        const val = ev.target.value;
+        if (val && val.trim() !== '') {
+            this.<%= entityInstancePlural %>  = this.<%= entityInstancePlural %>.filter((item) => {
+                return ((item.name.toLowerCase().indexOf(val.toLowerCase()) > -1)
+                    || (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1));
+            });
+        } else {
+            this.loadAll();
+        }
+    }
+
+<%_ if (fieldsContainBlob) { _%>
+    byteSize(field) {
+        return this.dataUtils.byteSize(field);
+    }
+    openFile(contentType, field) {
+        return this.dataUtils.openFile(contentType, field);
+    }
+<%_ } _%>
+
+}

@@ -59,7 +59,8 @@ import { <%= uniqueRel.otherEntityAngularName %>, <%= uniqueRel.otherEntityAngul
 
 @Component({
     selector: 'page-<%= entityFileName %>-edit',
-    templateUrl: '<%= entityFileName %>-edit.html'
+    templateUrl: '<%= entityFileName %>-edit.html',
+    styleUrls: ['../entities.page.scss']
 })
 export class <%= entityAngularName %>EditPage implements OnInit {
 
@@ -235,7 +236,7 @@ _%>
         this.isSaving = false;
         const toast = await this.toastCtrl.create({message: `<%= entityAngularName %> ${action} successfully.`, duration: 2000, position: 'middle'});
         toast.present();
-        this.navController.navigateBack('/tabs/entities/<%= entityFileName %>');
+        this.navController.navigateBack('/entities/<%= entityFileName %>/list');
     }
 
     previousState() {
