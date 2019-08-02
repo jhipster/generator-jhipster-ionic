@@ -22,15 +22,15 @@
 <ion-content padding>
   <ion-button class='hidden-xs-down' size='small' float-right [routerLink]="['/entities/<%=entityFileName %>/new0']">
     <ion-icon slot="start" name="add"> </ion-icon>
-    {{ 'New' | translate }} {{ 'User' | translate }}
+    {{ 'New' | translate }} {{ '<%=entityClassHumanized_%>' | translate }}
   </ion-button>
   <ion-fab class='hidden-sm-up' vertical="top" horizontal="end" slot="fixed">
     <ion-fab-button [routerLink]="['/entities/<%=entityFileName %>/new0']">
-        <ion-icon name="add"></ion-icon>
-     </ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
   </ion-fab>
-  
-  <ion-segment small [(ngModel)]="<%=entityInstance %>Active" (ionChange)="loadAll($event)">
+
+  <ion-segment small [(ngModel)]="<%=entityInstance %>Active" (ionChange)="loadActive($event)">
     <ion-segment-button small value=true>
       <ion-label>{{'Active' | translate}}</ion-label>
     </ion-segment-button>
@@ -40,17 +40,12 @@
   </ion-segment>
 
   <ion-searchbar (ionInput)="search($event)"></ion-searchbar>
-  <ion-refresher (ionRefresh)="loadAll($event)">
-    <ion-refresher-content>
-      {{ 'LOADING'| translate}}
-    </ion-refresher-content>
+
+  <ion-refresher [disabled]="plt.is('desktop')" slot="fixed" (ionRefresh)="loadActive($event)">
+        <ion-refresher-content>{{ 'LOADING'| translate}}</ion-refresher-content>
   </ion-refresher>
 
-    <ion-refresher [disabled]="plt.is('desktop')" slot="fixed" (ionRefresh)="loadAll($event)">
-        <ion-refresher-content></ion-refresher-content>
-    </ion-refresher>
-
-    <div class="overflowX" *ngIf="<%=entityInstancePlural %>?.length > 0">
+  <div class="overflowX" *ngIf="<%=entityInstancePlural %>?.length > 0">
       <table>
         <thead>
         <!-- you can hide rows according to screen-size changing xs by (sm,md,lg or xl) -->
@@ -59,11 +54,11 @@
               <%_ if (fields[idx].fieldName === 'name' || fields[idx].fieldName === 'title') { _%>
               <th ><%=fields[idx].fieldNameCapitalized _%>
               <%_ }  else { _%>
-               <th class='hidden-xs-down'><%=fields[idx].fieldNameCapitalized _%>
+               <th class='hidden-xs-down'> {{ '<%=fields[idx].fieldNameCapitalized _%>' || translate }}
               <%_ } _%>
 
-                <ion-icon name="arrow-up" (click)="loadAll('<%=fields[idx].fieldName _%>', true)"></ion-icon>
-                <ion-icon name="arrow-down" (click)="loadAll('<%=fields[idx].fieldName _%>', false)"></ion-icon>
+                <ion-icon name="arrow-up" (click)="sortActive('<%=fields[idx].fieldName _%>', true)"></ion-icon>
+                <ion-icon name="arrow-down" (click)="sortActive('<%=fields[idx].fieldName _%>', false)"></ion-icon>
             </th>
             <%_ } _%>
             <th></th>

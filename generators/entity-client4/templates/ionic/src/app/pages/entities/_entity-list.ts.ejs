@@ -16,6 +16,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
+import { MainService } from 'src/app/services/main/main.service';
 import { Component } from '@angular/core';
 import { NavController, ToastController, Platform, IonItemSliding } from '@ionic/angular';
 import { filter, map } from 'rxjs/operators';
@@ -29,7 +30,8 @@ import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'page-<%= entityFileName %>-list',
-    templateUrl: '<%= entityFileName %>-list.html'
+    templateUrl: '<%= entityFileName %>-list.html',
+    styleUrls: ['../entities.page.scss']
 })
 export class <%= entityAngularName %>ListPage {
     <%= entityInstancePlural %>: <%= entityAngularName %>[];
@@ -38,10 +40,13 @@ export class <%= entityAngularName %>ListPage {
     totalItems: number;
     <%=entityInstance %>Active = true;
 
+    ERROR_LOAD = 'Failed to load data';
+
     constructor(
 <%_ if (fieldsContainBlob) { _%>
         private dataUtils: JhiDataUtils,
 <%_ } _%>
+        private mainService: MainService,
         private navController: NavController,
         private <%= entityInstance %>Service: <%= entityAngularName %>Service,
         private toastCtrl: ToastController,
@@ -52,7 +57,8 @@ export class <%= entityAngularName %>ListPage {
     }
 
     ionViewWillEnter() {
-        this.loadAll();
+        // this.loadAll();
+         this.loadActive();
     }
 
     loadAll(predicate = 'id', reverse = true) {
@@ -84,24 +90,12 @@ export class <%= entityAngularName %>ListPage {
     loadPage(page) {
         this.page = page;
         this.loadAll();
+        // this.loadActive();
     }
 
     protected paginate(data: <%= entityAngularName %>[], headers: HttpHeaders) {
         this.<%= entityInstancePlural %> = data;
         this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
-    }
-
-    // todo: item.field1 or item.field2 ... instead of 'name' or find javascript searchArray
-    search(ev: any) {
-        const val = ev.target.value;
-        if (val && val.trim() !== '') {
-            this.<%= entityInstancePlural %>  = this.<%= entityInstancePlural %>.filter((item) => {
-                return ((item.name.toLowerCase().indexOf(val.toLowerCase()) > -1)
-                    || (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1));
-            });
-        } else {
-            this.loadAll();
-        }
     }
 
 <%_ if (fieldsContainBlob) { _%>
@@ -112,5 +106,39 @@ export class <%= entityAngularName %>ListPage {
         return this.dataUtils.openFile(contentType, field);
     }
 <%_ } _%>
+
+    // Loading only Active or Inactive according to <%= entityInstance %>Active value
+    loadActive(refresher?) {
+        this.<%= entityInstance %>Service.queryByDomainId(this.mainService.DOMAIN_ID, this.<%= entityInstance %>Active).subscribe(
+            (res) => {
+                this.<%= entityInstancePlural %> = res;
+                if (refresher) { refresher.target.complete(); }
+            },
+            (error) => {
+                console.error(error);
+                this.presentToast(this.ERROR_LOAD);
+            });
+    }
+
+    sortActive(field, asc) {
+        this.<%= entityInstancePlural %> = asc ? this.<%= entityInstancePlural %>.sort((a, b) => a[field].localeCompare(b[field])) :
+            this.<%= entityInstancePlural %>.sort((a, b) => b[field].localeCompare(a[field]));
+    }
+
+    // Object.keys for getting all property names of the object,
+    // Array.some for iterating the keys and exit loop if found,
+    search(ev: any) {
+        const val = ev.target.value;
+        if (val && val.trim() !== '') {
+            this.<%= entityInstancePlural %> = this.<%= entityInstancePlural %>.filter(o =>
+                Object.keys(o).some(k => String(o[k]).toLowerCase().includes(val.toLowerCase())));
+        } else {
+            this.loadActive();
+        }
+    }
+    async presentToast(text) {
+        const toast = await this.toastCtrl.create({ message: text, duration: 3000, position: 'middle' });
+        toast.present();
+    }
 
 }
