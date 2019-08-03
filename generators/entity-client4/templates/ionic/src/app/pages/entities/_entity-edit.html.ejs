@@ -68,14 +68,14 @@ _%>
                     <%_ if (fieldTypeBlobContent === 'image') { _%>
                     <img [src]="'data:' + <%=entityInstance %>.<%=fieldName%>ContentType + ';base64,' + <%=entityInstance %>.<%=fieldName%>" style="max-height: 100px;" *ngIf="<%= entityInstance %>?.<%= fieldName %>" alt="<%=entityInstance %> image"/>
                     <%_ } _%>
-                    <div *ngIf="<%= entityInstance %>.<%= fieldName %>">
-                        <p>{{<%= entityInstance %>.<%= fieldName %>ContentType}}, {{byteSize(<%= entityInstance %>.<%= fieldName %>)}}</p>
+                    <div *ngIf="<%= entityInstance %>?.<%= fieldName %>">
+                        <p>{{<%= entityInstance %>?.<%= fieldName %>ContentType}}, {{byteSize(<%= entityInstance %>?.<%= fieldName %>)}}</p>
                         <%_ if (fieldTypeBlobContent === 'image') { _%>
                         <ion-button color="danger" (click)="clearInputImage('<%= fieldName %>', '<%= fieldName %>ContentType', 'fileImage')">
                             <ion-icon name="trash" slot="icon-only"></ion-icon>
                         </ion-button>
                         <%_ } else { _%>
-                        <ion-button color="danger" (click)="<%= entityInstance %>.<%= fieldName %>=null;<%= entityInstance %>.<%= fieldName %>ContentType=null;">
+                        <ion-button color="danger" (click)="<%= entityInstance %>?.<%= fieldName %>=null;<%= entityInstance %>?.<%= fieldName %>ContentType=null;">
                             <ion-icon name="trash" slot="icon-only"></ion-icon>
                         </ion-button>
                         <%_ } _%>
@@ -152,7 +152,7 @@ _%>
                 <%_ } else { _%>
                     <ion-select-option *ngIf="!form.value.<%= relationshipName %>" [value]="null" selected></ion-select-option>
                 <%_ } _%>
-                    <ion-select-option [value]="<%=otherEntityName %>Option.id === <%= entityInstance %>.<%=relationshipFieldName %>?.id ? <%= entityInstance %>.<%=relationshipFieldName %> : <%=otherEntityName %>Option" *ngFor="let <%=otherEntityName %>Option of <%=relationshipFieldNamePlural.toLowerCase() %>; trackBy: track<%=otherEntityNameCapitalized %>ById">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-select-option>
+                    <ion-select-option [value]="<%=otherEntityName %>Option.id === <%= entityInstance %>?.<%=relationshipFieldName %>?.id ? <%= entityInstance %>?.<%=relationshipFieldName %> : <%=otherEntityName %>Option" *ngFor="let <%=otherEntityName %>Option of <%=relationshipFieldNamePlural.toLowerCase() %>; trackBy: track<%=otherEntityNameCapitalized %>ById">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-select-option>
                 </ion-select>
                 <%_ } else { _%>
                 <ion-select id="field_<%= relationshipName %>" formControlName="<%= relationshipName %>" [compareWith]="compare<%=otherEntityNameCapitalized %>"<% if (relationshipRequired) { %> required<% } %>>
