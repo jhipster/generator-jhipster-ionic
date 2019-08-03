@@ -52,7 +52,7 @@
         <tr> 
             <%_ for (idx in fields) { _%>
               <%_ if (fields[idx].fieldName === 'name' || fields[idx].fieldName === 'title') { _%>
-            <th >{{ '<%=fields[idx].fieldNameCapitalized _%>' | translate }}
+            <th>{{ '<%=fields[idx].fieldNameCapitalized _%>' | translate }}
               <%_ }  else { _%>
             <th class='hidden-xs-down'> {{ '<%=fields[idx].fieldNameCapitalized _%>' | translate }}
               <%_ } _%>
