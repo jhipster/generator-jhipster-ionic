@@ -54,7 +54,7 @@
               <%_ if (fields[idx].fieldName === 'name' || fields[idx].fieldName === 'title') { _%>
               <th ><%=fields[idx].fieldNameCapitalized _%>
               <%_ }  else { _%>
-               <th class='hidden-xs-down'> {{ '<%=fields[idx].fieldNameCapitalized _%>' || translate }}
+               <th class='hidden-xs-down'> {{ '<%=fields[idx].fieldNameCapitalized _%>' | translate }}
               <%_ } _%>
 
                 <ion-icon name="arrow-up" (click)="sortActive('<%=fields[idx].fieldName _%>', true)"></ion-icon>
