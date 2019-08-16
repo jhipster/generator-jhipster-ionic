@@ -17,6 +17,8 @@
  * limitations under the License.
  */
 /* eslint-disable consistent-return */
+
+const path = require('path');
 const chalk = require('chalk');
 const packagejs = require('../../package.json');
 const jsonfile = require('jsonfile');
@@ -25,7 +27,6 @@ const shelljs = require('shelljs');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
 const spawn = require('cross-spawn');
 const fs = require('fs');
-const constants = require('generator-jhipster/generators/generator-constants');
 const utils = require('./utils');
 
 module.exports = class extends BaseGenerator {
@@ -102,12 +103,12 @@ module.exports = class extends BaseGenerator {
       }];
     if (this.defaultApp) {
       this.ionicAppName = 'ionic4j';
-      this.directoryPath = 'backend';
+      this.directoryPath = path.resolve('backend');
       done();
     } else {
       this.prompt(prompts).then((props) => {
         this.ionicAppName = props.appName;
-        this.directoryPath = props.directoryPath;
+        this.directoryPath = path.resolve(props.directoryPath);
         done();
       });
     }
@@ -145,6 +146,14 @@ module.exports = class extends BaseGenerator {
       params.push('--no-git');
     }
     spawn.sync('ionic', params, {stdio: 'inherit'});
+
+    const config = {
+      ionicAppName: this.ionicAppName,
+      directoryPath: this.directoryPath
+    };
+
+    const configFile = path.join(this.ionicAppName, '.jhipster-ionic.json');
+    jsonfile.writeFileSync(configFile, config);
   }
 
   _isIonicV3() {
