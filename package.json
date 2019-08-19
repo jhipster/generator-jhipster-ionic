@@ -41,7 +41,7 @@
     "@angular-devkit/schematics-cli": "0.802.2",
     "@oktadev/schematics": "0.8.3",
     "chai": "4.2.0",
-    "eslint": "6.1.0",
+    "eslint": "6.2.0",
     "eslint-config-airbnb-base": "14.0.0",
     "eslint-plugin-import": "2.18.2",
     "fs-extra": "8.1.0",
