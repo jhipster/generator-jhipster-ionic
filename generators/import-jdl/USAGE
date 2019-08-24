@@ -1,0 +1,5 @@
+Description:
+    Creates new Ionic client side components for a JHipster backend
+
+Example:
+    yo jhipster-ionic:entity Foo
