@@ -36,7 +36,7 @@ import { environment } from 'src/environments/environment';
 export class <%= entityAngularName %>ListPage {
     <%= entityInstancePlural %>: <%= entityAngularName %>[];
     itemsPerPage: number;
-    page=0;
+    page = 0;
     totalItems: number;
     <%=entityInstance %>Active = true;
 
@@ -112,7 +112,11 @@ export class <%= entityAngularName %>ListPage {
         this.<%= entityInstance %>Service.queryByDomainId(this.mainService.DOMAIN_ID, this.<%= entityInstance %>Active).subscribe(
             (res) => {
                 this.<%= entityInstancePlural %> = res;
-                if (refresher) { refresher.target.complete(); }
+                if (refresher !== undefined) {
+                    if (refresher.type === 'ionRefresh'){
+                        refresher.target.complete();
+                    }
+                }
             },
             (error) => {
                 console.error(error);
