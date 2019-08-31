@@ -303,7 +303,7 @@ _%>
 
     <%_ } if (fieldsContainImageBlob) { _%>
     getPicture(fieldName) {
-        if (Camera.installed()) {
+        if (Camera.installed()) && this.platform.is('mobile')){
             this.camera.getPicture(this.cameraOptions).then((data) => {
                 this.<%= entityInstance %>[fieldName] = data;
                 this.<%= entityInstance %>[fieldName + 'ContentType'] = 'image/jpeg';
