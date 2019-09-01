@@ -191,6 +191,11 @@ _%>
     </ion-grid>
     </form>
 
+    <br><br>
+    <div text-center *ngIf="<%=entityInstance %>?.lastModifiedBy !== ''">
+        {{ 'LastModifiedBy' | translate }}: {{<%=entityInstance %>?.lastModifiedBy}} on {{<%=entityInstance %>?.lastModifiedDate | date:'medium'}}
+    </div>  
+    <br><br>
     <div text-center class='hidden-xs-down'>
         <ion-button [disabled]="!isReadyToSave" size='small' (click)="save()">
             <ion-icon slot='start' name="md-checkmark"></ion-icon>
@@ -206,21 +211,16 @@ _%>
     <div class='hidden-sm-up'>
         <p><br><br></p>
     </div>
+    <ion-fab class='hidden-sm-up' vertical="bottom" horizontal="begin" slot="fixed">
+        <ion-fab-button (click)="save()">
+            {{ 'SAVE' | translate }}
+        </ion-fab-button>
+    </ion-fab>
+
     <ion-fab class='hidden-sm-up' vertical="bottom" horizontal="end" slot="fixed">
-        <ion-row>
-            <ion-col width-50>
-                <ion-fab-button (click)="save()">
-                    <ion-icon name="md-checkmark"></ion-icon>
-                    {{ 'SAVE' | translate }}
-                </ion-fab-button>
-            </ion-col>
-            <ion-col width-50>
-                <ion-fab-button color='medium' (click)="previousState()">
-                    <ion-icon slot='start' name="md-close"></ion-icon>
-                    {{ 'CANCEL' | translate }}
-                </ion-fab-button>
-            </ion-col>
-        </ion-row>
+        <ion-fab-button color='medium' (click)="previousState()">
+            {{ 'CANCEL' | translate }}
+        </ion-fab-button>
     </ion-fab>
 
 </ion-content>
