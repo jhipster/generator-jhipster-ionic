@@ -34,7 +34,7 @@ const CLIENT_IONIC_TEMPLATES_DIR = 'ionic';
  * For any other config an object { file:.., method:.., template:.. } can be used
  */
 
-const ionicFiles = {
+let ionicFiles = {
     client: [
         {
             path: IONIC_DIR,
@@ -68,52 +68,6 @@ const ionicFiles = {
                     renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.ts`
                 },
                 {
-                    file: 'entities/_entity-detail.html',
-                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.html`
-                },
-                {
-                    file: 'entities/_entity-detail.ts',
-                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.ts`
-                },
-                {
-                    file: 'entities/_entity-update.html',
-                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.html`
-                },
-                {
-                    file: 'entities/_entity-update.ts',
-                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.ts`
-                },
-                {
-                    file: 'entities/_entity-edit.html',
-                    method: 'processHtml',
-                    template: true,
-                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-edit.html`
-                },
-                {
-                    file: 'entities/_entity-edit.ts',
-                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-edit.ts`
-                },
-                {
-                    file: 'entities/_entity-list-edit.html',
-                    method: 'processHtml',
-                    template: true,
-                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-list-edit.html`
-                },
-                {
-                    file: 'entities/_entity-list-edit.ts',
-                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-list-edit.ts`
-                },
-                {
-                    file: 'entities/_entity-list.html',
-                    method: 'processHtml',
-                    template: true,
-                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-list.html`
-                },
-                {
-                    file: 'entities/_entity-list.ts',
-                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-list.ts`
-                },
-                {
                     file: 'entities/_en.json',
                     renameTo: generator => `../../assets/i18n/en_${generator.entityFileName}.json`
                 },
@@ -124,8 +78,65 @@ const ionicFiles = {
             ]
         }
     ]
+
     // todo: add tests
 };
+
+// TODO only add if option  -> this.context.options.genEditPage
+ionicFiles.client[0].templates.push({
+    file: 'entities/_entity-edit.html',
+    method: 'processHtml',
+    template: true,
+    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-edit.html`
+});
+ionicFiles.client[0].templates.push({
+    file: 'entities/_entity-edit.ts',
+    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-edit.ts`
+});
+
+// TODO only add if option  -> this.context.options.genListPage
+ionicFiles.client[0].templates.push({
+    file: 'entities/_entity-list.html',
+    method: 'processHtml',
+    template: true,
+    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-list.html`
+});
+ionicFiles.client[0].templates.push({
+    file: 'entities/_entity-list.ts',
+    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-list.ts`
+});
+
+// TODO only add if option  -> this.context.options.genInlinePage
+// Still to make inline table
+// ionicFiles.client[0].templates.push({
+//     file: 'entities/_entity-inline.html',
+//     method: 'processHtml',
+//     template: true,
+//     renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-inline.html`
+// });
+// ionicFiles.client[0].templates.push({
+//     file: 'entities/_entity-inline.ts',
+//     renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-inline.ts`
+// });
+
+
+// TODO add only if genNotPWA
+// {
+//     file: 'entities/_entity-detail.html',
+//     renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.html`
+// },
+// {
+//     file: 'entities/_entity-detail.ts',
+//     renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.ts`
+// },
+// {
+//     file: 'entities/_entity-update.html',
+//     renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.html`
+// },
+// {
+//     file: 'entities/_entity-update.ts',
+//     renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.ts`
+// },
 
 module.exports = {
     writeFiles,
@@ -158,6 +169,4 @@ function writeFiles() {
             }
         }
     };
-
-
 }

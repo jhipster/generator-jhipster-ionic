@@ -32,11 +32,21 @@ import { filter, map } from 'rxjs/operators';
 import { ComponentsModule } from 'src/app/components/components.module';
 
 import { <%= entityAngularName %>Page } from './<%=entityFileName %>';
+<%_ if (genNotPwa) { _%>
 import { <%= entityAngularName %>UpdatePage } from './<%=entityFileName %>-update';
+import { <%= entityAngularName %>DetailPage} from '.';
+<%_ } _%>
+<%_ if (genListPage) { _%>
 import { <%= entityAngularName %>ListPage } from './<%=entityFileName %>-list';
-import { <%= entityAngularName %>ListEditPage } from './<%=entityFileName %>-list-edit';
+<%_ } _%>
+<%_ if (genEditPage) { _%>
 import { <%= entityAngularName %>EditPage } from './<%=entityFileName %>-edit';
-import { <%= entityAngularName %>, <%= entityAngularName %>Service, <%= entityAngularName %>DetailPage} from '.';
+<%_ } _%>
+<%_ if (genInlinePage) { _%>
+import { <%= entityAngularName %>ListInlinePage } from './<%=entityFileName %>-inline';
+<%_ } _%>
+import { <%= entityAngularName %>, <%= entityAngularName %>Service} from '.';
+
 
 @Injectable({ providedIn: 'root' })
 export class <%= entityAngularName %>Resolve implements Resolve<<%= entityAngularName %>> {
@@ -63,6 +73,7 @@ const routes: Routes = [
       },
       canActivate: [UserRouteAccessService]
     },
+    <%_ if (genNotPwa) { _%>
     {
       path: 'new',
       component: <%= entityAngularName %>UpdatePage,
@@ -73,7 +84,9 @@ const routes: Routes = [
         authorities: ['ROLE_USER']
       },
       canActivate: [UserRouteAccessService]
-    },
+    }, 
+    <%_ } _%>
+    <%_ if (genEditPage) { _%>
     {
       path: 'new0',
       component: <%= entityAngularName %>EditPage,
@@ -85,6 +98,8 @@ const routes: Routes = [
       },
       canActivate: [UserRouteAccessService]
     },
+    <%_ } _%>
+    <%_ if (genNotPwa) { _%>
     {
       path: ':id/view',
       component: <%= entityAngularName %>DetailPage,
@@ -107,6 +122,8 @@ const routes: Routes = [
       },
       canActivate: [UserRouteAccessService]
     },
+    <%_ } _%>
+    <%_ if (genEditPage) { _%>
     {
       path: 'edit/:id',
       component: <%= entityAngularName %>EditPage,
@@ -118,6 +135,8 @@ const routes: Routes = [
       },
       canActivate: [UserRouteAccessService]
     },
+    <%_ } _%>
+    <%_ if (genListPage) { _%>
     {
       path: 'list',
       component: <%= entityAngularName %>ListPage,
@@ -126,25 +145,35 @@ const routes: Routes = [
       },
       canActivate: [UserRouteAccessService]
     },
+    <%_ } _%>
+    <%_ if (genInlinePage) { _%>
     {
-      path: 'listEdit',
-      component: <%= entityAngularName %>ListEditPage,
+      path: 'inline',
+      component: <%= entityAngularName %>InlinePage,
       data: {
         authorities: ['ROLE_USER']
       },
       canActivate: [UserRouteAccessService]
     }
+    <%_ } _%>
   ];
-
 
 @NgModule({
     declarations: [
-        <%= entityAngularName %>Page,
+      <%_ if (genNotPwa) { _%>
         <%= entityAngularName %>UpdatePage,
         <%= entityAngularName %>DetailPage,
+      <%_ } _%>
+      <%_ if (genListPage) { _%>
         <%= entityAngularName %>ListPage,
-        <%= entityAngularName %>ListEditPage,
-        <%= entityAngularName %>EditPage
+      <%_ } _%>
+      <%_ if (genEditPage) { _%>
+        <%= entityAngularName %>EditPage,
+      <%_ } _%>
+      <%_ if (genInlinePage) { _%>
+        <%= entityAngularName %>InlinePage,
+      <%_ } _%>
+        <%= entityAngularName %>Page
     ],
     imports: [
         IonicModule,

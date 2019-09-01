@@ -89,6 +89,30 @@ module.exports = class extends BaseGenerator {
             type: String
         });
 
+        // This adds support for `--list` flag -> generates list Page
+        this.option('list', {
+            desc: 'Generte list Pages',
+            type: String
+        });
+
+        // This adds support for `--edit` flag -> generates Edit Page
+        this.option('edit', {
+            desc: 'Generte edit Page',
+            type: String
+        });
+
+        // This adds support for `--inline` flag -> generating Inline Page
+        this.option('inline', {
+            desc: 'Generte inline Page',
+            type: String
+        });
+
+        // This adds support for `--genNotPwa` flag -> generating Inline Page
+        this.option('genNotPwa', {
+            desc: 'Generte update & detail Pages not in pwa format',
+            type: String
+        });
+
         this.context = {};
         this.setupEntityOptions(this, this, this.context);
         const blueprint = this.config.get('blueprint');
@@ -101,6 +125,10 @@ module.exports = class extends BaseGenerator {
             getConfig() {
                 const context = this.context;
                 context.useConfigurationFile = false;
+                context.genListPage = this.options.list;
+                context.genEditPage = this.options.edit;
+                context.genInlinePage = this.options.inline;
+                context.genNotPwa = this.options.genNotPwa;
                 this.env.options.appPath = this.config.get('appPath') || constants.CLIENT_MAIN_SRC_DIR;
                 context.options = this.options;
                 context.baseName = this.config.get('baseName');
@@ -395,6 +423,7 @@ module.exports = class extends BaseGenerator {
                 context.fieldsContainBigDecimal = false;
                 context.fieldsContainBlob = false;
                 context.fieldsContainImageBlob = false;
+                context.fieldsContainActive = false;
                 context.validation = false;
                 context.fieldsContainOwnerManyToMany = false;
                 context.fieldsContainNoOwnerOneToOne = false;
@@ -449,6 +478,7 @@ module.exports = class extends BaseGenerator {
                         // Handle the specific case when the second letter is capitalized
                         // See http://stackoverflow.com/questions/2948083/naming-convention-for-getters-setters-in-java
                         if (field.fieldName.length > 1) {
+                            if (field.fieldName === 'active') { context.fieldsContainActive = true; }
                             const firstLetter = field.fieldName.charAt(0);
                             const secondLetter = field.fieldName.charAt(1);
                             if (firstLetter === firstLetter.toLowerCase() && secondLetter === secondLetter.toUpperCase()) {

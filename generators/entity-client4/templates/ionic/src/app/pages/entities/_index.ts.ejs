@@ -18,5 +18,16 @@
 -%>
 export * from './<%= entityFileName %>.model';
 export * from './<%= entityFileName %>.service';
-export * from './<%= entityFileName %>-detail';
 export * from './<%= entityFileName %>';
+<%_ if (genNotPwa) { _%> 
+export * from './<%= entityFileName %>-detail';
+<%_ } _%>
+<%_ if (genListPage) { _%> 
+export * from './<%= entityFileName %>-list';
+<%_ } _%>
+<%_ if (genEditPage) { _%> 
+export * from './<%= entityFileName %>-edit';
+<%_ } _%>
+<%_ if (genInlinePage) { _%> 
+export * from './<%= entityFileName %>-inline';
+<%_ } _%>
