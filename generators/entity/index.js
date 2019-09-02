@@ -107,12 +107,6 @@ module.exports = class extends BaseGenerator {
             type: String
         });
 
-        // This adds support for `--genNotPwa` flag -> generating Inline Page
-        this.option('genNotPwa', {
-            desc: 'Generte update & detail Pages not in pwa format',
-            type: String
-        });
-
         this.context = {};
         this.setupEntityOptions(this, this, this.context);
         const blueprint = this.config.get('blueprint');
@@ -128,7 +122,7 @@ module.exports = class extends BaseGenerator {
                 context.genListPage = this.options.list;
                 context.genEditPage = this.options.edit;
                 context.genInlinePage = this.options.inline;
-                context.genNotPwa = this.options.genNotPwa;
+                context.genPwa = this.options.inline || this.options.edit || this.options.list;
                 this.env.options.appPath = this.config.get('appPath') || constants.CLIENT_MAIN_SRC_DIR;
                 context.options = this.options;
                 context.baseName = this.config.get('baseName');

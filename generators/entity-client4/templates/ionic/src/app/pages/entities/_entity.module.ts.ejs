@@ -32,7 +32,7 @@ import { filter, map } from 'rxjs/operators';
 import { ComponentsModule } from 'src/app/components/components.module';
 
 import { <%= entityAngularName %>Page } from './<%=entityFileName %>';
-<%_ if (genNotPwa) { _%>
+<%_ if (!genPwa) { _%>
 import { <%= entityAngularName %>UpdatePage } from './<%=entityFileName %>-update';
 import { <%= entityAngularName %>DetailPage} from '.';
 <%_ } _%>
@@ -43,7 +43,7 @@ import { <%= entityAngularName %>ListPage } from './<%=entityFileName %>-list';
 import { <%= entityAngularName %>EditPage } from './<%=entityFileName %>-edit';
 <%_ } _%>
 <%_ if (genInlinePage) { _%>
-import { <%= entityAngularName %>ListInlinePage } from './<%=entityFileName %>-inline';
+import { <%= entityAngularName %>InlinePage } from './<%=entityFileName %>-inline';
 <%_ } _%>
 import { <%= entityAngularName %>, <%= entityAngularName %>Service} from '.';
 
@@ -73,7 +73,7 @@ const routes: Routes = [
       },
       canActivate: [UserRouteAccessService]
     },
-    <%_ if (genNotPwa) { _%>
+    <%_ if (!genPwa) { _%>
     {
       path: 'new',
       component: <%= entityAngularName %>UpdatePage,
@@ -99,7 +99,7 @@ const routes: Routes = [
       canActivate: [UserRouteAccessService]
     },
     <%_ } _%>
-    <%_ if (genNotPwa) { _%>
+    <%_ if (!genPwa) { _%>
     {
       path: ':id/view',
       component: <%= entityAngularName %>DetailPage,
@@ -160,7 +160,7 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [
-      <%_ if (genNotPwa) { _%>
+      <%_ if (!genPwa) { _%>
         <%= entityAngularName %>UpdatePage,
         <%= entityAngularName %>DetailPage,
       <%_ } _%>
