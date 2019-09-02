@@ -61,4 +61,58 @@ export class <%= entityAngularName %>Service {
     delete(id: <% if (pkType === 'String') { %>string<% } else { %>number<% } %>): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }
+
+<%_ if (fieldsContainActive) { _%>
+    // == Custom ====
+    queryByTenantId(tenantId: any, active: boolean = true): Observable<any> {
+        console.log(`${this.resourceUrl}ByTenantId/${tenantId}/${active}`);
+        return this.http.get(`${this.resourceUrl}ByTenantId/${tenantId}/${active}`);
+    }
+
+    queryByDomainId(domainId: any, active: boolean = true): Observable<any> {
+        console.log(`${this.resourceUrl}ByDomainId/${domainId}/${active}`);
+        return this.http.get(`${this.resourceUrl}ByDomainId/${domainId}/${active}`);
+    }
+
+    queryActive( active: boolean = true): Observable<any> {
+        console.log(`${this.resourceUrl}Active/${active}`);
+        return this.http.get(`${this.resourceUrl}Active/${active}`);
+    }
+
+    chgActive(zoneId: number, active: boolean = true): Observable<any> {
+        console.log(`${this.resourceUrl}ChgActive/${zoneId}/${active}`);
+        return this.http.get(`${this.resourceUrl}ChgActive/${zoneId}/${active}`);
+    }
+
+// Don't forget to put in the backend <%= entityAngularName %>Resource.java file this:
+
+// /**
+//  * {@code PUT  /<%= entityApiUrl %>} : Updates active of nmsZone with zoneId.
+//  *
+//  * @param nmsZone the nmsZone to update.
+//  * @return true with status {@code 200 (OK)} if changed,
+//  * or with status {@code 400 (Bad Request)} if the nmsZone is not valid,
+//  * or with status {@code 500 (Internal Server Error)} if the nmsZone couldn't be updated.
+//  * @throws URISyntaxException if the Location URI syntax is incorrect.
+//  */
+// @PutMapping("/<%= entityApiUrl %>ChgActive/{id}/{active}")
+// public Boolean updateActive<%= entityAngularName %> (@PathVariable Long id, @PathVariable Boolean active) 
+//             throws URISyntaxException {
+//     log.debug("REST request to chg <%= entityAngularName %> {} set Active{}  : {} {}", id, active);
+//     return <%= entityInstance %>Repository.chgActive(id,active) == 1;
+// }
+
+// And in the <%= entityAngularName %>Repository.java file this: 
+
+// import javax.transaction.Transactional;
+// import org.springframework.data.jpa.repository.*;
+// import org.springframework.data.repository.query.Param;
+// import org.springframework.stereotype.Repository;
+
+// @Transactional()
+// @Modifying(clearAutomatically = true)
+// @Query("update <%= entityAngularName %>  entity set entity.active=:active where entity.id = :id ")
+// int chgActive(@Param("id") Long id, @Param("active") Boolean active);
+<%_ } _%>
+
 }
