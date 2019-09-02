@@ -74,38 +74,37 @@ export class <%= entityAngularName %>Service {
         return this.http.get(`${this.resourceUrl}ByDomainId/${domainId}/${active}`);
     }
 
-    queryActive( active: boolean = true): Observable<any> {
+    queryActive(active: boolean = true): Observable<any> {
         console.log(`${this.resourceUrl}Active/${active}`);
         return this.http.get(`${this.resourceUrl}Active/${active}`);
     }
 
-    chgActive(zoneId: number, active: boolean = true): Observable<any> {
-        console.log(`${this.resourceUrl}ChgActive/${zoneId}/${active}`);
-        return this.http.get(`${this.resourceUrl}ChgActive/${zoneId}/${active}`);
+    chgActive(id: number, active: boolean = true): Observable<any> {
+        console.log(`${this.resourceUrl}ChgActive/${id}/${active}`);
+        return this.http.get(`${this.resourceUrl}ChgActive/${id}/${active}`);
     }
 
 // Don't forget to put in the backend <%= entityAngularName %>Resource.java file this:
 
 // ======= Custom API's =======================
 // /**
-//  * GET  /<%= entityAngularName %>Active : get the nmsDomain by DomainID.
-//  *
-//  * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many)
-//  * @return the ResponseEntity with status 200 (OK) and the list of nmsfamilies in body
+//  * GET  /<%= entityAngularName %>Active : get the <%= entityAngularName %> by active.
+//  * @return the ResponseEntity with status 200 (OK) and the list of <%= entityAngularName %> in body
 //  */
-// @GetMapping("/nms-domainsActive/{active}")
+// @GetMapping("/<%= entityApiUrl %>}Active/{active}")
 // public List<<%= entityAngularName %>> getActive( @PathVariable boolean active) {
 //     log.debug("REST request to get <%= entityAngularName %> where Active = {} active:{} ",   active);
 //         return <%= entityInstance %>Repository.getActive(active);
 // }
 //
 // /**
-//  * {@code PUT  /<%= entityApiUrl %>} : Updates active of nmsZone with zoneId.
+//  * {@code PUT  /<%= entityApiUrl %>} : Updates active of <%= entityAngularName %> with zoneId.
 //  *
-//  * @param nmsZone the nmsZone to update.
+//  * @param id the <%= entityAngularName %> to update.
+    * @active Boolean value to update
 //  * @return true with status {@code 200 (OK)} if changed,
-//  * or with status {@code 400 (Bad Request)} if the nmsZone is not valid,
-//  * or with status {@code 500 (Internal Server Error)} if the nmsZone couldn't be updated.
+//  * or with status {@code 400 (Bad Request)} if the <%= entityAngularName %> is not valid,
+//  * or with status {@code 500 (Internal Server Error)} if the <%= entityAngularName %>  couldn't be updated.
 //  * @throws URISyntaxException if the Location URI syntax is incorrect.
 //  */
 // @PutMapping("/<%= entityApiUrl %>ChgActive/{id}/{active}")
