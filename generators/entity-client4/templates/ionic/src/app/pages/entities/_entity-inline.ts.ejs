@@ -101,7 +101,7 @@ export class <%= entityAngularName %>InlinePage {
 <%_ if (fieldsContainActive) { _%>
     // Loading only Active or Inactive according to <%= entityInstance %>Active value
     loadAll(refresher?) {
-        this.<%= entityInstance %>Service. queryByTenantId(this.mainService.TENANT.id, this.<%= entityInstance %>Active).subscribe(
+        this.<%= entityInstance %>Service.queryByTenantId(this.mainService.TENANT.id, this.<%= entityInstance %>Active).subscribe(
             (res) => {
                 this.<%= entityInstancePlural %> = res;
                 if (refresher !== undefined) {

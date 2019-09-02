@@ -86,6 +86,19 @@ export class <%= entityAngularName %>Service {
 
 // Don't forget to put in the backend <%= entityAngularName %>Resource.java file this:
 
+// ======= Custom API's =======================
+// /**
+//  * GET  /<%= entityAngularName %>Active : get the nmsDomain by DomainID.
+//  *
+//  * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many)
+//  * @return the ResponseEntity with status 200 (OK) and the list of nmsfamilies in body
+//  */
+// @GetMapping("/nms-domainsActive/{active}")
+// public List<<%= entityAngularName %>> getActive( @PathVariable boolean active) {
+//     log.debug("REST request to get <%= entityAngularName %> where Active = {} active:{} ",   active);
+//         return <%= entityInstance %>Repository.getActive(active);
+// }
+//
 // /**
 //  * {@code PUT  /<%= entityApiUrl %>} : Updates active of nmsZone with zoneId.
 //  *
@@ -113,6 +126,8 @@ export class <%= entityAngularName %>Service {
 // @Modifying(clearAutomatically = true)
 // @Query("update <%= entityAngularName %>  entity set entity.active=:active where entity.id = :id ")
 // int chgActive(@Param("id") Long id, @Param("active") Boolean active);
+//
+// @Query("select entity from <%= entityAngularName %>  entity  where  entity.active =:active ")
+// List<<%= entityAngularName %> > getActive( @Param("active") Boolean active);
 <%_ } _%>
-
 }
