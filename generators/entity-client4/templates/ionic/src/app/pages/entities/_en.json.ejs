@@ -17,6 +17,9 @@
  limitations under the License.
 -%>{
  <%_ for (idx in fields) { %>  "<%=fields[idx].fieldNameCapitalized%>": "<%=fields[idx].fieldNameHumanized%>",
- <%_ } %>
- <%= entityClassPluralHumanized %>
+ <%_ } %><%_ if (fieldsContainActive) { _%>
+ "Activate":"Activate",
+ "Inactivate":"Inactivate",
+ <%_ } _%>
+ "<%= entityClassPlural %>" :  "<%= entityClassPluralHumanized %>"
 }
