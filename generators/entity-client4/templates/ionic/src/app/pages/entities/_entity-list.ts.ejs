@@ -135,7 +135,14 @@ export class <%= entityAngularName %>ListPage {
 
 <%_ if (fieldsContainActive) { _%>
     chgActive(id,active) {
-        this.<%= entityInstance %>Service.chgActive(id, active);
+        this.<%= entityInstance %>Service..chgActive(id, active).subscribe(res => {
+            console.log(res);
+            this.loadAll();
+        },
+        (error) => {
+            console.error(error);
+            this.presentToast(this.ERROR_LOAD);
+        });
     }
 <%_ } _%>
 

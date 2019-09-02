@@ -81,7 +81,7 @@ export class <%= entityAngularName %>Service {
 
     chgActive(id: number, active: boolean = true): Observable<any> {
         console.log(`${this.resourceUrl}ChgActive/${id}/${active}`);
-        return this.http.get(`${this.resourceUrl}ChgActive/${id}/${active}`);
+        return this.http.put(`${this.resourceUrl}ChgActive/${id}/${active}`, null);
     }
 
 // Don't forget to put in the backend <%= entityAngularName %>Resource.java file this:
