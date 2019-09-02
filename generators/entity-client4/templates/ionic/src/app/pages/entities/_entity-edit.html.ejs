@@ -198,7 +198,7 @@ _%>
     </form>
 
     <br><br>
-    <div text-center *ngIf="<%=entityInstance %>?.lastModifiedBy">
+    <div text-center *ngIf="<%=entityInstance %>?.lastModifiedDate">
         {{ 'LastModifiedBy' | translate }}: {{<%=entityInstance %>?.lastModifiedBy}} on {{<%=entityInstance %>?.lastModifiedDate | date:'medium'}}
     </div>  
     <br><br>

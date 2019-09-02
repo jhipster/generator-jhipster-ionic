@@ -32,7 +32,7 @@
     </ion-fab-button>
   </ion-fab>
   <%_ } _%>
-  
+
   <%_ if (fieldsContainActive) { _%>
   <ion-segment small [(ngModel)]="<%=entityInstance %>Active" (ionChange)="loadAll($event)">
     <ion-segment-button small value=true>
@@ -62,8 +62,8 @@
             <th class='hidden-xs-down'> {{ '<%=fields[idx].fieldNameCapitalized _%>' | translate }}
               <%_ } _%>
               <%_ if (fields[idx].fieldName !== 'active') { _%>
-                <ion-icon name="arrow-up" (click)="sort('<%=fields[idx].fieldName _%>', true)"></ion-icon>
-                <ion-icon name="arrow-down" (click)="sort('<%=fields[idx].fieldName _%>', false)"></ion-icon>
+                <ion-icon name="arrow-dropup" (click)="sort('<%=fields[idx].fieldName _%>', true)"></ion-icon>
+                <ion-icon name="arrow-dropdown" (click)="sort('<%=fields[idx].fieldName _%>', false)"></ion-icon>
             </th>
             <%_ } _%>
             <%_ } _%>
