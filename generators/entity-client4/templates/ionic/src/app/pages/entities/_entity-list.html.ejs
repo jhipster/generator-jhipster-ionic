@@ -107,7 +107,7 @@
             </ion-button>
             <%_ if (fieldsContainActive) { _%>
                 <ion-button size='small' (click)='chgActive(<%=entityInstance %>.id,true)' *ngIf="!<%=entityInstance %>.active">
-                    <ion-icon slot="start" color="green" name="add"> </ion-icon>
+                    <ion-icon slot="start" name="checkmark-circle"> </ion-icon>
                     {{ 'Activate' | translate }}
                 </ion-button>
                 <ion-button size='small' (click)="chgActive(<%=entityInstance %>.id,false)" *ngIf="<%=entityInstance %>.active">
