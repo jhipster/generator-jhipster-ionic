@@ -31,6 +31,10 @@ import { HttpResponse } from '@angular/common/http';
 import { filter, map } from 'rxjs/operators';
 import { ComponentsModule } from 'src/app/components/components.module';
 
+<%_ if (relationships) { _%>
+import { IonicSelectableModule } from 'ionic-selectable';
+<%_ } _%>
+
 import { <%= entityAngularName %>Page } from './<%=entityFileName %>';
 <%_ if (!genPwa) { _%>
 import { <%= entityAngularName %>UpdatePage } from './<%=entityFileName %>-update';
@@ -178,6 +182,9 @@ const routes: Routes = [
     imports: [
         IonicModule,
         FormsModule,
+        <%_ if (relationships) { _%>
+        IonicSelectableModule,
+        <%_ } _%>
         ComponentsModule,
         ReactiveFormsModule,
         CommonModule,
