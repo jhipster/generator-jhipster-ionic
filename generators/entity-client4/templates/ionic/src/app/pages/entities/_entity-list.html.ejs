@@ -17,7 +17,7 @@
  limitations under the License.
 -%>
 <%_ const keyPrefix = entityTranslationKey; _%>
-<app-header title="{{'<%= entityClassPluralHumanized %>' | translate}}"></app-header> 
+<app-header title="{{'<%= entityClassPlural %>' | translate}}"></app-header> 
 
 <ion-content padding>
   <ion-button class='hidden-xs-down' size='small' float-right [routerLink]="['/entities/<%=entityFileName %>/new0']">
@@ -30,7 +30,7 @@
     </ion-fab-button>
   </ion-fab>
 
-  <ion-segment small [(ngModel)]="<%=entityInstance %>Active" (ionChange)="loadActive($event)">
+  <ion-segment small [(ngModel)]="<%=entityInstance %>Active" (ionChange)="loadAll($event)">
     <ion-segment-button small value=true>
       <ion-label>{{'Active' | translate}}</ion-label>
     </ion-segment-button>
@@ -41,7 +41,7 @@
 
   <ion-searchbar (ionInput)="search($event)"></ion-searchbar>
 
-  <ion-refresher [disabled]="plt.is('desktop')" slot="fixed" (ionRefresh)="loadActive($event)">
+  <ion-refresher [disabled]="plt.is('desktop')" slot="fixed" (ionRefresh)="loadAll($event)">
         <ion-refresher-content>{{ 'LOADING'| translate}}</ion-refresher-content>
   </ion-refresher>
 
@@ -51,14 +51,16 @@
         <!-- you can hide rows according to screen-size changing xs by (sm,md,lg or xl) -->
         <tr> 
             <%_ for (idx in fields) { _%>
-              <%_ if (fields[idx].fieldName === 'name' || fields[idx].fieldName === 'title') { _%>
-            <th>{{ '<%=fields[idx].fieldNameCapitalized _%>' | translate }}
-              <%_ }  else { _%>
+                <%_ if (fields[idx].fieldName === 'name' || fields[idx].fieldName === 'title') { _%>
+            <th><b>{{ '<%=fields[idx].fieldNameCapitalized _%>' | translate }}</b>
+              <%_ }  else if (fields[idx].fieldName !== 'active' ) { _%>
             <th class='hidden-xs-down'> {{ '<%=fields[idx].fieldNameCapitalized _%>' | translate }}
               <%_ } _%>
-                <ion-icon name="arrow-up" (click)="sortActive('<%=fields[idx].fieldName _%>', true)"></ion-icon>
-                <ion-icon name="arrow-down" (click)="sortActive('<%=fields[idx].fieldName _%>', false)"></ion-icon>
+              <%_ if (fields[idx].fieldName !== 'active' ) { _%>
+                <ion-icon name="arrow-up" (click)="sort('<%=fields[idx].fieldName _%>', true)"></ion-icon>
+                <ion-icon name="arrow-down" (click)="sort('<%=fields[idx].fieldName _%>', false)"></ion-icon>
             </th>
+            <%_ } _%>
             <%_ } _%>
             <th></th>
         </tr>
@@ -69,7 +71,8 @@
                     const fieldNameCapitalized = fields[idx].fieldNameCapitalized;
                     const fieldType = fields[idx].fieldType;
                     const fieldTypeBlobContent = fields[idx].fieldTypeBlobContent; _%>
-                    <%_ if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'image') { _%>
+                     <%_ if (fieldName === 'active' ) { _%>
+                    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'image') { _%>
                     <td>
                     <ion-avatar<% if (idx === 0) { %>item-start<% } %> *ngIf="<%= entityInstance %>.<%= fieldName %>">
                         <img [src]="'data:' + <%=entityInstance %>.<%=fieldName%>ContentType + ';base64,' + <%=entityInstance %>.<%=fieldName%>" />
@@ -80,15 +83,15 @@
                     <!-- todo: special handling for translating enum - {{'<%= fieldType %>.' + <%= entityInstance %>.<%= fieldName %>}}" -->
                     <td class='hidden-xs-down'>{{<%=entityInstance %>.<%=fieldName%>}}</td>
                     <%_ } else if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
-                    <td class='hidden-xs-down'>{{<%=entityInstance %>.<%=fieldName%> | date:'medium'}}</td>
+                    <td class='hidden-xs-down'>{{<%=entityInstance %>.<%=fieldName%> | date:'d/M/yy (H:mm)'}}</td>
                     <%_ } else if (fieldType === 'LocalDate') { _%>
-                    <td class='hidden-xs-down'>{{<%=entityInstance %>.<%=fieldName%> | date:'mediumDate'}}</td>
+                    <td class='hidden-xs-down'>{{<%=entityInstance %>.<%=fieldName%> | date:'d/M/yy (H:mm)'}}</td>
                     <%_ } else { _%>
-                    <%_ if (fieldName === 'name' || fieldName === 'title') { _%>
+                         <%_ if (fieldName === 'name' || fieldName === 'title') { _%>
                     <ion-text color="primary"><h6>{{<%=entityInstance %>.<%=fieldName%>}}</h6></ion-text>
-                    <%_ } else { _%>
+                         <%_ } else { _%>
                     <td class='hidden-xs-down'>{{<%=entityInstance %>.<%=fieldName%>}}</td>
-                    <%_ } _%>
+                          <%_ } _%>
                     <%_ } _%>
                 <%_ } _%>
                 
@@ -97,6 +100,17 @@
                 <ion-icon slot="start" name="create"> </ion-icon>
                 {{ 'EDIT' | translate }}
             </ion-button>
+            <%_ if (fieldsContainActive) { _%>
+                <ion-button size='small' (click)='chgActive(<%=entityInstance %>.id,true)' *ngIf="!<%=entityInstance %>.active">
+                    <ion-icon slot="start" color="green" name="add"> </ion-icon>
+                    {{ 'Activate' | translate }}
+                </ion-button>
+                <ion-button size='small' (click)="chgActive(<%=entityInstance %>.id,false)" *ngIf="<%=entityInstance %>.active">
+                    <ion-icon slot="start" color="red" name="trash"> </ion-icon>
+                    {{ 'Deactivate' | translate }}
+                </ion-button>
+            <%_ } _%>
+            
             </td>
         </tr>
         </tbody>

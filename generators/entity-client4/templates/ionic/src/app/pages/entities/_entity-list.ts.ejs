@@ -57,10 +57,10 @@ export class <%= entityAngularName %>ListPage {
     }
 
     ionViewWillEnter() {
-        // this.loadAll();
-         this.loadActive();
+        this.loadAll();
     }
 
+<%_ if (!fieldsContainActive) { _%>
     loadAll(predicate = 'id', reverse = true) {
         this.<%= entityInstance %>Service.query({
                 page: this.page,
@@ -90,26 +90,18 @@ export class <%= entityAngularName %>ListPage {
     loadPage(page) {
         this.page = page;
         this.loadAll();
-        // this.loadActive();
     }
 
     protected paginate(data: <%= entityAngularName %>[], headers: HttpHeaders) {
         this.<%= entityInstancePlural %> = data;
         this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
     }
+    <%_ } _%>
 
-<%_ if (fieldsContainBlob) { _%>
-    byteSize(field) {
-        return this.dataUtils.byteSize(field);
-    }
-    openFile(contentType, field) {
-        return this.dataUtils.openFile(contentType, field);
-    }
-<%_ } _%>
-
+<%_ if (fieldsContainActive) { _%>
     // Loading only Active or Inactive according to <%= entityInstance %>Active value
-    loadActive(refresher?) {
-        this.<%= entityInstance %>Service.queryByDomainId(this.mainService.DOMAIN_ID, this.<%= entityInstance %>Active).subscribe(
+    loadAll(refresher?) {
+        this.<%= entityInstance %>Service. queryByTenantId(this.mainService.TENANT.id, this.<%= entityInstance %>Active).subscribe(
             (res) => {
                 this.<%= entityInstancePlural %> = res;
                 if (refresher !== undefined) {
@@ -123,11 +115,11 @@ export class <%= entityAngularName %>ListPage {
                 this.presentToast(this.ERROR_LOAD);
             });
     }
-
-    sortActive(field, asc) {
+    sort(field, asc) {
         this.<%= entityInstancePlural %> = asc ? this.<%= entityInstancePlural %>.sort((a, b) => a[field].localeCompare(b[field])) :
             this.<%= entityInstancePlural %>.sort((a, b) => b[field].localeCompare(a[field]));
     }
+    <%_ } _%>
 
     // Object.keys for getting all property names of the object,
     // Array.some for iterating the keys and exit loop if found,
@@ -137,9 +129,25 @@ export class <%= entityAngularName %>ListPage {
             this.<%= entityInstancePlural %> = this.<%= entityInstancePlural %>.filter(o =>
                 Object.keys(o).some(k => String(o[k]).toLowerCase().includes(val.toLowerCase())));
         } else {
-            this.loadActive();
+            this.loadAll();
         }
     }
+
+<%_ if (fieldsContainActive) { _%>
+    chgActive(id,active) {
+        this.<%= entityInstance %>Service.chgActive(id, active);
+    }
+<%_ } _%>
+
+<%_ if (fieldsContainBlob) { _%>
+    byteSize(field) {
+        return this.dataUtils.byteSize(field);
+    }
+    openFile(contentType, field) {
+        return this.dataUtils.openFile(contentType, field);
+    }
+<%_ } _%>
+
     async presentToast(text) {
         const toast = await this.toastCtrl.create({ message: text, duration: 3000, position: 'middle' });
         toast.present();
