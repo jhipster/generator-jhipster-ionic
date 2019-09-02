@@ -20,6 +20,8 @@
 <app-header title="{{'<%= entityClassPlural %>' | translate}}"></app-header> 
 
 <ion-content padding>
+ 
+<%_ if (genEditPage) { _%> 
   <ion-button class='hidden-xs-down' size='small' float-right [routerLink]="['/entities/<%=entityFileName %>/new0']">
     <ion-icon slot="start" name="add"> </ion-icon>
     {{ 'New' | translate }} {{ '<%=entityClassHumanized_%>' | translate }}
@@ -29,7 +31,9 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
+  <%_ } _%>
+  
+  <%_ if (fieldsContainActive) { _%>
   <ion-segment small [(ngModel)]="<%=entityInstance %>Active" (ionChange)="loadAll($event)">
     <ion-segment-button small value=true>
       <ion-label>{{'Active' | translate}}</ion-label>
@@ -38,6 +42,7 @@
       <ion-label>{{'Inactive' | translate}}</ion-label>
     </ion-segment-button>
   </ion-segment>
+  <%_ } _%>
 
   <ion-searchbar (ionInput)="search($event)"></ion-searchbar>
 
@@ -53,10 +58,10 @@
             <%_ for (idx in fields) { _%>
                 <%_ if (fields[idx].fieldName === 'name' || fields[idx].fieldName === 'title') { _%>
             <th><b>{{ '<%=fields[idx].fieldNameCapitalized _%>' | translate }}</b>
-              <%_ }  else if (fields[idx].fieldName !== 'active' ) { _%>
+                <%_ }  else if (fields[idx].fieldName !== 'active' ) { _%>
             <th class='hidden-xs-down'> {{ '<%=fields[idx].fieldNameCapitalized _%>' | translate }}
               <%_ } _%>
-              <%_ if (fields[idx].fieldName !== 'active' ) { _%>
+              <%_ if (fields[idx].fieldName !== 'active') { _%>
                 <ion-icon name="arrow-up" (click)="sort('<%=fields[idx].fieldName _%>', true)"></ion-icon>
                 <ion-icon name="arrow-down" (click)="sort('<%=fields[idx].fieldName _%>', false)"></ion-icon>
             </th>
@@ -94,7 +99,7 @@
                           <%_ } _%>
                     <%_ } _%>
                 <%_ } _%>
-                
+        <%_ if (genEditPage) { _%>
             <td>
             <ion-button size='small' [routerLink]="['/entities/<%=entityFileName %>/edit',<%=entityInstance %>.id ]">
                 <ion-icon slot="start" name="create"> </ion-icon>
@@ -110,8 +115,8 @@
                     {{ 'Deactivate' | translate }}
                 </ion-button>
             <%_ } _%>
-            
             </td>
+        <%_ } _%>
         </tr>
         </tbody>
       </table>

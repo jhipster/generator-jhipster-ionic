@@ -39,6 +39,9 @@ _%>
                 let fieldInputType = 'text';
                 let ngModelOption = '';
                 const translationKey = keyPrefix + fieldName;
+                if (fields[idx].fieldName !== 'lastModifiedBy' &&fields[idx].fieldName !== 'lastModifiedDate') {
+                    
+                }
                 if (['Integer', 'Long', 'Float', 'Double', 'BigDecimal'].includes(fieldType)) {
                     fieldInputType = 'number';
                 } else if (fieldType === 'LocalDate') {
@@ -51,6 +54,8 @@ _%>
                     fieldInputType = 'hidden';
                 }
             _%>
+
+        <%_ if (fields[idx].fieldName !== 'lastModifiedBy' &&fields[idx].fieldName !== 'lastModifiedDate') {_%>
             <ion-item lines='none'>
                 <%_ if (fields[idx].fieldIsEnum) { _%>
                 <ion-label> {{ '<%=fieldNameCapitalized _%>' | translate }}:</ion-label>
@@ -104,6 +109,7 @@ _%>
                 <ion-input type="<%= fieldInputType %>" name="<%= fieldName %>" formControlName="<%= fieldName %>"></ion-input>
                 <%_ } _%>
             </ion-item>
+        <%_ }_%>   
          <%_ if ( (idx % 5) === 0  && idx > 0) { _%>
          </ion-col>
 
@@ -192,7 +198,7 @@ _%>
     </form>
 
     <br><br>
-    <div text-center *ngIf="<%=entityInstance %>?.lastModifiedBy !== ''">
+    <div text-center *ngIf="<%=entityInstance %>?.lastModifiedBy">
         {{ 'LastModifiedBy' | translate }}: {{<%=entityInstance %>?.lastModifiedBy}} on {{<%=entityInstance %>?.lastModifiedDate | date:'medium'}}
     </div>  
     <br><br>

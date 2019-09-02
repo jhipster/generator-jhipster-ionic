@@ -108,16 +108,16 @@ ionicFiles.client[0].templates.push({
 
 // TODO only add if option  -> this.context.options.genInlinePage
 // Still to make inline table
-ionicFiles.client[0].templates.push({
-    file: 'entities/_entity-inline.html',
-    method: 'processHtml',
-    template: true,
-    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-inline.html`
-});
-ionicFiles.client[0].templates.push({
-    file: 'entities/_entity-inline.ts',
-    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-inline.ts`
-});
+// ionicFiles.client[0].templates.push({
+//     file: 'entities/_entity-inline.html',
+//     method: 'processHtml',
+//     template: true,
+//     renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-inline.html`
+// });
+// ionicFiles.client[0].templates.push({
+//     file: 'entities/_entity-inline.ts',
+//     renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-inline.ts`
+// });
 
 
 // TODO add only if !genPWA
