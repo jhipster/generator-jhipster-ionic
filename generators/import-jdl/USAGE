@@ -1,5 +1,5 @@
 Description:
-    Creates new Ionic client side components for a JHipster backend
+    Creates new Ionic client side components based on JDL
 
 Example:
-    yo jhipster-ionic:entity Foo
+    yo jhipster-ionic:import-jdl blog.jdl
