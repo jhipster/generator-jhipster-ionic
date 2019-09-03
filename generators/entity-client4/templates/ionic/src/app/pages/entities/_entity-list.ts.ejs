@@ -47,7 +47,6 @@ export class <%= entityAngularName %>ListPage {
         private dataUtils: JhiDataUtils,
 <%_ } _%>
         private mainService: MainService,
-        private navController: NavController,
         private <%= entityInstance %>Service: <%= entityAngularName %>Service,
         private toastCtrl: ToastController,
         public plt: Platform
@@ -135,7 +134,7 @@ export class <%= entityAngularName %>ListPage {
 
 <%_ if (fieldsContainActive) { _%>
     chgActive(id,active) {
-        this.<%= entityInstance %>Service..chgActive(id, active).subscribe(res => {
+        this.<%= entityInstance %>Service.chgActive(id, active).subscribe(res => {
             console.log(res);
             this.loadAll();
         },
