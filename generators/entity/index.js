@@ -26,7 +26,6 @@ class EntityGenerator extends BaseEntityGenerator {
     const myCustomPhaseSteps = {
       loadConfig() {
         this.configRootPath = this.options.configRootPath = this.fs.readJSON('.jhipster-ionic.json').directoryPath;
-        console.log(`this.configRootPath: ${this.configRootPath}`);
       }
     };
     return Object.assign(myCustomPhaseSteps, phaseFromJHipster);
