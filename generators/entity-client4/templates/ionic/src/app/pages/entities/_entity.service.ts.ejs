@@ -23,7 +23,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { createRequestOption } from 'src/app/shared';
 import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
 
-@Injectable({ providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class <%= entityAngularName %>Service {
     private resourceUrl = ApiService.API_URL<% if (locals.microserviceName) { %>.replace('api', 'services/<%= microserviceName.toLowerCase() %>/api')<% } %> + '/<%= entityApiUrl %>';
 
@@ -36,7 +36,7 @@ export class <%= entityAngularName %>Service {
     create(<%= entityInstance %>: <%= entityAngularName %>):
         Observable<HttpResponse<<%= entityAngularName %>>> {
     <%_ } _%>
-        return this.http.post<<%= entityAngularName %>>(this.resourceUrl, <%= entityInstance %>, { observe: 'response'});
+        return this.http.post<<%= entityAngularName %>>(this.resourceUrl, <%= entityInstance %>, { observe: 'response' });
     }
     <%_ if (entityAngularName.length <= 30) { _%>
 
@@ -46,7 +46,7 @@ export class <%= entityAngularName %>Service {
     update(<%= entityInstance %>: <%= entityAngularName %>):
         Observable<HttpResponse<<%= entityAngularName %>>> {
     <%_ } _%>
-        return this.http.put(this.resourceUrl, <%= entityInstance %>, { observe: 'response'});
+        return this.http.put(this.resourceUrl, <%= entityInstance %>, { observe: 'response' });
     }
 
     find(id: <% if (pkType === 'String') { %>string<% } else { %>number<% } %>): Observable<HttpResponse<<%= entityAngularName %>>> {
@@ -59,7 +59,7 @@ export class <%= entityAngularName %>Service {
     }
 
     delete(id: <% if (pkType === 'String') { %>string<% } else { %>number<% } %>): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
 <%_ if (fieldsContainActive) { _%>
@@ -123,10 +123,10 @@ export class <%= entityAngularName %>Service {
 
 // @Transactional()
 // @Modifying(clearAutomatically = true)
-// @Query("update <%= entityAngularName %>  entity set entity.active=:active where entity.id = :id ")
+// @Query("UPDATE <%= entityAngularName %> entity SET entity.active=:active WHERE entity.id = :id ")
 // int chgActive(@Param("id") Long id, @Param("active") Boolean active);
 //
-// @Query("select entity from <%= entityAngularName %>  entity  where  entity.active =:active ")
+// @Query("SELECT entity FROM <%= entityAngularName %> entity WHERE entity.active =:active ")
 // List<<%= entityAngularName %> > getActive( @Param("active") Boolean active);
 <%_ } _%>
 }
