@@ -114,9 +114,13 @@ export class <%= entityAngularName %>ListPage {
                 this.presentToast(this.ERROR_LOAD);
             });
     }
+    
     sort(field, asc) {
-        this.<%= entityInstancePlural %> = asc ? this.<%= entityInstancePlural %>.sort((a, b) => a[field].localeCompare(b[field])) :
-            this.<%= entityInstancePlural %>.sort((a, b) => b[field].localeCompare(a[field]));
+        this.<%= entityInstancePlural %> = this.<%= entityInstancePlural %>.sort((a, b) => {
+            return a[field] === null || a[field] === undefined ? asc ? -1 : 1 :
+                b[field] === null || b[field] === undefined ? asc ? 1 : -1 :
+                    asc ? a[field].localeCompare(b[field]) : b[field].localeCompare(a[field]);
+        });
     }
     <%_ } _%>
 
