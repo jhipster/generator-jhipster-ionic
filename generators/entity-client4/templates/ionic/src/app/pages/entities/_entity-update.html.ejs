@@ -38,7 +38,7 @@ _%>
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class="ion-padding">
     <form *ngIf="form" name="form" [formGroup]="form" (ngSubmit)="save()">
         <ion-list>
             <ion-item [hidden]="!form.id">

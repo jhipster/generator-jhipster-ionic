@@ -19,7 +19,7 @@
 <%_ const keyPrefix = entityTranslationKey; _%>
 <app-header title="{{'<%= entityClassPlural %>' | translate}}"></app-header> 
 
-<ion-content padding>
+<ion-content class="ion-padding">
   <ion-button class='hidden-xs-down' size='small' float-right [routerLink]="['/entities/<%=entityFileName %>/new0']">
     <ion-icon slot="start" name="add"> </ion-icon>
     {{ 'New' | translate }} {{ '<%=entityClassHumanized_%>' | translate }}
