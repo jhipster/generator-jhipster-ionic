@@ -16,7 +16,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-import { MainService } from 'src/app/services/main/main.service';
 import { Component } from '@angular/core';
 import { NavController, ToastController, Platform, IonItemSliding } from '@ionic/angular';
 import { filter, map } from 'rxjs/operators';
@@ -46,7 +45,6 @@ export class <%= entityAngularName %>ListPage {
 <%_ if (fieldsContainBlob) { _%>
         private dataUtils: JhiDataUtils,
 <%_ } _%>
-        private mainService: MainService,
         private <%= entityInstance %>Service: <%= entityAngularName %>Service,
         private toastCtrl: ToastController,
         public plt: Platform
@@ -100,9 +98,7 @@ export class <%= entityAngularName %>ListPage {
 <%_ if (fieldsContainActive) { _%>
     // Loading only Active or Inactive according to <%= entityInstance %>Active value
     loadAll(refresher?) {
-        this.<%= entityInstance %>Service.queryByDomainId(this.mainService.DOMAIN.id, this.<%= entityInstance %>Active).subscribe(
-       // this.<%= entityInstance %>Service.queryByTenantId(this.mainService.TENANT.id, this.<%= entityInstance %>Active).subscribe(
-       // this.<%= entityInstance %>Service.queryActive(this.<%= entityInstance %>Active).subscribe(
+        this.<%= entityInstance %>Service.queryActive(this.<%= entityInstance %>Active).subscribe(
             (res) => {
                 this.<%= entityInstancePlural %> = res;
                 if (refresher !== undefined) {

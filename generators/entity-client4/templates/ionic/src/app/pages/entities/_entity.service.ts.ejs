@@ -64,16 +64,7 @@ export class <%= entityAngularName %>Service {
 
 <%_ if (fieldsContainActive) { _%>
     // == Custom ====
-    queryByTenantId(tenantId: any, active: boolean = true): Observable<any> {
-        console.log(`${this.resourceUrl}ByTenantId/${tenantId}/${active}`);
-        return this.http.get(`${this.resourceUrl}ByTenantId/${tenantId}/${active}`);
-    }
-
-    queryByDomainId(domainId: any, active: boolean = true): Observable<any> {
-        console.log(`${this.resourceUrl}ByDomainId/${domainId}/${active}`);
-        return this.http.get(`${this.resourceUrl}ByDomainId/${domainId}/${active}`);
-    }
-
+   
     queryActive(active: boolean = true): Observable<any> {
         console.log(`${this.resourceUrl}Active/${active}`);
         return this.http.get(`${this.resourceUrl}Active/${active}`);
