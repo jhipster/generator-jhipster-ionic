@@ -40,7 +40,7 @@ _%>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
-<ion-content padding>
+<ion-content class="ion-padding">
     <form *ngIf="form" [formGroup]="form" (ngSubmit)="save()">
         <ion-list>
             <ion-item [hidden]="!form.id">
