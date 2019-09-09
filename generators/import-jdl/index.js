@@ -40,13 +40,18 @@ class ImporterGenerator extends BaseGenerator {
       defaults: false
     });
 
-    this.configRootPath = fs.readJSONSync('.jhipster-ionic.json').directoryPath;
-    const configuration = jhipsterUtils.getAllJhipsterConfig(null, true, this.configRootPath);
-    this.applicationType = configuration.applicationType;
-    this.baseName = configuration.baseName;
-    this.prodDatabaseType = configuration.prodDatabaseType || this.options.db;
+    try {
+      this.configRootPath = fs.readJSONSync('.jhipster-ionic.json').directoryPath;
+      const configuration = jhipsterUtils.getAllJhipsterConfig(null, true, this.configRootPath);
+      this.applicationType = configuration.applicationType;
+      this.baseName = configuration.baseName;
+      this.prodDatabaseType = configuration.prodDatabaseType || this.options.db;
 
-    this.importState = importJDL.call(this);
+      this.importState = importJDL.call(this);
+    } catch (error) {
+      logger.info('File .jhipster-ionic.json not found. Please run this command in an Ionic project.');
+      logger.error(error);
+    }
   }
 }
 
