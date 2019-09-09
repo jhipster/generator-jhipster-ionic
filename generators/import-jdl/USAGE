@@ -1,5 +1,4 @@
 Description:
-    Creates new Ionic client side components based on JDL
-
+    Creates entities from the passed JDL file location
 Example:
-    yo jhipster-ionic:import-jdl blog.jdl
+    yo jhipster-ionic:import-jdl model.jdl
