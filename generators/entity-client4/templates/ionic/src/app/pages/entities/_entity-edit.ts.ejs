@@ -112,11 +112,6 @@ _%>
         private <%= entityInstance %>Service: <%= entityAngularName %>Service
     ) {
 
-        // Watch the form for changes, and
-        this.form.valueChanges.subscribe((v) => {
-            this.isReadyToSave = this.form.valid;
-        });
-
         <%_ if (fieldsContainImageBlob) { _%>
         // Set the Camera options
         this.cameraOptions = {
@@ -179,6 +174,11 @@ _%>
             <%=relationshipFieldNamePlural %>: [<%=entityInstance %>.<%=relationshipFieldNamePlural %>],
     <%_ } _%>
 <%_ } _%>
+        });
+
+        // Watch the form for changes, and
+        this.form.valueChanges.subscribe((v) => {
+            this.isReadyToSave = this.form.valid;
         });
     }
 
