@@ -145,19 +145,10 @@ function generateEntityFiles(generator, entity) {
     debug: generator.options.debug,
     regenerate: true,
     'skip-install': true,
-    'skip-client': entity.skipClient,
-    'skip-server': entity.skipServer,
-    'no-fluent-methods': entity.noFluentMethod,
-    'skip-user-management': entity.skipUserManagement,
-    'skip-ui-grouping': generator.options['skip-ui-grouping'],
     arguments: [entity.name]
   });
 }
 
 function callSubGenerator(generator, subgenPath, name, args) {
-  console.log('generator', generator)
-  console.log('subgenPath', subgenPath)
-  console.log('name', name)
-  console.log('args', args)
   generator.composeWith(require.resolve(path.join(subgenPath, name)), args);
 }
