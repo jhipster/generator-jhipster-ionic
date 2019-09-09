@@ -23,7 +23,7 @@ const chalk = require('chalk');
 const jhiCore = require('jhipster-core');
 const { logger } = require('generator-jhipster/cli/utils');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
-const packagejs = require('../../package.json');
+const pluralize = require('pluralize');
 const jhipsterUtils = require('generator-jhipster/generators/utils');
 const fs = require('fs-extra');
 
@@ -51,7 +51,7 @@ class ImporterGenerator extends BaseGenerator {
 }
 
 function importJDL() {
-  this.log('The JDL is being parsed.');
+  logger.info('The JDL is being parsed.');
   const jdlImporter = new jhiCore.JDLImporter(this.jdlFiles, {
     databaseType: this.prodDatabaseType,
     applicationType: this.applicationType,
@@ -66,19 +66,19 @@ function importJDL() {
       const entityNames = _.uniq(importState.exportedEntities
         .map(exportedEntity => exportedEntity.name))
         .join(', ');
-      this.log(`Found entities: ${chalk.yellow(entityNames)}.`);
+      logger.info(`Found entities: ${chalk.yellow(entityNames)}.`);
     } else {
-      this.log(chalk.yellow('No change in entity configurations, no entities were updated.'));
+      logger.info(chalk.yellow('No change in entity configurations, no entities were updated.'));
     }
-    this.log('The JDL has been successfully parsed');
+    logger.info('The JDL has been successfully parsed');
   } catch (error) {
-    this.debug('Error:', error);
+    logger.debug('Error:', error);
     if (error) {
       const errorName = `${error.name}:` || '';
       const errorMessage = error.message || '';
-      this.log(chalk.red(`${errorName} ${errorMessage}`));
+      logger.log(chalk.red(`${errorName} ${errorMessage}`));
     }
-    this.error(`Error while parsing applications and entities from the JDL ${error}`);
+    logger.error(`Error while parsing entities from the JDL ${error}`, error);
   }
   return importState;
 }
@@ -107,26 +107,23 @@ module.exports = class extends ImporterGenerator {
     return {
       generateEntities() {
         if (this.importState.exportedEntities.length === 0 || this.importState.exportedApplications.length !== 0) {
+          logger.debug('Entities not generated');
           return;
         }
         if (this.options['json-only']) {
-          this.log('Entity JSON files created. Entity generation skipped.');
+          logger.info('Entity JSON files created. Entity generation skipped.');
           return;
         }
         try {
+          logger.info(
+            `Generating ${this.importState.exportedEntities.length} ` +
+            `${pluralize('entity', this.importState.exportedEntities.length)}.`
+          );
           this.importState.exportedEntities.forEach((exportedEntity) => {
-            if (this.importState.exportedApplications.length === 0
-              || this.importState.exportedApplications.length === 1) {
-              //this.log(`Generating ${this.importState.exportedEntities.length} `
-              //  + `entit${this.importState.exportedEntities.length === 1 ? 'y' : 'ies'}.`);
-              generateEntityFiles(this, exportedEntity);
-            } else {
-              // sub-folder generation, not yet handled
-              this.entitiesLeftToGenerate.push(exportedEntity.name);
-            }
+            generateEntityFiles(this, exportedEntity);
           });
         } catch (error) {
-          this.error(`Error while generating entities from the parsed JDL\n${error}`);
+          logger.error(`Error while generating entities from the parsed JDL\n${error}`, error);
         }
       }
     };
@@ -141,7 +138,7 @@ module.exports = class extends ImporterGenerator {
 
 function generateEntityFiles(generator, entity) {
   callSubGenerator(generator, '..', 'entity', {
-    force: generator.options.force,
+    force: true,
     debug: generator.options.debug,
     regenerate: true,
     'skip-install': true,

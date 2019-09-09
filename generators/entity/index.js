@@ -19,6 +19,11 @@
 const BaseEntityGenerator = require('generator-jhipster/generators/entity');
 
 class EntityGenerator extends BaseEntityGenerator {
+  constructor(args, opts) {
+    const suppressWarning = {'from-cli': true};
+    super(args, {...opts, ...suppressWarning});
+  }
+
   get initializing() {
     // Here we are not overriding this phase and hence its being handled by JHipster
     // return super._initializing();
@@ -57,6 +62,7 @@ class EntityGenerator extends BaseEntityGenerator {
         this.composeWith(require.resolve(entityClientDirectory), {
           context,
           'skip-install': context.options['skip-install'],
+          'from-cli': true,
           force: context.options.force,
           debug: context.isDebugEnabled
         });
