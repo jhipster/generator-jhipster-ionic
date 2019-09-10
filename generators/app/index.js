@@ -248,10 +248,6 @@ module.exports = class extends BaseGenerator {
     this.authenticationType = this.jhipsterAppConfig.authenticationType;
     this.template('e2e/pages/login.po.ts', `${this.ionicAppName}/e2e/pages/login.po.ts`);
     this.template('e2e/spec/login.e2e-spec.ts', `${this.ionicAppName}/e2e/spec/login.e2e-spec.ts`);
-
-    // Prettier
-    this.template('.prettier', `${this.ionicAppName}/.prettier`);
-    this.template('.prettierignore', `${this.ionicAppName}/.prettierignore`);
     done();
   }
 
