@@ -10,15 +10,16 @@ To learn more about this module, see [Build Mobile Apps with Angular, Ionic 4, a
 
 ## Prerequisites
 
-As this is a [JHipster](http://www.jhipster.tech/) module, we expect you to have an existing JHipster app and Ionic already installed.
+As this is a [JHipster](http://www.jhipster.tech/) module, we expect you to have an existing JHipster, Ionic, and Angular CLI already installed.
 
-- [Installing JHipster](https://www.jhipster.tech/installation/)
-- [Installing Ionic](https://ionicframework.com/docs/installation/cli)
+- [Install JHipster](https://www.jhipster.tech/installation/)
+- [Install Ionic](https://ionicframework.com/docs/installation/cli)
+- [Install Angular CLI](https://angular.io/cli)
 
-Or simply:
+Or just run:
 
 ```bash
-npm i -g generator-jhipster ionic
+npm i -g generator-jhipster ionic @angular/cli
 ```
 
 ## Installation
