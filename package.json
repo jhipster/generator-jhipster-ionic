@@ -20,7 +20,8 @@
   ],
   "bin": {
     "ionic4j": "./cli/ionic4j.js",
-    "ionic4j:entity": "./cli/ionic4j.js"
+    "ionic4j:entity": "./cli/ionic4j.js",
+    "ionic4j:import-jdl": "./cli/ionic4j.js"
   },
   "main": "generators/app/index.js",
   "repository": {
