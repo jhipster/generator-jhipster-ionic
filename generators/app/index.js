@@ -187,7 +187,6 @@ module.exports = class extends BaseGenerator {
       packageJSON.devDependencies['@oktadev/schematics'] = oktaSchematicsVersion;
       jsonfile.writeFileSync(packagePath, packageJSON);
       installAuthCmd = `schematics @oktadev/schematics:add-auth ${params} --skipPackageJson=true`;
-      }
 
       if (shelljs.exec(`cd ${this.ionicAppName} && ${installAuthCmd}`).code !== 0) {
         this.error(installAuthCmd);
