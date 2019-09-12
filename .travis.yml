@@ -1,12 +1,14 @@
+dist: bionic
 os:
   - linux
 services:
   - docker
+  - xvfb
 language: node_js
 node_js:
-  - "10.16.0"
+  - "10.16.3"
 jdk:
-  - oraclejdk8
+  - oraclejdk11
 addons:
   apt:
     sources:
