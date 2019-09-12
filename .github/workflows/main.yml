@@ -1,0 +1,22 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Set up node and npm
+      uses: actions/setup-node@v1
+      with:
+        version: 12.9.1
+
+    - name: Install node dependencies
+      run: npm install
+      
+    - name: Run tests
+      run: npm test
