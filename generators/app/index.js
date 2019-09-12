@@ -64,10 +64,6 @@ module.exports = class extends BaseGenerator {
         this.jhipsterAppConfig = this.getAllJhipsterConfig();
       },
       displayLogo() {
-        // it's here to show that you can use functions from generator-jhipster
-        // this function is in: generator-jhipster/generators/generator-base.js
-        // this.printJHipsterLogo();
-
         // Have Yeoman greet the user.
         this.log(`\nWelcome to the ${chalk.bold.blue('Ionic')} Module for ${chalk.bold.green('J')}${chalk.bold.red('Hipster')}! ${chalk.yellow(`v${packagejs.version}\n`)}`);
       }

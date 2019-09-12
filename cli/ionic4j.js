@@ -21,15 +21,27 @@ const spawn = require('cross-spawn');
 
 let commands = ['jhipster-ionic'];
 
-// allow ionic4j:entity
+// ionic4j:entity
 if (process.argv[1].includes('entity')) {
   commands = [commands[0].replace('ionic', 'ionic:entity')];
   commands.push(process.argv[2]);
 }
 
-// allow ionic4j entity $name
+// ionic4j entity $name
 if (process.argv[2] === 'entity') {
   commands = [commands[0].replace('ionic', 'ionic:entity')];
+  commands[1] = process.argv[3];
+}
+
+// ionic4j:import-jdl
+if (process.argv[1].includes('import-jdl')) {
+  commands = [commands[0].replace('ionic', 'ionic:import-jdl')];
+  commands.push(process.argv[2]);
+}
+
+// allow ionic4j import-jdl $file
+if (process.argv[2] === 'import-jdl') {
+  commands = [commands[0].replace('ionic', 'ionic:import-jdl')];
   commands[1] = process.argv[3];
 }
 

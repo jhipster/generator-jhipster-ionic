@@ -20,7 +20,8 @@
   ],
   "bin": {
     "ionic4j": "./cli/ionic4j.js",
-    "ionic4j:entity": "./cli/ionic4j.js"
+    "ionic4j:entity": "./cli/ionic4j.js",
+    "ionic4j:import-jdl": "./cli/ionic4j.js"
   },
   "main": "generators/app/index.js",
   "repository": {
@@ -30,7 +31,7 @@
   "dependencies": {
     "chalk": "2.4.2",
     "cross-spawn": "7.0.0",
-    "generator-jhipster": ">=6.1.1",
+    "generator-jhipster": ">=6.2.0",
     "jsonfile": "5.0.0",
     "lodash": "4.17.15",
     "pluralize": "8.0.0",
