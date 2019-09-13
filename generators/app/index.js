@@ -285,6 +285,7 @@ module.exports = class extends BaseGenerator {
     return {
       gitCommit() {
         if (this.installDeps) {
+          const done = this.async();
           this.debug('Committing files to git');
           this.isGitInstalled((code) => {
             if (code === 0) {
