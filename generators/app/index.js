@@ -249,9 +249,11 @@ module.exports = class extends BaseGenerator {
     this.template('e2e/spec/login.e2e-spec.ts', `${this.ionicAppName}/e2e/spec/login.e2e-spec.ts`);
 
     // Add Prettier script and run
-    packageJSON.scripts.prettier = 'prettier --write "{,src/**/}*.{md,json,ts,css,scss,yml}" --loglevel silent';
-    jsonfile.writeFileSync(packagePath, packageJSON);
-    shelljs.exec(`cd ${this.ionicAppName} && npm run prettier`);
+    if (this.installDeps) {
+      packageJSON.scripts.prettier = 'prettier --write "{,src/**/}*.{md,json,ts,css,scss,yml}" --loglevel silent';
+      jsonfile.writeFileSync(packagePath, packageJSON);
+      shelljs.exec(`cd ${this.ionicAppName} && npm run prettier`);
+    }
 
     done();
   }
@@ -282,10 +284,9 @@ module.exports = class extends BaseGenerator {
   get end() {
     return {
       gitCommit() {
-        if (!this.options['skip-git']) {
-          const done = this.async();
+        if (this.installDeps) {
           this.debug('Committing files to git');
-          this.isGitInstalled(code => {
+          this.isGitInstalled((code) => {
             if (code === 0) {
               shelljs.exec(`cd ${this.ionicAppName} && git add -A`, () => {
                 shelljs.exec(`cd ${this.ionicAppName} && git commit --amend --no-edit`, () => {
