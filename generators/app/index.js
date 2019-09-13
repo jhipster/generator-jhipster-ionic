@@ -50,7 +50,6 @@ module.exports = class extends BaseGenerator {
 
     this.interactive = this.options.interactive;
     this.installDeps = this.options.installDeps;
-    this.registerPrettierTransform();
   }
 
   get initializing() {
@@ -249,6 +248,11 @@ module.exports = class extends BaseGenerator {
     this.template('e2e/pages/login.po.ts', `${this.ionicAppName}/e2e/pages/login.po.ts`);
     this.template('e2e/spec/login.e2e-spec.ts', `${this.ionicAppName}/e2e/spec/login.e2e-spec.ts`);
 
+    // Add Prettier script and run
+    packageJSON.scripts.prettier = 'prettier --write "{,src/**/}*.{md,json,ts,css,scss,yml}" --loglevel silent';
+    jsonfile.writeFileSync(packagePath, packageJSON);
+    shelljs.exec(`cd ${this.ionicAppName} && npm run prettier`);
+
     done();
   }
 
@@ -275,14 +279,40 @@ module.exports = class extends BaseGenerator {
     }
   }
 
-  end() {
-    this.log('\nIonic for JHipster App created successfully! 🎉\n');
-    this.log('Run the following commands (in separate terminal windows) to see everything working:\n');
-    this.log(`${chalk.green(`    cd ${this.directoryPath} && ${this.jhipsterAppConfig.buildTool === 'maven' ? './mvnw' : './gradlew'}`)}`);
-    this.log(`${chalk.green(`    cd ${this.ionicAppName} && ionic serve`)}\n`);
-    if (this.interactive) {
-      // force quit; needed because of this.conflicter.force = true
-      process.exit(0);
+  get end() {
+    return {
+      gitCommit() {
+        if (!this.options['skip-git']) {
+          const done = this.async();
+          this.debug('Committing files to git');
+          this.isGitInstalled(code => {
+            if (code === 0) {
+              shelljs.exec(`cd ${this.ionicAppName} && git add -A`, () => {
+                shelljs.exec(`cd ${this.ionicAppName} && git commit --amend --no-edit`, () => {
+                  this.log(chalk.green('App successfully committed to Git.'));
+                  done();
+                });
+              });
+            } else {
+              this.warning(
+                'The generated app could not be committed to Git, as a Git repository could not be initialized.'
+              );
+              done();
+            }
+          });
+        }
+      },
+
+      afterRunHook() {
+        this.log('\nIonic for JHipster App created successfully! 🎉\n');
+        this.log('Run the following commands (in separate terminal windows) to see everything working:\n');
+        this.log(`${chalk.green(`    cd ${this.directoryPath} && ${this.jhipsterAppConfig.buildTool === 'maven' ? './mvnw' : './gradlew'}`)}`);
+        this.log(`${chalk.green(`    cd ${this.ionicAppName} && ionic serve`)}\n`);
+        if (this.interactive) {
+          // force quit; needed because of this.conflicter.force = true
+          process.exit(0);
+        }
+      }
     }
   }
 };
