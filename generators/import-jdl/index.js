@@ -27,7 +27,57 @@ const pluralize = require('pluralize');
 const jhipsterUtils = require('generator-jhipster/generators/utils');
 const fs = require('fs-extra');
 
-class ImporterGenerator extends BaseGenerator {
+function importJDL() {
+  logger.info('The JDL is being parsed...');
+
+  const jdlImporter = new jhiCore.JDLImporter(this.jdlFiles, {
+    databaseType: this.prodDatabaseType,
+    applicationType: this.applicationType,
+    applicationName: this.baseName
+  });
+  let importState = {
+    exportedEntities: [],
+    exportedApplications: [],
+    exportedDeployments: []
+  };
+  try {
+    importState = jdlImporter.import();
+    if (importState.exportedEntities.length > 0) {
+      const entityNames = _.uniq(importState.exportedEntities
+        .map((exportedEntity) => exportedEntity.name))
+        .join(', ');
+      logger.info(`Found entities: ${chalk.yellow(entityNames)}.`);
+    } else {
+      logger.info(chalk.yellow('No change in entity configurations, no entities were updated.'));
+    }
+    logger.info('The JDL has been successfully parsed.');
+  } catch (error) {
+    logger.debug('Error:', error);
+    if (error) {
+      const errorName = `${error.name}:` || '';
+      const errorMessage = error.message || '';
+      logger.log(chalk.red(`${errorName} ${errorMessage}`));
+    }
+    logger.error(`Error while parsing entities from the JDL ${error}`, error);
+  }
+  return importState;
+}
+
+function generateEntityFiles(generator, entity) {
+  callSubGenerator(generator, '..', 'entity', {
+    force: true,
+    debug: generator.options.debug,
+    regenerate: true,
+    'skip-install': true,
+    arguments: entity.name
+  });
+}
+
+function callSubGenerator(generator, subgenPath, name, args) {
+  generator.composeWith(require.resolve(path.join(subgenPath, name)), args);
+}
+
+class ImportJDLGenerator extends BaseGenerator {
   constructor(args, opts) {
     super(args, opts);
     this.argument('jdlFiles', { type: Array, required: true });
@@ -53,46 +103,6 @@ class ImporterGenerator extends BaseGenerator {
       logger.error(error);
     }
   }
-}
-
-function importJDL() {
-  logger.info('The JDL is being parsed.');
-  const jdlImporter = new jhiCore.JDLImporter(this.jdlFiles, {
-    databaseType: this.prodDatabaseType,
-    applicationType: this.applicationType,
-    applicationName: this.baseName
-  });
-  let importState = {
-    exportedEntities: []
-  };
-  try {
-    importState = jdlImporter.import();
-    if (importState.exportedEntities.length > 0) {
-      const entityNames = _.uniq(importState.exportedEntities
-        .map(exportedEntity => exportedEntity.name))
-        .join(', ');
-      logger.info(`Found entities: ${chalk.yellow(entityNames)}.`);
-    } else {
-      logger.info(chalk.yellow('No change in entity configurations, no entities were updated.'));
-    }
-    logger.info('The JDL has been successfully parsed');
-  } catch (error) {
-    logger.debug('Error:', error);
-    if (error) {
-      const errorName = `${error.name}:` || '';
-      const errorMessage = error.message || '';
-      logger.log(chalk.red(`${errorName} ${errorMessage}`));
-    }
-    logger.error(`Error while parsing entities from the JDL ${error}`, error);
-  }
-  return importState;
-}
-
-module.exports = class extends ImporterGenerator {
-  constructor(args, opts) {
-    super(args, opts);
-    this.entitiesLeftToGenerate = [];
-  }
 
   get initializing() {
     return {
@@ -111,7 +121,7 @@ module.exports = class extends ImporterGenerator {
   get writing() {
     return {
       generateEntities() {
-        if (this.importState.exportedEntities.length === 0 || this.importState.exportedApplications.length !== 0) {
+        if (this.importState.exportedEntities.length === 0) {
           logger.debug('Entities not generated');
           return;
         }
@@ -133,24 +143,6 @@ module.exports = class extends ImporterGenerator {
       }
     };
   }
-
-  end() {
-    if (this.entitiesLeftToGenerate.length !== 0) {
-      this.info(`Here are the entity names to generate manually: ${_.uniq(this.entitiesLeftToGenerate).join(', ')}`);
-    }
-  }
-};
-
-function generateEntityFiles(generator, entity) {
-  callSubGenerator(generator, '..', 'entity', {
-    force: true,
-    debug: generator.options.debug,
-    regenerate: true,
-    'skip-install': true,
-    arguments: [entity.name]
-  });
 }
 
-function callSubGenerator(generator, subgenPath, name, args) {
-  generator.composeWith(require.resolve(path.join(subgenPath, name)), args);
-}
+module.exports = ImportJDLGenerator;
