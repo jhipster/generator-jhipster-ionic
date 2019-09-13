@@ -46,6 +46,12 @@ In a directory alongside your JHipster app, run this module. This will create an
 yo jhipster-ionic
 ```
 
+This module also ships with an `ionic4j` CLI that you can use as a shortcut.
+
+* Use `ionic4j` to generate a new app
+* `ionic4j entity <name>` generates entities
+* `ionic4j import-jdl <file.jdl>` imports JDL and generates entities
+
 ### Okta for Authentication
 
 Choosing OAuth 2.0 / OIDC for authentication will allow you to use Keycloak or Okta for identity. In theory, you should be able to use any OIDC-compliant identity provider, and these are the only ones we've tested against. JHipster ships with Keycloak configured and ready to go by default. You simply have to start it in your JHipster backend.
@@ -152,7 +158,11 @@ adb reverse tcp:9080 tcp:9080
 
 ### Entity Generator
 
-To generate entities, run `yo jhipster-ionic:entity <name>`.
+To generate entities, run `ionic4j entity <name>` or `yo jhipster-ionic:entity <name>`.
+
+### Import JDL
+
+To import JDL, run `ionic4j import-jdl <entities.jdl>` or `yo jhipster-ionic:import-jdl <entities.jdl>`.
 
 ## Testing
 
