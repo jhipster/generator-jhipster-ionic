@@ -179,7 +179,7 @@ module.exports = class extends BaseGenerator {
 
       let installAuthCmd;
       const params = '--configUri=http://localhost:8080/api/auth-info --issuer=null --clientId=null';
-      const schematicsVersion = '0.8.3';
+      const schematicsVersion = '0.9.0';
 
       // use `schematics` when testing and expect it to be installed
       if (this.installDeps) {
