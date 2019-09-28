@@ -130,9 +130,11 @@ module.exports = class extends BaseGenerator {
       this.error(`\nYour backend project must be a monolith or a gateway to work with this module! Found application type: ${applicationType}.\n`);
     }
 
-    const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster${(this.interactive) ? '' : ' --no-interactive'}`;
+    const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster --type angular${(this.interactive) ? '' : ' --no-interactive'}`;
     this.log(`\nCreating Ionic app with command: ${chalk.green(`${cmd}`)}`);
     const params = ['start', this.ionicAppName, 'oktadeveloper/jhipster'];
+    params.push('--type');
+    params.push('angular');
     if (!this.interactive) {
       params.push('--no-interactive');
       params.push('--quiet');
