@@ -16,7 +16,7 @@ export class WelcomePage implements OnInit {
 
   ngOnInit() {
     this.authService.authObservable.subscribe((action) => {
-      if (action.action === AuthActions.SignInSuccess || action.action === AuthActions.AuthSignInSuccess) {
+      if (action.action === AuthActions.SignInSuccess || action.action === AuthActions.AutoSignInSuccess) {
         console.log('action', action);
         this.navController.navigateRoot('/tabs');
       } else if (action.action === AuthActions.SignOutSuccess) {
