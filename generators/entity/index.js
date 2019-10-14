@@ -30,6 +30,13 @@ class EntityGenerator extends BaseEntityGenerator {
     const phaseFromJHipster = super._initializing();
     const myCustomPhaseSteps = {
       loadConfig() {
+
+        this.context.genListPage = true; // this.options.list;
+        this.context.genEditPage = true; // this.options.edit;
+        this.context.genInlinePage = false; // this.options.inline;
+        this.context.genPwa = true; // this.options.inline || this.options.edit || this.options.list;
+        this.context.fieldsContainActive = true; // true; // TODO Change to check in Jhispter
+        
         this.configRootPath = this.options.configRootPath = this.fs.readJSON('.jhipster-ionic.json').directoryPath;
       }
     };
