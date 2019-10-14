@@ -143,11 +143,11 @@ _%>
     </form>
 
     <br><br>
-    <div text-center *ngIf="<%=entityInstance %>?.lastModifiedDate">
+    <div class='ion-text-center' *ngIf="<%=entityInstance %>?.lastModifiedDate">
         {{ 'LastModifiedBy' | translate }}: {{<%=entityInstance %>?.lastModifiedBy}} on {{<%=entityInstance %>?.lastModifiedDate | date:'medium'}}
     </div>  
     <br><br>
-    <div text-center class='hidden-xs-down'>
+    <div class='ion-text-center hidden-xs-down'>
         <ion-button [disabled]="!isReadyToSave" size='small' (click)="save()">
             <ion-icon slot='start' name="md-checkmark"></ion-icon>
             {{ 'SAVE' | translate }}

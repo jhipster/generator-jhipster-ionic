@@ -40,14 +40,8 @@ import { <%= entityAngularName %>Page } from './<%=entityFileName %>';
 import { <%= entityAngularName %>UpdatePage } from './<%=entityFileName %>-update';
 import { <%= entityAngularName %>DetailPage} from '.';
 <%_ } _%>
-<%_ if (genListPage) { _%>
-import { <%= entityAngularName %>ListPage } from './<%=entityFileName %>-list';
-<%_ } _%>
 <%_ if (genEditPage) { _%>
 import { <%= entityAngularName %>EditPage } from './<%=entityFileName %>-edit';
-<%_ } _%>
-<%_ if (genInlinePage) { _%>
-import { <%= entityAngularName %>InlinePage } from './<%=entityFileName %>-inline';
 <%_ } _%>
 import { <%= entityAngularName %>, <%= entityAngularName %>Service} from '.';
 
@@ -140,26 +134,6 @@ const routes: Routes = [
       canActivate: [UserRouteAccessService]
     },
     <%_ } _%>
-    <%_ if (genListPage) { _%>
-    {
-      path: 'list',
-      component: <%= entityAngularName %>ListPage,
-      data: {
-        authorities: ['ROLE_USER']
-      },
-      canActivate: [UserRouteAccessService]
-    },
-    <%_ } _%>
-    <%_ if (genInlinePage) { _%>
-    {
-      path: 'inline',
-      component: <%= entityAngularName %>InlinePage,
-      data: {
-        authorities: ['ROLE_USER']
-      },
-      canActivate: [UserRouteAccessService]
-    }
-    <%_ } _%>
   ];
 
 @NgModule({
@@ -168,14 +142,8 @@ const routes: Routes = [
         <%= entityAngularName %>UpdatePage,
         <%= entityAngularName %>DetailPage,
       <%_ } _%>
-      <%_ if (genListPage) { _%>
-        <%= entityAngularName %>ListPage,
-      <%_ } _%>
       <%_ if (genEditPage) { _%>
         <%= entityAngularName %>EditPage,
-      <%_ } _%>
-      <%_ if (genInlinePage) { _%>
-        <%= entityAngularName %>InlinePage,
       <%_ } _%>
         <%= entityAngularName %>Page
     ],
