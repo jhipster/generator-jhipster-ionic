@@ -17,6 +17,8 @@
  * limitations under the License.
  */
 /* eslint-disable consistent-return */
+
+const path = require('path');
 const chalk = require('chalk');
 const packagejs = require('../../package.json');
 const jsonfile = require('jsonfile');
@@ -25,7 +27,6 @@ const shelljs = require('shelljs');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
 const spawn = require('cross-spawn');
 const fs = require('fs');
-const constants = require('generator-jhipster/generators/generator-constants');
 const utils = require('./utils');
 
 module.exports = class extends BaseGenerator {
@@ -63,10 +64,6 @@ module.exports = class extends BaseGenerator {
         this.jhipsterAppConfig = this.getAllJhipsterConfig();
       },
       displayLogo() {
-        // it's here to show that you can use functions from generator-jhipster
-        // this function is in: generator-jhipster/generators/generator-base.js
-        // this.printJHipsterLogo();
-
         // Have Yeoman greet the user.
         this.log(`\nWelcome to the ${chalk.bold.blue('Ionic')} Module for ${chalk.bold.green('J')}${chalk.bold.red('Hipster')}! ${chalk.yellow(`v${packagejs.version}\n`)}`);
       }
@@ -102,12 +99,12 @@ module.exports = class extends BaseGenerator {
       }];
     if (this.defaultApp) {
       this.ionicAppName = 'ionic4j';
-      this.directoryPath = 'backend';
+      this.directoryPath = path.resolve('backend');
       done();
     } else {
       this.prompt(prompts).then((props) => {
         this.ionicAppName = props.appName;
-        this.directoryPath = props.directoryPath;
+        this.directoryPath = path.resolve(props.directoryPath);
         done();
       });
     }
@@ -133,9 +130,11 @@ module.exports = class extends BaseGenerator {
       this.error(`\nYour backend project must be a monolith or a gateway to work with this module! Found application type: ${applicationType}.\n`);
     }
 
-    const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster${(this.interactive) ? '' : ' --no-interactive'}`;
+    const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster --type angular${(this.interactive) ? '' : ' --no-interactive'}`;
     this.log(`\nCreating Ionic app with command: ${chalk.green(`${cmd}`)}`);
     const params = ['start', this.ionicAppName, 'oktadeveloper/jhipster'];
+    params.push('--type');
+    params.push('angular');
     if (!this.interactive) {
       params.push('--no-interactive');
       params.push('--quiet');
@@ -145,6 +144,14 @@ module.exports = class extends BaseGenerator {
       params.push('--no-git');
     }
     spawn.sync('ionic', params, {stdio: 'inherit'});
+
+    const config = {
+      ionicAppName: this.ionicAppName,
+      directoryPath: this.directoryPath
+    };
+
+    const configFile = path.join(this.ionicAppName, '.jhipster-ionic.json');
+    jsonfile.writeFileSync(configFile, config);
   }
 
   _isIonicV3() {
@@ -174,7 +181,7 @@ module.exports = class extends BaseGenerator {
 
       let installAuthCmd;
       const params = '--configUri=http://localhost:8080/api/auth-info --issuer=null --clientId=null';
-      const schematicsVersion = '0.8.3';
+      const schematicsVersion = '0.9.0';
 
       // use `schematics` when testing and expect it to be installed
       if (this.installDeps) {
@@ -243,6 +250,13 @@ module.exports = class extends BaseGenerator {
     this.template('e2e/pages/login.po.ts', `${this.ionicAppName}/e2e/pages/login.po.ts`);
     this.template('e2e/spec/login.e2e-spec.ts', `${this.ionicAppName}/e2e/spec/login.e2e-spec.ts`);
 
+    // Add Prettier script and run
+    if (this.installDeps) {
+      packageJSON.scripts.prettier = 'prettier --write "{,src/**/}*.{md,json,ts,css,scss,yml}" --loglevel silent';
+      jsonfile.writeFileSync(packagePath, packageJSON);
+      shelljs.exec(`cd ${this.ionicAppName} && npm run prettier`);
+    }
+
     done();
   }
 
@@ -269,14 +283,40 @@ module.exports = class extends BaseGenerator {
     }
   }
 
-  end() {
-    this.log('\nIonic for JHipster App created successfully! 🎉\n');
-    this.log('Run the following commands (in separate terminal windows) to see everything working:\n');
-    this.log(`${chalk.green(`    cd ${this.directoryPath} && ${this.jhipsterAppConfig.buildTool === 'maven' ? './mvnw' : './gradlew'}`)}`);
-    this.log(`${chalk.green(`    cd ${this.ionicAppName} && ionic serve`)}\n`);
-    if (this.interactive) {
-      // force quit; needed because of this.conflicter.force = true
-      process.exit(0);
+  get end() {
+    return {
+      gitCommit() {
+        if (this.installDeps) {
+          const done = this.async();
+          this.debug('Committing files to git');
+          this.isGitInstalled((code) => {
+            if (code === 0) {
+              shelljs.exec(`cd ${this.ionicAppName} && git add -A`, () => {
+                shelljs.exec(`cd ${this.ionicAppName} && git commit --amend --no-edit`, () => {
+                  this.log(chalk.green('App successfully committed to Git.'));
+                  done();
+                });
+              });
+            } else {
+              this.warning(
+                'The generated app could not be committed to Git, as a Git repository could not be initialized.'
+              );
+              done();
+            }
+          });
+        }
+      },
+
+      afterRunHook() {
+        this.log('\nIonic for JHipster App created successfully! 🎉\n');
+        this.log('Run the following commands (in separate terminal windows) to see everything working:\n');
+        this.log(`${chalk.green(`    cd ${this.directoryPath} && ${this.jhipsterAppConfig.buildTool === 'maven' ? './mvnw' : './gradlew'}`)}`);
+        this.log(`${chalk.green(`    cd ${this.ionicAppName} && ionic serve`)}\n`);
+        if (this.interactive) {
+          // force quit; needed because of this.conflicter.force = true
+          process.exit(0);
+        }
+      }
     }
   }
 };

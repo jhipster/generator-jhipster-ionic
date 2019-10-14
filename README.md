@@ -10,15 +10,16 @@ To learn more about this module, see [Build Mobile Apps with Angular, Ionic 4, a
 
 ## Prerequisites
 
-As this is a [JHipster](http://www.jhipster.tech/) module, we expect you to have an existing JHipster app and Ionic already installed.
+As this is a [JHipster](http://www.jhipster.tech/) module, we expect you to have an existing JHipster, Ionic, and Angular CLI already installed.
 
-- [Installing JHipster](https://www.jhipster.tech/installation/)
-- [Installing Ionic](https://ionicframework.com/docs/installation/cli)
+- [Install JHipster](https://www.jhipster.tech/installation/)
+- [Install Ionic](https://ionicframework.com/docs/installation/cli)
+- [Install Angular CLI](https://angular.io/cli)
 
-Or simply:
+Or just run:
 
 ```bash
-npm i -g generator-jhipster ionic
+npm i -g generator-jhipster ionic @angular/cli
 ```
 
 ## Installation
@@ -44,6 +45,12 @@ In a directory alongside your JHipster app, run this module. This will create an
 ```bash
 yo jhipster-ionic
 ```
+
+This module also ships with an `ionic4j` CLI that you can use as a shortcut.
+
+* Use `ionic4j` to generate a new app
+* `ionic4j entity <name>` generates entities
+* `ionic4j import-jdl <file.jdl>` imports JDL and generates entities
 
 ### Okta for Authentication
 
@@ -151,7 +158,11 @@ adb reverse tcp:9080 tcp:9080
 
 ### Entity Generator
 
-To generate entities, run `yo jhipster-ionic:entity <name>`.
+To generate entities, run `ionic4j entity <name>` or `yo jhipster-ionic:entity <name>`.
+
+### Import JDL
+
+To import JDL, run `ionic4j import-jdl <entities.jdl>` or `yo jhipster-ionic:import-jdl <entities.jdl>`.
 
 ## Testing
 

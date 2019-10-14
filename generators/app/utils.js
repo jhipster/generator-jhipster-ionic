@@ -18,7 +18,6 @@
  */
 const chalk = require('chalk');
 const shelljs = require('shelljs');
-const jhipsterUtils = require('generator-jhipster/generators/utils');
 
 module.exports = {
     getAppFolder

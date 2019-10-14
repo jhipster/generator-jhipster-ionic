@@ -1,6 +1,6 @@
 {
   "name": "generator-jhipster-ionic",
-  "version": "4.0.2",
+  "version": "4.2.0",
   "description": "A JHipster Module that generates an Ionic Client.",
   "keywords": [
     "yeoman-generator",
@@ -19,8 +19,7 @@
     "cli"
   ],
   "bin": {
-    "ionic4j": "./cli/ionic4j.js",
-    "ionic4j:entity": "./cli/ionic4j.js"
+    "ionic4j": "./cli/ionic4j.js"
   },
   "main": "generators/app/index.js",
   "repository": {
@@ -29,23 +28,24 @@
   },
   "dependencies": {
     "chalk": "2.4.2",
-    "cross-spawn": "6.0.5",
-    "generator-jhipster": ">=6.1.1",
+    "cross-spawn": "7.0.1",
+    "fs-extra": "8.1.0",
+    "generator-jhipster": ">=6.3.1",
     "jsonfile": "5.0.0",
+    "lodash": "4.17.15",
     "pluralize": "8.0.0",
     "semver": "6.3.0",
     "shelljs": "0.8.3"
   },
   "devDependencies": {
-    "@angular-devkit/schematics-cli": "0.801.2",
-    "@oktadev/schematics": "0.8.3",
+    "@angular-devkit/schematics-cli": "0.803.9",
+    "@oktadev/schematics": "0.9.0",
     "chai": "4.2.0",
-    "eslint": "6.1.0",
-    "eslint-config-airbnb-base": "13.2.0",
+    "eslint": "6.5.1",
+    "eslint-config-airbnb-base": "14.0.0",
     "eslint-plugin-import": "2.18.2",
-    "fs-extra": "8.1.0",
     "jsdoc": "3.6.3",
-    "mocha": "6.2.0",
+    "mocha": "6.2.1",
     "yeoman-assert": "3.1.1",
     "yeoman-test": "2.0.0",
     "yo": "3.1.0"
