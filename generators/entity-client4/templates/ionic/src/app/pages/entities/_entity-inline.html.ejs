@@ -41,7 +41,7 @@
 
   <ion-searchbar (ionInput)="search($event)"></ion-searchbar>
 
-  <ion-refresher [disabled]="plt.is('desktop')" slot="fixed" (ionRefresh)="loadAll($event)">
+  <ion-refresher slot="fixed" [disabled]="plt.is('desktop')" slot="fixed" (ionRefresh)="loadAll($event)">
         <ion-refresher-content>{{ 'LOADING'| translate}}</ion-refresher-content>
   </ion-refresher>
 
