@@ -22,7 +22,6 @@
         "serviceDiscoveryType": false,
         "buildTool": "maven",
         "enableSwaggerCodegen": false,
-        "jwtSecretKey": "812296929ed3a9243f29e7bd0829e89d7760a2e2",
         "clientFramework": "angular",
         "useSass": false,
         "clientPackageManager": "yarn",
