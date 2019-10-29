@@ -68,7 +68,7 @@ export class <%= entityAngularName %>UpdatePage implements OnInit {
     <%- variables[idx] %>
     <%_ } _%>
     <%_ if (fieldsContainImageBlob) { _%>
-    @ViewChild('fileInput') fileInput;
+    @ViewChild('fileInput', {static: false}) fileInput;
     cameraOptions: CameraOptions;
     <%_ } _%>
     <%_ for ( idx in fields ) {
