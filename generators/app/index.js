@@ -187,7 +187,7 @@ module.exports = class extends BaseGenerator {
 
       // use `schematics` when testing and expect it to be installed
       if (this.installDeps) {
-        installAuthCmd = `ng add @oktadev/schematics@${schematicsVersion} ${params}`;
+        installAuthCmd = `npx ng add @oktadev/schematics@${schematicsVersion} ${params}`;
       } else {
         packageJSON.devDependencies['@oktadev/schematics'] = schematicsVersion;
         jsonfile.writeFileSync(packagePath, packageJSON);
