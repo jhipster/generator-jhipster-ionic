@@ -11,10 +11,9 @@ jdk:
   - oraclejdk11
 addons:
   apt:
-    sources:
-      - google-chrome
     packages:
-      - google-chrome-stable
+      - dpkg
+  chrome: stable
 cache:
   directories:
     - $HOME/.m2

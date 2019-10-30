@@ -22,7 +22,8 @@ elif [ -f "gradlew" ]; then
         -Dlogging.level.io.github.jhipster.travis=ERROR
 fi
 
-npm test
+# skip client tests
+# npm test
 
 #-------------------------------------------------------------------------------
 # Launch Ionic tests

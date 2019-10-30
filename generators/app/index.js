@@ -173,6 +173,8 @@ module.exports = class extends BaseGenerator {
     packageJSON.homepage = 'https://www.jhipster.tech';
     packageJSON.description = 'A hipster Ionic project, made with 💙 by @oktadev!';
     packageJSON.devDependencies['generator-jhipster-ionic'] = packagejs.version;
+    // add prettier script
+    packageJSON.scripts.prettier = 'prettier --write "{,src/**/}*.{md,json,ts,css,scss,yml}" --loglevel silent';
     jsonfile.writeFileSync(packagePath, packageJSON);
 
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
@@ -181,7 +183,7 @@ module.exports = class extends BaseGenerator {
 
       let installAuthCmd;
       const params = '--configUri=http://localhost:8080/api/auth-info --issuer=null --clientId=null';
-      const schematicsVersion = '0.9.0';
+      const schematicsVersion = '1.0.0';
 
       // use `schematics` when testing and expect it to be installed
       if (this.installDeps) {
@@ -250,13 +252,6 @@ module.exports = class extends BaseGenerator {
     this.template('e2e/pages/login.po.ts', `${this.ionicAppName}/e2e/pages/login.po.ts`);
     this.template('e2e/spec/login.e2e-spec.ts', `${this.ionicAppName}/e2e/spec/login.e2e-spec.ts`);
 
-    // Add Prettier script and run
-    if (this.installDeps) {
-      packageJSON.scripts.prettier = 'prettier --write "{,src/**/}*.{md,json,ts,css,scss,yml}" --loglevel silent';
-      jsonfile.writeFileSync(packagePath, packageJSON);
-      shelljs.exec(`cd ${this.ionicAppName} && npm run prettier`);
-    }
-
     done();
   }
 
@@ -285,6 +280,12 @@ module.exports = class extends BaseGenerator {
 
   get end() {
     return {
+      runPrettier() {
+        if (this.installDeps) {
+          shelljs.exec(`cd ${this.ionicAppName} && npm run prettier`);
+        }
+      },
+
       gitCommit() {
         if (this.installDeps) {
           const done = this.async();

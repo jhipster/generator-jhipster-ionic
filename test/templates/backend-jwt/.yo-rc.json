@@ -4,7 +4,7 @@
             "packageName": "com.okta.developer",
             "nativeLanguage": "en"
         },
-        "jhipsterVersion": "6.3.1",
+        "jhipsterVersion": "6.4.1",
         "baseName": "backend",
         "reactive": false,
         "packageName": "com.okta.developer",
@@ -22,7 +22,6 @@
         "serviceDiscoveryType": false,
         "buildTool": "maven",
         "enableSwaggerCodegen": false,
-        "jwtSecretKey": "812296929ed3a9243f29e7bd0829e89d7760a2e2",
         "clientFramework": "angular",
         "useSass": false,
         "clientPackageManager": "yarn",
