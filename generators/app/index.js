@@ -143,9 +143,6 @@ module.exports = class extends BaseGenerator {
       params.push('--no-deps');
       params.push('--no-git');
     }
-    if (this.jhipsterAppConfig.authenticationType === 'oauth2' && params.indexOf('--no-deps') === -1) {
-      params.push('--no-deps');
-    }
     spawn.sync('ionic', params, {stdio: 'inherit'});
 
     const config = {
