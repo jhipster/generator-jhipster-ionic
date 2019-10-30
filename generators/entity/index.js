@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 const BaseEntityGenerator = require('generator-jhipster/generators/entity');
+const prompts = require('./prompts');
 
 class EntityGenerator extends BaseEntityGenerator {
   constructor(args, opts) {
@@ -37,8 +38,11 @@ class EntityGenerator extends BaseEntityGenerator {
   }
 
   get prompting() {
-    // Here we are not overriding this phase and hence its being handled by JHipster
-    return super._prompting();
+    const entityPrompts = super._prompting();
+    return {
+      askForBackendJson: prompts.askForBackendJson,
+      ...entityPrompts
+    };
   }
 
   get configuring() {
