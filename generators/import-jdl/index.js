@@ -69,6 +69,7 @@ function generateEntityFiles(generator, entity) {
     debug: generator.options.debug,
     regenerate: true,
     'skip-install': true,
+    'skip-prompt': true,
     arguments: entity.name
   });
 }

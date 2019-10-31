@@ -19,10 +19,13 @@
 const BaseEntityGenerator = require('generator-jhipster/generators/entity');
 const prompts = require('./prompts');
 
+let skipPrompt = false;
+
 class EntityGenerator extends BaseEntityGenerator {
   constructor(args, opts) {
     const suppressWarning = {'from-cli': true};
     super(args, {...opts, ...suppressWarning});
+    skipPrompt = opts['skip-prompt'];
   }
 
   get initializing() {
@@ -38,6 +41,10 @@ class EntityGenerator extends BaseEntityGenerator {
   }
 
   get prompting() {
+    if (skipPrompt) {
+      return super._prompting();
+    }
+
     const entityPrompts = super._prompting();
     return {
       askForBackendJson: prompts.askForBackendJson,
