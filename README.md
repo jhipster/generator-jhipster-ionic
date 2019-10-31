@@ -102,7 +102,7 @@ this.requestor.xhr({method: 'GET', url: AUTH_CONFIG_URI}).then(async (data: any)
 }
 ```
 
-You'll also need to add a trusted origin for `http://localhost:8100`. Go to **API** > **Trusted Origins** > **Add Origin**. Use the following values:
+You'll also need to add a trusted origin for `http://localhost:8100`. In your Okta dashboard, go to **API** > **Trusted Origins** > **Add Origin**. Use the following values:
 
 * Name: `http://localhost:8100`
 * Origin URL: `http://localhost:8100`
