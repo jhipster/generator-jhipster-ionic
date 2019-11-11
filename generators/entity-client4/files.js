@@ -45,16 +45,6 @@ let ionicFiles = {
           method: 'processHtml',
           template: true,
           renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.model.ts`
-        },
-        {
-          file: 'entities/_entity.service.ts',
-          method: 'processHtml',
-          template: true,
-          renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.service.ts`
-        },
-        {
-          file: 'entities/_index.ts',
-          renameTo: generator => `entities/${generator.entityFolderName}/index.ts`
         }
       ]
     }
@@ -101,30 +91,30 @@ function writeFiles() {
       if (this.skipClient) return;
 
       // todo if i118
-      ionicFiles.client[0].templates.push({
-        file: 'entities/_en.json',
-        renameTo: generator => `../../assets/i18n/en_${generator.entityFileName}.json`
-      });
-      ionicFiles.client[0].templates.push({
-        file: 'entities/_entity-edit.ts',
-        renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-edit.ts`
-      });
+      // ionicFiles.client[0].templates.push({
+      //   file: 'entities/_en.json',
+      //   renameTo: generator => `../../assets/i18n/en_${generator.entityFileName}.json`
+      // });
+      // ionicFiles.client[0].templates.push({
+      //   file: 'entities/_entity-edit.ts',
+      //   renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-edit.ts`
+      // });
 
       // TODO only add if option  -> this.context.options.genEditPage
       // if (this.context.options.genListPage) {
-      ionicFiles.client[0].templates.push({
-        file: 'entities/_entity-edit.html',
-        method: 'processHtml',
-        template: true,
-        renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-edit.html`
-      });
-      ionicFiles.client[0].templates.push({
-        file: 'entities/_entity-edit.ts',
-        renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-edit.ts`
-      });
+      // ionicFiles.client[0].templates.push({
+      //   file: 'entities/_entity-edit.html',
+      //   method: 'processHtml',
+      //   template: true,
+      //   renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-edit.html`
+      // });
+      // ionicFiles.client[0].templates.push({
+      //   file: 'entities/_entity-edit.ts',
+      //   renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-edit.ts`
+      // });
       // }
 
-      // TODO only add if option  -> this.context.options.genEditPage
+      // TODO only add if option  -> this.context.options.genModule
       // if (this.context.options.genListPage) {
       ionicFiles.client[0].templates.push({
         file: 'entities/_entity.module.ts',
@@ -133,8 +123,14 @@ function writeFiles() {
         renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.module.ts`
       });
       ionicFiles.client[0].templates.push({
-        file: 'entities/_entity-edit.ts',
-        renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-edit.ts`
+        file: 'entities/_entity.service.ts',
+        method: 'processHtml',
+        template: true,
+        renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.service.ts`
+      });
+      ionicFiles.client[0].templates.push({
+        file: 'entities/_index.ts',
+        renameTo: generator => `entities/${generator.entityFolderName}/index.ts`
       });
       // }
 
@@ -146,6 +142,7 @@ function writeFiles() {
         template: true,
         renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.html`
       });
+
       ionicFiles.client[0].templates.push({
         file: 'entities/_entity-list.ts',
         renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.ts`

@@ -37,7 +37,7 @@ class EntityGenerator extends BaseEntityGenerator {
         this.context.genPwa = true; // this.options.inline || this.options.edit || this.options.list;
         this.context.fieldsContainActive = true; // true; // TODO Change to check in Jhispter
         
-        this.configRootPath = this.options.configRootPath = this.fs.readJSON('.jhipster-ionic.json').directoryPath;
+        // this.configRootPath = this.options.configRootPath = this.fs.readJSON('.jhipster-ionic.json').directoryPath;
       }
     };
     return Object.assign(myCustomPhaseSteps, phaseFromJHipster);
