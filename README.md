@@ -102,6 +102,14 @@ this.requestor.xhr({method: 'GET', url: AUTH_CONFIG_URI}).then(async (data: any)
 }
 ```
 
+You'll also need to add a trusted origin for `http://localhost:8100`. In your Okta dashboard, go to **API** > **Trusted Origins** > **Add Origin**. Use the following values:
+
+* Name: `http://localhost:8100`
+* Origin URL: `http://localhost:8100`
+* Type: Check **both** CORS and Redirect
+
+Click **Save**.
+
 #### Add Claims to Access Token
 
 In order to authentication successfully with your Ionic app, you have to do a bit more configuration in Okta. Since the Ionic client will only send an access token to JHipster, you need to 1) add a `groups` claim to the access token and 2) add a couple more claims so the user's name will be available in JHipster.

@@ -17,11 +17,15 @@
  * limitations under the License.
  */
 const BaseEntityGenerator = require('generator-jhipster/generators/entity');
+const prompts = require('./prompts');
+
+let skipPrompt = false;
 
 class EntityGenerator extends BaseEntityGenerator {
   constructor(args, opts) {
     const suppressWarning = {'from-cli': true};
     super(args, {...opts, ...suppressWarning});
+    skipPrompt = opts['skip-prompt'];
   }
 
   get initializing() {
@@ -42,8 +46,6 @@ class EntityGenerator extends BaseEntityGenerator {
     };
     return Object.assign(myCustomPhaseSteps, phaseFromJHipster);
   }
-
-  get prompting() {
     // Here we are not overriding this phase and hence its being handled by JHipster
     // This adds support for `--list` flag -> generates list Page
     // this.option('list', {
@@ -62,7 +64,17 @@ class EntityGenerator extends BaseEntityGenerator {
     //     desc: 'Generte inline Page',
     //     type: String
     // });
-    return super._prompting();
+    // return super._prompting();
+  // get prompting() {
+    if (skipPrompt) {
+      return super._prompting();
+    }
+
+    const entityPrompts = super._prompting();
+    return {
+      askForBackendJson: prompts.askForBackendJson,
+      ...entityPrompts
+    };
   }
 
   get configuring() {
