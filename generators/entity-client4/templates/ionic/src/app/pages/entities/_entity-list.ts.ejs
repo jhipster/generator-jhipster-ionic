@@ -18,7 +18,7 @@
 -%>
 import { MainService } from 'src/app/services/main/main.service';
 import { Component } from '@angular/core';
-import { NavController, ToastController, Platform, IonItemSliding } from '@ionic/angular';
+import { NavController, ToastController, Platform, IonItemSliding, Events } from '@ionic/angular';
 import { filter, map } from 'rxjs/operators';
 import { HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 <%_ if (fieldsContainBlob) { _%>
@@ -49,8 +49,11 @@ export class <%= entityAngularName %>Page {
         private mainService: MainService,
         private <%= entityInstance %>Service: <%= entityAngularName %>Service,
         private toastCtrl: ToastController,
-        public plt: Platform
-    ) {
+        public plt: Platform,
+        public events: Events) {
+        this.events.subscribe('tenantChg', tenId => {
+            this.loadAll();
+        });
         this.<%= entityInstancePlural %> = [];
         this.itemsPerPage = environment.ITEMS_PER_PAGE;
     }
@@ -59,18 +62,7 @@ export class <%= entityAngularName %>Page {
         this.loadAll();
     }
 
-<%_ if (!fieldsContainActive) { _%>
-    loadAll(predicate = 'id', reverse = true) {
-        this.<%= entityInstance %>Service.query({
-                page: this.page,
-                size: this.itemsPerPage,
-                sort: this.sortPred(predicate, reverse)
-            }).subscribe(
-                (res: HttpResponse<<%= entityAngularName %>[]>) => this.paginate(res.body, res.headers),
-                (res: HttpErrorResponse) => console.log('LoadError:', res.message)
-            );
-    }
-
+<%_ if (listPage) { _%>
     loadAll(predicate = 'id', reverse = true) {
         this.<%= entityInstance %>Service.query({
                 page: this.page,
@@ -128,10 +120,11 @@ export class <%= entityAngularName %>Page {
     
     sort(field, asc) {
         this.<%= entityInstancePlural %> = this.<%= entityInstancePlural %>.sort((a, b) => {
-            return a[field] === null || a[field] === undefined ? asc ? -1 : 1 :
+              return a[field] === null || a[field] === undefined ? asc ? -1 : 1 :
                 b[field] === null || b[field] === undefined ? asc ? 1 : -1 :
-                    asc ? a[field].localeCompare(b[field]) : b[field].localeCompare(a[field]);
-        });
+                  asc ? a[field].toString().localeCompare(b[field], undefined, { numeric: true, sensitivity: 'base' }) :
+                    b[field].toString().localeCompare(a[field], undefined, { numeric: true, sensitivity: 'base' });
+            });
     }
     <%_ } _%>
 

@@ -36,16 +36,21 @@ class EntityGenerator extends BaseEntityGenerator {
       loadConfig() {
 
         this.context.genListPage = true; // this.options.list;
-        this.context.genEditPage = true; // this.options.edit;
+        this.context.genEditPage = false; // this.options.edit;
         this.context.genInlinePage = false; // this.options.inline;
-        this.context.genPwa = true; // this.options.inline || this.options.edit || this.options.list;
         this.context.fieldsContainActive = true; // true; // TODO Change to check in Jhispter
-        
-        // this.configRootPath = this.options.configRootPath = this.fs.readJSON('.jhipster-ionic.json').directoryPath;
+        this.context.listPage = true; // true; // TODO Change to check in Jhispter
+        this.context.genPwa = true; // this.options.inline || this.options.edit || this.options.list;
+      
+        this.configRootPath = this.options.configRootPath = this.fs.readJSON('.jhipster-ionic.json').directoryPath;
       }
     };
     return Object.assign(myCustomPhaseSteps, phaseFromJHipster);
   }
+
+
+  get prompting() {
+
     // Here we are not overriding this phase and hence its being handled by JHipster
     // This adds support for `--list` flag -> generates list Page
     // this.option('list', {
@@ -65,7 +70,6 @@ class EntityGenerator extends BaseEntityGenerator {
     //     type: String
     // });
     // return super._prompting();
-  // get prompting() {
     if (skipPrompt) {
       return super._prompting();
     }

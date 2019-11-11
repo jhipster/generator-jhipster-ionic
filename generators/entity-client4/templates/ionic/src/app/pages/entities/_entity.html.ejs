@@ -37,7 +37,7 @@
     <ion-list>
         <ion-item-sliding *ngFor="let <%=entityInstance %> of <%=entityInstancePlural %>; trackBy: trackId" #slidingItem>
             <ion-item (click)="view(<%= entityInstance %>)">
-              <ion-label text-wrap>
+              <ion-label class="ion-text-wrap">
               <%_ for (idx in fields) {
                 const fieldName = fields[idx].fieldName;
                 const fieldNameCapitalized = fields[idx].fieldNameCapitalized;
