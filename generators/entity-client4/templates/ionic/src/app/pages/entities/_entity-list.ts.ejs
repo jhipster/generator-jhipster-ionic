@@ -62,7 +62,7 @@ export class <%= entityAngularName %>Page {
         this.loadAll();
     }
 
-<%_ if (listPage) { _%>
+<%_ if (pageable) { _%>
     loadAll(predicate = 'id', reverse = true) {
         this.<%= entityInstance %>Service.query({
                 page: this.page,

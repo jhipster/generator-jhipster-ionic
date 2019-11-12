@@ -36,10 +36,10 @@ class EntityGenerator extends BaseEntityGenerator {
       loadConfig() {
 
         this.context.genListPage = true; // this.options.list;
-        this.context.genEditPage = false; // this.options.edit;
+        this.context.genEditPage = true; // this.options.edit;
         this.context.genInlinePage = false; // this.options.inline;
         this.context.fieldsContainActive = true; // true; // TODO Change to check in Jhispter
-        this.context.listPage = true; // true; // TODO Change to check in Jhispter
+        this.context.pageable = false; // true; Pageable
         this.context.genPwa = true; // this.options.inline || this.options.edit || this.options.list;
       
         this.configRootPath = this.options.configRootPath = this.fs.readJSON('.jhipster-ionic.json').directoryPath;

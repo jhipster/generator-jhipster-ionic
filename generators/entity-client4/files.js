@@ -102,16 +102,16 @@ function writeFiles() {
 
       // TODO only add if option  -> this.context.options.genEditPage
       // if (this.context.options.genListPage) {
-      // ionicFiles.client[0].templates.push({
-      //   file: 'entities/_entity-edit.html',
-      //   method: 'processHtml',
-      //   template: true,
-      //   renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-edit.html`
-      // });
-      // ionicFiles.client[0].templates.push({
-      //   file: 'entities/_entity-edit.ts',
-      //   renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-edit.ts`
-      // });
+      ionicFiles.client[0].templates.push({
+        file: 'entities/_entity-edit.html',
+        method: 'processHtml',
+        template: true,
+        renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-edit.html`
+      });
+      ionicFiles.client[0].templates.push({
+        file: 'entities/_entity-edit.ts',
+        renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-edit.ts`
+      });
       // }
 
       // TODO only add if option  -> this.context.options.genModule
