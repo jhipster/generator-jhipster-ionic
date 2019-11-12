@@ -95,10 +95,6 @@ function writeFiles() {
       //   file: 'entities/_en.json',
       //   renameTo: generator => `../../assets/i18n/en_${generator.entityFileName}.json`
       // });
-      // ionicFiles.client[0].templates.push({
-      //   file: 'entities/_entity-edit.ts',
-      //   renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-edit.ts`
-      // });
 
       // TODO only add if option  -> this.context.options.genEditPage
       // if (this.context.options.genListPage) {
@@ -148,6 +144,10 @@ function writeFiles() {
         renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.ts`
       });
 
+      // ionicFiles.client[0].templates.push({
+      //   file: 'entities/_entity-update.ts',
+      //  renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.ts`
+      // });
 
       // TODO only add if option  -> this.context.options.genInlinePage
       // Still to make inline table

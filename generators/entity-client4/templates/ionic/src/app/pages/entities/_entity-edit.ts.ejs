@@ -213,8 +213,7 @@ _%>
           action = 'created';
         }
         this.isSaving = false;
-        const toast = await this.toastCtrl.create({message: `<%= entityAngularName %> ${action} successfully.`, duration: 2000, position: 'middle'});
-        toast.present();
+        this.presentToast(`<%= entityAngularName %> ${action} successfully.`);
         window.history.back();
     }
 
@@ -225,8 +224,7 @@ _%>
     async onError(error) {
         this.isSaving = false;
         console.error(error);
-        const toast = await this.toastCtrl.create({message: 'Failed to load data', duration: 2000, position: 'middle'});
-        toast.present();
+        this.presentToast('Failed to load data');
     }
 
     private createFromForm(): <%= entityAngularName %> {
@@ -288,9 +286,7 @@ _%>
                 this.<%= entityInstance %>[fieldName + 'ContentType'] = 'image/jpeg';
                 this.form.patchValue({ [fieldName]: data });
                 this.form.patchValue({ [fieldName + 'ContentType']: 'image/jpeg' });
-            }, (err) => {
-                alert('Unable to take photo');
-            });
+            }, (err) => { this.presentToast('Unable to take photo'); });
         } else {
             this.fileInput.nativeElement.click();
         }
@@ -329,4 +325,9 @@ _%>
         return item.id;
     }
     <%_ entitiesSeen.push(otherEntityNameCapitalized); } } _%>
+    
+    async presentToast(text) {
+        const toast = await this.toastCtrl.create({ message: text, duration: 3000, position: 'middle' });
+        toast.present();
+    }
 }
