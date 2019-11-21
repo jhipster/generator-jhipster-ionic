@@ -18,11 +18,7 @@
 -%>
 export * from './<%= entityFileName %>.model';
 export * from './<%= entityFileName %>.service';
-export * from './<%= entityFileName %>';
 <%_ if (!genPwa) { _%> 
 export * from './<%= entityFileName %>-detail';
 export * from './<%= entityFileName %>-update';
-<%_ } _%>
-<%_ if (genEditPage) { _%> 
-export * from './<%= entityFileName %>-edit';
 <%_ } _%>
