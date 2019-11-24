@@ -30,7 +30,7 @@ const fs = require('fs-extra');
 function importJDL() {
   logger.info('The JDL is being parsed...');
 
-  const jdlImporter = new jhiCore.JDLImporter(this.jdlFiles, {
+  const jdlImporter = jhiCore.jdl.import.JDLImporter.createImporterFromFiles(this.jdlFiles, {
     databaseType: this.prodDatabaseType,
     applicationType: this.applicationType,
     applicationName: this.baseName
