@@ -51,7 +51,7 @@
     "yo": "3.1.0"
   },
   "scripts": {
-    "test": "mocha --timeout 20000 test/*"
+    "test": "mocha --timeout 10000 test/*"
   },
   "engines": {
     "node": ">=8.10.0",
