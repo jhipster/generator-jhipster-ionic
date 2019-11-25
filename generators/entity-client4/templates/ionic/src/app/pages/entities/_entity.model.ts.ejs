@@ -103,7 +103,7 @@ relationships.forEach(relationship => {
     variables[fieldName] = fieldName + '?: ' + fieldType;
 });
 _%>
-import { BaseEntity } from 'src/app/model/base-entity'
+import { BaseEntity } from 'src/app/model/base-entity';
 <%_ typeImports.forEach( (importedPath, importedType) => { _%>
 import { <%- importedType %> } from '<%- importedPath %>';
 <%_ }); _%>
