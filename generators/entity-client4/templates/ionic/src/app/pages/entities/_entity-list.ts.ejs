@@ -18,7 +18,7 @@
 -%>
 import { MainService } from 'src/app/services/main/main.service';
 import { Component } from '@angular/core';
-import { NavController, ToastController, Platform, IonItemSliding, Events } from '@ionic/angular';
+import { ToastController, Platform, Events } from '@ionic/angular';
 import { filter, map } from 'rxjs/operators';
 import { HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 <%_ if (fieldsContainBlob) { _%>
@@ -39,14 +39,14 @@ export class <%= entityAngularName %>Page {
     page = 0;
     totalItems: number;
     <%=entityInstance %>Active = true;
-
+    loadingItems = 'Loading ...'
     ERROR_LOAD = 'Failed to load data';
 
     constructor(
 <%_ if (fieldsContainBlob) { _%>
         private dataUtils: JhiDataUtils,
 <%_ } _%>
-        private mainService: MainService,
+        public mainService: MainService,
         private <%= entityInstance %>Service: <%= entityAngularName %>Service,
         private toastCtrl: ToastController,
         public plt: Platform,
@@ -103,16 +103,19 @@ export class <%= entityAngularName %>Page {
 <%_ if (fieldsContainActive) { _%>
     // Loading only Active or Inactive according to <%= entityInstance %>Active value
     loadAll(refresher?) {
+        this.loadingItems = 'Loading ...';
         this.<%= entityInstance %>Service.queryByDomainId(this.mainService.DOMAIN.id, this.<%= entityInstance %>Active).subscribe(
        // this.<%= entityInstance %>Service.queryByTenantId(this.mainService.TENANT.id, this.<%= entityInstance %>Active).subscribe(
        // this.<%= entityInstance %>Service.queryActive(this.<%= entityInstance %>Active).subscribe(
             (res) => {
                 this.<%= entityInstancePlural %> = res;
+                this.loadingItems = (res.lenght > 0 ) ?  '' : 'No Rooms found';
                 if (refresher !== undefined) {
                     if (refresher.type === 'ionRefresh') { refresher.target.complete(); }
                 }
             },
             (error) => {
+                this.loadingItems = 'Error Loading';
                 console.error(error);
                 this.presentToast(this.ERROR_LOAD);
             });
