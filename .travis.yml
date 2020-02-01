@@ -41,7 +41,7 @@ before_install:
   - date
   - sudo /etc/init.d/mysql stop
   - sudo /etc/init.d/postgresql stop
-  - npm -g install yo ionic
+  - npm -g install yo @ionic/cli
   - git clone https://github.com/jhipster/jhipster.git
   - cd jhipster && ./mvnw clean install -Dgpg.skip=true
   - chmod +x $JHIPSTER_INSTALL/*.sh
