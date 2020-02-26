@@ -6,7 +6,7 @@ services:
   - xvfb
 language: node_js
 node_js:
-  - "10.16.3"
+  - "12.16.1"
 jdk:
   - oraclejdk11
 addons:
@@ -43,7 +43,7 @@ before_install:
   - sudo /etc/init.d/postgresql stop
   - npm -g install yo @ionic/cli
   - git clone https://github.com/jhipster/jhipster.git
-  - cd jhipster && ./mvnw clean install -Dgpg.skip=true
+  - cd jhipster && ./mvnw clean install -DskipTests -Dgpg.skip=true
   - chmod +x $JHIPSTER_INSTALL/*.sh
   - chmod +x $JHIPSTER_SCRIPTS/*.sh
   - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)

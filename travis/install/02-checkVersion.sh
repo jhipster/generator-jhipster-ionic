@@ -11,4 +11,3 @@ yo --version
 docker version
 docker-compose version
 ionic --version
-ionic4j --version
