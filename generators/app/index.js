@@ -38,7 +38,7 @@ module.exports = class extends BaseGenerator {
     this.option('interactive', {
       desc: 'Don\'t prompt user when running ionic start',
       type: Boolean,
-      defaults: true
+      defaults: false
     });
 
     // This adds support for a `--install` flag
@@ -183,7 +183,7 @@ module.exports = class extends BaseGenerator {
 
       let installAuthCmd;
       const params = '--configUri=http://localhost:8080/api/auth-info --issuer=null --clientId=null';
-      const schematicsVersion = '1.1.1';
+      const schematicsVersion = '1.2.1';
 
       // use `schematics` when testing and expect it to be installed
       if (this.installDeps) {
