@@ -33,11 +33,6 @@ if (process.argv[2] === 'import-jdl') {
   commands[1] = process.argv[3];
 }
 
-// allow ionic4j default for CI
-if (process.argv[2] === 'default') {
-  commands[1] = process.argv[2];
-}
-
 // Path to the yo cli script in generator-jhipster-ionic's node_modules
 const yoInternalCliPath = `${__dirname}/../node_modules/yo/lib/cli.js`;
 
