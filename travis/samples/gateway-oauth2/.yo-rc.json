@@ -1,7 +1,7 @@
 {
   "generator-jhipster": {
-    "applicationType": "monolith",
-    "baseName": "travisOauth2",
+    "applicationType": "gateway",
+    "baseName": "travisDefault",
     "packageName": "io.github.jhipster.travis",
     "packageFolder": "io/github/jhipster/travis",
     "authenticationType": "oauth2",
@@ -13,8 +13,9 @@
     "devDatabaseType": "h2Disk",
     "prodDatabaseType": "mysql",
     "searchEngine": false,
+    "serviceDiscoveryType": "eureka",
     "useSass": false,
-    "buildTool": "gradle",
+    "buildTool": "maven",
     "enableTranslation": true,
     "nativeLanguage": "en",
     "languages": [
@@ -30,8 +31,7 @@
     "jhiPrefix": "jhi",
     "travis": true,
     "messageBroker": false,
-    "serviceDiscoveryType": false,
     "clientPackageManager": "npm",
-    "clientFramework": "angularX"
+    "clientFramework": "angular"
   }
 }
