@@ -1,13 +1,17 @@
+import { IonicStorageModule } from '@ionic/storage';
+import { NgxWebstorageModule } from 'ngx-webstorage';
+import { TranslateModule } from '@ngx-translate/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { LoginService } from './login.service';
-import { NgxWebstorageModule } from 'ngx-webstorage';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TranslateModule } from '@ngx-translate/core';
-import { IonicStorageModule } from '@ionic/storage';
+import { AuthModule } from '../../auth/auth.module';
 
 describe('LoginService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [HttpClientTestingModule, NgxWebstorageModule.forRoot(), TranslateModule.forRoot(), IonicStorageModule.forRoot()]
+    imports: [
+      HttpClientTestingModule, NgxWebstorageModule.forRoot(), TranslateModule.forRoot(),
+      IonicStorageModule.forRoot(), AuthModule
+    ]
   }));
 
   it('should be created', () => {
