@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This is a [JHipster](http://www.jhipster.tech/) module. You can use it to generate an Ionic 4 app that talks to a JHipster 6 backend. It uses the [Ionic JHipster Starter](https://github.com/oktadeveloper/ionic-jhipster-starter) as a base template, then applies functionality (e.g. entity generation) on top of it. 
+This is a [JHipster](http://www.jhipster.tech/) module. You can use it to generate an Ionic app that talks to a JHipster backend. It uses the [Ionic JHipster Starter](https://github.com/oktadeveloper/ionic-jhipster-starter) as a base template, then applies functionality (e.g. entity generation) on top of it. 
 
 To learn more about this module, see [Build Mobile Apps with Angular, Ionic 4, and Spring Boot](https://developer.okta.com/blog/2019/06/24/ionic-4-angular-spring-boot-jhipster).
 
@@ -19,7 +19,7 @@ As this is a [JHipster](http://www.jhipster.tech/) module, we expect you to have
 Or just run:
 
 ```bash
-npm i -g generator-jhipster ionic @angular/cli
+npm i -g generator-jhipster @ionic/cli @angular/cli
 ```
 
 ## Installation
