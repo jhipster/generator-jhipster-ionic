@@ -15,7 +15,7 @@ fi
 mkdir -p "$APP_FOLDER"
 cp -f "$JHIPSTER_SAMPLES"/"$JHIPSTER"/.yo-rc.json "$APP_FOLDER"/
 cd "$APP_FOLDER"
-jhipster --force --no-insight --skip-checks --with-entities --skip-git --skip-commit-hook --skip-install
+jhipster --force --no-insight --skip-checks --skip-git --skip-commit-hook --skip-install
 
 #-------------------------------------------------------------------------------
 # Generate an Ionic app with yo jhipster-ionic

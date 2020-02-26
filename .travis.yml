@@ -36,6 +36,8 @@ env:
   matrix:
     - JHIPSTER=ngx-mysql PROFILE=dev PROTRACTOR=1
     - JHIPSTER=ngx-oauth2 PROFILE=dev PROTRACTOR=1
+    - JHIPSTER=gateway-oauth2 PROFILE=dev PROTRACTOR=1
+    - JHIPSTER=reactive-oauth2 PROFILE=dev PROTRACTOR=1
 before_install:
   - export TZ=America/Denver
   - date
