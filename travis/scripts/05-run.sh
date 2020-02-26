@@ -43,7 +43,7 @@ launchCurlOrProtractor() {
     cd "$IONIC_FOLDER"
     ionic serve &
     sleep 20
-    retryCount=0
+    retryCount=3
     until [ "$retryCount" -ge "$maxRetry" ]
     do
         result=0

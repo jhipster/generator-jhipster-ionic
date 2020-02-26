@@ -19,9 +19,9 @@ jhipster --force --no-insight --skip-checks --with-entities --skip-git --skip-co
 ls -al "$APP_FOLDER"
 
 #-------------------------------------------------------------------------------
-# Generate an Ionic app with yo jhipster-ionic
+# Generate an Ionic app with ionic4j
 #-------------------------------------------------------------------------------
 cd "$HOME"
-yo jhipster-ionic default --force --no-insight
+ionic4j default --force --no-insight
 ls -al "$IONIC_FOLDER"
 
