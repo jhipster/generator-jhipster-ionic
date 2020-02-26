@@ -1,15 +1,14 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { TestBed, async } from '@angular/core/testing';
-
 import { Platform } from '@ionic/angular';
+import { IonicStorageModule } from '@ionic/storage';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-
-import { AppComponent } from './app.component';
-import Mock = jest.Mock;
 import { TranslateModule } from '@ngx-translate/core';
+import Mock = jest.Mock;
+import { TestBed, async } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { IonicStorageModule } from '@ionic/storage';
+import { AppComponent } from './app.component';
+import { AuthModule } from './auth/auth.module';
 
 describe('AppComponent', () => {
   let statusBarSpy, splashScreenSpy, platformReadySpy, platformSpy;
@@ -22,7 +21,7 @@ describe('AppComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [AppComponent],
-      imports: [TranslateModule.forRoot(), HttpClientTestingModule, IonicStorageModule.forRoot()],
+      imports: [TranslateModule.forRoot(), HttpClientTestingModule, IonicStorageModule.forRoot(), AuthModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: StatusBar, useValue: statusBarSpy },
