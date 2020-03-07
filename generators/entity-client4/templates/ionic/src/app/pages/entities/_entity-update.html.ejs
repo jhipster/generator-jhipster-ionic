@@ -31,7 +31,7 @@ _%>
         <ion-buttons slot="end">
             <ion-button [disabled]="!isReadyToSave" (click)="save()" color="primary">
               <span *ngIf="platform.is('ios')">{{'DONE_BUTTON' | translate}}</span>
-              <ion-icon name="md-checkmark" *ngIf="!platform.is('ios')"></ion-icon>
+              <ion-icon name="checkmark" *ngIf="!platform.is('ios')"></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
