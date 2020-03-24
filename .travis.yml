@@ -35,7 +35,7 @@ env:
     - NG_CLI_ANALYTICS=false
   matrix:
     - JHIPSTER=monolith-jwt PROFILE=dev PROTRACTOR=1
-    - JHIPSTER=ngx-oauth2 PROFILE=dev PROTRACTOR=1
+    - JHIPSTER=monolith-oauth2 PROFILE=dev PROTRACTOR=1
     - JHIPSTER=gateway-oauth2 PROFILE=dev PROTRACTOR=1
     - JHIPSTER=reactive-oauth2 PROFILE=dev PROTRACTOR=1
 before_install:
@@ -45,7 +45,7 @@ before_install:
   - sudo /etc/init.d/postgresql stop
   - npm -g install yo @ionic/cli
   - git clone https://github.com/jhipster/jhipster.git
-  - cd jhipster && ./mvnw clean install -DskipTests -Dgpg.skip=true
+  - cd jhipster && ./mvnw clean install -ntp -DskipTests -Dgpg.skip=true
   - chmod +x $JHIPSTER_INSTALL/*.sh
   - chmod +x $JHIPSTER_SCRIPTS/*.sh
   - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
