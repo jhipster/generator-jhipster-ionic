@@ -132,8 +132,8 @@ class ImportJDLGenerator extends BaseGenerator {
         }
         try {
           logger.info(
-            `Generating ${this.importState.exportedEntities.length} ` +
-            `${pluralize('entity', this.importState.exportedEntities.length)}.`
+            `Generating ${this.importState.exportedEntities.length} `
+            + `${pluralize('entity', this.importState.exportedEntities.length)}.`
           );
           this.importState.exportedEntities.forEach((exportedEntity) => {
             generateEntityFiles(this, exportedEntity);
@@ -141,6 +141,14 @@ class ImportJDLGenerator extends BaseGenerator {
         } catch (error) {
           logger.error(`Error while generating entities from the parsed JDL\n${error}`, error);
         }
+      }
+    };
+  }
+
+  get end() {
+    return {
+      runPrettier() {
+        shelljs.exec('npm run prettier');
       }
     };
   }
