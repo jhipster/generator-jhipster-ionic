@@ -179,7 +179,7 @@ module.exports = class extends BaseGenerator {
     // remove when Ionic 5 supports Angular 9
     packageJSON.dependencies['@ng-bootstrap/ng-bootstrap'] = '5.3.0';
     // add prettier script
-    packageJSON.scripts.prettier = 'prettier --write "{,src/**/}*.{md,json,ts,css,scss,yml}" --loglevel silent';
+    packageJSON.scripts.prettier = 'prettier --write "{,src/**/}*.{js,json,html,md,ts,css,scss,yml}" --loglevel silent';
     jsonfile.writeFileSync(packagePath, packageJSON);
 
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
