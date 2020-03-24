@@ -175,6 +175,9 @@ module.exports = class extends BaseGenerator {
     packageJSON.devDependencies['generator-jhipster-ionic'] = packagejs.version;
     // force JHipster 6.7.0 to fix https://github.com/jhipster/generator-jhipster/issues/11501
     packageJSON.devDependencies['generator-jhipster'] = '6.7.0';
+    // fix ng-bootstrap issue https://github.com/oktadeveloper/generator-jhipster-ionic/issues/252
+    // remove when Ionic 5 supports Angular 9
+    packageJSON.dependencies['@ng-bootstrap/ng-bootstrap'] = '5.2.2';
     // add prettier script
     packageJSON.scripts.prettier = 'prettier --write "{,src/**/}*.{md,json,ts,css,scss,yml}" --loglevel silent';
     jsonfile.writeFileSync(packagePath, packageJSON);
