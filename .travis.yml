@@ -23,9 +23,9 @@ env:
     - PROFILE=dev
     - RUN_APP=1
     - PROTRACTOR=1
-    - JHIPSTER_TRAVIS=$TRAVIS_BUILD_DIR/travis
+    - JHIPSTER_TRAVIS=$TRAVIS_BUILD_DIR/test-integration
     - JHIPSTER_INSTALL=$JHIPSTER_TRAVIS/install
-    - JHIPSTER_SAMPLES=$JHIPSTER_TRAVIS/samples
+    - JHIPSTER_SAMPLES=$JHIPSTER_TRAVIS/jdl
     - JHIPSTER_SCRIPTS=$JHIPSTER_TRAVIS/scripts
     - APP_FOLDER=$HOME/backend
     - IONIC_FOLDER=$HOME/ionic4j
@@ -34,8 +34,8 @@ env:
     - SPRING_JPA_SHOW_SQL=false
     - NG_CLI_ANALYTICS=false
   matrix:
-    - JHIPSTER=ngx-mysql PROFILE=dev PROTRACTOR=1
-    - JHIPSTER=ngx-oauth2 PROFILE=dev PROTRACTOR=1
+    - JHIPSTER=monolith-jwt PROFILE=dev PROTRACTOR=1
+    - JHIPSTER=monolith-oauth2 PROFILE=dev PROTRACTOR=1
     - JHIPSTER=gateway-oauth2 PROFILE=dev PROTRACTOR=1
     - JHIPSTER=reactive-oauth2 PROFILE=dev PROTRACTOR=1
 before_install:
@@ -45,7 +45,7 @@ before_install:
   - sudo /etc/init.d/postgresql stop
   - npm -g install yo @ionic/cli
   - git clone https://github.com/jhipster/jhipster.git
-  - cd jhipster && ./mvnw clean install -DskipTests -Dgpg.skip=true
+  - cd jhipster && ./mvnw clean install -ntp -DskipTests -Dgpg.skip=true
   - chmod +x $JHIPSTER_INSTALL/*.sh
   - chmod +x $JHIPSTER_SCRIPTS/*.sh
   - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
@@ -54,11 +54,10 @@ install:
   - $JHIPSTER_INSTALL/01-install-jhipster-stack.sh
   - $JHIPSTER_INSTALL/02-checkVersion.sh
 script:
-  - $JHIPSTER_SCRIPTS/01-generate-entities.sh
-  - $JHIPSTER_SCRIPTS/02-generate-project.sh
-  - $JHIPSTER_SCRIPTS/03-docker-compose.sh
-  - $JHIPSTER_SCRIPTS/04-tests.sh
-  - $JHIPSTER_SCRIPTS/05-run.sh
+  - $JHIPSTER_SCRIPTS/01-generate-project.sh
+  - $JHIPSTER_SCRIPTS/02-docker-compose.sh
+  - $JHIPSTER_SCRIPTS/03-tests.sh
+  - $JHIPSTER_SCRIPTS/04-run.sh
 jobs:
   include:
     - if: tag IS blank

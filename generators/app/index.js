@@ -173,6 +173,11 @@ module.exports = class extends BaseGenerator {
     packageJSON.homepage = 'https://www.jhipster.tech';
     packageJSON.description = 'A hipster Ionic project, made with 💙 by @oktadev!';
     packageJSON.devDependencies['generator-jhipster-ionic'] = packagejs.version;
+    // force JHipster 6.7.0 to fix https://github.com/jhipster/generator-jhipster/issues/11501
+    packageJSON.devDependencies['generator-jhipster'] = '6.7.0';
+    // fix ng-bootstrap issue https://github.com/oktadeveloper/generator-jhipster-ionic/issues/252
+    // remove when Ionic 5 supports Angular 9
+    packageJSON.dependencies['@ng-bootstrap/ng-bootstrap'] = '5.2.2';
     // add prettier script
     packageJSON.scripts.prettier = 'prettier --write "{,src/**/}*.{md,json,ts,css,scss,yml}" --loglevel silent';
     jsonfile.writeFileSync(packagePath, packageJSON);
@@ -183,7 +188,7 @@ module.exports = class extends BaseGenerator {
 
       let installAuthCmd;
       const params = '--configUri=http://localhost:8080/api/auth-info --issuer=null --clientId=null';
-      const schematicsVersion = '1.3.0';
+      const schematicsVersion = '1.5.2';
 
       // use `schematics` when testing and expect it to be installed
       if (this.installDeps) {
@@ -282,7 +287,7 @@ module.exports = class extends BaseGenerator {
     return {
       runPrettier() {
         if (this.installDeps) {
-          shelljs.exec(`cd ${this.ionicAppName} && npm run prettier`);
+          shelljs.exec(`cd ${this.ionicAppName} && npm i && npm run prettier`);
         }
       },
 

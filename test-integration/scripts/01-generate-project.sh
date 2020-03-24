@@ -13,13 +13,15 @@ fi
 # Generate the project with jhipster
 #-------------------------------------------------------------------------------
 mkdir -p "$APP_FOLDER"
-cp -f "$JHIPSTER_SAMPLES"/"$JHIPSTER"/.yo-rc.json "$APP_FOLDER"/
+cp -f "$JHIPSTER_SAMPLES"/"$JHIPSTER".jdl "$APP_FOLDER"/
 cd "$APP_FOLDER"
-jhipster --force --no-insight --skip-checks --skip-git --skip-commit-hook --skip-install
+jhipster import-jdl "$JHIPSTER".jdl --force --no-insight --skip-checks --skip-git --skip-commit-hook --skip-install
 
 #-------------------------------------------------------------------------------
 # Generate an Ionic app with yo jhipster-ionic
 #-------------------------------------------------------------------------------
 cd "$HOME"
 yo jhipster-ionic default --force --no-insight
+cd "$IONIC_FOLDER"
+yo jhipster-ionic:import-jdl "$APP_FOLDER"/"$JHIPSTER".jdl
 
