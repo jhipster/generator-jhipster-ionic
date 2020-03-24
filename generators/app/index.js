@@ -173,6 +173,8 @@ module.exports = class extends BaseGenerator {
     packageJSON.homepage = 'https://www.jhipster.tech';
     packageJSON.description = 'A hipster Ionic project, made with 💙 by @oktadev!';
     packageJSON.devDependencies['generator-jhipster-ionic'] = packagejs.version;
+    // force JHipster 6.7.0 to fix https://github.com/jhipster/generator-jhipster/issues/11501
+    packageJSON.devDependencies['generator-jhipster'] = '6.7.0';
     // add prettier script
     packageJSON.scripts.prettier = 'prettier --write "{,src/**/}*.{md,json,ts,css,scss,yml}" --loglevel silent';
     jsonfile.writeFileSync(packagePath, packageJSON);
