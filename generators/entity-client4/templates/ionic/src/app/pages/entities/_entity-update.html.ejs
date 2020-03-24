@@ -141,11 +141,11 @@ _%>
                     <ion-select-option [value]="<%=otherEntityName %>Option" *ngFor="let <%=otherEntityName %>Option of <%=otherEntityNamePlural%>; trackBy: track<%=otherEntityNameCapitalized %>ById">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-select-option>
                 </ion-select>
                 <%_ } else { _%>
-                <ion-select id="field_<%= relationshipName %>" formControlName="<%= relationshipName %>" [compareWith]="compare<%=otherEntityNameCapitalized %>"<% if (relationshipRequired) { %> required<% } %>>
+                <ion-select id="field_<%= relationshipName %>" formControlName="<%= relationshipName %>Id" [compareWith]="compare<%=otherEntityNameCapitalized %>"<% if (relationshipRequired) { %> required<% } %>>
                 <%_ if (!relationshipRequired) { _%>
                     <ion-select-option [value]="null"></ion-select-option>
                 <%_ } else { _%>
-                    <ion-select-option *ngIf="!form.value.<%= relationshipName %>" [value]="null" selected></ion-select-option>
+                    <ion-select-option *ngIf="!form.value.<%= relationshipName %>Id" [value]="null" selected></ion-select-option>
                 <%_ } _%>
                     <ion-select-option [value]="<%=otherEntityName %>Option.id" *ngFor="let <%=otherEntityName %>Option of <%=otherEntityNamePlural%>; trackBy: track<%=otherEntityNameCapitalized %>ById">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-select-option>
                 </ion-select>
@@ -164,11 +164,11 @@ _%>
                     <ion-select-option [value]="<%=otherEntityName %>Option.id === <%= entityInstance %>.<%=relationshipFieldName %>?.id ? <%= entityInstance %>.<%=relationshipFieldName %> : <%=otherEntityName %>Option" *ngFor="let <%=otherEntityName %>Option of <%=relationshipFieldNamePlural.toLowerCase() %>; trackBy: track<%=otherEntityNameCapitalized %>ById">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-select-option>
                 </ion-select>
                 <%_ } else { _%>
-                <ion-select id="field_<%= relationshipName %>" formControlName="<%= relationshipName %>" [compareWith]="compare<%=otherEntityNameCapitalized %>"<% if (relationshipRequired) { %> required<% } %>>
+                <ion-select id="field_<%= relationshipName %>" formControlName="<%= relationshipName %>Id" [compareWith]="compare<%=otherEntityNameCapitalized %>"<% if (relationshipRequired) { %> required<% } %>>
                 <%_ if (!relationshipRequired) { _%>
                     <ion-select-option [value]="null"></ion-select-option>
                 <%_ } else { _%>
-                    <ion-select-option *ngIf="!form.value.<%= relationshipName %>" [value]="null" selected></ion-select-option>
+                    <ion-select-option *ngIf="!form.value.<%= relationshipName %>Id" [value]="null" selected></ion-select-option>
                 <%_ } _%>
                     <ion-select-option [value]="<%=otherEntityName %>Option.id" *ngFor="let <%=otherEntityName %>Option of <%=relationshipFieldNamePlural.toLowerCase() %>; trackBy: track<%=otherEntityNameCapitalized %>ById">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-select-option>
                 </ion-select>
@@ -183,9 +183,10 @@ _%>
             </ion-item>
             <%_ } _%>
             <%_ if (relationships[idx].relationshipValidate === true) { _%>
-            <div [hidden]="!(form.controls.<%= relationshipName %>?.dirty && form.controls.<%= relationshipName %>?.invalid)">
+            <%_ const controlName = relationshipName + (dto === 'no') ? '' : 'Id' _%>
+            <div [hidden]="!(form.controls.<%= controlName %>?.dirty && form.controls.<%= controlName %>?.invalid)">
                 <%_ if (relationshipRequired) { _%>
-                <small [hidden]="!form.controls.<%= relationshipName %>?.errors?.required">
+                <small [hidden]="!form.controls.<%= controlName %>?.errors?.required">
                     This field is required.
                 </small>
                 <%_ } _%>

@@ -342,7 +342,7 @@ _%>
         if(relationships[idx].relationshipType !== 'one-to-many' && !entitiesSeen.includes(otherEntityNameCapitalized)) {
     _%>
     compare<%- otherEntityNameCapitalized -%>(first: <%- relationships[idx].otherEntityAngularName -%>, second: <%- relationships[idx].otherEntityAngularName -%>): boolean {
-        return first && second ? first.id === second.id : first === second;
+        return first.id && second.id ? first.id === second.id : first === second;
     }
 
     track<%- otherEntityNameCapitalized -%>ById(index: number, item: <%- relationships[idx].otherEntityAngularName -%>) {
