@@ -135,12 +135,12 @@ module.exports = class extends BaseGenerator {
     const params = ['start', this.ionicAppName, 'oktadeveloper/jhipster'];
     params.push('--type');
     params.push('angular');
-    params.push('--no-deps');
     if (!this.interactive) {
       params.push('--no-interactive');
       params.push('--quiet');
     }
     if (!this.installDeps) {
+      params.push('--no-deps');
       params.push('--no-git');
     }
     spawn.sync('ionic', params, {stdio: 'inherit'});
