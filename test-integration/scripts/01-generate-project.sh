@@ -22,5 +22,6 @@ jhipster import-jdl "$JHIPSTER".jdl --force --no-insight --skip-checks --skip-gi
 #-------------------------------------------------------------------------------
 cd "$HOME"
 yo jhipster-ionic default --force --no-insight
+cd "$IONIC_FOLDER"
 yo jhipster-ionic:import-jdl ../"$APP_FOLDER"/"$JHIPSTER".jdl
 
