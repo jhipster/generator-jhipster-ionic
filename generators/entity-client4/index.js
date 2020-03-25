@@ -61,7 +61,7 @@ module.exports = class extends BaseGenerator {
         }
         const entityPagePath = 'src/app/pages/entities/entities.page.ts';
         try {
-            const page = `{name: '${entityAngularName}', component: '${entityAngularName}Page', route: '${entityFileName}'},`;
+            const page = `{ name: '${entityAngularName}', component: '${entityAngularName}Page', route: '${entityFileName}' },`;
             utils.rewriteFile({
                 file: entityPagePath,
                 needle: 'jhipster-needle-add-entity-page',

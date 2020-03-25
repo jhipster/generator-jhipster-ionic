@@ -293,8 +293,8 @@ _%>
         return this.dataUtils.openFile(contentType, field);
     }
 
-    setFileData(event, entity, field, isImage) {
-        this.dataUtils.setFileData(event, entity, field, isImage);
+    setFileData(event, field, isImage) {
+        this.dataUtils.loadFileToForm(event, this.form, field, isImage).subscribe();
         <%_ if (fieldsContainImageBlob) { _%>
         this.processWebImage(event, field);
         <%_ } _%>
@@ -326,6 +326,8 @@ _%>
 
             this.form.patchValue({ [fieldName]: imageData });
             this.form.patchValue({ [fieldName + 'ContentType']: imageType });
+            this.<%= entityInstance %>[fieldName] = imageData;
+            this.<%= entityInstance %>[fieldName + 'ContentType'] = imageType;
         };
 
         reader.readAsDataURL(event.target.files[0]);
