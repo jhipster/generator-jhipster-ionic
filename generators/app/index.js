@@ -151,6 +151,9 @@ module.exports = class extends BaseGenerator {
     };
 
     const configFile = path.join(this.ionicAppName, '.jhipster-ionic.json');
+    if (!fs.existsSync(this.ionicAppName)) {
+      fs.mkdirSync(this.ionicAppName);
+    }
     jsonfile.writeFileSync(configFile, config);
   }
 
@@ -165,7 +168,7 @@ module.exports = class extends BaseGenerator {
     // update package.json in Ionic app
     const done = this.async();
     const packagePath = `${this.ionicAppName}/package.json`;
-    const packageJSON = this.fs.readJSON(packagePath);
+    const packageJSON = this.fs.readJSON(packagePath) || { devDependencies: [], dependencies: [], scripts: {}};
     const CLIENT_MAIN_SRC_DIR = `${this.ionicAppName}/src/`;
 
     // add some branding 🤓
