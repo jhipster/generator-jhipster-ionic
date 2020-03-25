@@ -89,12 +89,12 @@ _%>
                             <ion-icon name="trash" slot="icon-only"></ion-icon>
                         </ion-button>
                         <%_ } else { _%>
-                        <ion-button color="danger" (click)="<%= entityInstance %>.<%= fieldName %>=null;<%= entityInstance %>.<%= fieldName %>ContentType=null;">
+                        <ion-button color="danger" (click)="<%= entityInstance %>.<%= fieldName %>=null;<%= entityInstance %>.<%= fieldName %>ContentType=null;form.patchValue({'<%= fieldName %>': ''});form.patchValue({'<%= fieldName %>ContentType': ''})">
                             <ion-icon name="trash" slot="icon-only"></ion-icon>
                         </ion-button>
                         <%_ } _%>
                     </div>
-                    <input type="file" #fileInput style="display: none" (change)="setFileData($event, <%= entityInstance %>, '<%= fieldName %>', <% if (fieldTypeBlobContent === 'image') { %>true)" accept="image/*"<% } else { %>false)"<% } %>/>
+                    <input type="file" #fileInput<% if (fieldTypeBlobContent === 'image') { %> style="display: none"<% } %> (change)="setFileData($event, '<%= fieldName %>', <% if (fieldTypeBlobContent === 'image') { %>true)" accept="image/*"<% } else { %>false)"<% } %>/>
                     <%_ if (fieldTypeBlobContent === 'image') { _%>
                     <ion-button *ngIf="!<%= entityInstance %>?.<%= fieldName %>" (click)="getPicture('<%= fieldName %>')">
                         <ion-icon name="add-circle" slot="start"></ion-icon>
