@@ -33,7 +33,8 @@ function importJDL() {
   const jdlImporter = jhiCore.JDLImporter.createImporterFromFiles(this.jdlFiles, {
     databaseType: this.prodDatabaseType,
     applicationType: this.applicationType,
-    applicationName: this.baseName
+    applicationName: this.baseName,
+    forceNoFiltering: true
   });
   let importState = {
     exportedEntities: [],
