@@ -59,17 +59,17 @@ module.exports = class extends BaseGenerator {
         if (!entityAngularName) {
             return;
         }
-const entityPagePath = 'src/app/pages/entities/entities.page.ts';
-try {
-    const page = `{ name: '${entityAngularName}', component: '${entityAngularName}Page', route: '${entityFileName}' },`;
-    utils.rewriteFile({
-        file: entityPagePath,
-        needle: 'jhipster-needle-add-entity-page',
-        splicable: [
-            this.stripMargin(page)
-        ]
-    }, this);
-} catch (e) {
+        const entityPagePath = 'src/app/pages/entities/entities.page.ts';
+        try {
+            const page = `{ name: '${entityAngularName}', component: '${entityAngularName}Page', route: '${entityFileName}' },`;
+            utils.rewriteFile({
+                file: entityPagePath,
+                needle: 'jhipster-needle-add-entity-page',
+                splicable: [
+                    this.stripMargin(page)
+                ]
+            }, this);
+        } catch (e) {
             this.log(`${chalk.yellow('\nUnable to find ') + entityPagePath + chalk.yellow(' or missing required jhipster-needle. Reference to ') + entityAngularName} ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`);
             this.debug('Error:', e);
         }
