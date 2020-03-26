@@ -17,7 +17,6 @@
  * limitations under the License.
  */
 const _ = require('lodash');
-const randexp = require('randexp');
 const chalk = require('chalk');
 const fs = require('fs');
 const constants = require('generator-jhipster/generators/generator-constants');
