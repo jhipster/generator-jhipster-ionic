@@ -1,0 +1,98 @@
+#
+# Copyright 2013-2020 the original author or authors from the JHipster project.
+#
+# This file is part of the JHipster project, see https://www.jhipster.tech/
+# for more information.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+name: Generator JHipster Ionic CI Build
+on: [push, pull_request]
+env: 
+    PROFILE: dev
+    RUN_APP: 1
+    PROTRACTOR: 1
+    JHI_GITHUB_CI: ${{ github.workspace }}/test-integration
+    JHIPSTER_INSTALL: ${{ github.workspace }}/test-integration/install
+    JHIPSTER_SAMPLES: ${{ github.workspace }}/test-integration/jdl
+    JHIPSTER_SCRIPTS: ${{ github.workspace }}/test-integration/scripts
+    APP_FOLDER: $HOME/backend
+    IONIC_FOLDER: $HOME/ionic4j
+
+    #environment properties
+    SPRING_OUTPUT_ANSI_ENABLED: ALWAYS
+    SPRING_JPA_SHOW_SQL: false
+    NG_CLI_ANALYTICS: false
+jobs:
+    build:
+        name: Generator JHipster Ionic CI Build
+        runs-on: ${{ matrix.os }}
+        if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]')"
+        timeout-minutes: 40
+        strategy:
+          fail-fast: false
+          matrix:
+            node_version: [12.16.1]
+            os: [ubuntu-latest]
+            app-type:
+              - monolith-jwt
+              - monolith-oauth2
+              - gateway-oauth2
+              - reactive-oauth2
+            include:
+              - app-type: monolith-jwt
+                profile: dev
+                protractor: 1
+              - app-type: monolith-oauth2
+                profile: dev
+                protractor: 1
+              - app-type: gateway-oauth2
+                profile: dev
+                protractor: 1
+              - app-type: reactive-oauth2
+                profile: dev
+                protractor: 1
+              
+        steps:
+          #----------------------------------------------------------------------
+          # Install all tools and check configuration
+          #----------------------------------------------------------------------
+          - uses: actions/checkout@v2
+          - uses: actions/setup-node@v1
+            with:
+                node-version: ${{ matrix.node_version }}
+          - name: Before Install
+            run: |
+                export TZ=America/Denver
+                date
+                npm -g install yo @ionic/cli
+                git clone https://github.com/jhipster/jhipster.git
+                cd jhipster && ./mvnw clean install -ntp -DskipTests -Dgpg.skip=true
+                chmod +x $JHIPSTER_INSTALL/*.sh
+                chmod +x $JHIPSTER_SCRIPTS/*.sh
+          - name: Install JHipster Stack
+            run: $JHIPSTER_INSTALL/01-install-jhipster-stack.sh
+          - name: Check Version
+            run: $JHIPSTER_INSTALL/02-checkVersion.sh
+          #----------------------------------------------------------------------
+          # Script
+          #----------------------------------------------------------------------
+          - name: Generate Project
+            run: $JHIPSTER_SCRIPTS/01-generate.project.sh
+          - name: Docker Compose
+            run: $JHIPSTER_SCRIPTS/02-docker-compose.sh
+          - name: Tests
+            run: $JHIPSTER_SCRIPTS/03-tests.sh
+          - name: Run
+            run: $JHIPSTER_SCRIPTS/04-run.sh
