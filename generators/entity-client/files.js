@@ -116,8 +116,6 @@ function writeFiles() {
         },
 
         writeClientFiles() {
-            if (this.skipClient) return;
-
             // write client side files for angular
             this.writeFilesToDisk(ionicFiles, this, false, CLIENT_IONIC_TEMPLATES_DIR);
             this.addEntityToModule(this.entityInstance, this.entityClass, this.entityAngularName, this.entityFolderName, this.entityFileName, this.enableTranslation);

@@ -66,7 +66,6 @@ class EntityGenerator extends BaseEntityGenerator {
     return {
       composeClient() {
         const context = this.context;
-        if (context.skipClient) return;
 
         const entityClientDirectory = context.isIonicV3 ? '../entity-client' : '../entity-client4';
 
