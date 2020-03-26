@@ -33,7 +33,8 @@ function importJDL() {
   const jdlImporter = jhiCore.JDLImporter.createImporterFromFiles(this.jdlFiles, {
     databaseType: this.prodDatabaseType,
     applicationType: this.applicationType,
-    applicationName: this.baseName
+    applicationName: this.baseName,
+    forceNoFiltering: true
   });
   let importState = {
     exportedEntities: [],
@@ -123,7 +124,7 @@ class ImportJDLGenerator extends BaseGenerator {
     return {
       generateEntities() {
         if (this.importState.exportedEntities.length === 0) {
-          logger.debug('Entities not generated');
+          logger.info('Entities not generated');
           return;
         }
         if (this.options['json-only']) {
