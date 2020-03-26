@@ -124,7 +124,7 @@ class ImportJDLGenerator extends BaseGenerator {
     return {
       generateEntities() {
         if (this.importState.exportedEntities.length === 0) {
-          logger.debug('Entities not generated');
+          logger.info('Entities not generated');
           return;
         }
         if (this.options['json-only']) {
