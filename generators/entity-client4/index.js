@@ -19,7 +19,6 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
 const _ = require('lodash');
-const resolve = require('path').resolve;
 const writeFiles = require('./files').writeFiles;
 const utils = require('generator-jhipster/generators/utils');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
