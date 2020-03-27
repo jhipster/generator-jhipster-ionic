@@ -33,7 +33,7 @@ export function createTranslateLoader(http: HttpClient) {
       }
     }),
     IonicModule.forRoot(),
-    NgxWebstorageModule.forRoot({prefix: 'jhi', separator: '-'}),
+    NgxWebstorageModule.forRoot({ prefix: 'jhi', separator: '-' }),
     AppRoutingModule,
     AuthModule,
     IonicStorageModule.forRoot()
@@ -41,7 +41,7 @@ export function createTranslateLoader(http: HttpClient) {
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
@@ -55,5 +55,4 @@ export function createTranslateLoader(http: HttpClient) {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

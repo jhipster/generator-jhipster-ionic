@@ -15,6 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private async handleAccess(request: HttpRequest<any>, next: HttpHandler): Promise<HttpEvent<any>> {
+    // prettier-ignore
     if (!request || !request.url || (/^http/.test(request.url) &&
       !request.url.startsWith(ApiService.API_URL) && !request.url.startsWith(this.servicesEndpoint))) {
       return next.handle(request).toPromise();

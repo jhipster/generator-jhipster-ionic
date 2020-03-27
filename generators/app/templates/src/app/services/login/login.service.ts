@@ -7,24 +7,23 @@ import { AuthService } from '../../auth/auth.service';
   providedIn: 'root'
 })
 export class LoginService {
-  constructor(
-    private accountService: AccountService,
-    private authService: AuthService,
-    private translate: TranslateService
-  ) {}
+  constructor(private accountService: AccountService, private authService: AuthService, private translate: TranslateService) {}
 
   login() {
-    this.authService.signIn().then(data => {
-      this.accountService.identity(true).then(account => {
-        // After the login the language will be changed to
-        // the language selected by the user during his registration
-        if (account !== null) {
-          this.translate.use(account.langKey);
-        }
+    this.authService
+      .signIn()
+      .then((data) => {
+        this.accountService.identity(true).then((account) => {
+          // After the login the language will be changed to
+          // the language selected by the user during his registration
+          if (account !== null) {
+            this.translate.use(account.langKey);
+          }
+        });
+      })
+      .catch((error) => {
+        console.error(`Sign in error: ${error}`);
       });
-    }).catch(error => {
-      console.error(`Sign in error: ${error}`);
-    });
   }
 
   logout() {
