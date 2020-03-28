@@ -6,9 +6,11 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
 import { IonicStorageModule } from '@ionic/storage';
 
 describe('UserRouteAccessService', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [HttpClientTestingModule, RouterTestingModule, NgxWebstorageModule.forRoot(), IonicStorageModule.forRoot()]
-  }));
+  beforeEach(() =>
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule, RouterTestingModule, NgxWebstorageModule.forRoot(), IonicStorageModule.forRoot()]
+    })
+  );
 
   it('should be created', () => {
     const service: UserRouteAccessService = TestBed.get(UserRouteAccessService);

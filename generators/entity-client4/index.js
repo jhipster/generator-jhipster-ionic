@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2019 the original author or authors from the JHipster project.
+ * Copyright 2019-Present the original author or authors from the JHipster project.
  *
  * This file is part of the JHipster project, see http://www.jhipster.tech/
  * for more information.
@@ -19,138 +19,147 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
 const _ = require('lodash');
-const writeFiles = require('./files').writeFiles;
 const utils = require('generator-jhipster/generators/utils');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
+const writeFiles = require('./files').writeFiles;
 
 let useBlueprint;
 
 module.exports = class extends BaseGenerator {
-    constructor(args, opts) {
-        super(args, opts);
-        utils.copyObjectProps(this, this.options.context);
-        const blueprint = this.config.get('blueprint');
-        useBlueprint = this.composeBlueprint(blueprint, 'entity'); // use global variable since getters dont have access to instance property
+  constructor(args, opts) {
+    super(args, opts);
+    utils.copyObjectProps(this, this.options.context);
+    const blueprint = this.config.get('blueprint');
+    useBlueprint = this.composeBlueprint(blueprint, 'entity'); // use global variable since getters dont have access to instance property
+  }
+
+  get writing() {
+    if (useBlueprint) return;
+    return writeFiles();
+  }
+
+  end() {
+    if (useBlueprint) return;
+    this.log(chalk.bold.green('\nEntity generation complete!'));
+  }
+
+  /**
+   * Add a new entity in the TS modules file.
+   *
+   * @param {string} entityInstance - Entity Instance
+   * @param {string} entityClass - Entity Class
+   * @param {string} entityAngularName - Entity Angular Name
+   * @param {string} entityFolderName - Entity Folder Name
+   * @param {string} entityFileName - Entity File Name
+   * @param {boolean} enableTranslation - If translations are enabled or not
+   */
+  addEntityToModule(entityInstance, entityClass, entityAngularName, entityFolderName, entityFileName, enableTranslation) {
+    // workaround method being called on initialization
+    if (!entityAngularName) {
+      return;
     }
+    const entityPagePath = 'src/app/pages/entities/entities.page.ts';
+    try {
+      const isSpecificEntityAlreadyGenerated = utils.checkStringInFile(entityPagePath, `route: '${entityFileName}'`, this);
 
-    get writing() {
-        if (useBlueprint) return;
-        return writeFiles();
+      if (!isSpecificEntityAlreadyGenerated) {
+        const isAnyEntityAlreadyGenerated = utils.checkStringInFile(entityPagePath, 'route:', this);
+        const prefix = isAnyEntityAlreadyGenerated ? ',' : '';
+        const pageEntry = `${prefix}{ name: '${entityAngularName}', component: '${entityAngularName}Page', route: '${entityFileName}' }`;
+        utils.rewriteFile(
+          {
+            file: entityPagePath,
+            needle: 'jhipster-needle-add-entity-page',
+            splicable: [this.stripMargin(pageEntry)]
+          },
+          this
+        );
+      }
+    } catch (e) {
+      this.log(
+        `${
+          chalk.yellow('\nUnable to find ') +
+          entityPagePath +
+          chalk.yellow(' or missing required jhipster-needle. Reference to ') +
+          entityAngularName
+        } ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`
+      );
+      this.debug('Error:', e);
     }
+  }
 
-    end() {
-        if (useBlueprint) return;
-        this.log(chalk.bold.green('\nEntity generation complete!'));
+  /**
+   * Add a new route in the TS modules file.
+   *
+   * @param {string} entityInstance - Entity Instance
+   * @param {string} entityClass - Entity Class
+   * @param {string} entityAngularName - Entity Angular Name
+   * @param {string} entityFolderName - Entity Folder Name
+   * @param {string} entityFileName - Entity File Name
+   * @param {boolean} enableTranslation - If translations are enabled or not
+   */
+  addEntityRouteToModule(entityInstance, entityClass, entityAngularName, entityFolderName, entityFileName, enableTranslation) {
+    // workaround method being called on initialization
+    if (!entityAngularName) {
+      return;
     }
-
-
-    /**
-     * Add a new entity in the TS modules file.
-     *
-     * @param {string} entityInstance - Entity Instance
-     * @param {string} entityClass - Entity Class
-     * @param {string} entityAngularName - Entity Angular Name
-     * @param {string} entityFolderName - Entity Folder Name
-     * @param {string} entityFileName - Entity File Name
-     * @param {boolean} enableTranslation - If translations are enabled or not
-     */
-    addEntityToModule(entityInstance, entityClass, entityAngularName, entityFolderName, entityFileName, enableTranslation) {
-        // workaround method being called on initialization
-        if (!entityAngularName) {
-            return;
-        }
-        const entityPagePath = 'src/app/pages/entities/entities.page.ts';
-        try {
-            const isSpecificEntityAlreadyGenerated = utils.checkStringInFile(
-              entityPagePath,
-              `route: '${entityFileName}'`,
-              this
-            );
-
-            if (!isSpecificEntityAlreadyGenerated) {
-                const isAnyEntityAlreadyGenerated = utils.checkStringInFile(entityPagePath, 'route:', this);
-                const prefix = isAnyEntityAlreadyGenerated ? ',' : '';
-                const pageEntry = `${prefix}{ name: '${entityAngularName}', component: '${entityAngularName}Page', route: '${entityFileName}' }`;
-                utils.rewriteFile({
-                    file: entityPagePath,
-                    needle: 'jhipster-needle-add-entity-page',
-                    splicable: [
-                      this.stripMargin(pageEntry)
-                    ]
-                }, this);
-            }
-        } catch (e) {
-            this.log(`${chalk.yellow('\nUnable to find ') + entityPagePath + chalk.yellow(' or missing required jhipster-needle. Reference to ') + entityAngularName} ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`);
-            this.debug('Error:', e);
-        }
-    }
-
-    /**
-     * Add a new route in the TS modules file.
-     *
-     * @param {string} entityInstance - Entity Instance
-     * @param {string} entityClass - Entity Class
-     * @param {string} entityAngularName - Entity Angular Name
-     * @param {string} entityFolderName - Entity Folder Name
-     * @param {string} entityFileName - Entity File Name
-     * @param {boolean} enableTranslation - If translations are enabled or not
-     */
-    addEntityRouteToModule(entityInstance, entityClass, entityAngularName, entityFolderName, entityFileName, enableTranslation) {
-        // workaround method being called on initialization
-        if (!entityAngularName) {
-            return;
-        }
-        const entityPagePath = 'src/app/pages/entities/entities.module.ts';
-        try {
-            const route = `|, {
+    const entityPagePath = 'src/app/pages/entities/entities.module.ts';
+    try {
+      const route = `|, {
                     |    path: '${entityFileName}',
                     |    loadChildren: './${entityFolderName}/${entityFileName}.module#${entityAngularName}PageModule'
                     |  }`;
-            utils.rewriteFile({
-                file: entityPagePath,
-                needle: 'jhipster-needle-add-entity-route',
-                splicable: [
-                    this.stripMargin(route)
-                ]
-            }, this);
-        } catch (e) {
-            this.log(`${chalk.yellow('\nUnable to find ') + entityPagePath + chalk.yellow(' or missing required jhipster-needle. Reference to ') + entityAngularName} ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`);
-            this.debug('Error:', e);
-        }
+      utils.rewriteFile(
+        {
+          file: entityPagePath,
+          needle: 'jhipster-needle-add-entity-route',
+          splicable: [this.stripMargin(route)]
+        },
+        this
+      );
+    } catch (e) {
+      this.log(
+        `${
+          chalk.yellow('\nUnable to find ') +
+          entityPagePath +
+          chalk.yellow(' or missing required jhipster-needle. Reference to ') +
+          entityAngularName
+        } ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`
+      );
+      this.debug('Error:', e);
     }
+  }
 
-    /**
-     * Generate Entity Queries for Ionic Providers
-     *
-     * @param {Array|Object} relationships - array of relationships
-     * @param {string} entityInstance - entity instance
-     * @param {string} dto - dto
-     * @returns {{queries: Array, variables: Array, hasManyToMany: boolean}}
-     */
-    generateEntityQueries(relationships, entityInstance, dto) {
-        // workaround method being called on initialization
-        if (!relationships) {
-            return;
+  /**
+   * Generate Entity Queries for Ionic Providers
+   *
+   * @param {Array|Object} relationships - array of relationships
+   * @param {string} entityInstance - entity instance
+   * @param {string} dto - dto
+   * @returns {{queries: Array, variables: Array, hasManyToMany: boolean}}
+   */
+  generateEntityQueries(relationships, entityInstance, dto) {
+    // workaround method being called on initialization
+    if (!relationships) {
+      return;
+    }
+    const queries = [];
+    const variables = [];
+    let hasManyToMany = false;
+    relationships.forEach((relationship) => {
+      let query;
+      let variableName;
+      hasManyToMany = hasManyToMany || relationship.relationshipType === 'many-to-many';
+      if (relationship.relationshipType === 'one-to-one' && relationship.ownerSide === true && relationship.otherEntityName !== 'user') {
+        variableName = _.camelCase(relationship.otherEntityNameCapitalizedPlural);
+        if (variableName === entityInstance) {
+          variableName += 'Collection';
         }
-        const queries = [];
-        const variables = [];
-        let hasManyToMany = false;
-        relationships.forEach((relationship) => {
-            let query;
-            let variableName;
-            hasManyToMany = hasManyToMany || relationship.relationshipType === 'many-to-many';
-            if (relationship.relationshipType === 'one-to-one' && relationship.ownerSide === true && relationship.otherEntityName !== 'user') {
-                variableName = _.camelCase(relationship.otherEntityNameCapitalizedPlural);
-                if (variableName === entityInstance) {
-                    variableName += 'Collection';
-                }
-                const relationshipFieldName = `this.${entityInstance}.${relationship.relationshipFieldName}`;
-                const relationshipFieldNameIdCheck = dto === 'no' ?
-                    `!${relationshipFieldName} || !${relationshipFieldName}.id` :
-                    `!${relationshipFieldName}Id`;
+        const relationshipFieldName = `this.${entityInstance}.${relationship.relationshipFieldName}`;
+        const relationshipFieldNameIdCheck =
+          dto === 'no' ? `!${relationshipFieldName} || !${relationshipFieldName}.id` : `!${relationshipFieldName}Id`;
 
-                query =
-                    `this.${relationship.otherEntityName}Service
+        query = `this.${relationship.otherEntityName}Service
             .query({filter: '${relationship.otherEntityRelationshipName.toLowerCase()}-is-null'})
             .subscribe(data => {
                 if (${relationshipFieldNameIdCheck}) {
@@ -163,24 +172,23 @@ module.exports = class extends BaseGenerator {
                         }, (error) => this.onError(error));
                 }
             }, (error) => this.onError(error));`;
-            } else if (relationship.relationshipType !== 'one-to-many') {
-                variableName = _.camelCase(relationship.otherEntityNameCapitalizedPlural);
-                if (variableName === entityInstance) {
-                    variableName += 'Collection';
-                }
-                query =
-                    `this.${relationship.otherEntityName}Service.query()
+      } else if (relationship.relationshipType !== 'one-to-many') {
+        variableName = _.camelCase(relationship.otherEntityNameCapitalizedPlural);
+        if (variableName === entityInstance) {
+          variableName += 'Collection';
+        }
+        query = `this.${relationship.otherEntityName}Service.query()
             .subscribe(data => { this.${variableName} = data.body; }, (error) => this.onError(error));`;
-            }
-            if (variableName && !this.contains(queries, query)) {
-                queries.push(query);
-                variables.push(`${variableName}: ${relationship.otherEntityAngularName}[];`);
-            }
-        });
-        return {
-            queries,
-            variables,
-            hasManyToMany
-        };
-    }
+      }
+      if (variableName && !this.contains(queries, query)) {
+        queries.push(query);
+        variables.push(`${variableName}: ${relationship.otherEntityAngularName}[];`);
+      }
+    });
+    return {
+      queries,
+      variables,
+      hasManyToMany
+    };
+  }
 };

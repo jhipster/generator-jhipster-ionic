@@ -1,5 +1,5 @@
 <%#
- Copyright 2013-2019 the original author or authors from the JHipster project.
+ Copyright 2019-Present the original author or authors from the JHipster project.
 
  This file is part of the JHipster project, see http://www.jhipster.tech/
  for more information.
@@ -114,7 +114,7 @@ export class <%= entityAngularName %>DialogPage {
             const fieldNameCapitalized = fields[idx].fieldNameCapitalized;
             const fieldNameHumanized = fields[idx].fieldNameHumanized;
             const fieldType = fields[idx].fieldType;
-        _%> 
+        _%>
             <%_ if (fieldType === 'Boolean') { _%>
             <%= fieldName %>: [params.get('item') ? this.<%= entityInstance %>.<%= fieldName %> : 'false', <% if (fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.indexOf('required') !== -1) { %> Validators.required<% } %>],
             <%_ } else { _%>

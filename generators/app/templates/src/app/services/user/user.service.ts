@@ -6,9 +6,7 @@ import { ApiService } from '../api/api.service';
   providedIn: 'root'
 })
 export class UserService {
-
-  constructor(public apiService: ApiService) {
-  }
+  constructor(public apiService: ApiService) {}
 
   findAll(): Observable<any> {
     return this.apiService.get('users');

@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2019 the original author or authors from the JHipster project.
+ * Copyright 2019-Present the original author or authors from the JHipster project.
  *
  * This file is part of the JHipster project, see http://www.jhipster.tech/
  * for more information.
@@ -20,7 +20,7 @@ const chalk = require('chalk');
 const shelljs = require('shelljs');
 
 module.exports = {
-    getAppFolder
+  getAppFolder
 };
 
 /**
@@ -29,20 +29,20 @@ module.exports = {
  * @returns {Array} array of string representing app folders
  */
 function getAppFolder(input) {
-    const destinationPath = this.destinationPath(input);
-    const appsFolders = [];
+  const destinationPath = this.destinationPath(input);
+  const appsFolders = [];
 
-    if (shelljs.test('-f', `${destinationPath}/.yo-rc.json`)) {
-        try {
-            const fileData = this.fs.readJSON(`${destinationPath}/.yo-rc.json`);
-            if (fileData['generator-jhipster'].baseName !== undefined) {
-                appsFolders.push(destinationPath);
-            }
-        } catch (err) {
-            this.log(chalk.red(`The .yo-rc.json in ${destinationPath} can't be read!`));
-            this.debug('Error:', err);
-        }
+  if (shelljs.test('-f', `${destinationPath}/.yo-rc.json`)) {
+    try {
+      const fileData = this.fs.readJSON(`${destinationPath}/.yo-rc.json`);
+      if (fileData['generator-jhipster'].baseName !== undefined) {
+        appsFolders.push(destinationPath);
+      }
+    } catch (err) {
+      this.log(chalk.red(`The .yo-rc.json in ${destinationPath} can't be read!`));
+      this.debug('Error:', err);
     }
+  }
 
-    return appsFolders;
+  return appsFolders;
 }

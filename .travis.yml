@@ -34,10 +34,10 @@ env:
     - SPRING_JPA_SHOW_SQL=false
     - NG_CLI_ANALYTICS=false
   matrix:
-    - JHIPSTER=monolith-jwt PROFILE=dev PROTRACTOR=1
-    - JHIPSTER=monolith-oauth2 PROFILE=dev PROTRACTOR=1
-    - JHIPSTER=gateway-oauth2 PROFILE=dev PROTRACTOR=1
-    - JHIPSTER=reactive-oauth2 PROFILE=dev PROTRACTOR=1
+    - JHIPSTER=monolith-jwt
+    - JHIPSTER=monolith-oauth2
+    - JHIPSTER=gateway-oauth2
+    - JHIPSTER=reactive-oauth2
 before_install:
   - export TZ=America/Denver
   - date

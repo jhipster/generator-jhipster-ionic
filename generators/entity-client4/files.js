@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2019 the original author or authors from the JHipster project.
+ * Copyright 2019-Present the original author or authors from the JHipster project.
  *
  * This file is part of the JHipster project, see http://www.jhipster.tech/
  * for more information.
@@ -34,93 +34,108 @@ const CLIENT_IONIC_TEMPLATES_DIR = 'ionic';
  */
 
 const ionicFiles = {
-    client: [
+  client: [
+    {
+      path: IONIC_DIR,
+      templates: [
         {
-            path: IONIC_DIR,
-            templates: [
-                {
-                    file: 'entities/_entity.html',
-                    method: 'processHtml',
-                    template: true,
-                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.html`
-                },
-                {
-                    file: 'entities/_entity.model.ts',
-                    method: 'processHtml',
-                    template: true,
-                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.model.ts`
-                },
-                {
-                    file: 'entities/_entity.module.ts',
-                    method: 'processHtml',
-                    template: true,
-                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.module.ts`
-                },
-                {
-                    file: 'entities/_entity.service.ts',
-                    method: 'processHtml',
-                    template: true,
-                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.service.ts`
-                },
-                {
-                    file: 'entities/_entity.ts',
-                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.ts`
-                },
-                {
-                    file: 'entities/_entity-detail.html',
-                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.html`
-                },
-                {
-                    file: 'entities/_entity-detail.ts',
-                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.ts`
-                },
-                {
-                    file: 'entities/_entity-update.html',
-                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.html`
-                },
-                {
-                    file: 'entities/_entity-update.ts',
-                    renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.ts`
-                },
-                {
-                    file: 'entities/_index.ts',
-                    renameTo: generator => `entities/${generator.entityFolderName}/index.ts`
-                }
-            ]
+          file: 'entities/_entity.html',
+          method: 'processHtml',
+          template: true,
+          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.html`
+        },
+        {
+          file: 'entities/_entity.model.ts',
+          method: 'processHtml',
+          template: true,
+          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.model.ts`
+        },
+        {
+          file: 'entities/_entity.module.ts',
+          method: 'processHtml',
+          template: true,
+          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.module.ts`
+        },
+        {
+          file: 'entities/_entity.service.ts',
+          method: 'processHtml',
+          template: true,
+          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.service.ts`
+        },
+        {
+          file: 'entities/_entity.ts',
+          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.ts`
+        },
+        {
+          file: 'entities/_entity-detail.html',
+          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.html`
+        },
+        {
+          file: 'entities/_entity-detail.ts',
+          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.ts`
+        },
+        {
+          file: 'entities/_entity-update.html',
+          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.html`
+        },
+        {
+          file: 'entities/_entity-update.ts',
+          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.ts`
+        },
+        {
+          file: 'entities/_index.ts',
+          renameTo: (generator) => `entities/${generator.entityFolderName}/index.ts`
         }
-    ]
-    // todo: add tests
+      ]
+    }
+  ]
+  // todo: add tests
 };
 
 module.exports = {
-    writeFiles,
-    ionicFiles
+  writeFiles,
+  ionicFiles
 };
 
 function writeFiles() {
-    return {
-        saveRemoteEntityPath() {
-            if (_.isUndefined(this.microservicePath)) {
-                return;
-            }
-            this.copy(`${this.microservicePath}/${this.jhipsterConfigDirectory}/${this.entityNameCapitalized}.json`, this.destinationPath(`${this.jhipsterConfigDirectory}/${this.entityNameCapitalized}.json`));
-        },
+  return {
+    saveRemoteEntityPath() {
+      if (_.isUndefined(this.microservicePath)) {
+        return;
+      }
+      this.copy(
+        `${this.microservicePath}/${this.jhipsterConfigDirectory}/${this.entityNameCapitalized}.json`,
+        this.destinationPath(`${this.jhipsterConfigDirectory}/${this.entityNameCapitalized}.json`)
+      );
+    },
 
-        writeClientFiles() {
-            // write client side files for angular
-            this.writeFilesToDisk(ionicFiles, this, false, CLIENT_IONIC_TEMPLATES_DIR);
-            this.addEntityToModule(this.entityInstance, this.entityClass, this.entityAngularName, this.entityFolderName, this.entityFileName, this.enableTranslation);
-            this.addEntityRouteToModule(this.entityInstance, this.entityClass, this.entityAngularName, this.entityFolderName, this.entityFileName, this.enableTranslation);
+    writeClientFiles() {
+      // write client side files for angular
+      this.writeFilesToDisk(ionicFiles, this, false, CLIENT_IONIC_TEMPLATES_DIR);
+      this.addEntityToModule(
+        this.entityInstance,
+        this.entityClass,
+        this.entityAngularName,
+        this.entityFolderName,
+        this.entityFileName,
+        this.enableTranslation
+      );
+      this.addEntityRouteToModule(
+        this.entityInstance,
+        this.entityClass,
+        this.entityAngularName,
+        this.entityFolderName,
+        this.entityFileName,
+        this.enableTranslation
+      );
 
-            // Copy for each
-            if (this.enableTranslation) {
-                const languages = this.languages || this.getAllInstalledLanguages();
-                languages.forEach((language) => {
-                    // this.copyI18n(language, CLIENT_I18N_TEMPLATES_DIR);
-                });
-            }
-        }
-    };
-
-
+      // Copy for each
+      if (this.enableTranslation) {
+        const languages = this.languages || this.getAllInstalledLanguages();
+        languages.forEach((language) => {
+          // this.copyI18n(language, CLIENT_I18N_TEMPLATES_DIR);
+        });
+      }
+    }
+  };
 }
