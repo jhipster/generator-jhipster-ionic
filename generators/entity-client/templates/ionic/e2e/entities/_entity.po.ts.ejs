@@ -1,0 +1,178 @@
+<%#
+ Copyright 2013-2020 the original author or authors from the JHipster project.
+
+ This file is part of the JHipster project, see https://www.jhipster.tech/
+ for more information.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-%>
+import { element, by<% if (!readOnly) { %>, ElementFinder<% } %> } from 'protractor';
+<%_
+let elementGetter = `getText()`;
+
+_%>
+export class <%= entityClass %>ComponentsPage {
+    <%_ if (!readOnly) { _%>
+    createButton = element(by.css('ion-fab-button'));
+    <%_ } _%>
+    viewButtons = element.all(by.css('ion-item'));
+    title = element.all(by.css('ion-title')).get(0);
+    noResult = element(by.cssContainingText('ion-label', 'No <%= entityClassPluralHumanized %> found.'));
+    entities = element.all(by.css('ion-text'));
+
+    <%_ if (!readOnly) { _%>
+    async clickOnCreateButton(): Promise<void> {
+        await this.createButton.click();
+    }
+    <%_ } _%>
+
+    async clickOnLastViewButton(): Promise<void> {
+      await this.viewButtons.last().click();
+    }
+
+    async getTitle(): Promise<string> {
+        return this.title.<%- elementGetter %>;
+    }
+
+    async getEntitiesNumber(): Promise <number> {
+      return await this.entities.count();
+    }
+}
+
+<%_ if (!readOnly) { _%>
+
+export class <%= entityClass %>UpdatePage {
+    pageTitle = element.all(by.css('ion-title')).get(1);
+    saveButton = element(by.css('ion-button'));
+
+<%_ fields.forEach((field) => {
+    const fieldName = field.fieldName;
+    const fieldType = field.fieldType;
+    const fieldIsEnum = field.fieldIsEnum;
+    const fieldTypeBlobContent = field.fieldTypeBlobContent;
+_%>
+    <%_ if (fieldType === 'Boolean') { _%>
+    <%_ } else if (fieldIsEnum) { _%>
+    <%= fieldName %>Select = element(by.css('ion-select[formControlName="<%= fieldName %>"]'));
+    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
+    <%= fieldName %>Input = element(by.css('ion-textarea[formControlName="<%= fieldName %>"] textarea'));
+    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType)) { _%>
+    <%= fieldName %>Input = element(by.css('ion-input[formControlName="<%= fieldName %>"] input'));
+    <%_ } else if (fieldType === 'LocalDate') { _%>
+    <%_ } else if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
+    <%_ } else { _%>
+    <%= fieldName %>Input = element(by.css('ion-input[formControlName="<%= fieldName %>"] input'));
+    <%_ } _%>
+<%_ }); _%>
+
+
+    async getPageTitle(): Promise<string> {
+        return this.pageTitle.<%- elementGetter %>;
+    }
+
+<%_ fields.forEach((field) => {
+    const fieldName = field.fieldName;
+    const fieldNameCapitalized = field.fieldNameCapitalized;
+    const fieldNameHumanized = field.fieldNameHumanized;
+    const fieldType = field.fieldType;
+    const fieldTypeBlobContent = field.fieldTypeBlobContent;
+    const fieldIsEnum = field.fieldIsEnum;
+    let fieldInputType = 'text';
+    let ngModelOption = '';
+_%>
+    <%_ if (fieldType === 'Boolean') { _%>
+    <%_ } else if (fieldIsEnum) { _%>
+    async <%= fieldName %>SelectLastOption(): Promise<void> {
+        await this.<%= fieldName %>Select.click();
+        await element.all(by.className('alert-radio')).last().click();
+        await element.all(by.className('alert-button')).last().click();
+    }
+    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
+    async set<%= fieldNameCapitalized %>Input(<%= fieldName %>: string): Promise<void> {
+        await this.<%= fieldName %>Input.sendKeys(<%= fieldName %>);
+    }
+    <%_ } else if (['Instant', 'ZonedDateTime', 'LocalDate'].includes(fieldType)) { _%>
+    <%_ } else { _%>
+    async set<%= fieldNameCapitalized %>Input(<%= fieldName %>: string): Promise<void> {
+        await this.<%= fieldName %>Input.sendKeys(<%= fieldName %>);
+    }
+    <%_ } _%>
+<%_ }); _%>
+
+    async save(): Promise<void> {
+        await this.saveButton.click();
+    }
+
+
+}
+
+export class <%= entityClass %>DetailPage {
+    pageTitle = element.all(by.css('ion-title')).get(1);
+    deleteButton = element(by.css('ion-button[color="danger"]'));
+    <%_ for (idx in fields) {
+    const fieldName = fields[idx].fieldName;
+    const fieldType = fields[idx].fieldType;
+    const fieldTypeBlobContent = fields[idx].fieldTypeBlobContent;
+    const fieldIsEnum = fields[idx].fieldIsEnum;
+    _%>
+    <%_ if (fieldType === 'Boolean') { _%>
+    <%_ } else if (['Instant', 'ZonedDateTime', 'LocalDate'].includes(fieldType)) { _%>
+    <%_ } else if (fieldIsEnum) { _%>
+    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
+    <%= fieldName %>Input = element.all(by.css('span')).get(<%=idx%>);
+    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType)) { _%>
+    <%= fieldName %>Input = element.all(by.css('span')).get(<%=idx%>);
+    <%_ } else { _%>
+    <%= fieldName %>Input = element.all(by.css('span')).get(<%=idx%>);
+    <%_ }; _%>
+
+    <%_ }; _%>
+
+    <%_ fields.forEach((field) => {
+      const fieldName = field.fieldName;
+      const fieldNameCapitalized = field.fieldNameCapitalized;
+      const fieldNameHumanized = field.fieldNameHumanized;
+      const fieldType = field.fieldType;
+      const fieldTypeBlobContent = field.fieldTypeBlobContent;
+      const fieldIsEnum = field.fieldIsEnum;
+      let fieldInputType = 'text';
+      let ngModelOption = '';
+      _%>
+
+    <%_ if (fieldType === 'Boolean') { _%>
+    <%_ } else if (fieldIsEnum) { _%>
+
+    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
+    async get<%= fieldNameCapitalized %>Input(): Promise<string> {
+        return await this.<%= fieldName %>Input.<%- elementGetter %>;
+    }
+    <%_ } else if (['Instant', 'ZonedDateTime', 'LocalDate'].includes(fieldType)) { _%>
+    <%_ } else { _%>
+    async get<%= fieldNameCapitalized %>Input(): Promise<string> {
+        return await this.<%= fieldName %>Input.<%- elementGetter %>;
+    }
+    <%_ } _%>
+    <%_ }); _%>
+
+    async clickOnDeleteButton(): Promise<void> {
+      await this.deleteButton.click();
+    }
+
+    async getPageTitle(): Promise<string> {
+      return this.pageTitle.<%- elementGetter %>;
+    }
+
+
+}
+
+<%_ } _%>

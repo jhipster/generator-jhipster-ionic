@@ -28,6 +28,8 @@ const MODELS_DIR = 'src/models/';
 
 const CLIENT_IONIC_TEMPLATES_DIR = 'ionic';
 
+const E2E_TEST_DIR = 'e2e/';
+
 /**
  * The default is to use a file path string. It implies use of the template method.
  * For any other config an object { file:.., method:.., template:.. } can be used
@@ -93,11 +95,37 @@ const ionicFiles = {
         {
           file: 'entities/_index.ts',
           renameTo: (generator) => `entities/${generator.entityFolderName}/index.ts`
+        },
+        {
+          file: 'entities/_entity.spec.ts',
+          renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.spec.ts`
+        },
+        {
+          file: 'entities/_entity-detail.spec.ts',
+          renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.spec.ts`
+        },
+        {
+        file: 'entities/_entity-dialog.spec.ts',
+        renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-dialog.spec.ts`
         }
       ]
     }
+  ],
+  e2e: [
+    {
+      path: E2E_TEST_DIR,
+      templates: [
+        {
+          file: 'entities/_entity.po.ts',
+          renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.po.ts`
+        },
+        {
+          file: 'entities/_entity.e2e-spec.ts',
+          renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.e2e-spec.ts`
+        }
+      ]
+   }
   ]
-  // todo: add tests
 };
 
 module.exports = {
