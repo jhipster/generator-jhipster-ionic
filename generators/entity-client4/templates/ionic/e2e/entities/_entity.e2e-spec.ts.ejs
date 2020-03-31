@@ -76,11 +76,14 @@ _%>
   beforeAll(async () => {
     loginPage = new LoginPage();
     await loginPage.navigateTo('/');
-    await browser.wait(ec.elementToBeClickable(loginPage.signInButton), 3000);
     await loginPage.signInButton.click();
+    <%_ if (authenticationType !== 'oauth2') { _%>
     await browser.wait(ec.elementToBeClickable(loginPage.loginButton), 3000);
+    <%_ } _%>
     await loginPage.login('admin', 'admin'); // use process.env.E2E_USERNAME if you want to use env variables
+    <%_ if (authenticationType !== 'oauth2') { _%>
     await browser.wait(ec.visibilityOf(loginPage.logoutButton), 1000);
+    <%_ }_%>
 
   });
 
@@ -91,8 +94,11 @@ _%>
     await tabEntities.click();
     await element.all(by.css('ion-item')).filter(async el => (await el.element(by.css('h2')).getText()) === '<%= entityClass %>').first().click();
 
+    <%_ if (authenticationType !== 'oauth2') { _%>
     // Need to refresh because webElements page are not accessibled
     await browser.navigate().refresh();
+    <%_ }_%>
+    
     <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
     await browser.wait(ec.visibilityOf(<%= entityInstance %>ComponentsPage.title), 5000);
     expect(await <%= entityInstance %>ComponentsPage.getTitle())
