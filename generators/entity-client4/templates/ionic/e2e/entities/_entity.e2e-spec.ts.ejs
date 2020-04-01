@@ -140,12 +140,16 @@ _%>
       .toEqual(initNumberOfEntities + 1);
   });
 
-  it('should view the last <%= entityClass %>', async () => {
+  it('should scroll to last <%= entityClass %>', async () => {
     await browser.wait(ec.visibilityOf(<%= entityInstance %>ComponentsPage.title), 5000);
     const lastElement = await <%= entityInstance %>ComponentsPage.viewButtons.last().getWebElement();
     await browser.executeScript('arguments[0].scrollIntoView()', lastElement);
     await browser.wait(ec.elementToBeClickable(<%= entityInstance %>ComponentsPage.viewButtons.last()), 5000);
     await browser.executeScript('arguments[0].click()', lastElement);
+
+  });
+
+  it('should view the last <%= entityClass %>', async () => {
     <%= entityInstance %>DetailPage = new <%= entityClass %>DetailPage();
     await browser.wait(ec.visibilityOf(<%= entityInstance %>DetailPage.pageTitle), 1000);
     expect(await <%= entityInstance %>DetailPage.getPageTitle())
