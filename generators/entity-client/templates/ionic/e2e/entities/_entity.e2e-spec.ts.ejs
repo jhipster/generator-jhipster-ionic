@@ -94,11 +94,6 @@ _%>
     await tabEntities.click();
     await element.all(by.css('ion-item')).filter(async el => (await el.element(by.css('h2')).getText()) === '<%= entityClass %>').first().click();
 
-    <%_ if (authenticationType !== 'oauth2') { _%>
-    // Need to refresh because webElements page are not accessibled
-    await browser.navigate().refresh();
-    <%_ }_%>
-
     <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
     await browser.wait(ec.visibilityOf(<%= entityInstance %>ComponentsPage.title), 5000);
     expect(await <%= entityInstance %>ComponentsPage.getTitle())
@@ -146,11 +141,8 @@ _%>
   });
 
   it('should view the last <%= entityClass %>', async () => {
-    // Need to refresh because webElements page are not accessibled
-    await browser.navigate().refresh();
-    <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
     await browser.wait(ec.visibilityOf(<%= entityInstance %>ComponentsPage.title), 5000);
-    await browser.executeScript('arguments[0].scrollIntoView()', <%= entityInstance %>ComponentsPage.viewButtons.last().getWebElement());
+    await browser.executeScript('arguments[0].scrollIntoView()', await <%= entityInstance %>ComponentsPage.viewButtons.last().getWebElement());
     await browser.wait(ec.elementToBeClickable(<%= entityInstance %>ComponentsPage.viewButtons.last()), 5000);
     await <%= entityInstance %>ComponentsPage.clickOnLastViewButton();
     <%= entityInstance %>DetailPage = new <%= entityClass %>DetailPage();
@@ -184,7 +176,8 @@ _%>
 
   it('should delete last <%= entityClass %>', async () => {
     await browser.wait(ec.elementToBeClickable(<%= entityInstance %>DetailPage.deleteButton), 3000);
-    await <%= entityInstance %>DetailPage.clickOnDeleteButton();
+    await browser.executeScript('arguments[0].click()', await <%= entityInstance %>DetailPage.deleteButton.getWebElement());
+
     const alertConfirmButton = element.all(by.className('alert-button')).last();
 
     await browser.wait(ec.elementToBeClickable(alertConfirmButton), 3000);
