@@ -27,7 +27,7 @@ git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %
 npm link
 
 #-------------------------------------------------------------------------------
-# Clone Ionic for JHipster
+# Link Ionic
 #-------------------------------------------------------------------------------
 cd "$GITHUB_WORKSPACE"
 npm link
