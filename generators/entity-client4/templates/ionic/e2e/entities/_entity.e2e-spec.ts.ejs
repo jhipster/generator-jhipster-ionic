@@ -26,7 +26,6 @@ import {
   <%_ } _%>
 } from './<%= entityFileName %>.po';
 
-
 describe('<%= entityClass %> e2e test', () => {
 
   let loginPage: LoginPage;
@@ -77,10 +76,12 @@ _%>
     loginPage = new LoginPage();
     await loginPage.navigateTo('/');
     await loginPage.signInButton.click();
+    const username = process.env.E2E_USERNAME || 'admin';
+    const password = process.env.E2E_PASSWORD || 'admin';
     <%_ if (authenticationType !== 'oauth2') { _%>
     await browser.wait(ec.elementToBeClickable(loginPage.loginButton), 3000);
     <%_ } _%>
-    await loginPage.login('admin', 'admin'); // use process.env.E2E_USERNAME if you want to use env variables
+    await loginPage.login(username, password);
     <%_ if (authenticationType !== 'oauth2') { _%>
     await browser.wait(ec.visibilityOf(loginPage.logoutButton), 1000);
     <%_ }_%>
@@ -92,7 +93,8 @@ _%>
     const tabEntities = element(by.css('ion-tab-button[tab="entities"]'));
     await browser.wait(ec.elementToBeClickable(tabEntities), 3000);
     await tabEntities.click();
-    await element.all(by.css('ion-item')).filter(async el => (await el.element(by.css('h2')).getText()) === '<%= entityClass %>').first().click();
+    await element.all(by.css('ion-item'))
+      .filter(async el => (await el.element(by.css('h2')).getText()) === '<%= entityClass %>').first().click();
 
     <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
     await browser.wait(ec.visibilityOf(<%= entityInstance %>ComponentsPage.title), 5000);
@@ -146,7 +148,6 @@ _%>
     await browser.executeScript('arguments[0].scrollIntoView()', lastElement);
     await browser.wait(ec.elementToBeClickable(<%= entityInstance %>ComponentsPage.viewButtons.last()), 5000);
     await browser.executeScript('arguments[0].click()', lastElement);
-
   });
 
   it('should view the last <%= entityClass %>', async () => {
@@ -175,8 +176,6 @@ _%>
     expect(await <%= entityInstance %>DetailPage.get<%= fieldNameCapitalized %>Input()).toEqual(<%=fieldName%>);
     <%_ } _%>
     <%_ }); _%>
-
-
   });
 
   it('should delete last <%= entityClass %>', async () => {
@@ -192,7 +191,6 @@ _%>
       .toEqual(COMPONENT_TITLE);
     expect(await <%= entityInstance %>ComponentsPage.getEntitiesNumber())
       .toEqual(initNumberOfEntities);
-
   });
 
   <%_ } _%>
@@ -205,6 +203,4 @@ _%>
     await browser.wait(ec.elementToBeClickable(loginPage.logoutButton), 3000);
     await loginPage.logout();
   });
-
-
 });

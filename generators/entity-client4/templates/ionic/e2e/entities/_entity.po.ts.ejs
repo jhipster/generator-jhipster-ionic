@@ -112,8 +112,6 @@ _%>
     async save(): Promise<void> {
         await this.saveButton.click();
     }
-
-
 }
 
 export class <%= entityClass %>DetailPage {
@@ -172,8 +170,5 @@ export class <%= entityClass %>DetailPage {
     async getPageTitle(): Promise<string> {
       return this.pageTitle.<%- elementGetter %>;
     }
-
-
 }
-
 <%_ } _%>
