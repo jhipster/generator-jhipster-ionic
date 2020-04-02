@@ -4,17 +4,17 @@ set -e
 #-------------------------------------------------------------------------------
 # Force no insight
 #-------------------------------------------------------------------------------
-if [ "$APP_FOLDER" == "$HOME/backend" ]; then
+if [ "$HOME/$APP_FOLDER" == "$HOME/backend" ]; then
     mkdir -p "$HOME"/.config/configstore/
-    cp "$JHIPSTER_TRAVIS"/configstore/*.json "$HOME"/.config/configstore/
+    cp "$JHI_GITHUB_CI"/configstore/*.json "$HOME"/.config/configstore/
 fi
 
 #-------------------------------------------------------------------------------
 # Generate the project with jhipster
 #-------------------------------------------------------------------------------
-mkdir -p "$APP_FOLDER"
-cp -f "$JHIPSTER_SAMPLES"/"$JHIPSTER".jdl "$APP_FOLDER"/
-cd "$APP_FOLDER"
+mkdir -p "$HOME/$APP_FOLDER"
+cp -f "$JHIPSTER_SAMPLES"/"$JHIPSTER".jdl "$HOME/$APP_FOLDER"/
+cd "$HOME/$APP_FOLDER"
 jhipster import-jdl "$JHIPSTER".jdl --force --no-insight --skip-checks --skip-git --skip-commit-hook --skip-install
 
 #-------------------------------------------------------------------------------
@@ -22,6 +22,6 @@ jhipster import-jdl "$JHIPSTER".jdl --force --no-insight --skip-checks --skip-gi
 #-------------------------------------------------------------------------------
 cd "$HOME"
 yo jhipster-ionic default --force --no-insight
-cd "$IONIC_FOLDER"
-yo jhipster-ionic:import-jdl "$APP_FOLDER"/"$JHIPSTER".jdl
+cd "$HOME/$IONIC_FOLDER"
+yo jhipster-ionic:import-jdl "$HOME/$APP_FOLDER"/"$JHIPSTER".jdl
 

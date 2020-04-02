@@ -6,8 +6,8 @@ set -ev
 #-------------------------------------------------------------------------------
 export JHIPSTER_REPO=https://github.com/jhipster/generator-jhipster.git
 export JHIPSTER_BRANCH=master
-export IONIC4J_REPO=https://github.com/${TRAVIS_PULL_REQUEST_SLUG:-$TRAVIS_REPO_SLUG}.git
-export IONIC4J_BRANCH=$BRANCH
+export IONIC4J_REPO=https://github.com/${GITHUB_REPOSITORY}.git
+export IONIC4J_BRANCH=${GITHUB_REF#refs/heads/}
 echo $IONIC4J_REPO
 echo $IONIC4J_BRANCH
 

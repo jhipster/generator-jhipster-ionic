@@ -28,7 +28,7 @@ launchCurlOrProtractor() {
     fi
 
     #---- run ionic e2e tests ----
-    cd "$IONIC_FOLDER"
+    cd "$HOME/$IONIC_FOLDER"
     ionic serve &
     sleep 20
     retryCount=3
@@ -49,7 +49,7 @@ launchCurlOrProtractor() {
 #-------------------------------------------------------------------------------
 # Package the application
 #-------------------------------------------------------------------------------
-cd "$APP_FOLDER"
+cd "$HOME/$APP_FOLDER"
 
 if [ -f "mvnw" ]; then
     ./mvnw -q package -DskipTests=true -P"$PROFILE"
@@ -71,7 +71,7 @@ fi
 #-------------------------------------------------------------------------------
 if [ "$RUN_APP" == 1 ]; then
 
-    cd "$APP_FOLDER"
+    cd "$HOME/$APP_FOLDER"
     java -jar app.jar \
         --spring.profiles.active="$PROFILE" &
     sleep 40

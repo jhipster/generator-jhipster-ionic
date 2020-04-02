@@ -27,8 +27,9 @@ env:
     JHIPSTER_INSTALL: ${{ github.workspace }}/test-integration/install
     JHIPSTER_SAMPLES: ${{ github.workspace }}/test-integration/jdl
     JHIPSTER_SCRIPTS: ${{ github.workspace }}/test-integration/scripts
-    APP_FOLDER: $HOME/backend
-    IONIC_FOLDER: $HOME/ionic4j
+    APP_FOLDER: backend
+    IONIC_FOLDER: ionic4j
+    TZ: America/Denver
 
     #environment properties
     SPRING_OUTPUT_ANSI_ENABLED: ALWAYS
@@ -63,6 +64,11 @@ jobs:
               - app-type: reactive-oauth2
                 profile: dev
                 protractor: 1
+        env:
+          JHI_APP: ${{ matrix.app-type }}
+          JHI_PROFILE: ${{ matrix.profile }}
+          JHIPSTER: ${{ matrix.app-type }}
+          JHI_PROTRACTOR: ${{ matrix.protractor }}
               
         steps:
           #----------------------------------------------------------------------
@@ -74,7 +80,6 @@ jobs:
                 node-version: ${{ matrix.node_version }}
           - name: Before Install
             run: |
-                export TZ=America/Denver
                 date
                 npm -g install yo @ionic/cli
                 git clone https://github.com/jhipster/jhipster.git
@@ -89,10 +94,10 @@ jobs:
           # Script
           #----------------------------------------------------------------------
           - name: Generate Project
-            run: $JHIPSTER_SCRIPTS/01-generate.project.sh
+            run: $JHIPSTER_SCRIPTS/01-generate-project.sh
           - name: Docker Compose
             run: $JHIPSTER_SCRIPTS/02-docker-compose.sh
           - name: Tests
             run: $JHIPSTER_SCRIPTS/03-tests.sh
           - name: Run
-            run: $JHIPSTER_SCRIPTS/04-run.sh
+            run: xvfb-run --server-args="-screen 0 1024x768x24" --auto-servernum $JHIPSTER_SCRIPTS/04-run.sh
