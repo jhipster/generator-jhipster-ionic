@@ -29,14 +29,5 @@ npm link
 #-------------------------------------------------------------------------------
 # Clone Ionic for JHipster
 #-------------------------------------------------------------------------------
-cd "$HOME"
-git clone $IONIC4J_REPO generator-jhipster-ionic
-cd generator-jhipster-ionic
-if [ "$IONIC4J_BRANCH" == "latest" ]; then
-    LATEST=$(git describe --abbrev=0)
-    git checkout -b $LATEST $LATEST
-elif [ "$IONIC4J_BRANCH" != "master" ]; then
-    git checkout -b $IONIC4J_BRANCH origin/$IONIC4J_BRANCH
-fi
-git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+cd "$GITHUB_WORKSPACE"
 npm link
