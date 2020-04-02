@@ -98,15 +98,15 @@ const ionicFiles = {
         },
         {
           file: 'entities/_entity.spec.ts',
-          renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.spec.ts`
+          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.spec.ts`
         },
         {
           file: 'entities/_entity-detail.spec.ts',
-          renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.spec.ts`
+          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.spec.ts`
         },
         {
-        file: 'entities/_entity-dialog.spec.ts',
-        renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-dialog.spec.ts`
+          file: 'entities/_entity-dialog.spec.ts',
+          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-dialog.spec.ts`
         }
       ]
     }
@@ -117,14 +117,14 @@ const ionicFiles = {
       templates: [
         {
           file: 'entities/_entity.po.ts',
-          renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.po.ts`
+          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.po.ts`
         },
         {
           file: 'entities/_entity.e2e-spec.ts',
-          renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.e2e-spec.ts`
+          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.e2e-spec.ts`
         }
       ]
-   }
+    }
   ]
 };
 
