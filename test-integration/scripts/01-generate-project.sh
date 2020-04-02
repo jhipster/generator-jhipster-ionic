@@ -23,5 +23,7 @@ jhipster import-jdl "$JHIPSTER".jdl --force --no-insight --skip-checks --skip-gi
 cd "$HOME"
 yo jhipster-ionic default --force --no-insight
 cd "$HOME/$IONIC_FOLDER"
+# to use last version linked
+npm link generator-jhipster-ionic
 yo jhipster-ionic:import-jdl "$HOME/$APP_FOLDER"/"$JHIPSTER".jdl
 

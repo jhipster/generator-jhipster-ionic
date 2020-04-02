@@ -8,9 +8,8 @@ export class LoginPage extends Page {
   // button on IdP sign-in form
   loginButton = element(by.css('input[type=submit]'));
   <%_ } else { _%>
-  // todo: figure out why more than one element exists
-  username = element.all(by.name('username')).get(1);
-  password = element.all(by.name('password')).get(1);
+  username = element(by.css('ion-input[name="username"] input'));
+  password = element(by.css('ion-input[name="password"] input'));
   loginButton = element(by.id('login'));
   <%_ } _%>
   signInButton = element(by.id('signIn'));
