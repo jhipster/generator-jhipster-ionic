@@ -156,7 +156,7 @@ _%>
   it('should view the last <%= entityClass %>', async () => {
     if (isVisible) {
     <%= entityInstance %>DetailPage = new <%= entityClass %>DetailPage();
-    await browser.wait(ec.visibilityOf(<%= entityInstance %>DetailPage.pageTitle), 1000);
+    await browser.wait(ec.visibilityOf(<%= entityInstance %>DetailPage.pageTitle), 3000);
     expect(await <%= entityInstance %>DetailPage.getPageTitle())
       .toEqual(SUBCOMPONENT_TITLE);
 
@@ -192,7 +192,7 @@ _%>
 
     await browser.wait(ec.elementToBeClickable(alertConfirmButton), 3000);
     alertConfirmButton.click();
-    await browser.wait(ec.visibilityOf(<%= entityInstance %>ComponentsPage.title), 1000);
+    await browser.wait(ec.visibilityOf(<%= entityInstance %>ComponentsPage.title), 3000);
     expect(await <%= entityInstance %>ComponentsPage.getTitle())
       .toEqual(COMPONENT_TITLE);
     expect(await <%= entityInstance %>ComponentsPage.getEntitiesNumber())
