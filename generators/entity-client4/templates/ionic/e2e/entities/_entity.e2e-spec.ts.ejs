@@ -144,9 +144,12 @@ _%>
   });
 
   it('should scroll to last <%= entityClass %>', async () => {
+    <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
     await browser.wait(ec.visibilityOf(<%= entityInstance %>ComponentsPage.title), 5000);
-    const lastElement = await <%= entityInstance %>ComponentsPage.viewButtons.last().getWebElement();
+    let lastElement = await <%= entityInstance %>ComponentsPage.viewButtons.last().getWebElement();
     await browser.executeScript('arguments[0].scrollIntoView()', lastElement);
+    <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
+    lastElement = await <%= entityInstance %>ComponentsPage.viewButtons.last().getWebElement();
     if (await lastElement.isEnabled() && await lastElement.isDisplayed()) {
       isVisible = true;
       await browser.executeScript('arguments[0].click()', lastElement);
@@ -185,6 +188,7 @@ _%>
 
   it('should delete last <%= entityClass %>', async () => {
     if (isVisible) {
+    <%= entityInstance %>DetailPage = new <%= entityClass %>DetailPage();
     await browser.wait(ec.elementToBeClickable(<%= entityInstance %>DetailPage.deleteButton), 3000);
     await browser.executeScript('arguments[0].click()', await <%= entityInstance %>DetailPage.deleteButton.getWebElement());
 
