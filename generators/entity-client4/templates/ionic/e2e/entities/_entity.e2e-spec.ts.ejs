@@ -165,9 +165,8 @@ _%>
   });
 
   it('should view the last <%= entityClass %>', async () => {
-    if (isVisible) {
     <%= entityInstance %>DetailPage = new <%= entityClass %>DetailPage();
-    await browser.wait(ec.visibilityOf(<%= entityInstance %>DetailPage.pageTitle), 3000);
+    if (isVisible && await <%= entityInstance %>DetailPage.pageTitle.isDisplayed()) {
     expect(await <%= entityInstance %>DetailPage.getPageTitle())
       .toEqual(SUBCOMPONENT_TITLE);
 
@@ -195,9 +194,8 @@ _%>
   });
 
   it('should delete last <%= entityClass %>', async () => {
-    if (isVisible) {
     <%= entityInstance %>DetailPage = new <%= entityClass %>DetailPage();
-    await browser.wait(ec.elementToBeClickable(<%= entityInstance %>DetailPage.deleteButton), 3000);
+    if (isVisible && await <%= entityInstance %>DetailPage.deleteButton.isDisplayed()) {
     await browser.executeScript('arguments[0].click()', await <%= entityInstance %>DetailPage.deleteButton.getWebElement());
 
     const alertConfirmButton = element.all(by.className('alert-button')).last();
