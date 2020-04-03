@@ -199,7 +199,6 @@ _%>
     await browser.executeScript('arguments[0].click()', await <%= entityInstance %>DetailPage.deleteButton.getWebElement());
 
     const alertConfirmButton = element.all(by.className('alert-button')).last();
-
     await browser.wait(ec.elementToBeClickable(alertConfirmButton), 3000);
     alertConfirmButton.click();
     await browser.wait(ec.visibilityOf(<%= entityInstance %>ComponentsPage.title), 3000);
