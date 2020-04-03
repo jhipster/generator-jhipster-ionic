@@ -37,6 +37,7 @@ describe('<%= entityClass %> e2e test', () => {
   let initNumberOfEntities: number;
   const COMPONENT_TITLE = '<%= entityClassPlural%>';
   const SUBCOMPONENT_TITLE = '<%= entityClass %>';
+  let lastElement: any;
   let isVisible = false;
 
   <%_ fields.forEach((field) => {
@@ -143,13 +144,15 @@ _%>
       .toEqual(initNumberOfEntities + 1);
   });
 
-  it('should scroll to last <%= entityClass %>', async () => {
+  it('should get the last <%= entityClass %>', async () => {
     <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
     await browser.wait(ec.visibilityOf(<%= entityInstance %>ComponentsPage.title), 5000);
-    let lastElement = await <%= entityInstance %>ComponentsPage.viewButtons.last().getWebElement();
+    lastElement = await <%= entityInstance %>ComponentsPage.viewButtons.last().getWebElement();
+  });
+
+  it('should scroll the last <%= entityClass %>', async () => {
     await browser.executeScript('arguments[0].scrollIntoView()', lastElement);
     <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
-    lastElement = await <%= entityInstance %>ComponentsPage.viewButtons.last().getWebElement();
     if (await lastElement.isEnabled() && await lastElement.isDisplayed()) {
       isVisible = true;
       await browser.executeScript('arguments[0].click()', lastElement);
