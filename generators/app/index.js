@@ -36,14 +36,14 @@ module.exports = class extends BaseGenerator {
     this.configOptions = {};
     // This adds support for a `--interactive` flag
     this.option('interactive', {
-      desc: 'Don\'t prompt user when running ionic start',
+      desc: "Don't prompt user when running ionic start",
       type: Boolean,
       defaults: false
     });
 
     // This adds support for a `--install` flag
     this.option('installDeps', {
-      desc: 'Don\'t install dependencies when running ionic start',
+      desc: "Don't install dependencies when running ionic start",
       type: Boolean,
       defaults: true
     });

@@ -78,9 +78,9 @@ module.exports = class extends BaseGenerator {
     } catch (e) {
       this.log(
         `${
-          chalk.yellow('\nUnable to find ')
-          + entityPagePath
-          + chalk.yellow(' or missing required jhipster-needle. Reference to ') +
+          chalk.yellow('\nUnable to find ') +
+          entityPagePath +
+          chalk.yellow(' or missing required jhipster-needle. Reference to ') +
           entityAngularName
         } ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`
       );
@@ -120,9 +120,9 @@ module.exports = class extends BaseGenerator {
     } catch (e) {
       this.log(
         `${
-          chalk.yellow('\nUnable to find ')
-          + entityPagePath
-          + chalk.yellow(' or missing required jhipster-needle. Reference to ') +
+          chalk.yellow('\nUnable to find ') +
+          entityPagePath +
+          chalk.yellow(' or missing required jhipster-needle. Reference to ') +
           entityAngularName
         } ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`
       );
