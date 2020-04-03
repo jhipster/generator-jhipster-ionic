@@ -54,7 +54,7 @@
   },
   "scripts": {
     "test": "mocha --timeout 10000 test/*",
-    "prettier": "prettier --write \"{,cli/,generators/**/}*.{js,json,html,md,ts}\" --loglevel silent"
+    "prettier": "prettier --write \"{,cli/,generators/**/}*.{ejs,js,json,html,md,ts}\" --loglevel silent"
   },
   "engines": {
     "node": ">=8.10.0",
