@@ -188,7 +188,7 @@ module.exports = class extends BaseGenerator {
     packageJSON.devDependencies['generator-jhipster-ionic'] = packagejs.version;
 
     // update e2e script while waiting for https://github.com/ionic-team/starters/pull/1209
-    packageJSON.scripts.e2e = 'ng e2e';
+    packageJSON.scripts.e2e = 'ng e2e --port 8100';
     // update protractor config and delete tsconfig.e2e.json
     // todo: remove when https://github.com/ionic-team/starters/pull/1209 is merged
     shelljs.sed('-i', 'tsconfig.e2e.json', 'tsconfig.json', `${this.ionicAppName}/e2e/protractor.conf.js`);
