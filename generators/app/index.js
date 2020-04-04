@@ -28,7 +28,6 @@ const BaseGenerator = require('generator-jhipster/generators/generator-base');
 const spawn = require('cross-spawn');
 const fs = require('fs');
 const utils = require('./utils');
-const jhUtils = require('generator-jhipster/generators/utils');
 
 module.exports = class extends BaseGenerator {
   constructor(args, opts) {
