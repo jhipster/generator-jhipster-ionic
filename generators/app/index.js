@@ -28,6 +28,7 @@ const BaseGenerator = require('generator-jhipster/generators/generator-base');
 const spawn = require('cross-spawn');
 const fs = require('fs');
 const utils = require('./utils');
+const jhUtils = require('generator-jhipster/generators/utils');
 
 module.exports = class extends BaseGenerator {
   constructor(args, opts) {
@@ -185,8 +186,14 @@ module.exports = class extends BaseGenerator {
     packageJSON.homepage = 'https://www.jhipster.tech';
     packageJSON.description = 'A hipster Ionic project, made with 💙 by @oktadev!';
     packageJSON.devDependencies['generator-jhipster-ionic'] = packagejs.version;
+
     // update e2e script while waiting for https://github.com/ionic-team/starters/pull/1209
-    packageJSON.scripts.e2e = 'ng e2e --protractorConfig=e2e/protractor.conf.js';
+    packageJSON.scripts.e2e = 'ng e2e';
+    // update protractor config and delete tsconfig.e2e.json
+    // todo: remove when https://github.com/ionic-team/starters/pull/1209 is merged
+    shelljs.sed('-i', 'tsconfig.e2e.json', 'tsconfig.json', `${this.ionicAppName}/e2e/protractor.conf.js`);
+    fs.unlinkSync(`${this.ionicAppName}/e2e/tsconfig.e2e.json`);
+
     // add prettier script
     packageJSON.scripts.prettier = 'prettier --write "{,src/**/}*.{js,json,html,md,ts,css,scss,yml}" --loglevel silent';
     jsonfile.writeFileSync(packagePath, packageJSON);
