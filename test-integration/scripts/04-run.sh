@@ -29,13 +29,11 @@ launchCurlOrProtractor() {
 
     #---- run ionic e2e tests ----
     cd "$HOME/$IONIC_FOLDER"
-    ionic serve &
-    sleep 20
     retryCount=3
     until [ "$retryCount" -ge "$maxRetry" ]
     do
         result=0
-        npm run e2e
+        ng e2e --protractorConfig=e2e/protractor.conf.js
         result=$?
         [ $result -eq 0 ] && break
         retryCount=$((retryCount+1))
