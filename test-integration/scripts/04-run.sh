@@ -33,7 +33,7 @@ launchCurlOrProtractor() {
     until [ "$retryCount" -ge "$maxRetry" ]
     do
         result=0
-        ng e2e --protractorConfig=e2e/protractor.conf.js
+        npm run e2e
         result=$?
         [ $result -eq 0 ] && break
         retryCount=$((retryCount+1))
