@@ -105,18 +105,23 @@ module.exports = class extends BaseGenerator {
     }
     const entityPagePath = 'src/app/pages/entities/entities.module.ts';
     try {
-      const route = `|, {
+      const isSpecificEntityAlreadyGenerated = utils.checkStringInFile(entityPagePath, `path: '${entityFileName}'`, this);
+      if (!isSpecificEntityAlreadyGenerated) {
+        const isAnyEntityAlreadyGenerated = utils.checkStringInFile(entityPagePath, 'loadChildren', this);
+        const prefix = isAnyEntityAlreadyGenerated ? ',' : '';
+        const route = `|${prefix} {
                     |    path: '${entityFileName}',
                     |    loadChildren: './${entityFolderName}/${entityFileName}.module#${entityAngularName}PageModule'
                     |  }`;
-      utils.rewriteFile(
-        {
-          file: entityPagePath,
-          needle: 'jhipster-needle-add-entity-route',
-          splicable: [this.stripMargin(route)]
-        },
-        this
-      );
+        utils.rewriteFile(
+          {
+            file: entityPagePath,
+            needle: 'jhipster-needle-add-entity-route',
+            splicable: [this.stripMargin(route)]
+          },
+          this
+        );
+      }
     } catch (e) {
       this.log(
         `${
