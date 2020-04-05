@@ -20,13 +20,13 @@
 
 const path = require('path');
 const chalk = require('chalk');
-const packagejs = require('../../package.json');
 const jsonfile = require('jsonfile');
 const semver = require('semver');
 const shelljs = require('shelljs');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
 const spawn = require('cross-spawn');
 const fs = require('fs');
+const packagejs = require('../../package.json');
 const utils = require('./utils');
 
 module.exports = class extends BaseGenerator {
@@ -203,7 +203,7 @@ module.exports = class extends BaseGenerator {
 
       let installAuthCmd;
       const params = '--configUri=http://localhost:8080/api/auth-info --issuer=null --clientId=null';
-      const schematicsVersion = '1.5.2';
+      const schematicsVersion = '1.6.0';
 
       // use `schematics` when testing and expect it to be installed
       if (this.installDeps) {
@@ -225,32 +225,32 @@ module.exports = class extends BaseGenerator {
       this.log('Updating Ionic AppAuth to work with JHipster...');
 
       // Update Ionic files to work with JHipster
-      this.template('src/app/app.component.ts', `${CLIENT_MAIN_SRC_DIR}app/app.component.ts`);
-      this.template('src/app/app.component.spec.ts', `${CLIENT_MAIN_SRC_DIR}app/app.component.spec.ts`);
-      this.template('src/app/app.module.ts', `${CLIENT_MAIN_SRC_DIR}app/app.module.ts`);
-      this.template('src/app/app-routing.module.ts', `${CLIENT_MAIN_SRC_DIR}app/app-routing.module.ts`);
-      this.template('src/app/interceptors/auth.interceptor.ts', `${CLIENT_MAIN_SRC_DIR}app/interceptors/auth.interceptor.ts`);
-      this.template('src/app/pages/home/home.page.spec.ts', `${CLIENT_MAIN_SRC_DIR}app/pages/home/home.page.spec.ts`);
-      this.template('src/app/pages/home/home.page.ts', `${CLIENT_MAIN_SRC_DIR}app/pages/home/home.page.ts`);
-      this.template('src/app/pages/login/login.page.html', `${CLIENT_MAIN_SRC_DIR}app/pages/login/login.page.html`);
-      this.template('src/app/pages/login/login.page.spec.ts', `${CLIENT_MAIN_SRC_DIR}app/pages/login/login.page.spec.ts`);
-      this.template('src/app/pages/login/login.page.ts', `${CLIENT_MAIN_SRC_DIR}app/pages/login/login.page.ts`);
-      this.template('src/app/pages/welcome/welcome.page.html', `${CLIENT_MAIN_SRC_DIR}app/pages/welcome/welcome.page.html`);
-      this.template('src/app/pages/welcome/welcome.page.spec.ts', `${CLIENT_MAIN_SRC_DIR}app/pages/welcome/welcome.page.spec.ts`);
-      this.template('src/app/pages/welcome/welcome.page.ts', `${CLIENT_MAIN_SRC_DIR}app/pages/welcome/welcome.page.ts`);
+      this.template('src/app/app.component.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/app.component.ts`);
+      this.template('src/app/app.component.spec.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/app.component.spec.ts`);
+      this.template('src/app/app.module.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/app.module.ts`);
+      this.template('src/app/app-routing.module.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/app-routing.module.ts`);
+      this.template('src/app/interceptors/auth.interceptor.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/interceptors/auth.interceptor.ts`);
+      this.template('src/app/pages/home/home.page.spec.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/pages/home/home.page.spec.ts`);
+      this.template('src/app/pages/home/home.page.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/pages/home/home.page.ts`);
+      this.template('src/app/pages/login/login.page.html.ejs', `${CLIENT_MAIN_SRC_DIR}app/pages/login/login.page.html`);
+      this.template('src/app/pages/login/login.page.spec.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/pages/login/login.page.spec.ts`);
+      this.template('src/app/pages/login/login.page.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/pages/login/login.page.ts`);
+      this.template('src/app/pages/welcome/welcome.page.html.ejs', `${CLIENT_MAIN_SRC_DIR}app/pages/welcome/welcome.page.html`);
+      this.template('src/app/pages/welcome/welcome.page.spec.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/pages/welcome/welcome.page.spec.ts`);
+      this.template('src/app/pages/welcome/welcome.page.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/pages/welcome/welcome.page.ts`);
       this.template(
-        'src/app/services/auth/user-route-access.service.spec.ts',
+        'src/app/services/auth/user-route-access.service.spec.ts.ejs',
         `${CLIENT_MAIN_SRC_DIR}app/services/auth/user-route-access.service.spec.ts`
       );
       this.template(
-        'src/app/services/auth/user-route-access.service.ts',
+        'src/app/services/auth/user-route-access.service.ts.ejs',
         `${CLIENT_MAIN_SRC_DIR}app/services/auth/user-route-access.service.ts`
       );
-      this.template('src/app/services/login/login.service.spec.ts', `${CLIENT_MAIN_SRC_DIR}app/services/login/login.service.spec.ts`);
-      this.template('src/app/services/login/login.service.ts', `${CLIENT_MAIN_SRC_DIR}app/services/login/login.service.ts`);
-      this.template('src/app/services/user/user.model.ts', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.model.ts`);
-      this.template('src/app/services/user/user.service.spec.ts', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.service.spec.ts`);
-      this.template('src/app/services/user/user.service.ts', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.service.ts`);
+      this.template('src/app/services/login/login.service.spec.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/login/login.service.spec.ts`);
+      this.template('src/app/services/login/login.service.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/login/login.service.ts`);
+      this.template('src/app/services/user/user.model.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.model.ts`);
+      this.template('src/app/services/user/user.service.spec.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.service.spec.ts`);
+      this.template('src/app/services/user/user.service.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.service.ts`);
 
       // Delete files no longer used
       const filesToDelete = [
@@ -270,13 +270,13 @@ module.exports = class extends BaseGenerator {
       });
     } else {
       this.log('Adding User model and e2e tests...');
-      this.template('src/app/services/user/user.model.ts', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.model.ts`);
+      this.template('src/app/services/user/user.model.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.model.ts`);
     }
 
     // Add e2e tests
     this.authenticationType = this.jhipsterAppConfig.authenticationType;
-    this.template('e2e/pages/login.po.ts', `${this.ionicAppName}/e2e/pages/login.po.ts`);
-    this.template('e2e/spec/login.e2e-spec.ts', `${this.ionicAppName}/e2e/spec/login.e2e-spec.ts`);
+    this.template('e2e/pages/login.po.ts.ejs', `${this.ionicAppName}/e2e/pages/login.po.ts`);
+    this.template('e2e/spec/login.e2e-spec.ts.ejs', `${this.ionicAppName}/e2e/spec/login.e2e-spec.ts`);
 
     done();
   }
