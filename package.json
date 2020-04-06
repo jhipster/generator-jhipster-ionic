@@ -47,7 +47,7 @@
     "eslint-plugin-import": "2.20.2",
     "jsdoc": "3.6.3",
     "mocha": "7.1.1",
-    "prettier": "2.0.3",
+    "prettier": "2.0.4",
     "yeoman-assert": "3.1.1",
     "yeoman-test": "2.4.1",
     "yo": "3.1.1"
