@@ -19,7 +19,7 @@
 
 name: Ionic
 on: [push, pull_request]
-env: 
+env:
     PROFILE: dev
     RUN_APP: 1
     PROTRACTOR: 1
@@ -51,6 +51,7 @@ jobs:
               - monolith-oauth2
               - gateway-oauth2
               - reactive-oauth2
+              - 21-points
             include:
               - app-type: monolith-jwt
                 profile: dev
@@ -64,12 +65,15 @@ jobs:
               - app-type: reactive-oauth2
                 profile: dev
                 protractor: 1
+              - app-type: 21-points
+                profile: dev
+                protractor: 1
         env:
           JHI_APP: ${{ matrix.app-type }}
           JHI_PROFILE: ${{ matrix.profile }}
           JHIPSTER: ${{ matrix.app-type }}
           JHI_PROTRACTOR: ${{ matrix.protractor }}
-              
+
         steps:
           #----------------------------------------------------------------------
           # Install all tools and check configuration
