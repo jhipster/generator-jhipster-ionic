@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "chalk": "4.0.0",
-    "cross-spawn": "7.0.1",
+    "cross-spawn": "7.0.2",
     "fs-extra": "9.0.0",
     "generator-jhipster": ">=6.5.1",
     "jhipster-core": "^7.1.1",
@@ -40,16 +40,16 @@
   },
   "devDependencies": {
     "@angular-devkit/schematics-cli": "0.901.0",
-    "@oktadev/schematics": "1.6.0",
+    "@oktadev/schematics": "2.0.1",
     "chai": "4.2.0",
     "eslint": "6.8.0",
     "eslint-config-airbnb-base": "14.1.0",
     "eslint-plugin-import": "2.20.2",
     "jsdoc": "3.6.3",
     "mocha": "7.1.1",
-    "prettier": "2.0.2",
+    "prettier": "2.0.3",
     "yeoman-assert": "3.1.1",
-    "yeoman-test": "2.3.0",
+    "yeoman-test": "2.4.1",
     "yo": "3.1.1"
   },
   "scripts": {
