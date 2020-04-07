@@ -102,9 +102,9 @@ _%>
                     </ion-button>
                     <%_ } _%>
                 </div>
-                <%_ } else if (fieldType === 'LocalDate' || ['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
+                <%_ } else if (['LocalDate', 'Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
                 <ion-label><%= fieldNameHumanized %></ion-label>
-                <ion-datetime displayFormat="MM/DD/YYYY" formControlName="<%= fieldName %>" id="field_<%= fieldName %>"></ion-datetime>
+                <ion-datetime displayFormat="MM/DD/YYYY<%= fieldType !== 'LocalDate' ? ' HH:mm' : ''%>" formControlName="<%= fieldName %>" id="field_<%= fieldName %>"></ion-datetime>
                 <%_ } else if (fieldType === 'Boolean') { _%>
                 <ion-label><%= fieldNameHumanized %></ion-label>
                 <ion-checkbox formControlName="<%= fieldName %>"></ion-checkbox>
