@@ -202,7 +202,7 @@ module.exports = class extends BaseGenerator {
       this.packageFolder = this.jhipsterAppConfig.packageFolder;
 
       let installAuthCmd;
-      const params = '--configUri=/auth-info --issuer=null --clientId=null';
+      const params = '--configUri=auth-info --issuer=null --clientId=null';
       const schematicsVersion = '2.0.2';
 
       // use `schematics` when testing and expect it to be installed
