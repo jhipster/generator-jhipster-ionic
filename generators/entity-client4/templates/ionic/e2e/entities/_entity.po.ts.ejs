@@ -16,10 +16,10 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-import { element, by<% if (!readOnly) { %>, ElementFinder<% } %> } from 'protractor';
+import { element, by, browser<% if (!readOnly) { %>, ElementFinder<% } %> } from 'protractor';
+
 <%_
 let elementGetter = `getText()`;
-
 _%>
 export class <%= entityClass %>ComponentsPage {
     <%_ if (!readOnly) { _%>
@@ -28,7 +28,7 @@ export class <%= entityClass %>ComponentsPage {
     viewButtons = element.all(by.css('ion-item'));
     title = element.all(by.css('ion-title')).get(2);
     noResult = element(by.cssContainingText('ion-label', 'No <%= entityClassPluralHumanized %> found.'));
-    entities = element.all(by.css('ion-text'));
+    entities = element.all(by.css('page-<%= entityFileName %> ion-item'));
 
     <%_ if (!readOnly) { _%>
     async clickOnCreateButton(): Promise<void> {
@@ -94,6 +94,7 @@ _%>
     <%_ } else if (fieldIsEnum) { _%>
     async <%= fieldName %>SelectLastOption(): Promise<void> {
         await this.<%= fieldName %>Select.click();
+        await browser.sleep(500);
         await element.all(by.className('alert-radio')).last().click();
         await element.all(by.className('alert-button')).last().click();
     }

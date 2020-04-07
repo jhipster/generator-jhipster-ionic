@@ -35,8 +35,8 @@ describe('<%= entityClass %> e2e test', () => {
   let <%= entityInstance %>DetailPage: <%= entityClass %>DetailPage;
   <%_ } _%>
   let initNumberOfEntities: number;
-  const COMPONENT_TITLE = '<%= entityClassPlural%>';
-  const SUBCOMPONENT_TITLE = '<%= entityClass %>';
+  const COMPONENT_TITLE = '<%= entityClassPluralHumanized %>';
+  const SUBCOMPONENT_TITLE = '<%= entityClassHumanized %>';
   let lastElement: any;
   let isVisible = false;
 
@@ -50,7 +50,7 @@ describe('<%= entityClass %> e2e test', () => {
     const minLength = field.fieldValidateRulesMinlength;
 _%>
 <%_ if (['Integer', 'Long', 'Float', 'Double', 'BigDecimal'].includes(fieldType)) { _%>
-  const <%= fieldName %> = '5';
+  const <%= fieldName %> = '10';
 <%_ } else if (fieldType === 'LocalDate') { _%>
 <%_ } else if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
 <%_ } else if (fieldType === 'Duration') { _%>

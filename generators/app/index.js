@@ -194,7 +194,7 @@ module.exports = class extends BaseGenerator {
     fs.unlinkSync(`${this.ionicAppName}/e2e/tsconfig.e2e.json`);
 
     // add prettier script
-    packageJSON.scripts.prettier = 'prettier --write "{,src/**/}*.{js,json,html,md,ts,css,scss,yml}" --loglevel silent';
+    packageJSON.scripts.prettier = 'prettier --write "{,e2e/**/,src/**/}*.{js,json,html,md,ts,css,scss,yml}" --loglevel silent';
     jsonfile.writeFileSync(packagePath, packageJSON);
 
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
@@ -202,8 +202,8 @@ module.exports = class extends BaseGenerator {
       this.packageFolder = this.jhipsterAppConfig.packageFolder;
 
       let installAuthCmd;
-      const params = '--configUri=http://localhost:8080/api/auth-info --issuer=null --clientId=null';
-      const schematicsVersion = '2.0.1';
+      const params = '--configUri=/auth-info --issuer=null --clientId=null';
+      const schematicsVersion = '2.0.2';
 
       // use `schematics` when testing and expect it to be installed
       if (this.installDeps) {
