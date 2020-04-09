@@ -19,8 +19,6 @@
 
 name: Ionic
 on: [push, pull_request]
-    tags-ignore:
-      - '*.*'
 env:
     PROFILE: dev
     RUN_APP: 1
