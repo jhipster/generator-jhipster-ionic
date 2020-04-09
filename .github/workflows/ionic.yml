@@ -39,7 +39,7 @@ jobs:
     build:
         name: ${{ matrix.app-type }}
         runs-on: ${{ matrix.os }}
-        if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]')"
+        if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]') && !contains(github.event.ref_type, '[tag]')"
         timeout-minutes: 40
         strategy:
           fail-fast: false
@@ -82,12 +82,17 @@ jobs:
           - uses: actions/setup-node@v1
             with:
                 node-version: ${{ matrix.node_version }}
-          - name: Before Install
+          - name: Install latest Chrome
+            run: |
+                sudo apt update
+                sudo apt --only-upgrade install google-chrome-stable
+                google-chrome --version
+          - name: Install Ionic CLI + JHipster BOM
             run: |
                 date
                 npm -g install yo @ionic/cli
                 git clone https://github.com/jhipster/jhipster.git
-                cd jhipster && ./mvnw clean install -ntp -DskipTests -Dgpg.skip=true
+                cd jhipster && ./mvnw install -q -ntp -DskipTests -Dgpg.skip=true
                 chmod +x $JHIPSTER_INSTALL/*.sh
                 chmod +x $JHIPSTER_SCRIPTS/*.sh
           - name: Install JHipster Stack
