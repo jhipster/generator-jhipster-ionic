@@ -19,6 +19,8 @@
 
 name: Ionic
 on: [push, pull_request]
+    tags-ignore:
+      - '*.*'
 env:
     PROFILE: dev
     RUN_APP: 1
@@ -82,6 +84,11 @@ jobs:
           - uses: actions/setup-node@v1
             with:
                 node-version: ${{ matrix.node_version }}
+          - name: Install latest Chrome
+            run: |
+                sudo apt update
+                sudo apt --only-upgrade install google-chrome-stable
+                google-chrome --version
           - name: Before Install
             run: |
                 date
@@ -90,10 +97,6 @@ jobs:
                 cd jhipster && ./mvnw clean install -ntp -DskipTests -Dgpg.skip=true
                 chmod +x $JHIPSTER_INSTALL/*.sh
                 chmod +x $JHIPSTER_SCRIPTS/*.sh
-
-                sudo apt-get update
-                sudo apt-get --only-upgrade install google-chrome-stable
-                google-chrome --version
           - name: Install JHipster Stack
             run: $JHIPSTER_INSTALL/01-install-jhipster-stack.sh
           - name: Check Version
