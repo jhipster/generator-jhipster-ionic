@@ -46,7 +46,7 @@
     "eslint-config-airbnb-base": "14.1.0",
     "eslint-plugin-import": "2.20.2",
     "jsdoc": "3.6.4",
-    "mocha": "7.1.1",
+    "mocha": "7.1.2",
     "prettier": "2.0.5",
     "yeoman-assert": "3.1.1",
     "yeoman-test": "2.4.1",
