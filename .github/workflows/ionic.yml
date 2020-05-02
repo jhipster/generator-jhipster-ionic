@@ -111,6 +111,7 @@ jobs:
                 npm i -g npm-check-updates
                 cd "$HOME/$IONIC_FOLDER"
                 ncu -u
+                npm i
           - name: Tests
             run: $JHIPSTER_SCRIPTS/03-tests.sh
           - name: Run
