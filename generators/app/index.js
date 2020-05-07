@@ -61,7 +61,7 @@ module.exports = class extends BaseGenerator {
         }
       },
       readConfig() {
-        this.jhipsterAppConfig = this.getAllJhipsterConfig();
+        this.jhipsterAppConfig = this.config;
       },
       displayLogo() {
         // Have Yeoman greet the user.
