@@ -73,11 +73,11 @@ Log in to your Okta Developer account (or [sign up](https://developer.okta.com/s
 From the **Applications** page, choose **Add Application**. On the Create New Application page, select **Native**. Give your app a memorable name, and configure it as follows:
 
 - Login redirect URIs:
-  - `http://localhost:8100/implicit/callback`
+  - `http://localhost:8100/callback`
   - `dev.localhost.ionic:/callback`
 - Logout redirect URIs:
 
-  - `http://localhost:8100/implicit/logout`
+  - `http://localhost:8100/logout`
   - `dev.localhost.ionic:/logout`
 
 **NOTE:** `dev.localhost.ionic` is the default scheme, but you can also use something more traditional like `com.okta.dev-737523` (where `dev-737523.okta.com` is your Okta Org URL). If you change it, be sure to update the `URL_SCHEME` in `package.json` and the redirect URIs in `src/app/auth/auth.service.ts`.
