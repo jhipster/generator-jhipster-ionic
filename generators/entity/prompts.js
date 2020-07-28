@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2019 the original author or authors from the JHipster project.
+ * Copyright 2019-Present the original author or authors from the JHipster project.
  *
  * This file is part of the JHipster project, see http://www.jhipster.tech/
  * for more information.
@@ -44,7 +44,7 @@ function askForBackendJson() {
       when: (response) => response.useBackendJson === true,
       type: 'input',
       name: 'backendPath',
-      message: 'Enter the path to your app\'s root directory:',
+      message: "Enter the path to your app's root directory:",
       store: true,
       validate: (input) => {
         let fromPath = '';

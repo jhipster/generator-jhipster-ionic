@@ -30,7 +30,7 @@ const fs = require('fs-extra');
 function importJDL() {
   logger.info('The JDL is being parsed...');
 
-  const jdlImporter = new jhiCore.JDLImporter(this.jdlFiles, {
+  const jdlImporter = jhiCore.JDLImporter.createImporterFromFiles(this.jdlFiles, {
     databaseType: this.prodDatabaseType,
     applicationType: this.applicationType,
     applicationName: this.baseName
@@ -43,9 +43,7 @@ function importJDL() {
   try {
     importState = jdlImporter.import();
     if (importState.exportedEntities.length > 0) {
-      const entityNames = _.uniq(importState.exportedEntities
-        .map((exportedEntity) => exportedEntity.name))
-        .join(', ');
+      const entityNames = _.uniq(importState.exportedEntities.map((exportedEntity) => exportedEntity.name)).join(', ');
       logger.info(`Found entities: ${chalk.yellow(entityNames)}.`);
     } else {
       logger.info(chalk.yellow('No change in entity configurations, no entities were updated.'));
@@ -123,7 +121,7 @@ class ImportJDLGenerator extends BaseGenerator {
     return {
       generateEntities() {
         if (this.importState.exportedEntities.length === 0) {
-          logger.debug('Entities not generated');
+          logger.info('Entities not generated');
           return;
         }
         if (this.options['json-only']) {
@@ -132,8 +130,7 @@ class ImportJDLGenerator extends BaseGenerator {
         }
         try {
           logger.info(
-            `Generating ${this.importState.exportedEntities.length} ` +
-            `${pluralize('entity', this.importState.exportedEntities.length)}.`
+            `Generating ${this.importState.exportedEntities.length} ` + `${pluralize('entity', this.importState.exportedEntities.length)}.`
           );
           this.importState.exportedEntities.forEach((exportedEntity) => {
             generateEntityFiles(this, exportedEntity);
@@ -141,6 +138,14 @@ class ImportJDLGenerator extends BaseGenerator {
         } catch (error) {
           logger.error(`Error while generating entities from the parsed JDL\n${error}`, error);
         }
+      }
+    };
+  }
+
+  get end() {
+    return {
+      runPrettier() {
+        shelljs.exec('npm run prettier');
       }
     };
   }

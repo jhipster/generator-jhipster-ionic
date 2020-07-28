@@ -1,10 +1,12 @@
 # Ionic for JHipster
-[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
+
+[![NPM version][npm-image]][npm-url] [![Build Status][github-actions-image]][github-actions-url] [![Dependency Status][daviddm-image]][daviddm-url]
+
 > A JHipster Module that generates an Ionic Client
 
 ## Introduction
 
-This is a [JHipster](http://www.jhipster.tech/) module. You can use it to generate an Ionic 4 app that talks to a JHipster 6 backend. It uses the [Ionic JHipster Starter](https://github.com/oktadeveloper/ionic-jhipster-starter) as a base template, then applies functionality (e.g. entity generation) on top of it. 
+This is a [JHipster](http://www.jhipster.tech/) module. You can use it to generate an Ionic app that talks to a JHipster backend. It uses the [Ionic JHipster Starter](https://github.com/oktadeveloper/ionic-jhipster-starter) as a base template, then applies functionality (e.g. entity generation) on top of it.
 
 To learn more about this module, see [Build Mobile Apps with Angular, Ionic 4, and Spring Boot](https://developer.okta.com/blog/2019/06/24/ionic-4-angular-spring-boot-jhipster).
 
@@ -19,7 +21,7 @@ As this is a [JHipster](http://www.jhipster.tech/) module, we expect you to have
 Or just run:
 
 ```bash
-npm i -g generator-jhipster ionic @angular/cli
+npm i -g generator-jhipster @ionic/cli @angular/cli
 ```
 
 ## Installation
@@ -38,7 +40,7 @@ npm update -g generator-jhipster-ionic
 
 ## Usage
 
-Create a JHipster app using `jhipster`, or a backend-only with `yo jhipster:server`. Choose `JWT` or `OAuth 2.0` as the authentication type. 
+Create a JHipster app using `jhipster`, or a backend-only with `yo jhipster:server`. Choose `JWT` or `OAuth 2.0` as the authentication type.
 
 In a directory alongside your JHipster app, run this module. This will create an Ionic app for you and install the necessary JHipster files for it to communicate with the backend.
 
@@ -48,9 +50,9 @@ yo jhipster-ionic
 
 This module also ships with an `ionic4j` CLI that you can use as a shortcut.
 
-* Use `ionic4j` to generate a new app
-* `ionic4j entity <name>` generates entities
-* `ionic4j import-jdl <file.jdl>` imports JDL and generates entities
+- Use `ionic4j` to generate a new app
+- `ionic4j entity <name>` generates entities
+- `ionic4j import-jdl <file.jdl>` imports JDL and generates entities
 
 ### Okta for Authentication
 
@@ -60,7 +62,7 @@ Choosing OAuth 2.0 / OIDC for authentication will allow you to use Keycloak or O
 docker-compose -f src/main/docker/keycloak up -d
 ```
 
-See [JHipster's security docs](https://www.jhipster.tech/security/#-oauth2-and-openid-connect) to see how to configure JHipster for Okta. 
+See [JHipster's security docs](https://www.jhipster.tech/security/#-oauth2-and-openid-connect) to see how to configure JHipster for Okta.
 
 In addition to having a OIDC app for your JHipster backend, you'll need to create a Native app too.
 
@@ -69,14 +71,15 @@ In addition to having a OIDC app for your JHipster backend, you'll need to creat
 Log in to your Okta Developer account (or [sign up](https://developer.okta.com/signup/) if you don't have an account).
 
 From the **Applications** page, choose **Add Application**. On the Create New Application page, select **Native**. Give your app a memorable name, and configure it as follows:
- 
-* Login redirect URIs: 
-  * `http://localhost:8100/implicit/callback`
-  * `dev.localhost.ionic:/callback`
-* Logout redirect URIs:
-  * `http://localhost:8100/implicit/logout`
-  * `dev.localhost.ionic:/logout`
-  
+
+- Login redirect URIs:
+  - `http://localhost:8100/callback`
+  - `dev.localhost.ionic:/callback`
+- Logout redirect URIs:
+
+  - `http://localhost:8100/logout`
+  - `dev.localhost.ionic:/logout`
+
 **NOTE:** `dev.localhost.ionic` is the default scheme, but you can also use something more traditional like `com.okta.dev-737523` (where `dev-737523.okta.com` is your Okta Org URL). If you change it, be sure to update the `URL_SCHEME` in `package.json` and the redirect URIs in `src/app/auth/auth.service.ts`.
 
 ```json
@@ -104,9 +107,9 @@ this.requestor.xhr({method: 'GET', url: AUTH_CONFIG_URI}).then(async (data: any)
 
 You'll also need to add a trusted origin for `http://localhost:8100`. In your Okta dashboard, go to **API** > **Trusted Origins** > **Add Origin**. Use the following values:
 
-* Name: `http://localhost:8100`
-* Origin URL: `http://localhost:8100`
-* Type: Check **both** CORS and Redirect
+- Name: `http://localhost:8100`
+- Origin URL: `http://localhost:8100`
+- Type: Check **both** CORS and Redirect
 
 Click **Save**.
 
@@ -118,7 +121,7 @@ Navigate to **API** > **Authorization Servers**, click the **Authorization Serve
 
 Add another claim, name it `given_name`, include it in the access token, use `Expression` in the value type, and set the value to `user.firstName`. Optionally, include it in the `profile` scope. Perform the same actions to create a `family_name` claim and use expression `user.lastName`.
 
-### iOS 
+### iOS
 
 Generate a native project with the following command:
 
@@ -192,8 +195,8 @@ Apache-2.0 © [Okta, Inc](https://developer.okta.com)
 
 [npm-image]: https://img.shields.io/npm/v/generator-jhipster-ionic.svg
 [npm-url]: https://npmjs.org/package/generator-jhipster-ionic
-[travis-image]: https://travis-ci.org/oktadeveloper/generator-jhipster-ionic.svg?branch=master
-[travis-url]: https://travis-ci.org/oktadeveloper/generator-jhipster-ionic
+[github-actions-image]: https://github.com/oktadeveloper/generator-jhipster-ionic/workflows/Ionic/badge.svg
+[github-actions-url]: https://github.com/oktadeveloper/generator-jhipster-ionic/actions
 [daviddm-image]: https://david-dm.org/oktadeveloper/generator-jhipster-ionic.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/oktadeveloper/generator-jhipster-ionic
 [feature-template]: https://github.com/oktadeveloper/generator-jhipster-ionic/issues/new?body=*%20**Overview%20of%20the%20request**%0A%0A%3C!--%20what%20is%20the%20query%20or%20request%20--%3E%0A%0A*%20**Motivation%20for%20or%20Use%20Case**%20%0A%0A%3C!--%20explain%20why%20this%20is%20a%20required%20for%20you%20--%3E%0A%0A%0A*%20**Browsers%20and%20Operating%20System**%20%0A%0A%3C!--%20is%20this%20a%20problem%20with%20all%20browsers%20or%20only%20IE8%3F%20--%3E%0A%0A%0A*%20**Related%20issues**%20%0A%0A%3C!--%20has%20a%20similar%20issue%20been%20reported%20before%3F%20--%3E%0A%0A*%20**Suggest%20a%20Fix**%20%0A%0A%3C!--%20if%20you%20can%27t%20fix%20this%20yourself%2C%20perhaps%20you%20can%20point%20to%20what%20might%20be%0A%20%20causing%20the%20problem%20(line%20of%20code%20or%20commit)%20--%3E

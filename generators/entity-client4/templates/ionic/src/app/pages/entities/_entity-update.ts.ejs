@@ -1,5 +1,5 @@
 <%#
- Copyright 2013-2019 the original author or authors from the JHipster project.
+ Copyright 2019-Present the original author or authors from the JHipster project.
 
  This file is part of the JHipster project, see http://www.jhipster.tech/
  for more information.
@@ -172,9 +172,9 @@ _%>
         <%- queries[idx] %>
     <%_ } } _%>
         this.activatedRoute.data.subscribe((response) => {
-            this.updateForm(response.data);
             this.<%= entityInstance %> = response.data;
             this.isNew = this.<%= entityInstance %>.id === null || this.<%= entityInstance %>.id === undefined;
+            this.updateForm(this.<%= entityInstance %>);
         });
     }
 
@@ -186,7 +186,9 @@ _%>
             const fieldType = fields[idx].fieldType;
         _%>
           <%_ if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
-            <%= fieldName %>: (this.isNew) ? new Date().toISOString() : <%= entityInstance %>.<%= fieldName %>,
+            <%= fieldName %>: this.isNew ? new Date().toISOString() : <%= entityInstance %>.<%= fieldName %>,
+          <%_ } else if (fieldType === 'LocalDate') { _%>
+            <%= fieldName %>: this.isNew ? new Date().toISOString().split('T')[0] : <%= entityInstance %>.<%= fieldName %>,
           <%_ } else { _%>
             <%= fieldName %>: <%= entityInstance %>.<%= fieldName %>,
           <%_ } _%>
@@ -216,6 +218,14 @@ _%>
     save() {
         this.isSaving = true;
         const <%= entityInstance %> = this.createFromForm();
+        <%_ for ( idx in fields ) {
+            const fieldName = fields[idx].fieldName;
+            const fieldType = fields[idx].fieldType;
+        _%>
+        <%_ if (['LocalDate'].includes(fieldType)) { _%>
+        <%= entityInstance %>.<%= fieldName %> = new Date(<%= entityInstance %>.<%= fieldName %>).toISOString().split('T')[0];
+        <%_ } _%>
+        <%_ } _%>
         if (!this.isNew) {
             this.subscribeToSaveResponse(this.<%= entityInstance %>Service.update(<%= entityInstance %>));
         } else {
@@ -293,8 +303,8 @@ _%>
         return this.dataUtils.openFile(contentType, field);
     }
 
-    setFileData(event, entity, field, isImage) {
-        this.dataUtils.setFileData(event, entity, field, isImage);
+    setFileData(event, field, isImage) {
+        this.dataUtils.loadFileToForm(event, this.form, field, isImage).subscribe();
         <%_ if (fieldsContainImageBlob) { _%>
         this.processWebImage(event, field);
         <%_ } _%>
@@ -326,6 +336,8 @@ _%>
 
             this.form.patchValue({ [fieldName]: imageData });
             this.form.patchValue({ [fieldName + 'ContentType']: imageType });
+            this.<%= entityInstance %>[fieldName] = imageData;
+            this.<%= entityInstance %>[fieldName + 'ContentType'] = imageType;
         };
 
         reader.readAsDataURL(event.target.files[0]);
@@ -342,7 +354,7 @@ _%>
         if(relationships[idx].relationshipType !== 'one-to-many' && !entitiesSeen.includes(otherEntityNameCapitalized)) {
     _%>
     compare<%- otherEntityNameCapitalized -%>(first: <%- relationships[idx].otherEntityAngularName -%>, second: <%- relationships[idx].otherEntityAngularName -%>): boolean {
-        return first && second ? first.id === second.id : first === second;
+        return first && first.id && second && second.id ? first.id === second.id : first === second;
     }
 
     track<%- otherEntityNameCapitalized -%>ById(index: number, item: <%- relationships[idx].otherEntityAngularName -%>) {

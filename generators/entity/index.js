@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2019 the original author or authors from the JHipster project.
+ * Copyright 2019-Present the original author or authors from the JHipster project.
  *
  * This file is part of the JHipster project, see http://www.jhipster.tech/
  * for more information.
@@ -23,8 +23,8 @@ let skipPrompt = false;
 
 class EntityGenerator extends BaseEntityGenerator {
   constructor(args, opts) {
-    const suppressWarning = {'from-cli': true};
-    super(args, {...opts, ...suppressWarning});
+    const suppressWarning = { 'from-cli': true };
+    super(args, { ...opts, ...suppressWarning });
     skipPrompt = opts['skip-prompt'];
   }
 
@@ -95,7 +95,6 @@ class EntityGenerator extends BaseEntityGenerator {
     return {
       composeClient() {
         const context = this.context;
-        if (context.skipClient) return;
 
         const entityClientDirectory = context.isIonicV3 ? '../entity-client' : '../entity-client4';
 

@@ -1,0 +1,39 @@
+application {
+  config {
+    baseName mono
+    applicationType monolith
+    authenticationType jwt
+    packageName org.jhipster.demo.blog
+    prodDatabaseType mysql
+    buildTool maven
+    clientFramework angular
+    testFrameworks [protractor]
+  }
+  entities *
+}
+
+enum Typology {
+ GOSSIP,
+ LIFE,
+ SCIENCE
+}
+
+entity Blog {
+  name String required minlength(5)
+  handle String required minlength(2)
+}
+
+entity Post {
+  title String required
+  content TextBlob required
+  date Instant required
+  male Boolean required
+}
+
+entity Tag {
+  name String required minlength(2)
+  received Integer
+  hash Typology required
+}
+
+paginate Post, Tag with infinite-scroll
