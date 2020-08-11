@@ -19,7 +19,7 @@ enum Typology {
 }
 
 entity Blog {
-  name String required minlength(5)
+  name String required minlength(3)
   handle String required minlength(2)
 }
 

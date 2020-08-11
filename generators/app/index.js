@@ -266,6 +266,9 @@ module.exports = class extends BaseGenerator {
       this.template('src/app/services/user/user.model.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.model.ts`);
     }
 
+    // Add @angular/localize
+    shelljs.exec(`cd ${this.ionicAppName} && npx ng add @angular/localize`);
+
     // Add e2e tests
     this.authenticationType = this.jhipsterAppConfig.authenticationType;
     this.template('e2e/pages/login.po.ts.ejs', `${this.ionicAppName}/e2e/pages/login.po.ts`);
