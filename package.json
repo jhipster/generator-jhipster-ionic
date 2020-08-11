@@ -33,7 +33,7 @@
     "generator-jhipster": ">=6.5.1",
     "jhipster-core": "^7.1.1",
     "jsonfile": "6.0.1",
-    "lodash": "4.17.15",
+    "lodash": "^4.17.19",
     "pluralize": "8.0.0",
     "semver": "7.3.2",
     "shelljs": "0.8.4"
