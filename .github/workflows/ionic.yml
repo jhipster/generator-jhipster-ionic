@@ -85,7 +85,7 @@ jobs:
           node-version: ${{ matrix.node_version }}
       - uses: actions/setup-java@v1
         with:
-          java-version: '11.x'
+          java-version: ${{ matrix.java_version }}
       - name: Install latest Chrome
         run: |
           sudo apt update
