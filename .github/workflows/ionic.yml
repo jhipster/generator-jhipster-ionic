@@ -20,93 +20,97 @@
 name: Ionic
 on: [push, pull_request]
 env:
-    PROFILE: dev
-    RUN_APP: 1
-    PROTRACTOR: 1
-    JHI_GITHUB_CI: ${{ github.workspace }}/test-integration
-    JHIPSTER_INSTALL: ${{ github.workspace }}/test-integration/install
-    JHIPSTER_SAMPLES: ${{ github.workspace }}/test-integration/jdl
-    JHIPSTER_SCRIPTS: ${{ github.workspace }}/test-integration/scripts
-    APP_FOLDER: backend
-    IONIC_FOLDER: ionic4j
-    TZ: America/Denver
+  PROFILE: dev
+  RUN_APP: 1
+  PROTRACTOR: 1
+  JHI_GITHUB_CI: ${{ github.workspace }}/test-integration
+  JHIPSTER_INSTALL: ${{ github.workspace }}/test-integration/install
+  JHIPSTER_SAMPLES: ${{ github.workspace }}/test-integration/jdl
+  JHIPSTER_SCRIPTS: ${{ github.workspace }}/test-integration/scripts
+  APP_FOLDER: backend
+  IONIC_FOLDER: ionic4j
+  TZ: America/Denver
 
-    #environment properties
-    SPRING_OUTPUT_ANSI_ENABLED: ALWAYS
-    SPRING_JPA_SHOW_SQL: false
-    NG_CLI_ANALYTICS: false
+  #environment properties
+  SPRING_OUTPUT_ANSI_ENABLED: ALWAYS
+  SPRING_JPA_SHOW_SQL: false
+  NG_CLI_ANALYTICS: false
 jobs:
-    build:
-        name: ${{ matrix.app-type }}
-        runs-on: ${{ matrix.os }}
-        if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]') && !contains(github.event.ref_type, '[tag]')"
-        timeout-minutes: 40
-        strategy:
-          fail-fast: false
-          matrix:
-            node_version: [12.16.1]
-            os: [ubuntu-latest]
-            app-type:
-              - monolith-jwt
-              - monolith-oauth2
-              - gateway-oauth2
-              - reactive-oauth2
-              - 21-points
-            include:
-              - app-type: monolith-jwt
-                profile: dev
-                protractor: 1
-              - app-type: monolith-oauth2
-                profile: dev
-                protractor: 1
-              - app-type: gateway-oauth2
-                profile: dev
-                protractor: 1
-              - app-type: reactive-oauth2
-                profile: dev
-                protractor: 1
-              - app-type: 21-points
-                profile: dev
-                protractor: 1
-        env:
-          JHI_APP: ${{ matrix.app-type }}
-          JHI_PROFILE: ${{ matrix.profile }}
-          JHIPSTER: ${{ matrix.app-type }}
-          JHI_PROTRACTOR: ${{ matrix.protractor }}
+  build:
+    name: ${{ matrix.app-type }}
+    runs-on: ${{ matrix.os }}
+    if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]') && !contains(github.event.ref_type, '[tag]')"
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        node_version: [12.16.1]
+        java_version: [11]
+        os: [ubuntu-latest]
+        app-type:
+          - monolith-jwt
+          - monolith-oauth2
+          - gateway-oauth2
+          - reactive-oauth2
+          - 21-points
+        include:
+          - app-type: monolith-jwt
+            profile: dev
+            protractor: 1
+          - app-type: monolith-oauth2
+            profile: dev
+            protractor: 1
+          - app-type: gateway-oauth2
+            profile: dev
+            protractor: 1
+          - app-type: reactive-oauth2
+            profile: dev
+            protractor: 1
+          - app-type: 21-points
+            profile: dev
+            protractor: 1
+    env:
+      JHI_APP: ${{ matrix.app-type }}
+      JHI_PROFILE: ${{ matrix.profile }}
+      JHIPSTER: ${{ matrix.app-type }}
+      JHI_PROTRACTOR: ${{ matrix.protractor }}
 
-        steps:
-          #----------------------------------------------------------------------
-          # Install all tools and check configuration
-          #----------------------------------------------------------------------
-          - uses: actions/checkout@v2
-          - uses: actions/setup-node@v1
-            with:
-                node-version: ${{ matrix.node_version }}
-          - name: Install latest Chrome
-            run: |
-                sudo apt update
-                sudo apt --only-upgrade install google-chrome-stable
-                google-chrome --version
-          - name: Install Ionic CLI + JHipster BOM
-            run: |
-                date
-                npm -g install yo @ionic/cli
-                git clone https://github.com/jhipster/jhipster.git
-                cd jhipster && ./mvnw install -q -ntp -DskipTests -Dgpg.skip=true
-                chmod +x $JHIPSTER_INSTALL/*.sh
-                chmod +x $JHIPSTER_SCRIPTS/*.sh
-          - name: Install JHipster Stack
-            run: $JHIPSTER_INSTALL/01-install-jhipster-stack.sh
-          - name: Check Version
-            run: $JHIPSTER_INSTALL/02-checkVersion.sh
-          #----------------------------------------------------------------------
-          # Script
-          #----------------------------------------------------------------------
-          - name: Generate Project
-            run: $JHIPSTER_SCRIPTS/01-generate-project.sh
-          - name: Docker Compose
-            run: $JHIPSTER_SCRIPTS/02-docker-compose.sh
-          - name: Tests
-            run: $JHIPSTER_SCRIPTS/03-tests.sh
-          - name: Run
-            run: xvfb-run --server-args="-screen 0 1024x768x24" --auto-servernum $JHIPSTER_SCRIPTS/04-run.sh
+    steps:
+      #----------------------------------------------------------------------
+      # Install all tools and check configuration
+      #----------------------------------------------------------------------
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node_version }}
+      - uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java_version }}
+      - name: Install latest Chrome
+        run: |
+          sudo apt update
+          sudo apt --only-upgrade install google-chrome-stable
+          google-chrome --version
+      - name: Install Ionic CLI + JHipster BOM
+        run: |
+          date
+          npm -g install yo @ionic/cli
+          git clone https://github.com/jhipster/jhipster.git
+          cd jhipster && ./mvnw install -q -ntp -DskipTests -Dgpg.skip=true
+          chmod +x $JHIPSTER_INSTALL/*.sh
+          chmod +x $JHIPSTER_SCRIPTS/*.sh
+      - name: Install JHipster Stack
+        run: $JHIPSTER_INSTALL/01-install-jhipster-stack.sh
+      - name: Check Version
+        run: $JHIPSTER_INSTALL/02-checkVersion.sh
+      #----------------------------------------------------------------------
+      # Script
+      #----------------------------------------------------------------------
+      - name: Generate Project
+        run: $JHIPSTER_SCRIPTS/01-generate-project.sh
+      - name: Docker Compose
+        run: $JHIPSTER_SCRIPTS/02-docker-compose.sh
+      - name: Tests
+        run: $JHIPSTER_SCRIPTS/03-tests.sh
+      - name: Run
+        run: xvfb-run --server-args="-screen 0 1024x768x24" --auto-servernum $JHIPSTER_SCRIPTS/04-run.sh
