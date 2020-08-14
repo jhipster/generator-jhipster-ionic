@@ -16,136 +16,109 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-import { MainService } from 'src/app/services/main/main.service';
-import { Component } from '@angular/core';
-import { ToastController, Platform, Events } from '@ionic/angular';
-import { filter, map } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 import { HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-<%_ if (fieldsContainBlob) { _%>
-import { JhiDataUtils } from 'ng-jhipster';
-<%_ } _%>
-import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
-import { <%= entityAngularName %>Service } from './<%= entityFileName %>.service';
 import { environment } from 'src/environments/environment';
+
+import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
+import { EntityService } from '../entity.service';
+import { NmsDomain } from '../nms-domain';
+
+<%_ if (TopClass ) { _%>
+import { <%= TopClass %> } from './../../../services/login.service';
+<%_ } _%>
+import { <%=entityInstance%>Url } from './../entity.service';
 
 @Component({
     selector: 'page-<%= entityFileName %>',
     templateUrl: '<%= entityFileName %>.html',
-    styleUrls: ['../entities.page.scss']
+    styleUrls: ['../entities-list.page.scss']
 })
-export class <%= entityAngularName %>Page {
-    <%= entityInstancePlural %>: <%= entityAngularName %>[];
+export class <%= entityAngularName %>Page implements OnInit {
+
+    topClassId: number;
+    <%=entityInstancePlural%>: <%= entityAngularName %>[];
+    <%=entityInstance%>Active = true;
+
     itemsPerPage: number;
     page = 0;
     totalItems: number;
-    <%=entityInstance %>Active = true;
-    loadingItems = 'Loading ...'
+    sortOrd = null;
+    searchItem = null;
+
     ERROR_LOAD = 'Failed to load data';
+    loading = 'Loading ...';
 
     constructor(
-<%_ if (fieldsContainBlob) { _%>
-        private dataUtils: JhiDataUtils,
-<%_ } _%>
-        public mainService: MainService,
-        private <%= entityInstance %>Service: <%= entityAngularName %>Service,
-        private toastCtrl: ToastController,
-        public plt: Platform,
-        public events: Events) {
-        this.events.subscribe('tenantChg', tenId => {
-            this.loadAll();
-        });
+        private entityService: EntityService,
+        private toastCtrl: ToastController) {
         this.<%= entityInstancePlural %> = [];
         this.itemsPerPage = environment.ITEMS_PER_PAGE;
     }
 
-    ionViewWillEnter() {
-        this.loadAll();
+    ngOnInit() {
+        <%=TopClass%>.subscribe(res => {
+            if (res !== null) {
+                this.topClassId = res.id;
+                this.loadAll();
+            }
+        });
     }
 
-<%_ if (pageable || !fieldsContainActive) { _%>
-    loadAll(predicate = 'id', reverse = true) {
-        this.<%= entityInstance %>Service.query({
+    init(event?) {
+        this.page = 0;
+        this.<%=entityInstancePlural%> = [];
+        this.loadAll(event);
+    }
+
+    // Loading only Active or Inactive according to <%= entityInstance %>Active value
+    loadAll(event?) {
+        this.loading = 'Loading ...';
+        this.entityService.queryBy<%=TopClass%>(<%=entityInstance%>Url, this.topClassId,  {
                 page: this.page,
                 size: this.itemsPerPage,
-                sort: this.sortPred(predicate, reverse)
-            }).subscribe(
-                (res: HttpResponse<<%= entityAngularName %>[]>) => this.paginate(res.body, res.headers),
-                (res: HttpErrorResponse) => console.log('LoadError:', res.message)
-            );
-    }
-
-   sortPred(predicate, reverse) {
-        const result = [predicate + ',' + (reverse ? 'asc' : 'desc')];
-        if (predicate !== 'id') {
-            result.push('id');
-        }
-        console.log(result);
-        return result;
-    }
-
-    reset() {
-        this.page = 0;
-        this.<%= entityInstancePlural %> = [];
-        this.loadAll();
-    }
-
-    loadPage(page) {
-        this.page = page;
-        this.loadAll();
-    }
-
-    protected paginate(data: <%= entityAngularName %>[], headers: HttpHeaders) {
-        this.<%= entityInstancePlural %> = data;
-        this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
-    }
-    <%_ } _%>
-
-<%_ if (fieldsContainActive) { _%>
-    // Loading only Active or Inactive according to <%= entityInstance %>Active value
-    loadAll(refresher?) {
-        this.loadingItems = 'Loading ...';
-        this.<%= entityInstance %>Service.queryByDomainId(this.mainService.DOMAIN.id, this.<%= entityInstance %>Active).subscribe(
-       // this.<%= entityInstance %>Service.queryByTenantId(this.mainService.TENANT.id, this.<%= entityInstance %>Active).subscribe(
-       // this.<%= entityInstance %>Service.queryActive(this.<%= entityInstance %>Active).subscribe(
-            (res) => {
-                this.<%= entityInstancePlural %> = res;
-                this.loadingItems = (res.lenght > 0 ) ?  '' : 'No Rooms found';
-                if (refresher !== undefined) {
-                    if (refresher.type === 'ionRefresh') { refresher.target.complete(); }
-                }
+                sort: this.sortOrd,
+                name: this.searchItem
+            }, this.<%=entityInstance%>Active).subscribe(
+            (res: HttpResponse<<%=entityAngularName%>[]>) => {
+                this.paginate(res.body, res.headers);
+                if (event) { event.target.complete(); }
+                this.loading = '';
             },
-            (error) => {
-                this.loadingItems = 'Error Loading';
-                console.error(error);
-                this.presentToast(this.ERROR_LOAD);
-            });
+            (err: HttpErrorResponse) => {
+                console.log('LoadError:', err.message);
+                if (event) { event.target.complete(); }
+                this.loading = '';
+            }
+        );
+    }
+
+    loadMore(event) {
+        this.page++;
+        this.loadAll(event);
+        if (this.<%=entityInstancePlural%>.length === this.totalItems) { event.target.disabled = true;  }
+    }
+
+    paginate(data: <%=entityAngularName%>[], headers: HttpHeaders) {
+        if (this.page === 0) { this.<%=entityInstancePlural%> = data; } else { this.<%=entityInstancePlural%> = this.<%=entityInstancePlural%>.concat(data); }
+        this.totalItems = +headers.get('X-Total-Count');
     }
     
-    sort(field, asc) {
-        this.<%= entityInstancePlural %> = this.<%= entityInstancePlural %>.sort((a, b) => {
-              return a[field] === null || a[field] === undefined ? asc ? -1 : 1 :
-                b[field] === null || b[field] === undefined ? asc ? 1 : -1 :
-                  asc ? a[field].toString().localeCompare(b[field], undefined, { numeric: true, sensitivity: 'base' }) :
-                    b[field].toString().localeCompare(a[field], undefined, { numeric: true, sensitivity: 'base' });
-            });
-    }
-    <%_ } _%>
-
-    // Object.keys for getting all property names of the object,
-    // Array.some for iterating the keys and exit loop if found,
-    search(ev: any) {
-        const val = ev.target.value;
-        if (val && val.trim() !== '') {
-            this.<%= entityInstancePlural %> = this.<%= entityInstancePlural %>.filter(o =>
-                Object.keys(o).some(k => String(o[k]).toLowerCase().includes(val.toLowerCase())));
-        } else {
-            this.loadAll();
-        }
+    sort(predicate, reverse) {
+        this.sortOrd = [predicate + ',' + (reverse ? 'asc' : 'desc')];
+        this.init();
     }
 
-<%_ if (fieldsContainActive) { _%>
+    search(ev: any) { // By name if more fields needed an idea could be name containing those fields joined
+        this.searchItem = ev.target.value;
+        if (this.searchItem && this.searchItem.trim() !== '') { this.searchItem = '%' + this.searchItem + '%'; }
+        else { this.searchItem = null; }
+        this.init();
+    }
+
     chgActive(id,active) {
-        this.<%= entityInstance %>Service.chgActive(id, active).subscribe(res => {
+        this.entityService.chgActive(<%=entityInstance%>Url, id, active).subscribe(res => {
             console.log(res);
             this.loadAll();
         },
@@ -153,17 +126,8 @@ export class <%= entityAngularName %>Page {
             console.error(error);
             this.presentToast(this.ERROR_LOAD);
         });
+        this.init();
     }
-<%_ } _%>
-
-<%_ if (fieldsContainBlob) { _%>
-    byteSize(field) {
-        return this.dataUtils.byteSize(field);
-    }
-    openFile(contentType, field) {
-        return this.dataUtils.openFile(contentType, field);
-    }
-<%_ } _%>
 
     async presentToast(text) {
         const toast = await this.toastCtrl.create({ message: text, duration: 3000, position: 'middle' });

@@ -18,111 +18,122 @@
 -%>
 <%_ const keyPrefix = entityTranslationKey; _%>
 <app-header title="{{'<%= entityClassPlural %>' | translate}}"></app-header> 
-
-<ion-content class="ion-padding">
  
 <%_ if (genEditPage) { _%> 
-  <ion-button class='hidden-xs-down ion-float-right' size='small' [routerLink]="['/entities/<%=entityFileName %>/new0']">
+<div *ngIf="loading ==='' || page > 0">Total: {{nmsResidents?.length}} of {{totalItems}}
+  <ion-button class='hidden-xs-down ion-float-right' size='small' [routerLink]="['/entities/<%=entityFileName %>/new']">
     <ion-icon slot="start" name="add"> </ion-icon>
     {{ 'New' | translate }} {{ '<%=entityClass _%>' | translate }}
   </ion-button>
-  <ion-fab class='hidden-sm-up' vertical="top" horizontal="end" slot="fixed">
-    <ion-fab-button [routerLink]="['/entities/<%=entityFileName %>/new0']">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-  <%_ } _%>
+</div>
+<ion-fab class='hidden-sm-up' vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['/entities/<%=entityFileName %>/new']">
+    <ion-icon name="add"></ion-icon>
+</ion-fab-button>
+</ion-fab>
+<%_ } _%>
 
-  <%_ if (fieldsContainActive) { _%>
-  <ion-segment small [(ngModel)]="<%=entityInstance %>Active" (ionChange)="loadAll($event)">
+<ion-segment small [(ngModel)]="<%=entityInstance %>Active" (ionChange)="init()">
     <ion-segment-button small value=true>
-      <ion-label>{{'Active' | translate}}</ion-label>
+        <ion-label>{{'Active' | translate}}</ion-label>
     </ion-segment-button>
     <ion-segment-button small value=false>
-      <ion-label>{{'Inactive' | translate}}</ion-label>
+        <ion-label>{{'Inactive' | translate}}</ion-label>
     </ion-segment-button>
-  </ion-segment>
-  <%_ } _%>
+</ion-segment>
 
-  <ion-searchbar (ionInput)="search($event)"></ion-searchbar>
+<ion-searchbar (ionInput)="search($event)"></ion-searchbar>
 
-  <ion-refresher slot="fixed" [disabled]="plt.is('desktop')" slot="fixed" (ionRefresh)="loadAll($event)">
-        <ion-refresher-content>{{ 'LOADING'| translate}}</ion-refresher-content>
-  </ion-refresher>
+<ion-row>  <!-- you can hide rows according to screen-size changing hidden-md-down by (xs,sm,md,lg or xl) -->
+    <%_ for (idx in fields) { _%>
+        <%_ if (fields[idx].fieldName === 'name' || fields[idx].fieldName === 'title') { _%>
+    <ion-col><b>{{ '<%=fields[idx].fieldNameCapitalized _%>' | translate }}</b>
+        <%_ }  else if (fields[idx].fieldTypeBlobContent ) { _%>
+        <ion-col> {{ '<%=fields[idx].fieldNameCapitalized _%>' | translate }}
+        <%_ }  else if (fields[idx].fieldName !== 'active' ) { _%>
+    <ion-col class='hidden-<%_ if (idx <6 ) { _%>lg<%_ } else { _%>xl <%_ } _%>-down'> {{ '<%=fields[idx].fieldNameCapitalized _%>' | translate }}
+        <%_ } _%>
+        <%_ if (fields[idx].fieldName !== 'active') { _%>
+        <ion-icon name="caret-up" style="zoom:1.4;" (click)="sort('<%=fields[idx].fieldName _%>', true)"></ion-icon>
+        <ion-icon name="caret-down" style="zoom:1.4;" (click)="sort('<%=fields[idx].fieldName _%>', false)"></ion-icon>
+    </ion-col>
+    <%_ } _%>
+    <%_ } _%>
+    <%_ if (genEditPage) { _%>
+    <ion-col>
+    </ion-col>
+        <%_ } _%>
+</ion-row>
 
-  <div class="overflowX" *ngIf="<%=entityInstancePlural %>?.length > 0">
-      <table>
-        <thead>
-        <!-- you can hide rows according to screen-size changing xs by (sm,md,lg or xl) -->
-        <tr> 
-            <%_ for (idx in fields) { _%>
-                <%_ if (fields[idx].fieldName === 'name' || fields[idx].fieldName === 'title') { _%>
-            <th><b>{{ '<%=fields[idx].fieldNameCapitalized _%>' | translate }}</b>
-                <%_ }  else if (fields[idx].fieldName !== 'active' ) { _%>
-            <th class='hidden-xs-down'> {{ '<%=fields[idx].fieldNameCapitalized _%>' | translate }}
-              <%_ } _%>
-              <%_ if (fields[idx].fieldName !== 'active') { _%>
-                <ion-icon name="arrow-dropup" style="zoom:1.4;" (click)="sort('<%=fields[idx].fieldName _%>', true)"></ion-icon>
-                <ion-icon name="arrow-dropdown" style="zoom:1.4;" (click)="sort('<%=fields[idx].fieldName _%>', false)"></ion-icon>
-            </th>
-            <%_ } _%>
-            <%_ } _%>
-            <%_ if (genEditPage) { _%>
-            <th></th>
-            <%_ } _%>
-        </tr>
-        <tbody>
-            <tr *ngFor="let <%=entityInstance %> of <%=entityInstancePlural %>;" >
-                <%_ for (idx in fields) {
-                    const fieldName = fields[idx].fieldName;
-                    const fieldNameCapitalized = fields[idx].fieldNameCapitalized;
-                    const fieldType = fields[idx].fieldType;
-                    const fieldTypeBlobContent = fields[idx].fieldTypeBlobContent; _%>
-                     <%_ if (fieldName === 'active' ) { _%>
-                    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'image') { _%>
-                    <td>
-                    <ion-avatar<% if (idx === 0) { %>item-start<% } %> *ngIf="<%= entityInstance %>.<%= fieldName %>">
-                        <img [src]="'data:' + <%=entityInstance %>.<%=fieldName%>ContentType + ';base64,' + <%=entityInstance %>.<%=fieldName%>" />
-                        <p *ngIf="<%= entityInstance %>.<%= fieldName %>">{{<%= entityInstance %>.<%= fieldName %>ContentType}}, {{byteSize(<%= entityInstance %>.<%= fieldName %>)}}</p>
-                    </ion-avatar>
-                    </td>
-                    <%_ } else if (fields[idx].fieldIsEnum) { _%>
-                    <!-- todo: special handling for translating enum - {{'<%= fieldType %>.' + <%= entityInstance %>.<%= fieldName %>}}" -->
-                    <td class='hidden-xs-down'>{{<%=entityInstance %>.<%=fieldName%>}}</td>
-                    <%_ } else if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
-                    <td class='hidden-xs-down'>{{<%=entityInstance %>.<%=fieldName%> | date:'d/M/yy (H:mm)'}}</td>
-                    <%_ } else if (fieldType === 'LocalDate') { _%>
-                    <td class='hidden-xs-down'>{{<%=entityInstance %>.<%=fieldName%> | date:'d/M/yy (H:mm)'}}</td>
+<ion-content class="ion-padding">
+    <ion-list *ngIf="loading !='' && <%=entityInstancePlural%>?.length === 0">
+        <ion-row *ngFor="let i of [1,2]">
+            <ion-col size='12'>
+                <h1>
+                    <ion-skeleton-text animated style='zoom: 4;'></ion-skeleton-text>
+                </h1>
+            </ion-col>
+        </ion-row>
+    </ion-list>
+
+    <ion-grid>
+        <ion-row *ngFor="let <%=entityInstance%> of <%=entityInstancePlural%>;" >
+        <%_ for (idx in fields) {
+            const fieldName = fields[idx].fieldName;
+            const fieldNameCapitalized = fields[idx].fieldNameCapitalized;
+            const fieldType = fields[idx].fieldType;
+            const fieldTypeBlobContent = fields[idx].fieldTypeBlobContent; _%>
+                <%_ if (fieldName === 'active' ) { _%>
+            <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'image') { _%>
+            <ion-col size ='3.5'>
+            <ion-avatar<% if (idx === 0) { %>item-start<% } %> *ngIf="<%= entityInstance %>.<%= fieldName %>">
+                <img [src]="'data:' + <%=entityInstance %>.<%=fieldName%>ContentType + ';base64,' + <%=entityInstance %>.<%=fieldName%>" />
+            </ion-avatar>
+            </ion-col>
+            <%_ } else if (fields[idx].fieldIsEnum) { _%>
+            <!-- todo: special handling for translating enum - {{'<%= fieldType %>.' + <%= entityInstance %>.<%= fieldName %>}}" -->
+            <ion-col class='hidden-<%_ if (idx <6 ) { _%>lg<%_ } else { _%>xl <%_ } _%>-down'>{{<%=entityInstance %>.<%=fieldName%>}}</ion-col>
+            <%_ } else if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
+            <ion-col class='hidden-<%_ if (idx <6 ) { _%>lg<%_ } else { _%>xl <%_ } _%>-down'>{{<%=entityInstance %>.<%=fieldName%> | date:'d/M/yy (H:mm)'}}</ion-col>
+            <%_ } else if (fieldType === 'LocalDate') { _%>
+            <ion-col class='hidden-<%_ if (idx <6 ) { _%>lg<%_ } else { _%>xl <%_ } _%>-down'>{{<%=entityInstance %>.<%=fieldName%> | date:'d/M/yy (H:mm)'}}</ion-col>
+            <%_ } else { _%>
+                    <%_ if (fieldName === 'name' || fieldName === 'title') { _%>
+            <ion-text color="primary"><h6>{{<%=entityInstance %>.<%=fieldName%>}}</h6></ion-text>
                     <%_ } else { _%>
-                         <%_ if (fieldName === 'name' || fieldName === 'title') { _%>
-                    <ion-text color="primary"><h6>{{<%=entityInstance %>.<%=fieldName%>}}</h6></ion-text>
-                         <%_ } else { _%>
-                    <td class='hidden-xs-down'>{{<%=entityInstance %>.<%=fieldName%>}}</td>
-                          <%_ } _%>
+            <ion-col class='hidden-<%_ if (idx <6 ) { _%>lg<%_ } else { _%>xl <%_ } _%>-down'>{{<%=entityInstance %>.<%=fieldName%>}}</ion-col>
                     <%_ } _%>
-                <%_ } _%>
-        <%_ if (genEditPage) { _%>
-            <td>
-            <ion-button size='small' [routerLink]="['/entities/<%=entityFileName %>/edit',<%=entityInstance %>.id ]">
-                <ion-icon slot="start" name="create"> </ion-icon>
-                {{ 'EDIT' | translate }}
-            </ion-button>
-            <%_ if (fieldsContainActive) { _%>
+            <%_ } _%>
+        <%_ } _%>
+            <ion-col>
+            <%_ if (genEditPage) { _%>
+                <ion-button *ngIf='<%=entityInstance%>?.active' size='small' [routerLink]="['/entities/<%=entityFileName %>/edit',<%=entityInstance %>.id ]">
+                    <ion-icon slot="start" name="create"> </ion-icon>
+                    {{ 'EDIT' | translate }}
+                </ion-button>
+            <%_ } _%>
                 <ion-button size='small' (click)='chgActive(<%=entityInstance %>.id,true)' *ngIf="!<%=entityInstance %>.active">
                     <ion-icon slot="start" name="checkmark-circle"> </ion-icon>
                     {{ 'Activate' | translate }}
                 </ion-button>
-                <ion-button size='small' (click)="chgActive(<%=entityInstance %>.id,false)" *ngIf="<%=entityInstance %>.active">
+                <ion-button size='small' (click)="chgActive(<%=entityInstance %>.id,false)" *ngIf="<%=entityInstance %>.active" color='red'>
                     <ion-icon slot="start" color="red" name="trash"> </ion-icon>
                     {{ 'Deactivate' | translate }}
                 </ion-button>
-            <%_ } _%>
-            </td>
-        <%_ } _%>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <ion-infinite-scroll threshold="20%" (ionInfinite)="loadMore($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <div class="ion-text-center">
+        <ion-button *ngIf="<%=entityInstancePlural%>?.length < totalItems" small (click)="loadMore()" fill='clear'>
+        <ion-icon slot="icon-only" name="caret-down"></ion-icon>Load More
+        </ion-button>
+    </div> 
+
     <ion-item *ngIf="!<%=entityInstancePlural %>?.length">
         <ion-label>
             No <%= entityClassPluralHumanized %> found.

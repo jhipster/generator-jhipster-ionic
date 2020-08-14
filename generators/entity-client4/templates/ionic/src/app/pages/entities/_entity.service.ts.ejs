@@ -62,7 +62,6 @@ export class <%= entityAngularName %>Service {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-<%_ if (fieldsContainActive) { _%>
     // == Custom ====
     queryByTenantId(tenantId: any, active: boolean = true): Observable<any> {
         console.log(`${this.resourceUrl}ByTenantId/${tenantId}/${active}`);
@@ -128,5 +127,5 @@ export class <%= entityAngularName %>Service {
 //
 // @Query("SELECT entity FROM <%= entityAngularName %> entity WHERE entity.active =:active ")
 // List<<%= entityAngularName %> > getActive( @Param("active") Boolean active);
-<%_ } _%>
+
 }

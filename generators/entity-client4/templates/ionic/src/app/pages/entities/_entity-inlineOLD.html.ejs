@@ -20,18 +20,15 @@
 <app-header title="{{'<%= entityClassPlural %>' | translate}}"></app-header> 
 
 <ion-content class="ion-padding">
- 
-<%_ if (genEditPage) { _%> 
-  <ion-button class='hidden-xs-down ion-float-right' size='small' [routerLink]="['/entities/<%=entityFileName %>/new']">
+  <ion-button class='hidden-xs-down' size='small' float-right [routerLink]="['/entities/<%=entityFileName %>/new']">
     <ion-icon slot="start" name="add"> </ion-icon>
-    {{ 'New' | translate }} {{ '<%=entityClass _%>' | translate }}
+    {{ 'New' | translate }} {{ '<%=entityClassHumanized_%>' | translate }}
   </ion-button>
   <ion-fab class='hidden-sm-up' vertical="top" horizontal="end" slot="fixed">
     <ion-fab-button [routerLink]="['/entities/<%=entityFileName %>/new']">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  <%_ } _%>
 
   <ion-segment small [(ngModel)]="<%=entityInstance %>Active" (ionChange)="loadAll($event)">
     <ion-segment-button small value=true>
@@ -44,15 +41,9 @@
 
   <ion-searchbar (ionInput)="search($event)"></ion-searchbar>
 
-  <ion-list *ngIf="loading !=''">
-      <ion-row *ngFor="let i of [1,2]">
-          <ion-col size='12'>
-              <h1>
-                  <ion-skeleton-text animated style='zoom: 4;'></ion-skeleton-text>
-              </h1>
-          </ion-col>
-      </ion-row>
-  </ion-list>
+  <ion-refresher slot="fixed" [disabled]="plt.is('desktop')" slot="fixed" (ionRefresh)="loadAll($event)">
+        <ion-refresher-content>{{ 'LOADING'| translate}}</ion-refresher-content>
+  </ion-refresher>
 
   <div class="overflowX" *ngIf="<%=entityInstancePlural %>?.length > 0">
       <table>
@@ -62,18 +53,16 @@
             <%_ for (idx in fields) { _%>
                 <%_ if (fields[idx].fieldName === 'name' || fields[idx].fieldName === 'title') { _%>
             <th><b>{{ '<%=fields[idx].fieldNameCapitalized _%>' | translate }}</b>
-                <%_ }  else if (fields[idx].fieldName !== 'active' ) { _%>
+              <%_ }  else if (fields[idx].fieldName !== 'active' ) { _%>
             <th class='hidden-xs-down'> {{ '<%=fields[idx].fieldNameCapitalized _%>' | translate }}
               <%_ } _%>
-              <%_ if (fields[idx].fieldName !== 'active') { _%>
-                <ion-icon name="caret-up" style="zoom:1.4;" (click)="sort('<%=fields[idx].fieldName _%>', true)"></ion-icon>
-                <ion-icon name="caret-down" style="zoom:1.4;" (click)="sort('<%=fields[idx].fieldName _%>', false)"></ion-icon>
+              <%_ if (fields[idx].fieldName !== 'active' ) { _%>
+                <ion-icon name="arrow-up" (click)="sort('<%=fields[idx].fieldName _%>', true)"></ion-icon>
+                <ion-icon name="arrow-down" (click)="sort('<%=fields[idx].fieldName _%>', false)"></ion-icon>
             </th>
             <%_ } _%>
             <%_ } _%>
-            <%_ if (genEditPage) { _%>
             <th></th>
-            <%_ } _%>
         </tr>
         <tbody>
             <tr *ngFor="let <%=entityInstance %> of <%=entityInstancePlural %>;" >
@@ -105,22 +94,22 @@
                           <%_ } _%>
                     <%_ } _%>
                 <%_ } _%>
-        <%_ if (genEditPage) { _%>
+                
             <td>
             <ion-button size='small' [routerLink]="['/entities/<%=entityFileName %>/edit',<%=entityInstance %>.id ]">
                 <ion-icon slot="start" name="create"> </ion-icon>
                 {{ 'EDIT' | translate }}
             </ion-button>
                 <ion-button size='small' (click)='chgActive(<%=entityInstance %>.id,true)' *ngIf="!<%=entityInstance %>.active">
-                    <ion-icon slot="start" name="checkmark-circle"> </ion-icon>
+                    <ion-icon slot="start" color="green" name="add"> </ion-icon>
                     {{ 'Activate' | translate }}
                 </ion-button>
                 <ion-button size='small' (click)="chgActive(<%=entityInstance %>.id,false)" *ngIf="<%=entityInstance %>.active">
                     <ion-icon slot="start" color="red" name="trash"> </ion-icon>
                     {{ 'Deactivate' | translate }}
                 </ion-button>
+            
             </td>
-        <%_ } _%>
         </tr>
         </tbody>
       </table>

@@ -16,6 +16,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
+import { EntityService, <%= entityAngularName %>Url } from './../entity.service';
 import { NgModule, Injectable } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { IonicModule } from '@ionic/angular';
@@ -24,7 +25,7 @@ import { Camera } from '@ionic-native/camera/ngx';
 <%_ } _%>
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { UserRouteAccessService } from '../../../services/auth/user-route-access.service';
+import { AuthGuard } from '../../../guards/auth.guard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
@@ -36,24 +37,20 @@ import { IonicSelectableModule } from 'ionic-selectable';
 <%_ } _%>
 
 import { <%= entityAngularName %>Page } from './<%=entityFileName %>';
-<%_ if (!genPwa) { _%>
-import { <%= entityAngularName %>UpdatePage } from './<%=entityFileName %>-update';
-import { <%= entityAngularName %>DetailPage} from '.';
-<%_ } _%>
 <%_ if (genEditPage) { _%>
 import { <%= entityAngularName %>EditPage } from './<%=entityFileName %>-edit';
 <%_ } _%>
-import { <%= entityAngularName %>, <%= entityAngularName %>Service} from '.';
+import { <%= entityAngularName %>} from '.';
 
 
 @Injectable({ providedIn: 'root' })
 export class <%= entityAngularName %>Resolve implements Resolve<<%= entityAngularName %>> {
-  constructor(private service: <%= entityAngularName %>Service) {}
+  constructor(private service: EntityService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<<%= entityAngularName %>> {
     const id = route.params.id ? route.params.id : null;
     if (id) {
-      return this.service.find(id).pipe(
+      return this.service.find(<%= entityAngularName %>Url, id).pipe(
         filter((response: HttpResponse<<%= entityAngularName %>>) => response.ok),
         map((<%= entityInstance %>: HttpResponse<<%= entityAngularName %>>) => <%= entityInstance %>.body)
       );
@@ -69,24 +66,11 @@ const routes: Routes = [
       data: {
         authorities: ['ROLE_USER']
       },
-      canActivate: [UserRouteAccessService]
+      canActivate: [AuthGuard]
     },
-    <%_ if (!genPwa) { _%>
-    {
-      path: 'new',
-      component: <%= entityAngularName %>UpdatePage,
-      resolve: {
-        data: <%= entityAngularName %>Resolve
-      },
-      data: {
-        authorities: ['ROLE_USER']
-      },
-      canActivate: [UserRouteAccessService]
-    }, 
-    <%_ } _%>
     <%_ if (genEditPage) { _%>
     {
-      path: 'new0',
+      path: 'new',
       component: <%= entityAngularName %>EditPage,
       resolve: {
         data: <%= entityAngularName %>Resolve
@@ -94,31 +78,7 @@ const routes: Routes = [
       data: {
         authorities: ['ROLE_USER']
       },
-      canActivate: [UserRouteAccessService]
-    },
-    <%_ } _%>
-    <%_ if (!genPwa) { _%>
-    {
-      path: ':id/view',
-      component: <%= entityAngularName %>DetailPage,
-      resolve: {
-        data: <%= entityAngularName %>Resolve
-      },
-      data: {
-        authorities: ['ROLE_USER']
-      },
-      canActivate: [UserRouteAccessService]
-    },
-    {
-      path: ':id/edit',
-      component: <%= entityAngularName %>UpdatePage,
-      resolve: {
-        data: <%= entityAngularName %>Resolve
-      },
-      data: {
-        authorities: ['ROLE_USER']
-      },
-      canActivate: [UserRouteAccessService]
+      canActivate: [AuthGuard]
     },
     <%_ } _%>
     <%_ if (genEditPage) { _%>
@@ -131,17 +91,13 @@ const routes: Routes = [
       data: {
         authorities: ['ROLE_USER']
       },
-      canActivate: [UserRouteAccessService]
+      canActivate: [AuthGuard]
     },
     <%_ } _%>
   ];
 
 @NgModule({
     declarations: [
-      <%_ if (!genPwa) { _%>
-        <%= entityAngularName %>UpdatePage,
-        <%= entityAngularName %>DetailPage,
-      <%_ } _%>
       <%_ if (genEditPage) { _%>
         <%= entityAngularName %>EditPage,
       <%_ } _%>
@@ -156,7 +112,7 @@ const routes: Routes = [
         ComponentsModule,
         ReactiveFormsModule,
         CommonModule,
-        TranslateModule,
+        TranslateModule.forChild(),
         RouterModule.forChild(routes)
     ]<% if (fieldsContainImageBlob) { %>,
     providers: [Camera]<% } %>

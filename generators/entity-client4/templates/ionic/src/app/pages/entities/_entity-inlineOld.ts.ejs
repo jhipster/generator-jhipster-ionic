@@ -16,68 +16,62 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
+import { MainService } from 'src/app/services/main/main.service';
 import { Component } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { NavController, ToastController, Platform, IonItemSliding } from '@ionic/angular';
+import { filter, map } from 'rxjs/operators';
 import { HttpResponse, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+<%_ if (fieldsContainBlob) { _%>
+import { JhiDataUtils } from 'ng-jhipster';
+<%_ } _%>
 import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
+import { <%= entityAngularName %>Service } from './<%= entityFileName %>.service';
 import { environment } from 'src/environments/environment';
 
-import { EntityService } from '../entity.service';
-import { NmsDomain } from '../nms-domain';
-
-<%_ if (TopClass ) { _%>
-import { <%=TopClass %> } from './../../../services/login.service';
-<%_ } _%>
-_%> <%= entityInstance %>Url } from './../entity.service';
-
 @Component({
-    selector: 'page-<%= entityFileName %>',
-    templateUrl: '<%= entityFileName %>.html',
-    styleUrls: ['../entities-list.page.scss']
+    selector: 'page-<%= entityFileName %>-inline',
+    templateUrl: '<%= entityFileName %>-inline.html',
+    styleUrls: ['../entities.page.scss']
 })
-export class <%= entityAngularName %>Page {
-
-    topClassId: number;
+export class <%= entityAngularName %>InlinePage {
     <%= entityInstancePlural %>: <%= entityAngularName %>[];
-    <%=entityInstance %>Active = true;
-
     itemsPerPage: number;
     page = 0;
     totalItems: number;
-    sortOrd = null;
-    searchItem = null;
+    <%=entityInstance %>Active = true;
 
     ERROR_LOAD = 'Failed to load data';
-    loading = 'Loading ...';
 
     constructor(
-        private entityService: EntityService,
-        private toastCtrl: ToastController) {
+<%_ if (fieldsContainBlob) { _%>
+        private dataUtils: JhiDataUtils,
+<%_ } _%>
+        private mainService: MainService,
+        private navController: NavController,
+        private <%= entityInstance %>Service: <%= entityAngularName %>Service,
+        private toastCtrl: ToastController,
+        public plt: Platform
+    ) {
         this.<%= entityInstancePlural %> = [];
-        this.itemsPerPage = environment.ITEMS_PER_PAGE;
+         this.itemsPerPage = environment.ITEMS_PER_PAGE;
     }
 
     ionViewWillEnter() {
-        <%=TopClass%>.subscribe(res => {
-            if (res !== null) {
-                this.topClassId = res.id;
-                this.loadAll();
-            }
-        });
+        this.loadAll();
     }
 
     loadAll(predicate = 'id', reverse = true) {
         this.<%= entityInstance %>Service.query({
                 page: this.page,
                 size: this.itemsPerPage,
-                sort: this.sortPred(predicate, reverse)
+                sort: this.sort(predicate, reverse)
             }).subscribe(
                 (res: HttpResponse<<%= entityAngularName %>[]>) => this.paginate(res.body, res.headers),
                 (res: HttpErrorResponse) => console.log('LoadError:', res.message)
             );
     }
 
-   sortPred(predicate, reverse) {
+   sort(predicate, reverse) {
         const result = [predicate + ',' + (reverse ? 'asc' : 'desc')];
         if (predicate !== 'id') {
             result.push('id');
@@ -104,29 +98,23 @@ export class <%= entityAngularName %>Page {
 
     // Loading only Active or Inactive according to <%= entityInstance %>Active value
     loadAll(refresher?) {
-        this.loadingItems = 'Loading ...';
-        this.<%= entityInstance %>Service.queryBy<%=TopClass%> (topClassId, this.<%= entityInstance %>Active).subscribe(
+        this.<%= entityInstance %>Service.queryByTenantId(this.mainService.TENANT.id, this.<%= entityInstance %>Active).subscribe(
             (res) => {
                 this.<%= entityInstancePlural %> = res;
-                this.loadingItems = (res.lenght > 0 ) ?  '' : 'No Rooms found';
                 if (refresher !== undefined) {
-                    if (refresher.type === 'ionRefresh') { refresher.target.complete(); }
+                    if (refresher.type === 'ionRefresh'){
+                        refresher.target.complete();
+                    }
                 }
             },
             (error) => {
-                this.loadingItems = 'Error Loading';
                 console.error(error);
                 this.presentToast(this.ERROR_LOAD);
             });
     }
-    
     sort(field, asc) {
-        this.<%= entityInstancePlural %> = this.<%= entityInstancePlural %>.sort((a, b) => {
-              return a[field] === null || a[field] === undefined ? asc ? -1 : 1 :
-                b[field] === null || b[field] === undefined ? asc ? 1 : -1 :
-                  asc ? a[field].toString().localeCompare(b[field], undefined, { numeric: true, sensitivity: 'base' }) :
-                    b[field].toString().localeCompare(a[field], undefined, { numeric: true, sensitivity: 'base' });
-            });
+        this.<%= entityInstancePlural %> = asc ? this.<%= entityInstancePlural %>.sort((a, b) => a[field].localeCompare(b[field])) :
+            this.<%= entityInstancePlural %>.sort((a, b) => b[field].localeCompare(a[field]));
     }
 
     // Object.keys for getting all property names of the object,
@@ -142,15 +130,14 @@ export class <%= entityAngularName %>Page {
     }
 
     chgActive(id,active) {
-        this.<%= entityInstance %>Service.chgActive(id, active).subscribe(res => {
-            console.log(res);
-            this.loadAll();
-        },
-        (error) => {
-            console.error(error);
-            this.presentToast(this.ERROR_LOAD);
-        });
+        this.<%= entityInstance %>Service.chgActive(id, active);
     }
+
+
+
+    saveZone() {
+        //TODO
+    }   
 
     async presentToast(text) {
         const toast = await this.toastCtrl.create({ message: text, duration: 3000, position: 'middle' });

@@ -22,21 +22,18 @@ const queries = query.queries;
 const variables = query.variables;
 let hasManyToMany = query.hasManyToMany;
 _%>
-import { Component, OnInit<% if (fieldsContainImageBlob) { %>, ElementRef, ViewChild<% } %> } from '@angular/core';
-<%_ if (fieldsContainBlob) { _%>
-import { JhiDataUtils } from 'ng-jhipster';
-<%_ } _%>
+
+import { Component, OnInit } from '@angular/core';
 <%_ if (fieldsContainImageBlob) { _%>
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 <%_ } _%>
+import { ToastController } from '@ionic/angular';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { NavController, Platform, ToastController } from '@ionic/angular';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
-import { <%= entityAngularName %>Service } from './<%= entityFileName %>.service';
-import { MainService } from 'src/app/services/main/main.service';
+
 <%_
 let hasRelationshipQuery = false;
 Object.keys(differentRelationships).forEach(key => {
@@ -50,68 +47,60 @@ Object.keys(differentRelationships).forEach(key => {
     if (differentRelationships[key].some(rel => rel.relationshipType !== 'one-to-many')) {
         const uniqueRel = differentRelationships[key][0];
         if (uniqueRel.otherEntityAngularName === 'User') { _%>
-import { User } from '../../../services/user/user.model';
-import { UserService } from '../../../services/user/user.service';
+import { User } from '../user/user.model';
     <%_ } else if (uniqueRel.otherEntityAngularName !== entityAngularName) { _%>
-import { <%= uniqueRel.otherEntityAngularName %>, <%= uniqueRel.otherEntityAngularName%>Service } from '../<%= uniqueRel.otherEntityModulePath %>';
+import { <%= uniqueRel.otherEntityAngularName %> } from '../<%= uniqueRel.otherEntityModulePath %>';
     <%_}
     }
 }); _%>
+import { TENANT, EMPLOYEE, DOMAIN } from './../../../services/login.service';
+import { EntityService } from '../entity.service';
+import { <%_ Object.keys(differentRelationships).forEach(key => {
+        if (differentRelationships[key].some(rel => rel.relationshipType !== 'one-to-many')) {
+            const uniqueRel = differentRelationships[key][0];
+            if (uniqueRel.otherEntityAngularName !== entityAngularName) { _%> <%= uniqueRel.otherEntityName %>Url, <%_
+            }
+        }
+    });
+_%> <%= entityInstance %>Url } from './../entity.service';
+import { NmsEmployee } from '../nms-employee';
+
+import { browserRefresh } from '../../../app.component';
 
 @Component({
     selector: 'page-<%= entityFileName %>-edit',
     templateUrl: '<%= entityFileName %>-edit.html',
-    styleUrls: ['../entities.page.scss']
+    styleUrls: ['../entities-edit.page.scss']
 })
 export class <%= entityAngularName %>EditPage implements OnInit {
+
+    dom: NmsDomain;
+    ten: NmsTenant;
+    emp: NmsEmployee;
 
     <%= entityInstance %>: <%= entityAngularName %>;
     <%_ for (const idx in variables) { _%>
     <%- variables[idx] %>
     <%_ } _%>
-    <%_ if (fieldsContainImageBlob) { _%>
-    @ViewChild('fileInput') fileInput;
-    cameraOptions: CameraOptions;
-    <%_ } _%>
-    <%_ for ( idx in fields ) {
-        const fieldName = fields[idx].fieldName;
-        const fieldType = fields[idx].fieldType;
-        if ( fieldType === 'LocalDate' ) { _%>
-    <%= fieldName %>Dp: any;
-        <%_ } else if ( ['Instant', 'ZonedDateTime'].includes(fieldType) ) { _%>
-    <%= fieldName %>: string;
-        <%_ } _%>
-    <%_ } _%>
+
     isSaving = false;
     isNew = true;
     isReadyToSave: boolean;
 
     form: FormGroup;
+<%_ if (fieldsContainBlob) { _%>
+    cam = Camera.installed;
+    cameraOptions: CameraOptions;
+<%_ } _%>
 
     constructor(
-        private mainService: MainService,
         protected activatedRoute: ActivatedRoute,
         protected formBuilder: FormBuilder,
-        public platform: Platform,
         protected toastCtrl: ToastController,
-<%_ if (fieldsContainBlob) { _%>
-        private dataUtils: JhiDataUtils,
-<%_ } _%>
-<% if (fieldsContainImageBlob) { %>
-        private elementRef: ElementRef,
-        private camera: Camera,
-<%_ } _%>
-<%_ Object.keys(differentRelationships).forEach(key => {
-        if (differentRelationships[key].some(rel => rel.relationshipType !== 'one-to-many')) {
-            const uniqueRel = differentRelationships[key][0];
-            if (uniqueRel.otherEntityAngularName !== entityAngularName) { _%>
-        private <%= uniqueRel.otherEntityName %>Service: <%= uniqueRel.otherEntityAngularName %>Service,
-            <%_
-            }
-        }
-    });
-_%>
-        private <%= entityInstance %>Service: <%= entityAngularName %>Service
+        <%_ if (fieldsContainImageBlob) { _%>
+        public camera: Camera,
+        <%_ } _%>
+        private entityService: EntityService
     ) {
 
         <%_ if (fieldsContainImageBlob) { _%>
@@ -123,24 +112,43 @@ _%>
             destinationType: this.camera.DestinationType.DATA_URL,
             encodingType: this.camera.EncodingType.JPEG,
             mediaType: this.camera.MediaType.PICTURE,
+            sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
             saveToPhotoAlbum: false,
-            allowEdit: true,
-            sourceType: 1
+            allowEdit: true
         };
         <%_ } _%>
     }
 
     ngOnInit() {
-    <%_ for (idx in queries) {
-        if (queries[idx].indexOf('userService') > -1) { _%>
-        this.userService.findAll().subscribe(data => this.users = data, (error) => this.onError(error));
-        <%_ } else { _%>
-        <%- queries[idx] %>
-    <%_ } } _%>
-        this.activatedRoute.data.subscribe((response) => {
-            this.initForm(response.data);
-            this.<%= entityInstance %> = response.data;
-            this.isNew = this.<%= entityInstance %>.id === null || this.<%= entityInstance %>.id === undefined;
+        if (browserRefresh) {
+            window.history.back();
+            return;
+        }
+
+        EMPLOYEE.subscribe(empl => {
+            if (empl !== null) {
+                this.emp = empl;
+                TENANT.subscribe(tena => {
+                    if (tena !== null) {
+                        this.ten = tena;
+                        DOMAIN.subscribe(domain => {
+                            if (domain !== null) {
+                                this.dom = domain;
+                        <%_ for (idx in queries) {
+                            if (queries[idx].indexOf('userService') > -1) { _%>
+                                this.userService.findAll().subscribe(data => this.users = data, (error) => this.onError(error));
+                            <%_ } else { _%>
+                                <%- queries[idx] %>
+                        <%_ } } _%>
+                                this.activatedRoute.data.subscribe((response) => {
+                                    this.initForm(response.data);
+                                    this.<%= entityInstance %> = response.data;
+                                    this.isNew = this.<%= entityInstance %>.id === null || this.<%= entityInstance %>.id === undefined;
+                                });
+                            }
+                        });
+                });
+            }
         });
     }
 
@@ -154,7 +162,9 @@ _%>
         <%_ if (fieldName === 'lastModifiedDate') { _%>
             <%= fieldName %>: [new Date().toISOString()],
         <%_ } else if (fieldName === 'lastModifiedBy') { _%>
-            lastModifiedBy: this.mainService.EMPLOYEE.user.firstName + ' ' + this.mainService.EMPLOYEE.user.lastName,
+            lastModifiedBy: this.emp.user.firstName + ' ' + this.emp.user.lastName,
+        <%_ } else if (fieldName === 'active') { _%>
+            active: [(this.isNew) ? true : <%= entityInstance %>.active],
         <%_ } else if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
             <%= fieldName %>: [(this.isNew) ? new Date().toISOString() : <%= entityInstance %>.<%= fieldName %>],
         <%_ } else { _%>
@@ -173,15 +183,15 @@ _%>
     <%_ if (relationshipType === 'many-to-one' || (relationshipType === 'one-to-one' && ownerSide === true)) { _%>
         <%_ if (dto === 'no') { _%>
              <%_ if (relationshipName === 'domain') { _%>
-            <%= relationshipName %>: [this.mainService.DOMAIN],
+            <%= relationshipName %>: [<%= entityInstance %>.domain != null ? <%= entityInstance %>.domain : this.dom],
              <%_ } else if (relationshipName === 'tenant') { _%>
-            <%= relationshipName %>: [this.mainService.TENANT],
+            <%= relationshipName %>: [<%= entityInstance %>.tenant != null ? <%= entityInstance %>.tenant : this.ten],
             <%_ } else { _%>   
             <%=relationshipName %>: [<%= entityInstance %>.<%=relationshipFieldName %>],
         <%_ }} else { _%>
             <%=relationshipName %>Id: [<%= entityInstance %>.<%=relationshipFieldName %>Id],
         <%_ } _%>
-    <%_ } else if (relationshipType === 'many-to-many' && relationships[idx].ownerSide === true) { _%>
+    <%_ } else if (relationshipType === 'many-to-many' ) { _%>
             <%=relationshipFieldNamePlural %>: [<%=entityInstance %>.<%=relationshipFieldNamePlural %>],
     <%_ } _%>
 <%_ } _%>
@@ -197,9 +207,9 @@ _%>
         this.isSaving = true;
         const <%= entityInstance %> = this.createFromForm();
         if (!this.isNew) {
-            this.subscribeToSaveResponse(this.<%= entityInstance %>Service.update(<%= entityInstance %>));
+            this.subscribeToSaveResponse(this.entityService.update(<%= entityInstance %>Url, <%= entityInstance %>));
         } else {
-            this.subscribeToSaveResponse(this.<%= entityInstance %>Service.create(<%= entityInstance %>));
+            this.subscribeToSaveResponse(this.entityService.create(<%= entityInstance %>Url, <%= entityInstance %>));
         }
     }
 
@@ -230,7 +240,7 @@ _%>
     private createFromForm(): <%= entityAngularName %> {
         return {
             ...new <%= entityAngularName %>(),
-            id: this.form.get(['id']).value,
+            id: this.<%= entityInstance %>.id,
         <%_ for ( idx in fields ) {
             const fieldName = fields[idx].fieldName;
             const fieldType = fields[idx].fieldType;
@@ -250,84 +260,62 @@ _%>
     const relationshipName = relationships[idx].relationshipName;
     const relationshipFieldNamePlural = relationships[idx].relationshipFieldNamePlural; _%>
     <%_ if (relationshipType === 'many-to-one' || (relationshipType === 'one-to-one' && ownerSide === true)) { _%>
-            <%_ if (dto === 'no') { _%>
+     <%_ if (dto === 'no') { _%>
+       <%_ if (relationshipName === 'domain') { _%>
+            <%= relationshipName %>: this.dom,
+          <%_ } else if (relationshipName === 'tenant') { _%>
+            <%= relationshipName %>: this.ten,
+          <%_ } else { _%>   
             <%= relationshipName %>: this.form.get(['<%= relationshipName %>']).value,
-            <%_ } else { _%>
-            <%= relationshipName %>Id: this.form.get(['<%= relationshipName %>Id']).value,
-            <%_ } _%>
-        <%_ } else if (relationshipType === 'many-to-many' && relationships[idx].ownerSide === true) { _%>
+          <%_ } _%> 
+        <%_ } else { _%>
+        <%= relationshipName %>Id: this.form.get(['<%= relationshipName %>Id']).value,
+     <%_ } _%>
+    <%_ } else if (relationshipType === 'many-to-many' ) { _%>
             <%= relationshipFieldNamePlural %>: this.form.get(['<%= relationshipFieldNamePlural %>']).value,
         <%_ } _%>
 <%_ } _%>
         };
     }
 
-    <%_ if (fieldsContainBlob) { _%>
-    byteSize(field) {
-        return this.dataUtils.byteSize(field);
-    }
-
-    openFile(contentType, field) {
-        return this.dataUtils.openFile(contentType, field);
-    }
-
-    setFileData(event, entity, field, isImage) {
-        this.dataUtils.setFileData(event, entity, field, isImage);
-        <%_ if (fieldsContainImageBlob) { _%>
-        this.processWebImage(event, field);
-        <%_ } _%>
-    }
-
-    <%_ } if (fieldsContainImageBlob) { _%>
+<%_ if (fieldsContainImageBlob) { _%>
     getPicture(fieldName) {
-        if (Camera.installed() && this.platform.is('mobile')){
-            this.camera.getPicture(this.cameraOptions).then((data) => {
-                this.<%= entityInstance %>[fieldName] = data;
-                this.<%= entityInstance %>[fieldName + 'ContentType'] = 'image/jpeg';
-                this.form.patchValue({ [fieldName]: data });
-                this.form.patchValue({ [fieldName + 'ContentType']: 'image/jpeg' });
-            }, (err) => { this.presentToast('Unable to take photo'); });
-        } else {
-            this.fileInput.nativeElement.click();
+        this.camera.getPicture(this.cameraOptions).then((data) => {
+            this.<%= entityInstance %>[fieldName] = data;
+            this.<%= entityInstance %>[fieldName + 'ContentType'] = 'image/jpeg';
+            this.form.patchValue({ [fieldName]: data });
+            this.form.patchValue({ [fieldName + 'ContentType']: 'image/jpeg' });
+        }, (err) => { this.presentToast('Unable to take photo'); });
+    }
+
+    clearInputImage(field: string) {
+            this.form.patchValue({ [field]: null });
+            this.<%= entityInstance %>[field] = null;
+    }
+
+    public uploadFile(files: FileList, fieldName) {
+        if (files && files.length > 0) {
+            const file: File = files.item(0); // assuming only one file is uploaded
+            console.log('Uploaded file, Filename:' + file.name + 'Filesize:' + file.size + 'Filetype:' + file.type);
+            if (file.size > 1000000) {
+                this.presentToast('Please upload a file smaller than 1M');
+                return;
+            }
+            const reader: FileReader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (e) => {
+                const fileContent: string = reader.result as string;
+                this.<%= entityInstance %>[fieldName] = fileContent.split(',')[1];
+                this.<%= entityInstance %>[fieldName + 'ContentType'] = file.type;
+                this.form.patchValue({ [fieldName]: this.<%= entityInstance %>[fieldName] });
+                this.form.patchValue({ [fieldName + 'ContentType']: this.<%= entityInstance %>[fieldName + 'ContentType'] });
+            };
         }
     }
+<%_ } _%>
 
-    processWebImage(event, fieldName) {
-        const reader = new FileReader();
-        reader.onload = (readerEvent) => {
-
-            let imageData = (readerEvent.target as any).result;
-            const imageType = event.target.files[0].type;
-            imageData = imageData.substring(imageData.indexOf(',') + 1);
-
-            this.form.patchValue({ [fieldName]: imageData });
-            this.form.patchValue({ [fieldName + 'ContentType']: imageType });
-        };
-
-        reader.readAsDataURL(event.target.files[0]);
-    }
-
-    clearInputImage(field: string, fieldContentType: string, idInput: string) {
-        this.dataUtils.clearInputImage(this.<%= entityInstance %>, this.elementRef, field, fieldContentType, idInput);
-        this.form.patchValue( {[field]: ''} );
-    }
-    <%_ }
-    const entitiesSeen = [];
-    for (idx in relationships) {
-        const otherEntityNameCapitalized = relationships[idx].otherEntityNameCapitalized;
-        if(relationships[idx].relationshipType !== 'one-to-many' && !entitiesSeen.includes(otherEntityNameCapitalized)) {
-    _%>
-    compare<%- otherEntityNameCapitalized -%>(first: <%- relationships[idx].otherEntityAngularName -%>, second: <%- relationships[idx].otherEntityAngularName -%>): boolean {
-        return first && second ? first.id === second.id : first === second;
-    }
-
-    track<%- otherEntityNameCapitalized -%>ById(index: number, item: <%- relationships[idx].otherEntityAngularName -%>) {
-        return item.id;
-    }
-    <%_ entitiesSeen.push(otherEntityNameCapitalized); } } _%>
-    
     async presentToast(text) {
-        const toast = await this.toastCtrl.create({ message: text, duration: 3000, position: 'middle' });
+        const toast = await this.toastCtrl.create({ message: text, duration: 2500, position: 'middle' });
         toast.present();
     }
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright 2019-Present the original author or authors from the JHipster project.
+ * Copyright 2013-2019 the original author or authors from the JHipster project.
  *
  * This file is part of the JHipster project, see http://www.jhipster.tech/
  * for more information.
@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 const _ = require('lodash');
+const randexp = require('randexp');
 const chalk = require('chalk');
 const fs = require('fs');
 const constants = require('generator-jhipster/generators/generator-constants');
@@ -28,94 +29,95 @@ const MODELS_DIR = 'src/models/';
 
 const CLIENT_IONIC_TEMPLATES_DIR = 'ionic';
 
-const E2E_TEST_DIR = 'e2e/';
 
 /**
  * The default is to use a file path string. It implies use of the template method.
  * For any other config an object { file:.., method:.., template:.. } can be used
  */
 
-const ionicFiles = {
+let ionicFiles = {
   client: [
     {
       path: IONIC_DIR,
       templates: [
-        {
-          file: 'entities/_entity.html',
-          method: 'processHtml',
-          template: true,
-          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.html`
-        },
+        // {
+        //   file: 'entities/_entity.html',
+        //   method: 'processHtml',
+        //   template: true,
+        //   renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.html`
+        // },
         {
           file: 'entities/_entity.model.ts',
           method: 'processHtml',
           template: true,
           renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.model.ts`
-        },
-        {
-          file: 'entities/_entity.module.ts',
-          method: 'processHtml',
-          template: true,
-          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.module.ts`
-        },
-        {
-          file: 'entities/_entity.service.ts',
-          method: 'processHtml',
-          template: true,
-          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.service.ts`
-        },
-        {
-          file: 'entities/_entity.ts',
-          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.ts`
-        },
-        {
-          file: 'entities/_entity-detail.html',
-          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.html`
-        },
-        {
-          file: 'entities/_entity-detail.ts',
-          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.ts`
-        },
-        {
-          file: 'entities/_entity-update.html',
-          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.html`
-        },
-        {
-          file: 'entities/_entity-update.ts',
-          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.ts`
-        },
-        {
-          file: 'entities/_index.ts',
-          renameTo: (generator) => `entities/${generator.entityFolderName}/index.ts`
-        },
-        {
-          file: 'entities/_entity.spec.ts',
-          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.spec.ts`
-        },
-        {
-          file: 'entities/_entity-detail.spec.ts',
-          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.spec.ts`
-        },
-        {
-          file: 'entities/_entity-update.spec.ts',
-          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.spec.ts`
         }
-      ]
-    }
-  ],
-  e2e: [
-    {
-      path: E2E_TEST_DIR,
-      templates: [
-        {
-          file: 'entities/_entity.po.ts',
-          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.po.ts`
-        },
-        {
-          file: 'entities/_entity.e2e-spec.ts',
-          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.e2e-spec.ts`
-        }
-      ]
+        // ,
+        // {
+        //   file: 'entities/_entity.module.ts',
+        //   method: 'processHtml',
+        //   template: true,
+        //   renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.module.ts`
+        // },
+      //   {
+      //     file: 'entities/_entity.service.ts',
+      //     method: 'processHtml',
+      //     template: true,
+      //     renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.service.ts`
+      //   },
+      //   {
+      //     file: 'entities/_entity.ts',
+      //     renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.ts`
+      //   },
+      //   {
+      //     file: 'entities/_entity-detail.html',
+      //     renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.html`
+      //   },
+      //   {
+      //     file: 'entities/_entity-detail.ts',
+      //     renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.ts`
+      //   },
+      //   {
+      //     file: 'entities/_entity-update.html',
+      //     renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.html`
+      //   },
+      //   {
+      //     file: 'entities/_entity-update.ts',
+      //     renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.ts`
+      //   },
+      //   {
+      //     file: 'entities/_index.ts',
+      //     renameTo: (generator) => `entities/${generator.entityFolderName}/index.ts`
+      //   },
+      //   {
+      //     file: 'entities/_entity.spec.ts',
+      //     renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.spec.ts`
+      //   },
+      //   {
+      //     file: 'entities/_entity-detail.spec.ts',
+      //     renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.spec.ts`
+      //   },
+      //   {
+      //     file: 'entities/_entity-update.spec.ts',
+      //     renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.spec.ts`
+      //   }
+      // ]
+    // }
+  ]
+  // ,
+  // e2e: [
+  //   {
+  //     path: E2E_TEST_DIR,
+  //     templates: [
+  //       {
+  //         file: 'entities/_entity.po.ts',
+  //         renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.po.ts`
+  //       },
+  //       {
+  //         file: 'entities/_entity.e2e-spec.ts',
+  //         renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.e2e-spec.ts`
+  //       }
+  //     ]
     }
   ]
 };
@@ -139,6 +141,81 @@ function writeFiles() {
     },
 
     writeClientFiles() {
+      if (this.skipClient) return;
+
+      // todo if i118
+      // ionicFiles.client[0].templates.push({
+      //   file: 'entities/_en.json',
+      //   renameTo: generator => `../../assets/i18n/en_${generator.entityFileName}.json`
+      // });
+
+      // TODO only add if option  -> this.context.options.genEditPage
+      // if (this.context.options.genListPage) {
+      ionicFiles.client[0].templates.push({
+        file: 'entities/_entity-edit.html',
+        method: 'processHtml',
+        template: true,
+        renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-edit.html`
+      });
+      ionicFiles.client[0].templates.push({
+        file: 'entities/_entity-edit.ts',
+        renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-edit.ts`
+      });
+      // }
+
+      // TODO only add if option  -> this.context.options.genModule
+      // if (this.context.options.genListPage) {
+      ionicFiles.client[0].templates.push({
+        file: 'entities/_entity.module.ts',
+        method: 'processHtml',
+        template: true,
+        renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.module.ts`
+      });
+      // ionicFiles.client[0].templates.push({
+      //   file: 'entities/_entity.service.ts',
+      //   method: 'processHtml',
+      //   template: true,
+      //   renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.service.ts`
+      // });
+      ionicFiles.client[0].templates.push({
+        file: 'entities/_index.ts',
+        renameTo: generator => `entities/${generator.entityFolderName}/index.ts`
+      });
+      // }
+
+
+      // TODO only add if option  -> this.context.options.genListPage
+      ionicFiles.client[0].templates.push({
+        file: 'entities/_entity-list.html',
+        method: 'processHtml',
+        template: true,
+        renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.html`
+      });
+
+      ionicFiles.client[0].templates.push({
+        file: 'entities/_entity-list.ts',
+        renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.ts`
+      });
+
+      // TODO only add if not pwa
+      // ionicFiles.client[0].templates.push({
+      //   file: 'entities/_entity-update.ts',
+      //  renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.ts`
+      // });
+
+      // TODO only add if option  -> this.context.options.genInlinePage
+      // Still to make inline table
+      // ionicFiles.client[0].templates.push({
+      //     file: 'entities/_entity-inline.html',
+      //     method: 'processHtml',
+      //     template: true,
+      //     renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.html`
+      // });
+      // ionicFiles.client[0].templates.push({
+      //     file: 'entities/_entity-inline.ts',
+      //     renameTo: generator => `entities/${generator.entityFolderName}/${generator.entityFileName}.ts`
+      // });
+
       // write client side files for angular
       this.writeFilesToDisk(ionicFiles, this, false, CLIENT_IONIC_TEMPLATES_DIR);
       this.addEntityToModule(
@@ -157,7 +234,7 @@ function writeFiles() {
         this.entityFileName,
         this.enableTranslation
       );
-
+      
       // Copy for each
       if (this.enableTranslation) {
         const languages = this.languages || this.getAllInstalledLanguages();

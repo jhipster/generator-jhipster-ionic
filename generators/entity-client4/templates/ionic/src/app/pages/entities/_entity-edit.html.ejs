@@ -22,14 +22,10 @@ _%>
 <app-header title="{{'<%= entityClassPlural %>' | translate }}"></app-header> 
 
 <ion-content class="ion-padding">
-    <form *ngIf="form" name="form" [formGroup]="form" >
+    <form *ngIf="form" name="form" [formGroup]="form">
       <ion-grid fixed>
       <ion-row>
          <ion-col size="12" size-xs='12' size-sm='10' size-md='6' size-lg='6' size-xl='6'>
-            <ion-item [hidden]="!form.id">
-                <ion-label>ID</ion-label>
-                <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
-            </ion-item>
             <%_ for (idx in fields) {
                 const fieldName = fields[idx].fieldName;
                 const fieldNameCapitalized = fields[idx].fieldNameCapitalized;
@@ -40,7 +36,6 @@ _%>
                 let ngModelOption = '';
                 const translationKey = keyPrefix + fieldName;
                 if (fields[idx].fieldName !== 'lastModifiedBy' &&fields[idx].fieldName !== 'lastModifiedDate') {
-                    
                 }
                 if (['Integer', 'Long', 'Float', 'Double', 'BigDecimal'].includes(fieldType)) {
                     fieldInputType = 'number';
@@ -54,7 +49,6 @@ _%>
                     fieldInputType = 'hidden';
                 }
             _%>
-
         <%_ if (fields[idx].fieldName !== 'lastModifiedBy' &&fields[idx].fieldName !== 'lastModifiedDate') {_%>
             <ion-item lines='none'>
                 <%_ if (fields[idx].fieldIsEnum) { _%>
@@ -70,26 +64,24 @@ _%>
                 <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent !== 'text') { _%>
                 <div>
                     <%_ if (fieldTypeBlobContent === 'image') { _%>
-                    <img [src]="'data:' + <%=entityInstance %>.<%=fieldName%>ContentType + ';base64,' + <%=entityInstance %>.<%=fieldName%>" style="max-height: 100px;" *ngIf="<%= entityInstance %>?.<%= fieldName %>" alt="<%=entityInstance %> image"/>
-                    <%_ } _%>
+                    <img *ngIf="<%= entityInstance %>?.<%= fieldName %>"
+                        [src]="'data:' + <%= entityInstance %>?.<%= fieldName %>ContentType + ';base64,' + <%= entityInstance %>?.<%= fieldName %>"
+                        style="height: 200px; align-self: center;" alt="<%=entityInstance %> <%= fieldName %>" />
                     <div *ngIf="<%= entityInstance %>?.<%= fieldName %>">
-                        <p>{{<%= entityInstance %>?.<%= fieldName %>ContentType}}, {{byteSize(<%= entityInstance %>?.<%= fieldName %>)}}</p>
-                        <%_ if (fieldTypeBlobContent === 'image') { _%>
-                        <ion-button color="danger" (click)="clearInputImage('<%= fieldName %>', '<%= fieldName %>ContentType', 'fileImage')">
+                        <ion-button color="danger" (click)="clearInputImage('<%= fieldName %>')">
                             <ion-icon name="trash" size='small' slot="icon-only"></ion-icon>
                         </ion-button>
-                        <%_ } else { _%>
-                        <ion-button color="danger" (click)="<%= entityInstance %>.<%= fieldName %>=null;<%= entityInstance %>.<%= fieldName %>ContentType=null;">
-                            <ion-icon name="trash" size='small' slot="icon-only"></ion-icon>
-                        </ion-button>
-                        <%_ } _%>
                     </div>
-                    <%_ if (fieldTypeBlobContent === 'image') { _%>
-                    <input type="file" #fileInput style="display: none" (change)="setFileData($event, <%= entityInstance %>, '<%= fieldName %>', <% if (fieldTypeBlobContent === 'image') { %>true)" accept="image/*"<% } else { %>false)"<% } %>/>
-                    
-                    <ion-button *ngIf="!<%= entityInstance %>?.<%= fieldName %>" (click)="getPicture('<%= fieldName %>')">
-                        <ion-icon name="add-circle" slot="start"></ion-icon>
-                        {{ 'ADD_IMAGE' | translate }}
+                    <ion-button *ngIf="!<%= entityInstance %>?.<%= fieldName %>">
+                        <input type="file" id='file' hidden=true (change)="uploadFile($event.target.files)" />
+                        <label *ngIf="!<%= entityInstance %>?.<%= fieldName %>" for="file">
+                            <ion-icon name="images"></ion-icon> {{ 'ADD_IMAGE' | translate }}
+                        </label>
+                    </ion-button>
+                    <ion-button *ngIf="!<%= entityInstance %>?.<%= fieldName %> && cam "
+                        (click)="getPicture('<%= fieldName %>')">
+                        <ion-icon name="camera" slot="start"></ion-icon>
+                                {{ 'TakePicture' | translate }}
                     </ion-button>
                     <%_ } else{ _%>
                       <ion-label >{{ '<%=fieldNameCapitalized _%>' | translate }}:</ion-label>
@@ -98,7 +90,7 @@ _%>
                 </div>
                 <%_ } else if (fieldType === 'LocalDate' || ['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
                 <ion-label>{{ '<%=fieldNameCapitalized _%>' | translate }}:</ion-label>
-                <ion-datetime displayFormat="MM/DD/YYYY" formControlName="<%= fieldName %>" id="field_<%= fieldName %>"></ion-datetime>
+                <ion-datetime displayFormat="DD MMM YYYY" min='1900' formControlName="<%= fieldName %>" id="field_<%= fieldName %>"></ion-datetime>
                 <%_ } else if (fieldType === 'Boolean') { _%>
                 <ion-label>{{ '<%=fieldNameCapitalized _%>' | translate }}:</ion-label>
                 <ion-checkbox formControlName="<%= fieldName %>"></ion-checkbox>
@@ -130,9 +122,7 @@ _%>
             const relationshipRequired = relationships[idx].relationshipRequired; _%>
             <ion-item lines='none'>
                 <ion-label>{{ '<%= relationshipNameHumanized %>' | translate}} </ion-label>
-                <ionic-selectable formControlName=<%_ if ( relationshipType === 'many-to-many') { _%> '<%=relationshipFieldNamePlural _%>'
-                <%_ } else { _%>  '<%=relationshipFieldName _%>' <%_ } _%> 
-                [items]='<%= otherEntityNamePlural %>' itemValueField="id"
+                <ionic-selectable formControlName=<%_ if ( relationshipType === 'many-to-many') { _%> '<%=relationshipFieldNamePlural _%>' <%_ } else { _%>  '<%=relationshipFieldName _%>' <%_ } _%> [items]='<%= otherEntityNamePlural %>' itemValueField="id"
                 itemTextField="name" [isMultiple]='<%= relationshipType === 'many-to-many' %>' [canSearch]="true" <%_ if (relationshipRequired) { _%> required<%_ } _%>>
                 </ionic-selectable>
             </ion-item>
@@ -149,11 +139,11 @@ _%>
     <br><br>
     <div class='ion-text-center hidden-xs-down'>
         <ion-button [disabled]="!isReadyToSave" size='small' (click)="save()">
-            <ion-icon slot='start' name="md-checkmark"></ion-icon>
+            <ion-icon slot='start' name="checkmark"></ion-icon>
             {{ 'SAVE' | translate }}
         </ion-button>&nbsp;
         <ion-button color='medium' size='small' (click)="previousState()">
-            <ion-icon slot='start' name="md-close"></ion-icon>
+            <ion-icon slot='start' name="close"></ion-icon>
             {{ 'CANCEL' | translate }}
         </ion-button>
         <br>

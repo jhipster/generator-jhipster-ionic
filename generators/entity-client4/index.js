@@ -182,8 +182,7 @@ module.exports = class extends BaseGenerator {
         if (variableName === entityInstance) {
           variableName += 'Collection';
         }
-        query = `this.${relationship.otherEntityName}Service.query()
-            .subscribe(data => { this.${variableName} = data.body; }, (error) => this.onError(error));`;
+        query = `this.entityService.queryActive(${relationship.otherEntityName}Url).subscribe(data => { this.${variableName} = data; }, (error) => this.onError(error));`;
       }
       if (variableName && !this.contains(queries, query)) {
         queries.push(query);
