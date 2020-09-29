@@ -123,41 +123,65 @@ Add another claim, name it `given_name`, include it in the access token, use `Ex
 
 ### iOS
 
-Generate a native project with the following command:
+Generate a native project with the following commands:
 
 ```
-ionic cordova prepare ios
+ionic build
+npx cap add ios
 ```
 
-Open your project in Xcode, configure code signing, and run your app.
+Open your project in Xcode and configure code signing.
 
 ```
-open platforms/ios/MyApp.xcworkspace
+npx cap open ios
 ```
+
+Add your custom scheme to `ios/App/App/Info.plist`:
+
+```xml
+<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+    <key>CFBundleURLName</key>
+    <string>com.getcapacitor.capacitor</string>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>capacitor</string>
+      <string>com.okta.dev-737523</string>
+    </array>
+  </dict>
+</array>
+```
+
+Then run your app from Xcode.
 
 ### Android
 
-Generate a native project with the following command:
+Generate a native project with the following commands:
 
 ```
-ionic cordova prepare android
+ionic build
+npx cap add android
 ```
 
-Set the launchMode to `singleTask` so the URL does not trigger a new instance of the app in `platforms/android/app/src/main/AndroidManifest.xml`:
+Change the custom scheme in `android/app/src/main/res/values/strings.xml` to use your reverse domain name:
 
 ```xml
-<activity
-      android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
-      android:name="com.mydomain.app.MainActivity"
-      android:label="@string/title_activity_main"
-      android:launchMode="singleTask"
-      android:theme="@style/AppTheme.NoActionBarLaunch">
+<string name="custom_url_scheme">com.okta.dev-737523</string>
 ```
 
-Open your project in Android Studio and run your app.
+The [SafariViewController Cordova Plugin](https://github.com/EddyVerbruggen/cordova-plugin-safariviewcontroller) is installed as part of this project. Capacitor uses AndroidX dependencies, but the SafariViewController plugin uses an older non-AndroidX dependency. Use [jetifier](https://developer.android.com/studio/command-line/jetifier) to [patch usages of old support libraries](https://capacitorjs.com/docs/android/troubleshooting#error-package-android-support-does-not-exist) with the following commands:
 
 ```
-studio platforms/android
+npm install jetifier
+npx jetify
+npx cap sync android
+```   
+
+Then, open your project in Android Studio and run your app.
+
+```
+npx cap open android
 ```
 
 You'll need to run a couple commands to allow the emulator to communicate with your API and Keycloak.
