@@ -76,34 +76,12 @@ From the **Applications** page, choose **Add Application**. On the Create New Ap
   - `http://localhost:8100/callback`
   - `dev.localhost.ionic:/callback`
 - Logout redirect URIs:
-
   - `http://localhost:8100/logout`
   - `dev.localhost.ionic:/logout`
 
-**NOTE:** `dev.localhost.ionic` is the default scheme, but you can also use something more traditional like `com.okta.dev-737523` (where `dev-737523.okta.com` is your Okta Org URL). If you change it, be sure to update the `URL_SCHEME` in `package.json` and the redirect URIs in `src/app/auth/auth.service.ts`.
+**NOTE:** `dev.localhost.ionic` is the default scheme, but you can also use something more traditional like `com.okta.dev-737523` (where `dev-737523.okta.com` is your Okta Org URL). If you change it, be sure to update the `scheme` in `src/environments/environment.ts` and the redirect URLs in `src/app/auth/factories/auth.factory.ts`.
 
-```json
-"cordova-plugin-customurlscheme": {
-    "URL_SCHEME": "com.okta.dev-737523"
-},
-```
-
-Open `src/app/auth/auth.service.ts` in an editor, search for `data.clientId` and replace it with the client ID from your Native app.
-
-```ts
-// try to get the oauth settings from the server
-this.requestor.xhr({method: 'GET', url: AUTH_CONFIG_URI}).then(async (data: any) => {
-  this.authConfig = {
-    identity_client: '{yourClientId}',
-    identity_server: data.issuer,
-    redirect_url: redirectUri,
-    end_session_redirect_url: logoutRedirectUri,
-    scopes,
-    usePkce: true
-  };
-  ...
-}
-```
+Open `src/app/auth/auth-config.service.ts` in an editor, search for `this.authConfig.clientId` and replace it with the client ID from your Native app.
 
 You'll also need to add a trusted origin for `http://localhost:8100`. In your Okta dashboard, go to **API** > **Trusted Origins** > **Add Origin**. Use the following values:
 
