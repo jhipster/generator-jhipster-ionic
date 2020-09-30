@@ -186,8 +186,14 @@ module.exports = class extends BaseGenerator {
     packageJSON.description = 'A hipster Ionic project, made with 💙 by @oktadev!';
     packageJSON.devDependencies['generator-jhipster-ionic'] = packagejs.version;
 
-    // add @ionic/storage
-    packageJSON.dependencies['@ionic/storage'] = '^2.3.1';
+    if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
+      // add @ionic/storage
+      packageJSON.dependencies['@ionic/storage'] = '^2.3.1';
+      // update jest config to ignore more patterns
+      packageJSON.jest.transformIgnorePatterns = [
+        "node_modules/(?!@ngrx|@ionic-native|@ionic|ionic-appauth|capacitor-secure-storage-plugin)"
+      ]
+    }
 
     // add prettier script
     packageJSON.scripts.prettier = 'prettier --write "{,e2e/**/,src/**/}*.{js,json,html,md,ts,css,scss,yml}" --loglevel silent';
