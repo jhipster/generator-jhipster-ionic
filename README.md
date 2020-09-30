@@ -81,7 +81,12 @@ From the **Applications** page, choose **Add Application**. On the Create New Ap
 
 **NOTE:** `dev.localhost.ionic` is the default scheme, but you can also use something more traditional like `com.okta.dev-737523` (where `dev-737523.okta.com` is your Okta Org URL). If you change it, be sure to update the `scheme` in `src/environments/environment.ts` and the redirect URLs in `src/app/auth/factories/auth.factory.ts`.
 
-Open `src/app/auth/auth-config.service.ts` in an editor, search for `this.authConfig.clientId` and replace it with the client ID from your Native app.
+Open `src/app/auth/auth-config.service.ts` in an editor, search for `this.authConfig.clientId` and replace it with the client ID from your Native app. For example:
+
+```ts
+environment.oidcConfig.server_host = this.authConfig.issuer;
+environment.oidcConfig.client_id = '0oa5nak5fmUbfT3O3357';
+```
 
 You'll also need to add a trusted origin for `http://localhost:8100`. In your Okta dashboard, go to **API** > **Trusted Origins** > **Add Origin**. Use the following values:
 
@@ -94,6 +99,8 @@ Click **Save**.
 #### Add Claims to Access Token
 
 In order to authentication successfully with your Ionic app, you have to do a bit more configuration in Okta. Since the Ionic client will only send an access token to JHipster, you need to 1) add a `groups` claim to the access token and 2) add a couple more claims so the user's name will be available in JHipster.
+
+**NOTE:** These steps will not be necessary if you're using a version of JHipster with [a `CustomClaimConverter`](https://github.com/jhipster/generator-jhipster/pull/12609).
 
 Navigate to **API** > **Authorization Servers**, click the **Authorization Servers** tab and edit the **default** one. Click the **Claims** tab and **Add Claim**. Name it "groups" and include it in the Access Token. Set the value type to "Groups" and set the filter to be a Regex of `.*`. Click **Create**.
 
