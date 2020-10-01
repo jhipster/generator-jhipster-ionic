@@ -99,7 +99,7 @@ Give your app a memorable name, and configure it as follows:
 If you use the Okta CLI, your terminal should look similar to the following:
 
 ```
-➜  ionic4j git:(master) okta apps create
+$ okta apps create
 Application name [ionic4j]:
 Type of Application
 (The Okta CLI only supports a subset of application types and properties):
@@ -162,8 +162,8 @@ Add your custom scheme to `ios/App/App/Info.plist`:
     <key>CFBundleURLSchemes</key>
     <array>
       <string>capacitor</string>
-      <string>com.okta.dev-737523</string>
       <string>dev.localhost.ionic</string>
+      <string>com.okta.dev-737523</string>
     </array>
   </dict>
 </array>
@@ -213,7 +213,17 @@ adb reverse tcp:8080 tcp:8080
 adb reverse tcp:9080 tcp:9080
 ```
 
-If you see `java.io.IOException: Cleartext HTTP traffic to localhost not permitted` in your Android Studio **Run** console, see [this Stack Overflow Q&A](https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted). If that doesn't work, just use Okta (and its HTTP-by-default feature 😉).
+If you see `java.io.IOException: Cleartext HTTP traffic to localhost not permitted` in your Android Studio console, enable clear text traffic in `android/app/src/main/AndroidManifest.xml`:
+
+```xml
+<application
+    ...
+    android:usesCleartextTraffic="true">
+```
+        
+See [this Stack Overflow Q&A](https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted) for more information. 
+
+If that doesn't work, just use Okta (and its HTTPS-by-default feature 😉).
 
 ### Entity Generator
 
