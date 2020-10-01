@@ -42,7 +42,14 @@ npm update -g generator-jhipster-ionic
 
 Create a JHipster app using `jhipster`, or a backend-only with `yo jhipster:server`. Choose `JWT` or `OAuth 2.0` as the authentication type.
 
-In a directory alongside your JHipster app, run this module. This will create an Ionic app for you and install the necessary JHipster files for it to communicate with the backend.
+In a directory alongside your JHipster app, run this module. 
+
+```bash
+- jhipster-app
+- ionic-app
+```
+
+The following command will create an Ionic app (and its directory) for you and install the necessary code for it to communicate with your JHipster backend.
 
 ```bash
 yo jhipster-ionic
@@ -64,13 +71,21 @@ docker-compose -f src/main/docker/keycloak up -d
 
 See [JHipster's security docs](https://www.jhipster.tech/security/#-oauth2-and-openid-connect) to see how to configure JHipster for Okta.
 
-In addition to having a OIDC app for your JHipster backend, you'll need to create a Native app too.
+**NEW:** You can use the [Okta CLI](https://github.com/oktadeveloper/okta-cli) to add JHipster integration in seconds! After running `okta register`, run `okta apps create` and select `JHipster`. 
+
+In addition to having a OIDC app for your JHipster backend, you'll need to create a Native app on Okta too.
 
 #### Create a Native Application in Okta
 
-Log in to your Okta Developer account (or [sign up](https://developer.okta.com/signup/) if you don't have an account).
+Log in to your Okta Developer account (or [sign up](https://developer.okta.com/signup/) if you don't have an account). 
 
-From the **Applications** page, choose **Add Application**. On the Create New Application page, select **Native**. Give your app a memorable name, and configure it as follows:
+> You can also use the Okta CLI and run `okta apps create`, using the settings below to configure your app.
+
+From the **Applications** page, choose **Add Application**. 
+
+On the Create New Application page, select **Native**
+
+Give your app a memorable name, and configure it as follows:
 
 - Login redirect URIs:
   - `http://localhost:8100/callback`
