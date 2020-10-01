@@ -30,10 +30,10 @@
     "chalk": "4.1.0",
     "cross-spawn": "7.0.3",
     "fs-extra": "9.0.1",
-    "generator-jhipster": ">=6.5.1",
-    "jhipster-core": "^7.1.1",
+    "generator-jhipster": ">=6.10.3",
+    "jhipster-core": "^7.3.4",
     "jsonfile": "6.0.1",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.20",
     "pluralize": "8.0.0",
     "semver": "7.3.2",
     "shelljs": "0.8.4"

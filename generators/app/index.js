@@ -186,6 +186,15 @@ module.exports = class extends BaseGenerator {
     packageJSON.description = 'A hipster Ionic project, made with 💙 by @oktadev!';
     packageJSON.devDependencies['generator-jhipster-ionic'] = packagejs.version;
 
+    if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
+      // add @ionic/storage
+      packageJSON.dependencies['@ionic/storage'] = '^2.3.1';
+      // update jest config to ignore more patterns
+      packageJSON.jest.transformIgnorePatterns = [
+        "node_modules/(?!@ngrx|@ionic-native|@ionic|ionic-appauth|capacitor-secure-storage-plugin)"
+      ]
+    }
+
     // add prettier script
     packageJSON.scripts.prettier = 'prettier --write "{,e2e/**/,src/**/}*.{js,json,html,md,ts,css,scss,yml}" --loglevel silent';
     jsonfile.writeFileSync(packagePath, packageJSON);
@@ -195,8 +204,8 @@ module.exports = class extends BaseGenerator {
       this.packageFolder = this.jhipsterAppConfig.packageFolder;
 
       let installAuthCmd;
-      const params = '--configUri=auth-info --issuer=null --clientId=null';
-      const schematicsVersion = '2.2.0';
+      const params = '--configUri=auth-info --issuer=http://localhost:9080/auth/realms/jhipster --clientId=web_app';
+      const schematicsVersion = '3.0.0'; // todo: remove environments workaround below
 
       // use `schematics` when testing and expect it to be installed
       if (this.installDeps) {
@@ -245,13 +254,17 @@ module.exports = class extends BaseGenerator {
       this.template('src/app/services/user/user.service.spec.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.service.spec.ts`);
       this.template('src/app/services/user/user.service.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.service.ts`);
 
+      // todo: Remove after upgrading to OktaDev Schematics 3.0.1
+      this.template('src/environments/environment.ts.ejs', `${this.ionicAppName}/src/environments/environment.ts`);
+
       // Delete files no longer used
       const filesToDelete = [
         `${CLIENT_MAIN_SRC_DIR}app/login`,
         `${CLIENT_MAIN_SRC_DIR}app/tab1`,
         `${CLIENT_MAIN_SRC_DIR}app/pages/signup`,
         `${CLIENT_MAIN_SRC_DIR}app/services/auth/auth-jwt.service.ts`,
-        `${CLIENT_MAIN_SRC_DIR}app/services/auth/auth-jwt.service.spec.ts`
+        `${CLIENT_MAIN_SRC_DIR}app/services/auth/auth-jwt.service.spec.ts`,
+        `${CLIENT_MAIN_SRC_DIR}app/interceptors/auth-expired.interceptor.ts`
       ];
 
       filesToDelete.forEach((path) => {
@@ -266,8 +279,10 @@ module.exports = class extends BaseGenerator {
       this.template('src/app/services/user/user.model.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.model.ts`);
     }
 
-    // Add @angular/localize
-    shelljs.exec(`cd ${this.ionicAppName} && npx ng add @angular/localize`);
+    // Add @angular/localize if not testing
+    if (this.installDeps) {
+      shelljs.exec(`cd ${this.ionicAppName} && npx ng add @angular/localize`);
+    }
 
     // Add e2e tests
     this.authenticationType = this.jhipsterAppConfig.authenticationType;

@@ -28,7 +28,8 @@ describe('JHipster generator jhipster-generator-ionic', () => {
         'ionic4j-oauth2/src/app/tab1',
         'ionic4j-oauth2/src/app/pages/signup',
         'ionic4j-oauth2/src/app/services/auth/auth-jwt.service.ts',
-        'ionic4j-oauth2/src/app/services/auth/auth-jwt.service.spec.ts'
+        'ionic4j-oauth2/src/app/services/auth/auth-jwt.service.spec.ts',
+        'ionic4j-oauth2/src/app/interceptors/auth-expired.interceptor.ts'
       ]);
     });
 

@@ -76,33 +76,16 @@ From the **Applications** page, choose **Add Application**. On the Create New Ap
   - `http://localhost:8100/callback`
   - `dev.localhost.ionic:/callback`
 - Logout redirect URIs:
-
   - `http://localhost:8100/logout`
   - `dev.localhost.ionic:/logout`
 
-**NOTE:** `dev.localhost.ionic` is the default scheme, but you can also use something more traditional like `com.okta.dev-737523` (where `dev-737523.okta.com` is your Okta Org URL). If you change it, be sure to update the `URL_SCHEME` in `package.json` and the redirect URIs in `src/app/auth/auth.service.ts`.
+**NOTE:** `dev.localhost.ionic` is the default scheme, but you can also use something more traditional like `com.okta.dev-737523` (where `dev-737523.okta.com` is your Okta Org URL). If you change it, be sure to update the `scheme` in `src/environments/environment.ts` and the redirect URLs in `src/app/auth/factories/auth.factory.ts`.
 
-```json
-"cordova-plugin-customurlscheme": {
-    "URL_SCHEME": "com.okta.dev-737523"
-},
-```
-
-Open `src/app/auth/auth.service.ts` in an editor, search for `data.clientId` and replace it with the client ID from your Native app.
+Open `src/app/auth/auth-config.service.ts` in an editor, search for `this.authConfig.clientId` and replace it with the client ID from your Native app. For example:
 
 ```ts
-// try to get the oauth settings from the server
-this.requestor.xhr({method: 'GET', url: AUTH_CONFIG_URI}).then(async (data: any) => {
-  this.authConfig = {
-    identity_client: '{yourClientId}',
-    identity_server: data.issuer,
-    redirect_url: redirectUri,
-    end_session_redirect_url: logoutRedirectUri,
-    scopes,
-    usePkce: true
-  };
-  ...
-}
+environment.oidcConfig.server_host = this.authConfig.issuer;
+environment.oidcConfig.client_id = '0oa5nak5fmUbfT3O3357';
 ```
 
 You'll also need to add a trusted origin for `http://localhost:8100`. In your Okta dashboard, go to **API** > **Trusted Origins** > **Add Origin**. Use the following values:
@@ -117,47 +100,73 @@ Click **Save**.
 
 In order to authentication successfully with your Ionic app, you have to do a bit more configuration in Okta. Since the Ionic client will only send an access token to JHipster, you need to 1) add a `groups` claim to the access token and 2) add a couple more claims so the user's name will be available in JHipster.
 
+**NOTE:** These steps will not be necessary if you're using a version of JHipster with [a `CustomClaimConverter`](https://github.com/jhipster/generator-jhipster/pull/12609).
+
 Navigate to **API** > **Authorization Servers**, click the **Authorization Servers** tab and edit the **default** one. Click the **Claims** tab and **Add Claim**. Name it "groups" and include it in the Access Token. Set the value type to "Groups" and set the filter to be a Regex of `.*`. Click **Create**.
 
 Add another claim, name it `given_name`, include it in the access token, use `Expression` in the value type, and set the value to `user.firstName`. Optionally, include it in the `profile` scope. Perform the same actions to create a `family_name` claim and use expression `user.lastName`.
 
 ### iOS
 
-Generate a native project with the following command:
+Generate a native project with the following commands:
 
 ```
-ionic cordova prepare ios
+ionic build
+npx cap add ios
 ```
 
-Open your project in Xcode, configure code signing, and run your app.
+Open your project in Xcode and configure code signing.
 
 ```
-open platforms/ios/MyApp.xcworkspace
+npx cap open ios
 ```
+
+Add your custom scheme to `ios/App/App/Info.plist`:
+
+```xml
+<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+    <key>CFBundleURLName</key>
+    <string>com.getcapacitor.capacitor</string>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>capacitor</string>
+      <string>com.okta.dev-737523</string>
+    </array>
+  </dict>
+</array>
+```
+
+Then run your app from Xcode.
 
 ### Android
 
-Generate a native project with the following command:
+Generate a native project with the following commands:
 
 ```
-ionic cordova prepare android
+ionic build
+npx cap add android
 ```
 
-Set the launchMode to `singleTask` so the URL does not trigger a new instance of the app in `platforms/android/app/src/main/AndroidManifest.xml`:
+Change the custom scheme in `android/app/src/main/res/values/strings.xml` to use your reverse domain name:
 
 ```xml
-<activity
-      android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
-      android:name="com.mydomain.app.MainActivity"
-      android:label="@string/title_activity_main"
-      android:launchMode="singleTask"
-      android:theme="@style/AppTheme.NoActionBarLaunch">
+<string name="custom_url_scheme">com.okta.dev-737523</string>
 ```
 
-Open your project in Android Studio and run your app.
+The [SafariViewController Cordova Plugin](https://github.com/EddyVerbruggen/cordova-plugin-safariviewcontroller) is installed as part of this project. Capacitor uses AndroidX dependencies, but the SafariViewController plugin uses an older non-AndroidX dependency. Use [jetifier](https://developer.android.com/studio/command-line/jetifier) to [patch usages of old support libraries](https://capacitorjs.com/docs/android/troubleshooting#error-package-android-support-does-not-exist) with the following commands:
 
 ```
-studio platforms/android
+npm install jetifier
+npx jetify
+npx cap sync android
+```   
+
+Then, open your project in Android Studio and run your app.
+
+```
+npx cap open android
 ```
 
 You'll need to run a couple commands to allow the emulator to communicate with your API and Keycloak.
