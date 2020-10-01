@@ -96,11 +96,32 @@ Give your app a memorable name, and configure it as follows:
 
 **NOTE:** `dev.localhost.ionic` is the default scheme, but you can also use something more traditional like `com.okta.dev-737523` (where `dev-737523.okta.com` is your Okta Org URL). If you change it, be sure to update the `scheme` in `src/environments/environment.ts` and the redirect URLs in `src/app/auth/factories/auth.factory.ts`.
 
+If you use the Okta CLI, your terminal should look similar to the following:
+
+```
+➜  ionic4j git:(master) okta apps create
+Application name [ionic4j]:
+Type of Application
+(The Okta CLI only supports a subset of application types and properties):
+> 1: Web
+> 2: Single Page App
+> 3: Native App (mobile)
+> 4: Service (Machine-to-Machine)
+Enter your choice [Web]: 3
+Redirect URI
+Common defaults:
+ Reverse Domain name - com.okta.dev-737523:/callback
+Enter your Redirect URI [com.okta.dev-737523:/callback]: dev.localhost.ionic:/callback,com.okta.dev-737523:/callback,http://localhost:8100/callback
+Enter your Post Logout Redirect URI [dev.localhost.ionic:/]: dev.localhost.ionic:/logout,com.okta.dev-737523:/logout,http://localhost:8100/logout
+Configuring a new OIDC Application, almost done:
+Created OIDC application, client-id: 0oa5qrj3i7RKHeyZh357
+```
+
 Open `src/app/auth/auth-config.service.ts` in an editor, search for `this.authConfig.clientId` and replace it with the client ID from your Native app. For example:
 
 ```ts
 environment.oidcConfig.server_host = this.authConfig.issuer;
-environment.oidcConfig.client_id = '0oa5nak5fmUbfT3O3357';
+environment.oidcConfig.client_id = '0oa5qrj3i7RKHeyZh357';
 ```
 
 You'll also need to add a trusted origin for `http://localhost:8100`. In your Okta dashboard, go to **API** > **Trusted Origins** > **Add Origin**. Use the following values:
@@ -127,13 +148,7 @@ Generate a native project with the following commands:
 
 ```
 ionic build
-npx cap add ios
-```
-
-Open your project in Xcode and configure code signing.
-
-```
-npx cap open ios
+ionic capacitor add ios
 ```
 
 Add your custom scheme to `ios/App/App/Info.plist`:
@@ -148,12 +163,19 @@ Add your custom scheme to `ios/App/App/Info.plist`:
     <array>
       <string>capacitor</string>
       <string>com.okta.dev-737523</string>
+      <string>dev.localhost.ionic</string>
     </array>
   </dict>
 </array>
 ```
 
-Then run your app from Xcode.
+Open your project in Xcode and configure code signing.
+
+```
+npx cap open ios
+```
+
+Then, run your app from Xcode.
 
 ### Android
 
@@ -161,10 +183,10 @@ Generate a native project with the following commands:
 
 ```
 ionic build
-npx cap add android
+ionic capacitor add android
 ```
 
-Change the custom scheme in `android/app/src/main/res/values/strings.xml` to use your reverse domain name:
+Change the custom scheme in `android/app/src/main/res/values/strings.xml` to use `dev.localhost.ionic` or your reverse domain name:
 
 ```xml
 <string name="custom_url_scheme">com.okta.dev-737523</string>
@@ -190,6 +212,8 @@ You'll need to run a couple commands to allow the emulator to communicate with y
 adb reverse tcp:8080 tcp:8080
 adb reverse tcp:9080 tcp:9080
 ```
+
+If you see `java.io.IOException: Cleartext HTTP traffic to localhost not permitted` in your Android Studio **Run** console, see [this Stack Overflow Q&A](https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted). If that doesn't work, just use Okta (and its HTTP-by-default feature 😉).
 
 ### Entity Generator
 
