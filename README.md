@@ -136,7 +136,7 @@ Click **Save**.
 
 In order to authentication successfully with your Ionic app, you have to do a bit more configuration in Okta. Since the Ionic client will only send an access token to JHipster, you need to 1) add a `groups` claim to the access token and 2) add a couple more claims so the user's name will be available in JHipster.
 
-**NOTE:** These steps will not be necessary if you're using a version of JHipster with [a `CustomClaimConverter`](https://github.com/jhipster/generator-jhipster/pull/12609).
+**NOTE:** These steps are not necessary if you're using a version of JHipster with [a `CustomClaimConverter`](https://github.com/jhipster/generator-jhipster/pull/12609).
 
 Navigate to **API** > **Authorization Servers**, click the **Authorization Servers** tab and edit the **default** one. Click the **Claims** tab and **Add Claim**. Name it "groups" and include it in the Access Token. Set the value type to "Groups" and set the filter to be a Regex of `.*`. Click **Create**.
 
