@@ -95,8 +95,8 @@ jobs:
         run: |
           date
           npm -g install yo @ionic/cli
-          git clone https://github.com/jhipster/jhipster.git
-          cd jhipster && ./mvnw install -q -ntp -DskipTests -Dgpg.skip=true
+          git clone https://github.com/jhipster/jhipster-bom.git
+          cd jhipster-bom && ./mvnw install -q -ntp -DskipTests -Dgpg.skip=true
           chmod +x $JHIPSTER_INSTALL/*.sh
           chmod +x $JHIPSTER_SCRIPTS/*.sh
       - name: Install JHipster Stack
