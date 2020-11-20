@@ -42,7 +42,7 @@
     "@angular-devkit/schematics-cli": "0.1100.2",
     "@oktadev/schematics": "3.0.1",
     "chai": "4.2.0",
-    "eslint": "7.12.1",
+    "eslint": "7.13.0",
     "eslint-config-airbnb-base": "14.2.0",
     "eslint-plugin-import": "2.22.1",
     "jsdoc": "3.6.6",
