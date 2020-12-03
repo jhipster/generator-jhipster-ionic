@@ -39,7 +39,7 @@
     "shelljs": "0.8.4"
   },
   "devDependencies": {
-    "@angular-devkit/schematics-cli": "0.1100.2",
+    "@angular-devkit/schematics-cli": "0.1100.3",
     "@oktadev/schematics": "3.0.1",
     "chai": "4.2.0",
     "eslint": "7.14.0",
