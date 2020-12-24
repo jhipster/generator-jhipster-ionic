@@ -121,7 +121,7 @@ module.exports = class extends BaseGenerator {
 
     const currentJhipsterVersion = this.jhipsterAppConfig.jhipsterVersion;
     const minimumJhipsterVersion = packagejs.dependencies['generator-jhipster'];
-    if (currentJhipsterVersion !== undefined && !semver.satisfies(currentJhipsterVersion, minimumJhipsterVersion)) {
+    if (currentJhipsterVersion !== undefined && !semver.satisfies(semver.coerce(currentJhipsterVersion), minimumJhipsterVersion)) {
       this.error(
         `\nYour backend uses an old JHipster version (${currentJhipsterVersion})... you need at least (${minimumJhipsterVersion})\n`
       );
@@ -205,7 +205,7 @@ module.exports = class extends BaseGenerator {
 
       let installAuthCmd;
       const params = '--configUri=auth-info --issuer=http://localhost:9080/auth/realms/jhipster --clientId=web_app';
-      const schematicsVersion = '3.0.0'; // todo: remove environments workaround below
+      const schematicsVersion = '3.1.0';
 
       // use `schematics` when testing and expect it to be installed
       if (this.installDeps) {
@@ -253,9 +253,6 @@ module.exports = class extends BaseGenerator {
       this.template('src/app/services/user/user.model.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.model.ts`);
       this.template('src/app/services/user/user.service.spec.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.service.spec.ts`);
       this.template('src/app/services/user/user.service.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.service.ts`);
-
-      // todo: Remove after upgrading to OktaDev Schematics 3.0.1
-      this.template('src/environments/environment.ts.ejs', `${this.ionicAppName}/src/environments/environment.ts`);
 
       // Delete files no longer used
       const filesToDelete = [
