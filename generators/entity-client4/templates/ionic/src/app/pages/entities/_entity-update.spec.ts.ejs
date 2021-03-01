@@ -35,7 +35,7 @@ describe('<%= entityAngularName %>UpdatePage', () => {
   let fixture: ComponentFixture<<%= entityAngularName %>UpdatePage>;
 
  const entityMock =  {
-  id: 0,
+  id: <% if (pkType === 'String') { %>'16198999-42bf-4dfe-90f4-52e1bb0555ac'<% } else { %>0<% } %>,
   user: {}
   };
 
