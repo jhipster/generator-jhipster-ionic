@@ -26,5 +26,7 @@ yo jhipster-ionic default --force --no-insight
 cd "$HOME/$IONIC_FOLDER"
 # to use last versions linked
 npm link generator-jhipster-ionic
+cd node_modules/generator-jhipster-ionic && npm link generator-jhipster
+cd ../..
 yo jhipster-ionic:import-jdl "$HOME/$APP_FOLDER"/"$JHIPSTER".jdl
 

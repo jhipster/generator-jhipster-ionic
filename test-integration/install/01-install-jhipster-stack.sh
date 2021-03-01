@@ -31,4 +31,3 @@ npm link
 #-------------------------------------------------------------------------------
 cd "$GITHUB_WORKSPACE"
 npm link
-npm link generator-jhipster
