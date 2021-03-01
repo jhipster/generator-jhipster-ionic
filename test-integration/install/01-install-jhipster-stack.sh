@@ -30,5 +30,5 @@ npm link
 # Link Ionic
 #-------------------------------------------------------------------------------
 cd "$GITHUB_WORKSPACE"
-npm link generator-jhipster
 npm link
+npm link generator-jhipster
