@@ -286,6 +286,9 @@ module.exports = class extends BaseGenerator {
     this.template('e2e/pages/login.po.ts.ejs', `${this.ionicAppName}/e2e/pages/login.po.ts`);
     this.template('e2e/spec/login.e2e-spec.ts.ejs', `${this.ionicAppName}/e2e/spec/login.e2e-spec.ts`);
 
+    // Fix npm 7 https://github.com/oktadeveloper/generator-jhipster-ionic/issues/434
+    this.template('.npmrc.ejs', `${this.ionicAppName}/.npmrc`);
+
     done();
   }
 
