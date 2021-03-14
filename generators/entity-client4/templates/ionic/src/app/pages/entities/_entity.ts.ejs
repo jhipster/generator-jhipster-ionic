@@ -21,7 +21,7 @@ import { NavController, ToastController, Platform, IonItemSliding } from '@ionic
 import { filter, map } from 'rxjs/operators';
 import { HttpResponse } from '@angular/common/http';
 <%_ if (fieldsContainBlob) { _%>
-import { JhiDataUtils } from '../services/utils/data-util.service';
+import { JhiDataUtils } from 'src/app/services/utils/data-util.service';
 <%_ } _%>
 import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
 import { <%= entityAngularName %>Service } from './<%= entityFileName %>.service';
