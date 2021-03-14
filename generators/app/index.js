@@ -141,8 +141,7 @@ module.exports = class extends BaseGenerator {
 
     const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster --type angular${this.interactive ? '' : ' --no-interactive'}`;
     this.log(`\nCreating Ionic app with command: ${chalk.green(`${cmd}`)}`);
-    // const params = ['start', this.ionicAppName, 'oktadeveloper/jhipster'];
-    const params = ['start', this.ionicAppName, 'https://github.com/oktadeveloper/ionic-jhipster-starter'];
+    const params = ['start', this.ionicAppName, 'oktadeveloper/jhipster'];
     params.push('--type');
     params.push('angular');
     if (!this.interactive) {
@@ -192,8 +191,8 @@ module.exports = class extends BaseGenerator {
       packageJSON.dependencies['@ionic/storage'] = '^2.3.1';
       // update jest config to ignore more patterns
       packageJSON.jest.transformIgnorePatterns = [
-        "node_modules/(?!@ngrx|@ionic-native|@ionic|ionic-appauth|capacitor-secure-storage-plugin)"
-      ]
+        'node_modules/(?!@ngrx|@ionic-native|@ionic|ionic-appauth|capacitor-secure-storage-plugin)'
+      ];
     }
 
     // add prettier script
@@ -206,7 +205,7 @@ module.exports = class extends BaseGenerator {
 
       let installAuthCmd;
       const params = '--configUri=auth-info --issuer=http://localhost:9080/auth/realms/jhipster --clientId=web_app';
-      const schematicsVersion = '3.3.0';
+      const schematicsVersion = '3.1.0';
 
       // use `schematics` when testing and expect it to be installed
       if (this.installDeps) {
