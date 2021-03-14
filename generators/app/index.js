@@ -254,8 +254,6 @@ module.exports = class extends BaseGenerator {
       this.template('src/app/services/user/user.model.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.model.ts`);
       this.template('src/app/services/user/user.service.spec.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.service.spec.ts`);
       this.template('src/app/services/user/user.service.spec.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.service.spec.ts`);
-      this.template('src/app/services/utils/data-util.service.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/utils/data-util.service.ts`);
-      this.template('src/app/services/utils/data-util.service.spec.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/utils/data-util.service.spec.ts`);
 
       // Delete files no longer used
       const filesToDelete = [
