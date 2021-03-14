@@ -36,14 +36,14 @@ module.exports = class extends BaseGenerator {
     this.configOptions = {};
     // This adds support for a `--interactive` flag
     this.option('interactive', {
-      desc: "Don't prompt user when running ionic start",
+      desc: 'Don\'t prompt user when running ionic start',
       type: Boolean,
       defaults: false
     });
 
     // This adds support for a `--install` flag
     this.option('installDeps', {
-      desc: "Don't install dependencies when running ionic start",
+      desc: 'Don\'t install dependencies when running ionic start',
       type: Boolean,
       defaults: true
     });
@@ -139,7 +139,8 @@ module.exports = class extends BaseGenerator {
       );
     }
 
-    const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster --type angular${this.interactive ? '' : ' --no-interactive'}`;
+    // const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster --type angular${this.interactive ? '' : ' --no-interactive'}`;
+    const cmd = `ionic start ${this.ionicAppName} https://github.com/oktadeveloper/jhipster-ionic-starter ${this.interactive ? '' : ' --no-interactive'}`;
     this.log(`\nCreating Ionic app with command: ${chalk.green(`${cmd}`)}`);
     const params = ['start', this.ionicAppName, 'oktadeveloper/jhipster'];
     params.push('--type');
@@ -252,7 +253,9 @@ module.exports = class extends BaseGenerator {
       this.template('src/app/services/login/login.service.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/login/login.service.ts`);
       this.template('src/app/services/user/user.model.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.model.ts`);
       this.template('src/app/services/user/user.service.spec.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.service.spec.ts`);
-      this.template('src/app/services/user/user.service.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.service.ts`);
+      this.template('src/app/services/user/user.service.spec.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.service.spec.ts`);
+      this.template('src/app/services/utils/data-util.service.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/utils/data-util.service.ts`);
+      this.template('src/app/services/utils/data-util.service.spec.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/utils/data-util.service.spec.ts`);
 
       // Delete files no longer used
       const filesToDelete = [
@@ -285,9 +288,6 @@ module.exports = class extends BaseGenerator {
     this.authenticationType = this.jhipsterAppConfig.authenticationType;
     this.template('e2e/pages/login.po.ts.ejs', `${this.ionicAppName}/e2e/pages/login.po.ts`);
     this.template('e2e/spec/login.e2e-spec.ts.ejs', `${this.ionicAppName}/e2e/spec/login.e2e-spec.ts`);
-
-    // Fix npm 7 https://github.com/oktadeveloper/generator-jhipster-ionic/issues/434
-    this.template('.npmrc.ejs', `${this.ionicAppName}/.npmrc`);
 
     done();
   }

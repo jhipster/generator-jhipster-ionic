@@ -24,7 +24,7 @@ let hasManyToMany = query.hasManyToMany;
 _%>
 import { Component<% if (fieldsContainImageBlob) { %>, ElementRef, ViewChild<% } %> } from '@angular/core';
 <%_ if (fieldsContainBlob) { _%>
-import { JhiDataUtils } from 'ng-jhipster';
+import { JhiDataUtils } from '../services/utils/data-util.service';
 <%_ } _%>
 <%_ if (fieldsContainImageBlob) { _%>
 import { Camera, CameraOptions } from '@ionic-native/camera';
