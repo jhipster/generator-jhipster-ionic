@@ -141,8 +141,7 @@ module.exports = class extends BaseGenerator {
 
     const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster --type angular${this.interactive ? '' : ' --no-interactive'}`;
     this.log(`\nCreating Ionic app with command: ${chalk.green(`${cmd}`)}`);
-    // const params = ['start', this.ionicAppName, 'oktadeveloper/jhipster'];
-    const params = ['start', this.ionicAppName, 'https://github.com/oktadeveloper/ionic-jhipster-starter.git'];
+    const params = ['start', this.ionicAppName, 'oktadeveloper/jhipster'];
     params.push('--type');
     params.push('angular');
     if (!this.interactive) {
