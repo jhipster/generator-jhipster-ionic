@@ -139,10 +139,10 @@ module.exports = class extends BaseGenerator {
       );
     }
 
-    // const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster --type angular${this.interactive ? '' : ' --no-interactive'}`;
-    const cmd = `ionic start ${this.ionicAppName} https://github.com/oktadeveloper/jhipster-ionic-starter ${this.interactive ? '' : ' --no-interactive'}`;
+    const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster --type angular${this.interactive ? '' : ' --no-interactive'}`;
     this.log(`\nCreating Ionic app with command: ${chalk.green(`${cmd}`)}`);
-    const params = ['start', this.ionicAppName, 'oktadeveloper/jhipster'];
+    // const params = ['start', this.ionicAppName, 'oktadeveloper/jhipster'];
+    const params = ['start', this.ionicAppName, 'https://github.com/oktadeveloper/ionic-jhipster-starter'];
     params.push('--type');
     params.push('angular');
     if (!this.interactive) {
@@ -206,7 +206,7 @@ module.exports = class extends BaseGenerator {
 
       let installAuthCmd;
       const params = '--configUri=auth-info --issuer=http://localhost:9080/auth/realms/jhipster --clientId=web_app';
-      const schematicsVersion = '3.1.0';
+      const schematicsVersion = '3.3.0';
 
       // use `schematics` when testing and expect it to be installed
       if (this.installDeps) {
