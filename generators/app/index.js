@@ -36,14 +36,14 @@ module.exports = class extends BaseGenerator {
     this.configOptions = {};
     // This adds support for a `--interactive` flag
     this.option('interactive', {
-      desc: "Don't prompt user when running ionic start",
+      desc: 'Don\'t prompt user when running ionic start',
       type: Boolean,
       defaults: false
     });
 
     // This adds support for a `--install` flag
     this.option('installDeps', {
-      desc: "Don't install dependencies when running ionic start",
+      desc: 'Don\'t install dependencies when running ionic start',
       type: Boolean,
       defaults: true
     });
@@ -191,8 +191,8 @@ module.exports = class extends BaseGenerator {
       packageJSON.dependencies['@ionic/storage'] = '^2.3.1';
       // update jest config to ignore more patterns
       packageJSON.jest.transformIgnorePatterns = [
-        "node_modules/(?!@ngrx|@ionic-native|@ionic|ionic-appauth|capacitor-secure-storage-plugin)"
-      ]
+        'node_modules/(?!@ngrx|@ionic-native|@ionic|ionic-appauth|capacitor-secure-storage-plugin)'
+      ];
     }
 
     // add prettier script
@@ -205,7 +205,7 @@ module.exports = class extends BaseGenerator {
 
       let installAuthCmd;
       const params = '--configUri=auth-info --issuer=http://localhost:9080/auth/realms/jhipster --clientId=web_app';
-      const schematicsVersion = '3.1.0';
+      const schematicsVersion = '3.3.0';
 
       // use `schematics` when testing and expect it to be installed
       if (this.installDeps) {
@@ -251,8 +251,8 @@ module.exports = class extends BaseGenerator {
       this.template('src/app/services/login/login.service.spec.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/login/login.service.spec.ts`);
       this.template('src/app/services/login/login.service.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/login/login.service.ts`);
       this.template('src/app/services/user/user.model.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.model.ts`);
-      this.template('src/app/services/user/user.service.spec.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.service.spec.ts`);
       this.template('src/app/services/user/user.service.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.service.ts`);
+      this.template('src/app/services/user/user.service.spec.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.service.spec.ts`);
 
       // Delete files no longer used
       const filesToDelete = [
