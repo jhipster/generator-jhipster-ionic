@@ -69,7 +69,7 @@ To add PWA support to your Ionic app, run:
 ng add @angular/pwa
 ```
 
-[Use the Angular CLI to transform your Ionic app into a PWA](https://youtu.be/ooKvtmobyPw) is a 4-minute video that shows what this command does.
+Watch [use the Angular CLI to transform your Ionic app into a PWA](https://youtu.be/ooKvtmobyPw) to learn more.
 
 ### Okta for Authentication
 
@@ -81,15 +81,18 @@ docker-compose -f src/main/docker/keycloak up -d
 
 See [JHipster's security docs](https://www.jhipster.tech/security/#-oauth2-and-openid-connect) to see how to configure JHipster for Okta.
 
-**NEW:** You can use the [Okta CLI](https://github.com/oktadeveloper/okta-cli) to add JHipster integration in seconds! After running `okta register`, run `okta apps create` and select `JHipster`. 
+**NEW:** You can use the [Okta CLI](https://github.com/oktadeveloper/okta-cli) to add JHipster integration in seconds! After running `okta register`, run `okta apps create jhipster`. Then, source the created `.okta.env` file and start your app.
+
+```shell
+source .okta.env
+./gradlew # or ./mvnw
+```
 
 In addition to having a OIDC app for your JHipster backend, you'll need to create a Native app on Okta too.
 
 #### Create a Native Application in Okta
 
-Before you begin, you'll need a free Okta developer account. Install the [Okta CLI](https://cli.okta.com) and run `okta register` to sign up for a new account. If you already have an account, run `okta login`.
-
-Then, run `okta apps create{% if (include.type == "service") %} service{% endif %}`. Select the default app name, or change it as you see fit. Choose **Native** and press **Enter**.
+Run `okta apps create`. Select the default app name, or change it as you see fit. Choose **Native** and press **Enter**.
 
 Change the Redirect URI to `[http://localhost:8100/callback,dev.localhost.ionic:/callback]` and the Logout Redirect URI to `[http://localhost:8100/logout,dev.localhost.ionic:/logout]`. 
 
@@ -105,11 +108,17 @@ Client ID: 0oab8eb55Kb9jdMIr5d6
 
 **NOTE**: You can also use the Okta Admin Console to create your app. See [Create a Native App](https://developer.okta.com/docs/guides/sign-into-mobile-app/create-okta-application/) for more information.
 
-Open `src/app/auth/auth-config.service.ts` in an editor, search for `this.authConfig.clientId` and replace it with the client ID from your Native app. For example:
+Open `src/environments/environment.ts` and replace `web_app` with the client ID from your Native app. For example:
 
 ```ts
-environment.oidcConfig.server_host = this.authConfig.issuer;
-environment.oidcConfig.client_id = '0oa5qrj3i7RKHeyZh357';
+export const environment = {
+  ...
+  oidcConfig: {
+    client_id: '0oa5qrj3i7RKHeyZh357',
+    ...
+  },
+  ...
+};
 ```
 
 You'll also need to add a trusted origin for `http://localhost:8100`. In your Okta Admin Console, go to **Security** > **API** > **Trusted Origins** > **Add Origin**. Use the following values:
