@@ -39,6 +39,7 @@ describe('Login', () => {
   });
 
   it('should login successfully with admin account', async () => {
+    await browser.wait(ec.visibilityOf(loginPage.signInButton));
     await loginPage.signInButton.click();
     await loginPage.login(username, password);
 
