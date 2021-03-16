@@ -61,6 +61,16 @@ This module also ships with an `ionic4j` CLI that you can use as a shortcut.
 - `ionic4j entity <name>` generates entities
 - `ionic4j import-jdl <file.jdl>` imports JDL and generates entities
 
+## Add PWA Support
+
+To add PWA support to your Ionic app, run:
+
+```shell
+ng add @angular/pwa
+```
+
+[Use the Angular CLI to transform your Ionic app into a PWA](https://youtu.be/ooKvtmobyPw) is a 4-minute video that shows what this command does.
+
 ### Okta for Authentication
 
 Choosing OAuth 2.0 / OIDC for authentication will allow you to use Keycloak or Okta for identity. In theory, you should be able to use any OIDC-compliant identity provider, and these are the only ones we've tested against. JHipster ships with Keycloak configured and ready to go by default. You simply have to start it in your JHipster backend.
@@ -77,45 +87,23 @@ In addition to having a OIDC app for your JHipster backend, you'll need to creat
 
 #### Create a Native Application in Okta
 
-Log in to your Okta Developer account (or [sign up](https://developer.okta.com/signup/) if you don't have an account). 
+Before you begin, you'll need a free Okta developer account. Install the [Okta CLI](https://cli.okta.com) and run `okta register` to sign up for a new account. If you already have an account, run `okta login`.
 
-> You can also use the Okta CLI and run `okta apps create`, using the settings below to configure your app.
+Then, run `okta apps create{% if (include.type == "service") %} service{% endif %}`. Select the default app name, or change it as you see fit. Choose **Native** and press **Enter**.
 
-From the **Applications** page, choose **Add Application**. 
+Change the Redirect URI to `[http://localhost:8100/callback,dev.localhost.ionic:/callback]` and the Logout Redirect URI to `[http://localhost:8100/logout,dev.localhost.ionic:/logout]`. 
 
-On the Create New Application page, select **Native**
+**NOTE:** `dev.localhost.ionic` is the default scheme, but you can also use something more traditional like `com.okta.dev-133337` (where `dev-133337.okta.com` is your Okta Org URL). If you change it, be sure to update the `scheme` in `src/environments/environment.ts` and the redirect URLs in `src/app/auth/factories/auth.factory.ts`.
 
-Give your app a memorable name, and configure it as follows:
+The Okta CLI will create an OIDC App in your Okta Org. It will add the redirect URIs you specified and grant access to the Everyone group.
 
-- Login redirect URIs:
-  - `http://localhost:8100/callback`
-  - `dev.localhost.ionic:/callback`
-- Logout redirect URIs:
-  - `http://localhost:8100/logout`
-  - `dev.localhost.ionic:/logout`
-
-**NOTE:** `dev.localhost.ionic` is the default scheme, but you can also use something more traditional like `com.okta.dev-737523` (where `dev-737523.okta.com` is your Okta Org URL). If you change it, be sure to update the `scheme` in `src/environments/environment.ts` and the redirect URLs in `src/app/auth/factories/auth.factory.ts`.
-
-If you use the Okta CLI, your terminal should look similar to the following:
-
+```shell
+Okta application configuration:
+Issuer:    https://dev-133337.okta.com/oauth2/default
+Client ID: 0oab8eb55Kb9jdMIr5d6
 ```
-$ okta apps create
-Application name [ionic4j]:
-Type of Application
-(The Okta CLI only supports a subset of application types and properties):
-> 1: Web
-> 2: Single Page App
-> 3: Native App (mobile)
-> 4: Service (Machine-to-Machine)
-Enter your choice [Web]: 3
-Redirect URI
-Common defaults:
- Reverse Domain name - com.okta.dev-737523:/callback
-Enter your Redirect URI [com.okta.dev-737523:/callback]: dev.localhost.ionic:/callback,com.okta.dev-737523:/callback,http://localhost:8100/callback
-Enter your Post Logout Redirect URI [dev.localhost.ionic:/]: dev.localhost.ionic:/logout,com.okta.dev-737523:/logout,http://localhost:8100/logout
-Configuring a new OIDC Application, almost done:
-Created OIDC application, client-id: 0oa5qrj3i7RKHeyZh357
-```
+
+**NOTE**: You can also use the Okta Admin Console to create your app. See [Create a Native App](https://developer.okta.com/docs/guides/sign-into-mobile-app/create-okta-application/) for more information.
 
 Open `src/app/auth/auth-config.service.ts` in an editor, search for `this.authConfig.clientId` and replace it with the client ID from your Native app. For example:
 
@@ -124,7 +112,7 @@ environment.oidcConfig.server_host = this.authConfig.issuer;
 environment.oidcConfig.client_id = '0oa5qrj3i7RKHeyZh357';
 ```
 
-You'll also need to add a trusted origin for `http://localhost:8100`. In your Okta dashboard, go to **API** > **Trusted Origins** > **Add Origin**. Use the following values:
+You'll also need to add a trusted origin for `http://localhost:8100`. In your Okta Admin Console, go to **Security** > **API** > **Trusted Origins** > **Add Origin**. Use the following values:
 
 - Name: `http://localhost:8100`
 - Origin URL: `http://localhost:8100`
@@ -136,9 +124,9 @@ Click **Save**.
 
 In order to authentication successfully with your Ionic app, you have to do a bit more configuration in Okta. Since the Ionic client will only send an access token to JHipster, you need to 1) add a `groups` claim to the access token and 2) add a couple more claims so the user's name will be available in JHipster.
 
-**NOTE:** These steps are not necessary if you're using a version of JHipster with [a `CustomClaimConverter`](https://github.com/jhipster/generator-jhipster/pull/12609).
+**NOTE:** These steps are not necessary if you're using a version of JHipster with [a `CustomClaimConverter`](https://github.com/jhipster/generator-jhipster/pull/12609). In other words, if you're using Spring a MVC-based monolith, you don't need it. Support has not been added to WebFlux, yet.
 
-Navigate to **API** > **Authorization Servers**, click the **Authorization Servers** tab and edit the **default** one. Click the **Claims** tab and **Add Claim**. Name it "groups" and include it in the Access Token. Set the value type to "Groups" and set the filter to be a Regex of `.*`. Click **Create**.
+Navigate to **Security** > **API** > **Authorization Servers**, click the **Authorization Servers** tab and edit the **default** one. Click the **Claims** tab and **Add Claim**. Name it "groups" and include it in the Access Token. Set the value type to "Groups" and set the filter to be a Regex of `.*`. Click **Create**.
 
 Add another claim, name it `given_name`, include it in the access token, use `Expression` in the value type, and set the value to `user.firstName`. Optionally, include it in the `profile` scope. Perform the same actions to create a `family_name` claim and use expression `user.lastName`.
 
