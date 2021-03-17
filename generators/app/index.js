@@ -204,6 +204,9 @@ module.exports = class extends BaseGenerator {
     packageJSON.scripts.prettier = 'prettier --write "{,e2e/**/,src/**/}*.{js,json,html,md,ts,css,scss,yml}" --loglevel silent';
     jsonfile.writeFileSync(packagePath, packageJSON);
 
+    // force overwriting of files since prompting will confuse developers on initial install
+    this.conflicter.force = true;
+    
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
       this.packageName = this.jhipsterAppConfig.packageName;
       this.packageFolder = this.jhipsterAppConfig.packageFolder;
@@ -233,9 +236,6 @@ module.exports = class extends BaseGenerator {
         .replace('login/', 'pages/login/')
         .replace('tabs/', 'pages/tabs/');
       jsonfile.writeFileSync(tsConfigPath, JSON.parse(tsConfigJSON));
-
-      // force overwriting of files since prompting will confuse developers on initial install
-      this.conflicter.force = true;
 
       this.log('Updating Ionic AppAuth to work with JHipster...');
 
