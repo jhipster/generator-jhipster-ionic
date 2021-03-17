@@ -191,7 +191,7 @@ module.exports = class extends BaseGenerator {
 
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
       // add @ionic/storage
-      packageJSON.dependencies['@ionic/storage'] = '^2.3.1';
+      packageJSON.dependencies['@ionic/storage'] = '^3.0.2';
       // update jest config to ignore more patterns
       packageJSON.jest.transformIgnorePatterns = [
         'node_modules/(?!@ngrx|@ionic-native|@ionic|ionic-appauth|capacitor-secure-storage-plugin)'
@@ -208,7 +208,7 @@ module.exports = class extends BaseGenerator {
 
       let installAuthCmd;
       const params = '--configUri=auth-info --issuer=http://localhost:9080/auth/realms/jhipster --clientId=web_app';
-      const schematicsVersion = '3.3.0';
+      const schematicsVersion = '3.4.0';
 
       // use `schematics` when testing and expect it to be installed
       if (this.installDeps) {
