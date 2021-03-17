@@ -108,17 +108,11 @@ Client ID: 0oab8eb55Kb9jdMIr5d6
 
 **NOTE**: You can also use the Okta Admin Console to create your app. See [Create a Native App](https://developer.okta.com/docs/guides/sign-into-mobile-app/create-okta-application/) for more information.
 
-Open `src/environments/environment.ts` and replace `web_app` with the client ID from your Native app. For example:
+Open `ionic/src/app/auth/auth-config.service.ts` and add the client ID from your Native app. For example:
 
 ```ts
-export const environment = {
-  ...
-  oidcConfig: {
-    client_id: '0oa5qrj3i7RKHeyZh357',
-    ...
-  },
-  ...
-};
+environment.oidcConfig.server_host = this.authConfig.issuer;
+environment.oidcConfig.client_id = '<your-client-id>';
 ```
 
 You'll also need to add a trusted origin for `http://localhost:8100`. In your Okta Admin Console, go to **Security** > **API** > **Trusted Origins** > **Add Origin**. Use the following values:
