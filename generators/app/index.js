@@ -186,9 +186,6 @@ module.exports = class extends BaseGenerator {
     packageJSON.description = 'A hipster Ionic project, made with 💙 by @oktadev!';
     packageJSON.devDependencies['generator-jhipster-ionic'] = packagejs.version;
 
-    // calculate JHipster logo to use
-    this.hipster = this.getHipster(this.ionicAppName);
-
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
       // add @ionic/storage and @ionic/storage-angular
       packageJSON.dependencies['@ionic/storage'] = '^3.0.2';
@@ -206,6 +203,9 @@ module.exports = class extends BaseGenerator {
     // add prettier script
     packageJSON.scripts.prettier = 'prettier --write "{,e2e/**/,src/**/}*.{js,json,html,md,ts,css,scss,yml}" --loglevel silent';
     jsonfile.writeFileSync(packagePath, packageJSON);
+
+    // force overwriting of files since prompting will confuse developers on initial install
+    this.conflicter.force = true;
 
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
       this.packageName = this.jhipsterAppConfig.packageName;
@@ -237,9 +237,6 @@ module.exports = class extends BaseGenerator {
         .replace('tabs/', 'pages/tabs/');
       jsonfile.writeFileSync(tsConfigPath, JSON.parse(tsConfigJSON));
 
-      // force overwriting of files since prompting will confuse developers on initial install
-      this.conflicter.force = true;
-
       this.log('Updating Ionic AppAuth to work with JHipster...');
 
       // Update Ionic files to work with JHipster
@@ -249,13 +246,11 @@ module.exports = class extends BaseGenerator {
       this.template('src/app/app-routing.module.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/app-routing.module.ts`);
       this.template('src/app/interceptors/auth.interceptor.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/interceptors/auth.interceptor.ts`);
       this.template('src/app/pages/home/home.page.spec.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/pages/home/home.page.spec.ts`);
-      this.template('src/app/pages/home/home.page.scss.ejs', `${CLIENT_MAIN_SRC_DIR}app/pages/home/home.page.scss`);
       this.template('src/app/pages/home/home.page.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/pages/home/home.page.ts`);
       this.template('src/app/pages/login/login.page.html.ejs', `${CLIENT_MAIN_SRC_DIR}app/pages/login/login.page.html`);
       this.template('src/app/pages/login/login.page.spec.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/pages/login/login.page.spec.ts`);
       this.template('src/app/pages/login/login.page.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/pages/login/login.page.ts`);
       this.template('src/app/pages/welcome/welcome.page.html.ejs', `${CLIENT_MAIN_SRC_DIR}app/pages/welcome/welcome.page.html`);
-      this.template('src/app/pages/welcome/welcome.page.scss.ejs', `${CLIENT_MAIN_SRC_DIR}app/pages/welcome/welcome.page.scss`);
       this.template('src/app/pages/welcome/welcome.page.spec.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/pages/welcome/welcome.page.spec.ts`);
       this.template('src/app/pages/welcome/welcome.page.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/pages/welcome/welcome.page.ts`);
       this.template(
@@ -290,9 +285,13 @@ module.exports = class extends BaseGenerator {
         }
       });
     } else {
-      this.log('Adding User model and e2e tests...');
       this.template('src/app/services/user/user.model.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.model.ts`);
     }
+
+    // Calculate JHipster logo to use and add to Sass templates
+    this.hipster = this.getHipster(this.ionicAppName);
+    this.template('src/app/pages/home/home.page.scss.ejs', `${CLIENT_MAIN_SRC_DIR}app/pages/home/home.page.scss`);
+    this.template('src/app/pages/welcome/welcome.page.scss.ejs', `${CLIENT_MAIN_SRC_DIR}app/pages/welcome/welcome.page.scss`);
 
     // Add @angular/localize if not testing
     if (this.installDeps) {
