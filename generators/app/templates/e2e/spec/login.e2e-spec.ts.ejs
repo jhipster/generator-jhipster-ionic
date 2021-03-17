@@ -19,7 +19,7 @@ describe('Login', () => {
 
   it('should fail to login with bad password', async () => {
     await loginPage.signInButton.click();
-    await browser.sleep(500);
+    await browser.sleep(1000);
     await loginPage.login(username, 'foo');
     <%_ if (authenticationType !== 'oauth2') { _%>
     const error = element(by.css('.toast-message'));
@@ -40,8 +40,8 @@ describe('Login', () => {
   });
 
   it('should login successfully with admin account', async () => {
-    await browser.wait(ec.visibilityOf(loginPage.signInButton));
     await loginPage.signInButton.click();
+    await browser.sleep(1000);
     await loginPage.login(username, password);
 
     const welcome = /Welcome, Admin<% if (authenticationType === 'jwt') { %>istrator<% } %>/;
