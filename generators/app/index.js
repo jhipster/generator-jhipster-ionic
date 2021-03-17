@@ -190,12 +190,17 @@ module.exports = class extends BaseGenerator {
     this.hipster = this.getHipster(this.ionicAppName);
 
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
-      // add @ionic/storage
+      // add @ionic/storage and @ionic/storage-angular
       packageJSON.dependencies['@ionic/storage'] = '^3.0.2';
+      packageJSON.dependencies['@ionic/storage-angular'] = '^3.0.2';
       // update jest config to ignore more patterns
       packageJSON.jest.transformIgnorePatterns = [
         'node_modules/(?!@ngrx|@ionic-native|@ionic|ionic-appauth|capacitor-secure-storage-plugin)'
       ];
+      // fix Cannot find module '@ionic/storage' from 'node_modules/@ionic/storage-angular/bundles/ionic-storage-angular.umd.js'
+      packageJSON.jest.moduleNameMapper = {
+        '^@ionic/storage$': '<rootDir>/node_modules/@ionic/storage/dist/ionic-storage.cjs.js'
+      };
     }
 
     // add prettier script
@@ -223,6 +228,14 @@ module.exports = class extends BaseGenerator {
         this.error(installAuthCmd);
         shelljs.exit(1);
       }
+
+      // fix paths for login.module and tabs.module
+      const tsConfigPath = `${this.ionicAppName}/tsconfig.app.json`;
+      const tsConfig = this.fs.readJSON(tsConfigPath) || {};
+      const tsConfigJSON = JSON.stringify(tsConfig)
+        .replace('login/', 'pages/login/')
+        .replace('tabs/', 'pages/tabs/');
+      jsonfile.writeFileSync(tsConfigPath, JSON.parse(tsConfigJSON));
 
       // force overwriting of files since prompting will confuse developers on initial install
       this.conflicter.force = true;

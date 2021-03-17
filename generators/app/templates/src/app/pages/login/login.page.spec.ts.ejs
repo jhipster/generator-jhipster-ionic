@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { IonicStorageModule } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage-angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
