@@ -206,7 +206,7 @@ module.exports = class extends BaseGenerator {
 
     // force overwriting of files since prompting will confuse developers on initial install
     this.conflicter.force = true;
-    
+
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
       this.packageName = this.jhipsterAppConfig.packageName;
       this.packageFolder = this.jhipsterAppConfig.packageFolder;
@@ -285,7 +285,6 @@ module.exports = class extends BaseGenerator {
         }
       });
     } else {
-      this.log('Adding User model and e2e tests...');
       this.template('src/app/services/user/user.model.ts.ejs', `${CLIENT_MAIN_SRC_DIR}app/services/user/user.model.ts`);
     }
 
