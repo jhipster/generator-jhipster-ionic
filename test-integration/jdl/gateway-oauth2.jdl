@@ -4,9 +4,7 @@ application {
     applicationType gateway
     authenticationType oauth2
     packageName org.jhipster.demo.blog
-    databaseType mongodb
-    devDatabaseType mongodb
-    prodDatabaseType mongodb
+    prodDatabaseType postgresql
     enableHibernateCache false
     buildTool maven
     clientFramework angular
