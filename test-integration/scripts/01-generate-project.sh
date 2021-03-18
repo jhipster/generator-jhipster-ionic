@@ -15,7 +15,7 @@ fi
 mkdir -p "$HOME/$APP_FOLDER"
 cp -f "$JHIPSTER_SAMPLES"/"$JHIPSTER".jdl "$HOME/$APP_FOLDER"/
 cd "$HOME/$APP_FOLDER"
-npm link generator-jhipster
+# npm link generator-jhipster
 jhipster import-jdl "$JHIPSTER".jdl --force --no-insight --skip-checks --skip-git --skip-commit-hook --skip-install
 
 #-------------------------------------------------------------------------------

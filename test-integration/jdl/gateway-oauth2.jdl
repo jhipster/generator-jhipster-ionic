@@ -2,13 +2,9 @@ application {
   config {
     baseName gateway
     applicationType gateway
-    reactive true
     authenticationType oauth2
     packageName org.jhipster.demo.blog
-    databaseType mongodb
-    devDatabaseType mongodb
-    prodDatabaseType mongodb
-    enableHibernateCache false
+    prodDatabaseType postgresql
     buildTool maven
     clientFramework angular
     testFrameworks [protractor]
