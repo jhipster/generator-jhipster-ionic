@@ -5,7 +5,6 @@ application {
     authenticationType oauth2
     packageName org.jhipster.demo.blog
     prodDatabaseType postgresql
-    enableHibernateCache false
     buildTool maven
     clientFramework angular
     testFrameworks [protractor]
