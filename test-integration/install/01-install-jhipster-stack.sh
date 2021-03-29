@@ -15,7 +15,7 @@ echo $IONIC4J_BRANCH
 # Clone JHipster
 #-------------------------------------------------------------------------------
 cd "$HOME"
-npm i -g generator-jhipster
+npm i -g generator-jhipster@6.10.5
 #git clone $JHIPSTER_REPO generator-jhipster
 #cd generator-jhipster
 #if [ "$JHIPSTER_BRANCH" == "latest" ]; then
