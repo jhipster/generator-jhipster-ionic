@@ -35,7 +35,7 @@
     "jsonfile": "6.1.0",
     "lodash": "^4.17.21",
     "pluralize": "8.0.0",
-    "semver": "7.3.4",
+    "semver": "7.3.5",
     "shelljs": "0.8.4"
   },
   "devDependencies": {
