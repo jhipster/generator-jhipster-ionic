@@ -85,6 +85,7 @@ jobs:
           node-version: ${{ matrix.node_version }}
       - uses: actions/setup-java@v2
         with:
+          distribution: 'adopt'
           java-version: ${{ matrix.java_version }}
       - name: Install latest Chrome
         run: |
