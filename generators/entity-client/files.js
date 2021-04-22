@@ -23,7 +23,7 @@ const constants = require('generator-jhipster/generators/generator-constants');
 
 /* Constants use throughout */
 const INTERPOLATE_REGEX = constants.INTERPOLATE_REGEX;
-const IONIC_DIR = 'src/pages/';
+const IONIC_DIR = 'src/app/pages/';
 const MODELS_DIR = 'src/models/';
 
 const CLIENT_IONIC_TEMPLATES_DIR = 'ionic';
@@ -59,10 +59,10 @@ const ionicFiles = {
           renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.module.ts`
         },
         {
-          file: 'entities/_entity.provider.ts',
+          file: 'entities/_entity.service.ts',
           method: 'processHtml',
           template: true,
-          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.provider.ts`
+          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}.service.ts`
         },
         {
           file: 'entities/_entity.ts',
@@ -73,24 +73,16 @@ const ionicFiles = {
           renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.html`
         },
         {
-          file: 'entities/_entity-detail.module.ts',
-          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.module.ts`
-        },
-        {
           file: 'entities/_entity-detail.ts',
           renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.ts`
         },
         {
-          file: 'entities/_entity-dialog.html',
-          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-dialog.html`
+          file: 'entities/_entity-update.html',
+          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.html`
         },
         {
-          file: 'entities/_entity-dialog.module.ts',
-          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-dialog.module.ts`
-        },
-        {
-          file: 'entities/_entity-dialog.ts',
-          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-dialog.ts`
+          file: 'entities/_entity-update.ts',
+          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.ts`
         },
         {
           file: 'entities/_index.ts',
@@ -105,8 +97,8 @@ const ionicFiles = {
           renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-detail.spec.ts`
         },
         {
-          file: 'entities/_entity-dialog.spec.ts',
-          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-dialog.spec.ts`
+          file: 'entities/_entity-update.spec.ts',
+          renameTo: (generator) => `entities/${generator.entityFolderName}/${generator.entityFileName}-update.spec.ts`
         }
       ]
     }
@@ -156,12 +148,20 @@ function writeFiles() {
         this.entityFileName,
         this.enableTranslation
       );
+      this.addEntityRouteToModule(
+        this.entityInstance,
+        this.entityClass,
+        this.entityAngularName,
+        this.entityFolderName,
+        this.entityFileName,
+        this.enableTranslation
+      );
 
       // Copy for each
       if (this.enableTranslation) {
         const languages = this.languages || this.getAllInstalledLanguages();
         languages.forEach((language) => {
-          //this.copyI18n(language, CLIENT_I18N_TEMPLATES_DIR);
+          // this.copyI18n(language, CLIENT_I18N_TEMPLATES_DIR);
         });
       }
     }

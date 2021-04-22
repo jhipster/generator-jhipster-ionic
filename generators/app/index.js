@@ -127,11 +127,6 @@ module.exports = class extends BaseGenerator {
       );
     }
 
-    this.isIonicV3 = this._isIonicV3();
-    if (this.isIonicV3) {
-      this.log(`\n${chalk.bold.red('You are not using the latest version of Ionic. Run npm install -g ionic')}`);
-    }
-
     const applicationType = this.jhipsterAppConfig.applicationType;
     if (applicationType !== 'monolith' && applicationType !== 'gateway') {
       this.error(
@@ -164,13 +159,6 @@ module.exports = class extends BaseGenerator {
       fs.mkdirSync(this.ionicAppName);
     }
     jsonfile.writeFileSync(configFile, config);
-  }
-
-  _isIonicV3() {
-    const currentIonicVersion = shelljs.exec('ionic version --no-interactive', { silent: true }).stdout.replace(/\n/g, '');
-    const minimumIonicVersion = '<4.0.0';
-
-    return semver.satisfies(currentIonicVersion, minimumIonicVersion);
   }
 
   install() {
