@@ -27,11 +27,10 @@
     "url": "git+https://github.com/oktadeveloper/generator-jhipster-ionic.git"
   },
   "dependencies": {
-    "chalk": "4.1.0",
+    "chalk": "4.1.1",
     "cross-spawn": "7.0.3",
     "fs-extra": "9.1.0",
-    "generator-jhipster": ">=6.10.3",
-    "jhipster-core": "^7.3.4",
+    "generator-jhipster": ">=7.0.0",
     "jsonfile": "6.1.0",
     "lodash": "^4.17.21",
     "pluralize": "8.0.0",
@@ -39,10 +38,10 @@
     "shelljs": "0.8.4"
   },
   "devDependencies": {
-    "@angular-devkit/schematics-cli": "0.1102.7",
-    "@oktadev/schematics": "3.4.0",
+    "@angular-devkit/schematics-cli": "0.1102.10",
+    "@oktadev/schematics": "3.5.0",
     "chai": "4.3.4",
-    "eslint": "7.23.0",
+    "eslint": "7.24.0",
     "eslint-config-airbnb-base": "14.2.1",
     "eslint-plugin-import": "2.22.1",
     "jsdoc": "3.6.6",
