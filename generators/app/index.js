@@ -50,6 +50,7 @@ module.exports = class extends BaseGenerator {
 
     this.interactive = this.options.interactive;
     this.installDeps = this.options.installDeps;
+    this.conflicter = this.conflicter || this.env.conflicter;
   }
 
   get initializing() {
