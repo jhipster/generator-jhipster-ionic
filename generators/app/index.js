@@ -31,9 +31,13 @@ const utils = require('./utils');
 
 module.exports = class extends BaseGenerator {
   constructor(args, opts) {
+    if (!opts.env.sharedOptions.configOptions) {
+      opts.configOptions = opts.configOptions || {};
+      opts.env.sharedOptions.configOptions = opts.configOptions;
+    }
+
     super(args, opts);
 
-    this.configOptions = {};
     // This adds support for a `--interactive` flag
     this.option('interactive', {
       desc: 'Don\'t prompt user when running ionic start',

@@ -23,6 +23,10 @@ let skipPrompt = false;
 
 class EntityGenerator extends BaseEntityGenerator {
   constructor(args, opts) {
+    if (!opts.env.sharedOptions.configOptions) {
+      opts.configOptions = opts.configOptions || {};
+      opts.env.sharedOptions.configOptions = opts.configOptions;
+    }
     const suppressWarning = { 'from-cli': true };
     super(args, { ...opts, ...suppressWarning });
     skipPrompt = opts['skip-prompt'];

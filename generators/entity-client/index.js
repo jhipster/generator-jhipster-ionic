@@ -27,6 +27,11 @@ let useBlueprint;
 
 module.exports = class extends BaseGenerator {
   constructor(args, opts) {
+    if (!opts.env.sharedOptions.configOptions) {
+      opts.configOptions = opts.configOptions || {};
+      opts.env.sharedOptions.configOptions = opts.configOptions;
+    }
+
     super(args, opts);
     utils.copyObjectProps(this, this.options.context);
     const blueprint = this.config.get('blueprint');

@@ -77,6 +77,11 @@ function callSubGenerator(generator, subgenPath, name, args) {
 
 class ImportJDLGenerator extends BaseGenerator {
   constructor(args, opts) {
+    if (!opts.env.sharedOptions.configOptions) {
+      opts.configOptions = opts.configOptions || {};
+      opts.env.sharedOptions.configOptions = opts.configOptions;
+    }
+
     super(args, opts);
     this.argument('jdlFiles', { type: Array, required: true });
     this.jdlFiles = this.options.jdlFiles;
