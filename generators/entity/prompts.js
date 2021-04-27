@@ -27,7 +27,7 @@ module.exports = {
 
 function askForBackendJson() {
   const context = this.context;
-  if (this.useConfigurationFile) {
+  if (context.useConfigurationFile) {
     return;
   }
 

@@ -51,14 +51,7 @@ class EntityGenerator extends BaseEntityGenerator {
 
   get initializing() {
     // Here we are not overriding this phase and hence its being handled by JHipster
-    // return super._initializing();
-    const phaseFromJHipster = super._initializing();
-    const myCustomPhaseSteps = {
-      loadConfig() {
-        this.configRootPath = this.options.configRootPath = this.fs.readJSON('.jhipster-ionic.json').directoryPath;
-      }
-    };
-    return Object.assign(myCustomPhaseSteps, phaseFromJHipster);
+    return super._initializing();
   }
 
   get prompting() {
