@@ -221,7 +221,7 @@ module.exports = class extends BaseGenerator {
         query = `this.${relationship.otherEntityName}Service.query()
             .subscribe(data => { this.${variableName} = data.body; }, (error) => this.onError(error));`;
       }
-      if (variableName && !this.contains(queries, query)) {
+      if (variableName && !queries.includes(query)) {
         queries.push(query);
         variables.push(`${variableName}: ${relationship.otherEntityAngularName}[];`);
       }
