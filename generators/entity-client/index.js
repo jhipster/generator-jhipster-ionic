@@ -21,6 +21,8 @@ const chalk = require('chalk');
 const _ = require('lodash');
 const utils = require('generator-jhipster/generators/utils');
 const BaseGenerator = require('generator-jhipster/generators/entity-client');
+const fs = require('fs-extra');
+
 const writeFiles = require('./files').writeFiles;
 
 let useBlueprint;
@@ -36,6 +38,17 @@ module.exports = class extends BaseGenerator {
 
     if (this.options.help) {
       return;
+    }
+
+    // Load readonly jhipsterConfig
+    try {
+      this.configRootPath = fs.readJSONSync('.jhipster-ionic.json').directoryPath;
+      const yoRc = fs.readJSONSync(`${this.configRootPath}/.yo-rc.json`);
+      this.jhipsterConfig = yoRc ? yoRc['generator-jhipster'] : {};
+
+    } catch (error) {
+      this.log('File .jhipster-ionic.json not found. Please run this command in an Ionic project.');
+      throw error;
     }
   }
 

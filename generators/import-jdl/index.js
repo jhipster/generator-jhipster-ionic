@@ -102,15 +102,15 @@ class ImportJDLGenerator extends BaseGenerator {
     try {
       this.configRootPath = fs.readJSONSync('.jhipster-ionic.json').directoryPath;
       const yoRc = fs.readJSONSync(`${this.configRootPath}/.yo-rc.json`);
-      const configuration = yoRc ? yoRc['generator-jhipster'] : {};
-      this.applicationType = configuration.applicationType;
-      this.baseName = configuration.baseName;
-      this.prodDatabaseType = configuration.prodDatabaseType || this.options.db;
+      this.jhipsterConfig = yoRc ? yoRc['generator-jhipster'] : {};
+      this.applicationType = this.jhipsterConfig.applicationType;
+      this.baseName = this.jhipsterConfig.baseName;
+      this.prodDatabaseType = this.jhipsterConfig.prodDatabaseType || this.options.db;
 
       this.importState = importJDL.call(this);
     } catch (error) {
       logger.info('File .jhipster-ionic.json not found. Please run this command in an Ionic project.');
-      logger.error(error);
+      throw error;
     }
   }
 
