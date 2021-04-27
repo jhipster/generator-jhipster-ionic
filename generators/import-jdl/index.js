@@ -24,7 +24,6 @@ const jhiCore = require('jhipster-core');
 const { logger } = require('generator-jhipster/cli/utils');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
 const pluralize = require('pluralize');
-const jhipsterUtils = require('generator-jhipster/generators/utils');
 const fs = require('fs-extra');
 
 function importJDL() {
@@ -91,7 +90,8 @@ class ImportJDLGenerator extends BaseGenerator {
 
     try {
       this.configRootPath = fs.readJSONSync('.jhipster-ionic.json').directoryPath;
-      const configuration = jhipsterUtils.getAllJhipsterConfig(null, true, this.configRootPath);
+      const yoRc = fs.readJSONSync(`${this.configRootPath}/.yo-rc.json`);
+      const configuration = yoRc ? yoRc['generator-jhipster'] : {};
       this.applicationType = configuration.applicationType;
       this.baseName = configuration.baseName;
       this.prodDatabaseType = configuration.prodDatabaseType || this.options.db;
