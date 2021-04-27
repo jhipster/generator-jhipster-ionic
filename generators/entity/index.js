@@ -30,6 +30,8 @@ class EntityGenerator extends BaseEntityGenerator {
 
     super(args, { ...opts, fromCli: true });
 
+    skipPrompt = this.options.skipPrompt;
+
     if (this.options.help) {
       return;
     }
@@ -80,10 +82,10 @@ class EntityGenerator extends BaseEntityGenerator {
 
         this.composeWith(require.resolve(entityClientDirectory), {
           context,
-          'skip-install': context.options['skip-install'],
-          'from-cli': true,
-          force: context.options.force,
-          debug: context.isDebugEnabled
+          skipInstall: this.options.skipInstall,
+          fromCli: true,
+          force: this.options.force,
+          debug: this.configOptions.isDebugEnabled
         });
       }
     };
