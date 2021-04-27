@@ -193,7 +193,12 @@ module.exports = class extends BaseGenerator {
     jsonfile.writeFileSync(packagePath, packageJSON);
 
     // force overwriting of files since prompting will confuse developers on initial install
-    this.conflicter.force = true;
+    if (this.conflicter) {
+      this.conflicter.force = true;
+    } else {
+      // yeoman-environment@3 conflicter is not instantiated yet.
+      this.env.options.force = true;
+    }
 
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
       this.packageName = this.jhipsterAppConfig.packageName;
