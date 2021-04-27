@@ -11,4 +11,7 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-
+    ignore:
+      # generator-jhipster dependency is not fixed, it needs at least it's own yeoman-environment version.
+      # Don't update yeoman-environment and let generator-jhipster dependency version be dedupped.
+      - dependency-name: 'yeoman-environment'
