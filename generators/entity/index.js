@@ -27,8 +27,13 @@ class EntityGenerator extends BaseEntityGenerator {
       opts.configOptions = opts.configOptions || {};
       opts.env.sharedOptions.configOptions = opts.configOptions;
     }
-    const suppressWarning = { 'from-cli': true };
-    super(args, { ...opts, ...suppressWarning });
+
+    super(args, { ...opts, fromCli: true });
+
+    if (this.options.help) {
+      return;
+    }
+
     skipPrompt = opts['skip-prompt'];
   }
 

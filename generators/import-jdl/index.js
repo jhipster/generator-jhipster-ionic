@@ -83,8 +83,8 @@ class ImportJDLGenerator extends BaseGenerator {
     }
 
     super(args, opts);
+
     this.argument('jdlFiles', { type: Array, required: true });
-    this.jdlFiles = this.options.jdlFiles;
 
     // This adds support for a `--json-only` flag
     this.option('json-only', {
@@ -92,6 +92,12 @@ class ImportJDLGenerator extends BaseGenerator {
       type: Boolean,
       defaults: false
     });
+
+    if (this.options.help) {
+      return;
+    }
+
+    this.jdlFiles = this.options.jdlFiles;
 
     try {
       this.configRootPath = fs.readJSONSync('.jhipster-ionic.json').directoryPath;

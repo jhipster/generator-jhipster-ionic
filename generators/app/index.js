@@ -52,6 +52,10 @@ module.exports = class extends BaseGenerator {
       defaults: true
     });
 
+    if (this.options.help) {
+      return;
+    }
+
     this.interactive = this.options.interactive;
     this.installDeps = this.options.installDeps;
   }
