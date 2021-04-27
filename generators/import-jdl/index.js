@@ -20,7 +20,7 @@ const _ = require('lodash');
 const path = require('path');
 const shelljs = require('shelljs');
 const chalk = require('chalk');
-const jhiCore = require('jhipster-core');
+const { createImporterFromFiles } = require('generator-jhipster/jdl/jdl-importer');
 const { logger } = require('generator-jhipster/cli/utils');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
 const pluralize = require('pluralize');
@@ -29,7 +29,7 @@ const fs = require('fs-extra');
 function importJDL() {
   logger.info('The JDL is being parsed...');
 
-  const jdlImporter = jhiCore.JDLImporter.createImporterFromFiles(this.jdlFiles, {
+  const jdlImporter = createImporterFromFiles(this.jdlFiles, {
     databaseType: this.prodDatabaseType,
     applicationType: this.applicationType,
     applicationName: this.baseName
