@@ -68,6 +68,31 @@ class EntityGenerator extends BaseEntityGenerator {
     return super._configuring();
   }
 
+  get composing() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return {};
+  }
+
+  get loading() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return {...super._loading(), composing: undefined};
+  }
+
+  get preparing() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return super._preparing();
+  }
+
+  get preparingFields() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return super._preparingFields();
+  }
+
+  get preparingRelationships() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return super._preparingRelationships();
+  }
+
   get default() {
     // Here we are not overriding this phase and hence its being handled by JHipster
     return super._default();

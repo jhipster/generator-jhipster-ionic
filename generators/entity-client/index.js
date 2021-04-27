@@ -20,7 +20,7 @@
 const chalk = require('chalk');
 const _ = require('lodash');
 const utils = require('generator-jhipster/generators/utils');
-const BaseGenerator = require('generator-jhipster/generators/generator-base');
+const BaseGenerator = require('generator-jhipster/generators/entity-client');
 const writeFiles = require('./files').writeFiles;
 
 let useBlueprint;
@@ -37,10 +37,36 @@ module.exports = class extends BaseGenerator {
     if (this.options.help) {
       return;
     }
+  }
 
-    utils.copyObjectProps(this, this.options.context);
-    const blueprint = this.config.get('blueprint');
-    useBlueprint = this.composeBlueprint(blueprint, 'entity'); // use global variable since getters dont have access to instance property
+  get composing() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return {};
+  }
+
+  get loading() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return super._loading();
+  }
+
+  get preparing() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return super._preparing();
+  }
+
+  get preparingFields() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return super._preparingFields();
+  }
+
+  get preparingRelationships() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return super._preparingRelationships();
+  }
+
+  get default() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return super._default();
   }
 
   get writing() {
