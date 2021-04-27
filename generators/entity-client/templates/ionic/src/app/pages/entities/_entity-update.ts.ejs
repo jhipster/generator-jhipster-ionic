@@ -85,7 +85,6 @@ export class <%= entityAngularName %>UpdatePage implements OnInit {
     isReadyToSave: boolean;
 
     form = this.formBuilder.group({
-        id: [],
     <%_ for (idx in fields) {
         const fieldName = fields[idx].fieldName;
         const fieldType = fields[idx].fieldType;
@@ -180,7 +179,6 @@ _%>
 
     updateForm(<%= entityInstance %>: <%= entityAngularName %>) {
         this.form.patchValue({
-            id: <%= entityInstance %>.id,
         <%_ for ( idx in fields ) {
             const fieldName = fields[idx].fieldName;
             const fieldType = fields[idx].fieldType;
@@ -262,7 +260,6 @@ _%>
     private createFromForm(): <%= entityAngularName %> {
         return {
             ...new <%= entityAngularName %>(),
-            id: this.form.get(['id']).value,
         <%_ for ( idx in fields ) {
             const fieldName = fields[idx].fieldName;
             const fieldType = fields[idx].fieldType;
