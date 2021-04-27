@@ -49,7 +49,7 @@ export class <%= entityAngularName %>Service {
         return this.http.put(this.resourceUrl, <%= entityInstance %>, { observe: 'response'});
     }
 
-    find(id: <% if (pkType === 'String') { %>string<% } else { %>number<% } %>): Observable<HttpResponse<<%= entityAngularName %>>> {
+    find(id: <% if (primaryKey.type === 'String') { %>string<% } else { %>number<% } %>): Observable<HttpResponse<<%= entityAngularName %>>> {
         return this.http.get(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }
 
@@ -58,7 +58,7 @@ export class <%= entityAngularName %>Service {
         return this.http.get<<%= entityAngularName %>[]>(this.resourceUrl, { params: options, observe: 'response' });
     }
 
-    delete(id: <% if (pkType === 'String') { %>string<% } else { %>number<% } %>): Observable<HttpResponse<any>> {
+    delete(id: <% if (primaryKey.type === 'String') { %>string<% } else { %>number<% } %>): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }
 }
