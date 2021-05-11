@@ -46,6 +46,7 @@ jobs:
       matrix:
         node_version: [14.16.0]
         java_version: [11]
+        jhipster-version: [7.0.1]
         os: [ubuntu-latest]
         app-type:
           - monolith-jwt
@@ -95,13 +96,15 @@ jobs:
       - name: Install Ionic CLI + JHipster BOM
         run: |
           date
-          npm -g install yo @ionic/cli
+          npm -g install yo @ionic/cli generator-jhipster@${{ matrix.jhipster-version }}
           #git clone https://github.com/jhipster/jhipster-bom.git
           #cd jhipster-bom && ./mvnw install -q -ntp -DskipTests -Dgpg.skip=true
           chmod +x $JHIPSTER_INSTALL/*.sh
           chmod +x $JHIPSTER_SCRIPTS/*.sh
-      - name: Install JHipster Stack
-        run: $JHIPSTER_INSTALL/01-install-jhipster-stack.sh
+      - name: Link ionic
+        run: |
+          npm ci
+          npm link
       - name: Check Version
         run: $JHIPSTER_INSTALL/02-checkVersion.sh
       #----------------------------------------------------------------------
