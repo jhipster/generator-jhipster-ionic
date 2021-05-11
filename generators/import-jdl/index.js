@@ -26,6 +26,8 @@ const BaseGenerator = require('generator-jhipster/generators/generator-base');
 const pluralize = require('pluralize');
 const fs = require('fs-extra');
 
+const baseMixin = require('../generator-base-mixin');
+
 function importJDL() {
   logger.info('The JDL is being parsed...');
 
@@ -75,13 +77,8 @@ function callSubGenerator(generator, subgenPath, name, args) {
   generator.composeWith(require.resolve(path.join(subgenPath, name)), args);
 }
 
-class ImportJDLGenerator extends BaseGenerator {
+class ImportJDLGenerator extends baseMixin(BaseGenerator) {
   constructor(args, opts) {
-    if (!opts.env.sharedOptions.configOptions) {
-      opts.configOptions = opts.configOptions || {};
-      opts.env.sharedOptions.configOptions = opts.configOptions;
-    }
-
     super(args, opts);
 
     this.argument('jdlFiles', { type: Array, required: true });

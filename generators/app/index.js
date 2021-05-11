@@ -28,26 +28,22 @@ const spawn = require('cross-spawn');
 const fs = require('fs');
 const packagejs = require('../../package.json');
 const utils = require('./utils');
+const baseMixin = require('../generator-base-mixin');
 
-module.exports = class extends BaseGenerator {
+module.exports = class extends baseMixin(BaseGenerator) {
   constructor(args, opts) {
-    if (!opts.env.sharedOptions.configOptions) {
-      opts.configOptions = opts.configOptions || {};
-      opts.env.sharedOptions.configOptions = opts.configOptions;
-    }
-
     super(args, opts);
 
     // This adds support for a `--interactive` flag
     this.option('interactive', {
-      desc: 'Don\'t prompt user when running ionic start',
+      desc: "Don't prompt user when running ionic start",
       type: Boolean,
       defaults: false
     });
 
     // This adds support for a `--install` flag
     this.option('installDeps', {
-      desc: 'Don\'t install dependencies when running ionic start',
+      desc: "Don't install dependencies when running ionic start",
       type: Boolean,
       defaults: true
     });
@@ -233,9 +229,7 @@ module.exports = class extends BaseGenerator {
       // fix paths for login.module and tabs.module
       const tsConfigPath = `${this.ionicAppName}/tsconfig.app.json`;
       const tsConfig = this.fs.readJSON(tsConfigPath) || {};
-      const tsConfigJSON = JSON.stringify(tsConfig)
-        .replace('login/', 'pages/login/')
-        .replace('tabs/', 'pages/tabs/');
+      const tsConfigJSON = JSON.stringify(tsConfig).replace('login/', 'pages/login/').replace('tabs/', 'pages/tabs/');
       jsonfile.writeFileSync(tsConfigPath, JSON.parse(tsConfigJSON));
 
       this.log('Updating Ionic AppAuth to work with JHipster...');

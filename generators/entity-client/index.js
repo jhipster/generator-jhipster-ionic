@@ -24,16 +24,12 @@ const BaseGenerator = require('generator-jhipster/generators/entity-client');
 const fs = require('fs-extra');
 
 const writeFiles = require('./files').writeFiles;
+const baseMixin = require('../generator-base-mixin');
 
 let useBlueprint;
 
-module.exports = class extends BaseGenerator {
+module.exports = class extends baseMixin(BaseGenerator) {
   constructor(args, opts) {
-    if (!opts.env.sharedOptions.configOptions) {
-      opts.configOptions = opts.configOptions || {};
-      opts.env.sharedOptions.configOptions = opts.configOptions;
-    }
-
     super(args, opts);
 
     if (this.options.help) {
@@ -45,7 +41,6 @@ module.exports = class extends BaseGenerator {
       this.configRootPath = fs.readJSONSync('.jhipster-ionic.json').directoryPath;
       const yoRc = fs.readJSONSync(`${this.configRootPath}/.yo-rc.json`);
       this.jhipsterConfig = yoRc ? yoRc['generator-jhipster'] : {};
-
     } catch (error) {
       this.log('File .jhipster-ionic.json not found. Please run this command in an Ionic project.');
       throw error;

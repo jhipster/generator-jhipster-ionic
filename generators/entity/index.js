@@ -20,17 +20,13 @@ const BaseEntityGenerator = require('generator-jhipster/generators/entity');
 const fs = require('fs-extra');
 
 const prompts = require('./prompts');
+const baseMixin = require('../generator-base-mixin');
 
 let skipPrompt = false;
 
-class EntityGenerator extends BaseEntityGenerator {
+class EntityGenerator extends baseMixin(BaseEntityGenerator) {
   constructor(args, opts) {
-    if (!opts.env.sharedOptions.configOptions) {
-      opts.configOptions = opts.configOptions || {};
-      opts.env.sharedOptions.configOptions = opts.configOptions;
-    }
-
-    super(args, { ...opts, fromCli: true });
+    super(args, opts);
 
     skipPrompt = this.options.skipPrompt;
 
@@ -42,7 +38,6 @@ class EntityGenerator extends BaseEntityGenerator {
       this.configRootPath = fs.readJSONSync('.jhipster-ionic.json').directoryPath;
       const yoRc = fs.readJSONSync(`${this.configRootPath}/.yo-rc.json`);
       this.jhipsterConfig = yoRc ? yoRc['generator-jhipster'] : {};
-
     } catch (error) {
       this.log('File .jhipster-ionic.json not found. Please run this command in an Ionic project.');
       throw error;
@@ -78,7 +73,7 @@ class EntityGenerator extends BaseEntityGenerator {
 
   get loading() {
     // Here we are not overriding this phase and hence its being handled by JHipster
-    return {...super._loading(), composing: undefined};
+    return { ...super._loading(), composing: undefined };
   }
 
   get preparing() {
