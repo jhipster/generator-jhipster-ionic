@@ -17,23 +17,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const spawn = require('cross-spawn');
+const path = require('path');
+const { YeomanCommand } = require('yeoman-environment/lib/util/command');
+const Env = require('yeoman-environment');
+const packageJson = require('../package.json');
 
-let commands = ['jhipster-ionic'];
+const program = new YeomanCommand();
 
-// ionic4j entity $name
-if (process.argv[2] === 'entity') {
-  commands = [commands[0].replace('ionic', 'ionic:entity')];
-  commands[1] = process.argv[3];
-}
+program
+  .version(packageJson.version)
+  .allowExcessArguments(false)
+  .option('--force-insight', 'Force insight')
+  .option('--no-insight', 'Disable insight')
+  .once('yeoman:environment', (env) => {
+    const baseDir = path.join(__dirname, '..');
+    // Register jhipster generators.
+    env.lookup({ npmPaths: [path.join(baseDir, '..', 'node_modules'), path.join(baseDir, 'node_modules')] });
+    env.lookup({ packagePaths: [baseDir] });
+  });
 
-// allow ionic4j import-jdl $file
-if (process.argv[2] === 'import-jdl') {
-  commands = [commands[0].replace('ionic', 'ionic:import-jdl')];
-  commands[1] = process.argv[3];
-}
+Env.addEnvironmentOptions(program);
 
-// Path to the yo cli script in generator-jhipster-ionic's node_modules
-const yoInternalCliPath = `${__dirname}/../node_modules/yo/lib/cli.js`;
+Env.prepareGeneratorCommand(
+  program.command('app', { isDefault: true }).description('Create a Ionic application (default)'),
+  require('../generators/app'),
+  'jhipster-ionic:app'
+);
 
-spawn.sync(yoInternalCliPath, commands, { stdio: 'inherit' });
+Env.prepareGeneratorCommand(
+  program.command('import-jdl').description('Import jdl file'),
+  require('../generators/import-jdl'),
+  'jhipster-ionic:import-jdl'
+);
+
+program.parseAsync(process.argv);

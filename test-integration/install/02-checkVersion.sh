@@ -7,7 +7,6 @@ java -version
 git --version
 node -v
 npm -v
-yo --version
 docker version
 docker-compose version
 ionic --version

@@ -19,15 +19,15 @@ cd "$HOME/$APP_FOLDER"
 jhipster import-jdl "$JHIPSTER".jdl --force --no-insight --skip-checks --skip-git --skip-commit-hook --skip-install
 
 #-------------------------------------------------------------------------------
-# Generate an Ionic app with yo jhipster-ionic
+# Generate an Ionic app with ionic4j
 #-------------------------------------------------------------------------------
 cd "$HOME"
-yo jhipster-ionic default --force --no-insight
+ionic4j --defaults --force --no-insight
 cd "$HOME/$IONIC_FOLDER"
 # to use the cloned generator-jhipster-ionic
 npm link generator-jhipster-ionic
 # Uncomment if you want to use the cloned generator-jhipster for generator-jhipster-ionic
 # cd node_modules/generator-jhipster-ionic && npm link generator-jhipster
 # cd ../..
-yo jhipster-ionic:import-jdl "$HOME/$APP_FOLDER"/"$JHIPSTER".jdl --force
+ionic4j import-jdl "$HOME/$APP_FOLDER"/"$JHIPSTER".jdl --force
 

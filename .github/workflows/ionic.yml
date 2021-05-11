@@ -96,7 +96,7 @@ jobs:
       - name: Install Ionic CLI + JHipster BOM
         run: |
           date
-          npm -g install yo @ionic/cli generator-jhipster@${{ matrix.jhipster-version }}
+          npm -g install @ionic/cli generator-jhipster@${{ matrix.jhipster-version }}
           #git clone https://github.com/jhipster/jhipster-bom.git
           #cd jhipster-bom && ./mvnw install -q -ntp -DskipTests -Dgpg.skip=true
           chmod +x $JHIPSTER_INSTALL/*.sh

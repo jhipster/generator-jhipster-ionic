@@ -40,7 +40,7 @@ npm update -g generator-jhipster-ionic
 
 ## Usage
 
-Create a JHipster app using `jhipster`, or a backend-only with `yo jhipster:server`. Choose `JWT` or `OAuth 2.0` as the authentication type.
+Create a JHipster app using `jhipster`, or a backend-only with `jhipster --skip-client`. Choose `JWT` or `OAuth 2.0` as the authentication type.
 
 In a directory alongside your JHipster app, run this module.
 
@@ -52,7 +52,7 @@ In a directory alongside your JHipster app, run this module.
 The following command will create an Ionic app (and its directory) for you and install the necessary code for it to communicate with your JHipster backend.
 
 ```bash
-yo jhipster-ionic
+ionic4j
 ```
 
 This module also ships with an `ionic4j` CLI that you can use as a shortcut.
@@ -73,11 +73,11 @@ Watch [use the Angular CLI to transform your Ionic app into a PWA](https://youtu
 
 ## Entity Generator
 
-To generate entities, run `ionic4j entity <name>` or `yo jhipster-ionic:entity <name>`.
+To generate entities, run `ionic4j entity <name>`.
 
 ## Import JDL
 
-To import JDL, run `ionic4j import-jdl <entities.jdl>` or `yo jhipster-ionic:import-jdl <entities.jdl>`.
+To import JDL, run `ionic4j import-jdl <entities.jdl>`.
 
 ## Testing
 

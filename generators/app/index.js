@@ -34,6 +34,12 @@ module.exports = class extends baseMixin(BaseGenerator) {
   constructor(args, opts) {
     super(args, opts);
 
+    this.option('defaults', {
+      desc: 'Use default options',
+      type: Boolean,
+      defaults: false
+    });
+
     // This adds support for a `--interactive` flag
     this.option('interactive', {
       desc: "Don't prompt user when running ionic start",
@@ -58,8 +64,8 @@ module.exports = class extends baseMixin(BaseGenerator) {
 
   get initializing() {
     return {
-      init(args) {
-        if (args === 'default') {
+      init() {
+        if (this.options.defaults) {
           this.defaultApp = true;
           this.interactive = false;
         }
