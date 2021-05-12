@@ -78,8 +78,7 @@ module.exports = class extends baseMixin(BaseGenerator) {
     };
   }
 
-  prompting() {
-    const done = this.async();
+  async prompting() {
     const messageAskForPath = 'Enter the directory where your JHipster app is located:';
     const prompts = [
       {
@@ -109,13 +108,10 @@ module.exports = class extends baseMixin(BaseGenerator) {
     if (this.defaultApp) {
       this.ionicAppName = 'ionic4j';
       this.directoryPath = path.resolve('backend');
-      done();
     } else {
-      this.prompt(prompts).then((props) => {
-        this.ionicAppName = props.appName;
-        this.directoryPath = path.resolve(props.directoryPath);
-        done();
-      });
+      const answers = await this.prompt(prompts);
+      this.ionicAppName = answers.appName;
+      this.directoryPath = path.resolve(answers.directoryPath);
     }
   }
 
@@ -274,9 +270,9 @@ module.exports = class extends baseMixin(BaseGenerator) {
 
       filesToDelete.forEach((path) => {
         if (path.endsWith('.ts') || path.endsWith('.html')) {
-          this.deleteFile(path);
+          this._deleteFile(path);
         } else {
-          this.removeDirectory(path);
+          this._removeDirectory(path);
         }
       });
     } else {
@@ -301,7 +297,7 @@ module.exports = class extends baseMixin(BaseGenerator) {
     done();
   }
 
-  deleteFile(path) {
+  _deleteFile(path) {
     // check to see if the file exists before deleting
     try {
       fs.unlinkSync(path);
@@ -310,16 +306,16 @@ module.exports = class extends baseMixin(BaseGenerator) {
     }
   }
 
-  removeDirectory(path) {
+  _removeDirectory(path) {
     if (fs.existsSync(path)) {
       fs.readdirSync(path).forEach((file, index) => {
         const curPath = `${path}/${file}`;
         if (fs.lstatSync(curPath).isDirectory()) {
           // recurse
-          this.removeDirectory(curPath);
+          this._removeDirectory(curPath);
         } else {
           // delete file
-          this.deleteFile(curPath);
+          this._deleteFile(curPath);
         }
       });
       fs.rmdirSync(path);
