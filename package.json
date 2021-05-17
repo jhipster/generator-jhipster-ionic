@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@angular-devkit/schematics-cli": "0.1102.9",
-    "@oktadev/schematics": "3.4.1",
+    "@oktadev/schematics": "4.1.0",
     "chai": "4.3.4",
     "eslint": "7.24.0",
     "eslint-config-airbnb-base": "14.2.1",
