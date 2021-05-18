@@ -107,9 +107,7 @@ module.exports = class extends baseMixin(BaseGenerator) {
       const isSpecificEntityAlreadyGenerated = utils.checkStringInFile(entityPagePath, `route: '${entityFileName}'`, this);
 
       if (!isSpecificEntityAlreadyGenerated) {
-        const isAnyEntityAlreadyGenerated = utils.checkStringInFile(entityPagePath, 'route:', this);
-        const prefix = isAnyEntityAlreadyGenerated ? ',' : '';
-        const pageEntry = `${prefix}{ name: '${entityAngularName}', component: '${entityAngularName}Page', route: '${entityFileName}' }`;
+        const pageEntry = `{ name: '${entityAngularName}', component: '${entityAngularName}Page', route: '${entityFileName}' }`;
         utils.rewriteFile(
           {
             file: entityPagePath,
@@ -122,9 +120,9 @@ module.exports = class extends baseMixin(BaseGenerator) {
     } catch (e) {
       this.log(
         `${
-          chalk.yellow('\nUnable to find ') +
-          entityPagePath +
-          chalk.yellow(' or missing required jhipster-needle. Reference to ') +
+          chalk.yellow('\nUnable to find ')
+          + entityPagePath
+          + chalk.yellow(' or missing required jhipster-needle. Reference to ') +
           entityAngularName
         } ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`
       );
@@ -151,9 +149,7 @@ module.exports = class extends baseMixin(BaseGenerator) {
     try {
       const isSpecificEntityAlreadyGenerated = utils.checkStringInFile(entityPagePath, `path: '${entityFileName}'`, this);
       if (!isSpecificEntityAlreadyGenerated) {
-        const isAnyEntityAlreadyGenerated = utils.checkStringInFile(entityPagePath, 'loadChildren', this);
-        const prefix = isAnyEntityAlreadyGenerated ? ',' : '';
-        const route = `|${prefix} {
+        const route = `| {
                     |    path: '${entityFileName}',
                     |    loadChildren: './${entityFolderName}/${entityFileName}.module#${entityAngularName}PageModule'
                     |  }`;
@@ -169,9 +165,9 @@ module.exports = class extends baseMixin(BaseGenerator) {
     } catch (e) {
       this.log(
         `${
-          chalk.yellow('\nUnable to find ') +
-          entityPagePath +
-          chalk.yellow(' or missing required jhipster-needle. Reference to ') +
+          chalk.yellow('\nUnable to find ')
+          + entityPagePath
+          + chalk.yellow(' or missing required jhipster-needle. Reference to ') +
           entityAngularName
         } ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`
       );

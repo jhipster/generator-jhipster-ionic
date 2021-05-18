@@ -47,6 +47,10 @@ _%>
             </ion-item>
             <%_ for (idx in fields) {
                 const fieldName = fields[idx].fieldName;
+                // ignore ID as it's rendered above
+                if (fieldName === 'id') {
+                  continue;
+                }
                 const fieldNameCapitalized = fields[idx].fieldNameCapitalized;
                 const fieldNameHumanized = fields[idx].fieldNameHumanized;
                 const fieldType = fields[idx].fieldType;
