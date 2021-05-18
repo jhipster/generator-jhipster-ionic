@@ -107,7 +107,6 @@ module.exports = class extends baseMixin(BaseGenerator) {
       const isSpecificEntityAlreadyGenerated = utils.checkStringInFile(entityPagePath, `route: '${entityFileName}'`, this);
 
       if (!isSpecificEntityAlreadyGenerated) {
-        const isAnyEntityAlreadyGenerated = utils.checkStringInFile(entityPagePath, 'route:', this);
         const pageEntry = `{ name: '${entityAngularName}', component: '${entityAngularName}Page', route: '${entityFileName}' },`;
         utils.rewriteFile(
           {
@@ -121,9 +120,9 @@ module.exports = class extends baseMixin(BaseGenerator) {
     } catch (e) {
       this.log(
         `${
-          chalk.yellow('\nUnable to find ') +
-          entityPagePath +
-          chalk.yellow(' or missing required jhipster-needle. Reference to ') +
+          chalk.yellow('\nUnable to find ')
+          + entityPagePath
+          + chalk.yellow(' or missing required jhipster-needle. Reference to ') +
           entityAngularName
         } ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`
       );
@@ -166,9 +165,9 @@ module.exports = class extends baseMixin(BaseGenerator) {
     } catch (e) {
       this.log(
         `${
-          chalk.yellow('\nUnable to find ') +
-          entityPagePath +
-          chalk.yellow(' or missing required jhipster-needle. Reference to ') +
+          chalk.yellow('\nUnable to find ')
+          + entityPagePath
+          + chalk.yellow(' or missing required jhipster-needle. Reference to ') +
           entityAngularName
         } ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`
       );
