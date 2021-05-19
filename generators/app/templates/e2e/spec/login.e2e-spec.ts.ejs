@@ -28,7 +28,7 @@ describe('Login', () => {
     }
     <%_ } else { _%>
     // Keycloak
-    const alert = element(by.css('.alert-error'));
+    const alert = element(by.css('#input-error'));
     if (await alert.isPresent()) {
       expect(await alert.getText()).toMatch('Invalid username or password.');
     } else {
