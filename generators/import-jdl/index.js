@@ -63,18 +63,17 @@ function importJDL() {
 }
 
 function generateEntityFiles(generator, entity) {
-  callSubGenerator(generator, '..', 'entity', {
+  callSubGenerator(generator, '..', 'entity', [entity.name], {
     force: true,
     debug: generator.options.debug,
     regenerate: true,
-    'skip-install': true,
-    'skip-prompt': true,
-    arguments: entity.name
+    skipInstall: true,
+    skipPrompt: true
   });
 }
 
-function callSubGenerator(generator, subgenPath, name, args) {
-  generator.composeWith(require.resolve(path.join(subgenPath, name)), args);
+function callSubGenerator(generator, subgenPath, name, args, options) {
+  generator.composeWith(require.resolve(path.join(subgenPath, name)), args, options);
 }
 
 class ImportJDLGenerator extends baseMixin(BaseGenerator) {

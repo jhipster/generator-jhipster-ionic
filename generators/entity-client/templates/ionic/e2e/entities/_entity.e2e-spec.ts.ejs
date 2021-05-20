@@ -115,7 +115,7 @@ _%>
     expect(await <%= entityInstance %>UpdatePage.getPageTitle())
       .toEqual(SUBCOMPONENT_TITLE);
 
-    <%_ fields.filter(f => f.fieldName !== 'id').forEach((field) => {
+    <%_ fields.filter(f => !f.id).forEach((field) => {
       const fieldName = field.fieldName;
       const fieldNameCapitalized = field.fieldNameCapitalized;
       const fieldNameHumanized = field.fieldNameHumanized;

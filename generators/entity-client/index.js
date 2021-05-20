@@ -97,7 +97,7 @@ module.exports = class extends baseMixin(BaseGenerator) {
    * @param {string} entityFileName - Entity File Name
    * @param {boolean} enableTranslation - If translations are enabled or not
    */
-  addEntityToModule(entityInstance, entityClass, entityAngularName, entityFolderName, entityFileName, enableTranslation) {
+  _addEntityToModule(entityInstance, entityClass, entityAngularName, entityFolderName, entityFileName, enableTranslation) {
     // workaround method being called on initialization
     if (!entityAngularName) {
       return;
@@ -107,7 +107,7 @@ module.exports = class extends baseMixin(BaseGenerator) {
       const isSpecificEntityAlreadyGenerated = utils.checkStringInFile(entityPagePath, `route: '${entityFileName}'`, this);
 
       if (!isSpecificEntityAlreadyGenerated) {
-        const pageEntry = `{ name: '${entityAngularName}', component: '${entityAngularName}Page', route: '${entityFileName}' }`;
+        const pageEntry = `{ name: '${entityAngularName}', component: '${entityAngularName}Page', route: '${entityFileName}' },`;
         utils.rewriteFile(
           {
             file: entityPagePath,
@@ -140,7 +140,7 @@ module.exports = class extends baseMixin(BaseGenerator) {
    * @param {string} entityFileName - Entity File Name
    * @param {boolean} enableTranslation - If translations are enabled or not
    */
-  addEntityRouteToModule(entityInstance, entityClass, entityAngularName, entityFolderName, entityFileName, enableTranslation) {
+  _addEntityRouteToModule(entityInstance, entityClass, entityAngularName, entityFolderName, entityFileName, enableTranslation) {
     // workaround method being called on initialization
     if (!entityAngularName) {
       return;
@@ -152,7 +152,7 @@ module.exports = class extends baseMixin(BaseGenerator) {
         const route = `| {
                     |    path: '${entityFileName}',
                     |    loadChildren: './${entityFolderName}/${entityFileName}.module#${entityAngularName}PageModule'
-                    |  }`;
+                    |  },`;
         utils.rewriteFile(
           {
             file: entityPagePath,
@@ -183,7 +183,7 @@ module.exports = class extends baseMixin(BaseGenerator) {
    * @param {string} dto - dto
    * @returns {{queries: Array, variables: Array, hasManyToMany: boolean}}
    */
-  generateEntityQueries(relationships, entityInstance, dto) {
+  _generateEntityQueries(relationships, entityInstance, dto) {
     // workaround method being called on initialization
     if (!relationships) {
       return;
