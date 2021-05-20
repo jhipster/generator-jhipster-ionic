@@ -48,10 +48,6 @@ _%>
             // ignore ID as it's rendered above
             <%_ for (idx in fields.filter(f => !f.id)) {
                 const fieldName = fields[idx].fieldName;
-                // ignore ID as it's rendered above
-                if (fieldName === 'id') {
-                  continue;
-                }
                 const fieldNameCapitalized = fields[idx].fieldNameCapitalized;
                 const fieldNameHumanized = fields[idx].fieldNameHumanized;
                 const fieldType = fields[idx].fieldType;
