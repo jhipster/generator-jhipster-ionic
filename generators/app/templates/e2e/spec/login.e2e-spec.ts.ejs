@@ -18,6 +18,7 @@ describe('Login', () => {
   });
 
   it('should fail to login with bad password', async () => {
+    await browser.wait(ec.visibilityOf(loginPage.signInButton));
     await loginPage.signInButton.click();
     await loginPage.login(username, 'foo');
     <%_ if (authenticationType !== 'oauth2') { _%>
