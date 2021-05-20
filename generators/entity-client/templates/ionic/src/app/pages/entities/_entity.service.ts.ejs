@@ -46,7 +46,7 @@ export class <%= entityAngularName %>Service {
     update(<%= entityInstance %>: <%= entityAngularName %>):
         Observable<HttpResponse<<%= entityAngularName %>>> {
     <%_ } _%>
-        return this.http.put(this.resourceUrl, <%= entityInstance %>, { observe: 'response'});
+        return this.http.put(`${this.resourceUrl}/${<%= entityInstance %>.id}`, <%= entityInstance %>, { observe: 'response'});
     }
 
     find(id: <% if (primaryKey.type === 'String') { %>string<% } else { %>number<% } %>): Observable<HttpResponse<<%= entityAngularName %>>> {
