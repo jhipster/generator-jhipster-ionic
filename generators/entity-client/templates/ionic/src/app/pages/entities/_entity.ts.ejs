@@ -47,8 +47,8 @@ export class <%= entityAngularName %>Page {
         this.<%= entityInstancePlural %> = [];
     }
 
-    ionViewWillEnter() {
-        this.loadAll();
+    async ionViewWillEnter() {
+        await this.loadAll();
     }
 
     async loadAll(refresher?) {
@@ -68,7 +68,7 @@ export class <%= entityAngularName %>Page {
             async (error) => {
                 console.error(error);
                 const toast = await this.toastCtrl.create({message: 'Failed to load data', duration: 2000, position: 'middle'});
-                toast.present();
+                await toast.present();
             });
     }
 
@@ -86,25 +86,25 @@ export class <%= entityAngularName %>Page {
     }
 <%_ } _%>
 
-    new() {
-        this.navController.navigateForward('/tabs/entities/<%= entityFileName %>/new');
+    async new() {
+        await this.navController.navigateForward('/tabs/entities/<%= entityFileName %>/new');
     }
 
-    edit(item: IonItemSliding, <%= entityInstance %>: <%= entityAngularName %>) {
-        this.navController.navigateForward('/tabs/entities/<%= entityFileName %>/' + <%= entityInstance %>.id + '/edit');
-        item.close();
+    async edit(item: IonItemSliding, <%= entityInstance %>: <%= entityAngularName %>) {
+        await this.navController.navigateForward('/tabs/entities/<%= entityFileName %>/' + <%= entityInstance %>.id + '/edit');
+        await item.close();
     }
 
     async delete(<%= entityInstance %>) {
         this.<%= entityInstance %>Service.delete(<%= entityInstance %>.id).subscribe(async () => {
             const toast = await this.toastCtrl.create(
                 {message: '<%= entityAngularName %> deleted successfully.', duration: 3000, position: 'middle'});
-            toast.present();
-            this.loadAll();
+            await toast.present();
+            await this.loadAll();
         }, (error) => console.error(error));
     }
 
-    view(<%= entityInstance %>: <%= entityAngularName %>) {
-        this.navController.navigateForward('/tabs/entities/<%= entityFileName %>/' + <%= entityInstance %>.id + '/view');
+    async view(<%= entityInstance %>: <%= entityAngularName %>) {
+        await this.navController.navigateForward('/tabs/entities/<%= entityFileName %>/' + <%= entityInstance %>.id + '/view');
     }
 }

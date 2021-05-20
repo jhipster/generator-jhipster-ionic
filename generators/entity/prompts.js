@@ -27,7 +27,7 @@ module.exports = {
 
 function askForBackendJson() {
   const context = this.context;
-  if (this.useConfigurationFile) {
+  if (context.useConfigurationFile) {
     return;
   }
 
@@ -44,7 +44,7 @@ function askForBackendJson() {
       when: (response) => response.useBackendJson === true,
       type: 'input',
       name: 'backendPath',
-      message: "Enter the path to your app's root directory:",
+      message: 'Enter the path to your app\'s root directory:',
       store: true,
       validate: (input) => {
         let fromPath = '';

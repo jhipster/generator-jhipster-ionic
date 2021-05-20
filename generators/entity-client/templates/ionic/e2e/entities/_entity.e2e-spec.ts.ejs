@@ -35,8 +35,8 @@ describe('<%= entityClass %> e2e test', () => {
   let <%= entityInstance %>DetailPage: <%= entityClass %>DetailPage;
   <%_ } _%>
   let initNumberOfEntities: number;
-  const COMPONENT_TITLE = '<%= entityClassPlural%>';
-  const SUBCOMPONENT_TITLE = '<%= entityClass %>';
+  const COMPONENT_TITLE = '<%= entityClassPluralHumanized %>';
+  const SUBCOMPONENT_TITLE = '<%= entityClassHumanized %>';
   let lastElement: any;
   let isVisible = false;
 
@@ -50,7 +50,7 @@ describe('<%= entityClass %> e2e test', () => {
     const minLength = field.fieldValidateRulesMinlength;
 _%>
 <%_ if (['Integer', 'Long', 'Float', 'Double', 'BigDecimal'].includes(fieldType)) { _%>
-  const <%= fieldName %> = '5';
+  const <%= fieldName %> = '10';
 <%_ } else if (fieldType === 'LocalDate') { _%>
 <%_ } else if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
 <%_ } else if (fieldType === 'Duration') { _%>
@@ -77,6 +77,8 @@ _%>
   beforeAll(async () => {
     loginPage = new LoginPage();
     await loginPage.navigateTo('/');
+    await browser.sleep(1000);
+    await browser.wait(ec.visibilityOf(loginPage.signInButton), 3000);
     await loginPage.signInButton.click();
     const username = process.env.E2E_USERNAME || 'admin';
     const password = process.env.E2E_PASSWORD || 'admin';
@@ -111,11 +113,11 @@ _%>
     await browser.wait(ec.elementToBeClickable(<%= entityInstance %>ComponentsPage.createButton), 5000);
     await <%= entityInstance %>ComponentsPage.clickOnCreateButton();
     <%= entityInstance %>UpdatePage = new <%= entityClass %>UpdatePage();
-    await browser.wait(ec.visibilityOf(<%= entityInstance %>UpdatePage.pageTitle), 1000);
+    await browser.wait(ec.visibilityOf(<%= entityInstance %>UpdatePage.pageTitle), 3000);
     expect(await <%= entityInstance %>UpdatePage.getPageTitle())
       .toEqual(SUBCOMPONENT_TITLE);
 
-    <%_ fields.forEach((field) => {
+    <%_ fields.filter(f => !f.id).forEach((field) => {
       const fieldName = field.fieldName;
       const fieldNameCapitalized = field.fieldNameCapitalized;
       const fieldNameHumanized = field.fieldNameHumanized;
@@ -137,7 +139,7 @@ _%>
     <%_ }); _%>
 
     await <%= entityInstance %>UpdatePage.save();
-    await browser.wait(ec.visibilityOf(<%= entityInstance %>ComponentsPage.title), 1000);
+    await browser.wait(ec.visibilityOf(<%= entityInstance %>ComponentsPage.title), 3000);
     expect(await <%= entityInstance %>ComponentsPage.getTitle())
       .toEqual(COMPONENT_TITLE);
     expect(await <%= entityInstance %>ComponentsPage.getEntitiesNumber())

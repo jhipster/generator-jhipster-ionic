@@ -1,7 +1,7 @@
 <%#
  Copyright 2019-Present the original author or authors from the JHipster project.
 
- This file is part of the JHipster project, see http://www.jhipster.tech/
+ This file is part of the JHipster project, see https://www.jhipster.tech/
  for more information.
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,102 +16,127 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-import { browser, by, element, ExpectedConditions as ec } from 'protractor';
-import { LoginPage } from '../../pages/login.po';
-import {
-  <%= entityClass %>ComponentsPage,
-  <%_ if (!readOnly) { _%>
-      <%= entityClass %>DetailPage,
-      <%= entityClass %>UpdatePage
-  <%_ } _%>
-} from './<%= entityFileName %>.po';
+import { element, by, browser<% if (!readOnly) { %>, ElementFinder<% } %> } from 'protractor';
 
-describe('<%= entityClass %> e2e test', () => {
+<%_
+let elementGetter = `getText()`;
+_%>
+export class <%= entityClass %>ComponentsPage {
+    <%_ if (!readOnly) { _%>
+    createButton = element(by.css('ion-fab-button'));
+    <%_ } _%>
+    viewButtons = element.all(by.css('ion-item'));
+    title = element.all(by.css('ion-title')).get(2);
+    noResult = element(by.cssContainingText('ion-label', 'No <%= entityClassPluralHumanized %> found.'));
+    entities = element.all(by.css('page-<%= entityFileName %> ion-item'));
 
-  let loginPage: LoginPage;
-  let <%= entityInstance %>ComponentsPage: <%= entityClass %>ComponentsPage;
-  <%_ if (!readOnly) { _%>
-  let <%= entityInstance %>UpdatePage: <%= entityClass %>UpdatePage;
-  let <%= entityInstance %>DetailPage: <%= entityClass %>DetailPage;
-  <%_ } _%>
-  let initNumberOfEntities: number;
-  const COMPONENT_TITLE = '<%= entityClassPlural%>';
-  const SUBCOMPONENT_TITLE = '<%= entityClass %>';
+    <%_ if (!readOnly) { _%>
+    async clickOnCreateButton(): Promise<void> {
+        await this.createButton.click();
+    }
+    <%_ } _%>
 
-  <%_ fields.forEach((field) => {
+    async clickOnLastViewButton(): Promise<void> {
+      await this.viewButtons.last().click();
+    }
+
+    async getTitle(): Promise<string> {
+        return this.title.<%- elementGetter %>;
+    }
+
+    async getEntitiesNumber(): Promise <number> {
+      return await this.entities.count();
+    }
+}
+
+<%_ if (!readOnly) { _%>
+
+export class <%= entityClass %>UpdatePage {
+    pageTitle = element.all(by.css('ion-title')).get(3);
+    saveButton = element.all(by.css('ion-button')).get(1);
+
+<%_ fields.forEach((field) => {
+    const fieldName = field.fieldName;
+    const fieldType = field.fieldType;
+    const fieldIsEnum = field.fieldIsEnum;
+    const fieldTypeBlobContent = field.fieldTypeBlobContent;
+_%>
+    <%_ if (fieldType === 'Boolean') { _%>
+    <%_ } else if (fieldIsEnum) { _%>
+    <%= fieldName %>Select = element(by.css('ion-select[formControlName="<%= fieldName %>"]'));
+    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
+    <%= fieldName %>Input = element(by.css('ion-textarea[formControlName="<%= fieldName %>"] textarea'));
+    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType)) { _%>
+    <%= fieldName %>Input = element(by.css('ion-input[formControlName="<%= fieldName %>"] input'));
+    <%_ } else if (fieldType === 'LocalDate') { _%>
+    <%_ } else if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
+    <%_ } else { _%>
+    <%= fieldName %>Input = element(by.css('ion-input[formControlName="<%= fieldName %>"] input'));
+    <%_ } _%>
+<%_ }); _%>
+
+
+    async getPageTitle(): Promise<string> {
+        return this.pageTitle.<%- elementGetter %>;
+    }
+
+<%_ fields.forEach((field) => {
     const fieldName = field.fieldName;
     const fieldNameCapitalized = field.fieldNameCapitalized;
+    const fieldNameHumanized = field.fieldNameHumanized;
     const fieldType = field.fieldType;
     const fieldTypeBlobContent = field.fieldTypeBlobContent;
     const fieldIsEnum = field.fieldIsEnum;
-    const fieldValidateSampleString = field.fieldValidateSampleString;
-    const minLength = field.fieldValidateRulesMinlength;
+    let fieldInputType = 'text';
+    let ngModelOption = '';
 _%>
-<%_ if (['Integer', 'Long', 'Float', 'Double', 'BigDecimal'].includes(fieldType)) { _%>
-  const <%= fieldName %> = '5';
-<%_ } else if (fieldType === 'LocalDate') { _%>
-<%_ } else if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
-<%_ } else if (fieldType === 'Duration') { _%>
-  const <%= fieldName %> = 'PT12S';
-<%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
-  const <%= fieldName %> = '<%= fieldName %>';
-<%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType)) { _%>
-  <%# nothing field to upload byte image -%>
-<%_ } else if (fieldIsEnum) { _%>
-  <%# it will be set last choose -%>
-<%_ } else if (fieldType === 'UUID') { _%>
-  const <%= fieldName %> ='64c99148-3908-465d-8c4a-e510e3ade974';
-<%_ } else if (fieldType === 'String' && fieldValidateSampleString) { _%>
-  const <%= fieldName %> = '<%= fieldValidateSampleString %>';
-<%_ } else if (fieldType === 'String' && fieldName.length < minLength) { _%>
-  <%_ let value = 'A'.repeat(minLength - fieldName.length );
-   value = fieldName + value; _%>
-  const <%= fieldName %> =  '<%= value_%>';
-<%_ } else if (fieldType !== 'Boolean') { _%>
-  const <%= fieldName %> = '<%= fieldName %>';
-<%_ } _%>
+    <%_ if (fieldType === 'Boolean') { _%>
+    <%_ } else if (fieldIsEnum) { _%>
+    async <%= fieldName %>SelectLastOption(): Promise<void> {
+        await this.<%= fieldName %>Select.click();
+        await browser.sleep(500);
+        await element.all(by.className('alert-radio')).last().click();
+        await element.all(by.className('alert-button')).last().click();
+    }
+    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
+    async set<%= fieldNameCapitalized %>Input(<%= fieldName %>: string): Promise<void> {
+        await this.<%= fieldName %>Input.sendKeys(<%= fieldName %>);
+    }
+    <%_ } else if (['Instant', 'ZonedDateTime', 'LocalDate'].includes(fieldType)) { _%>
+    <%_ } else { _%>
+    async set<%= fieldNameCapitalized %>Input(<%= fieldName %>: string): Promise<void> {
+        await this.<%= fieldName %>Input.sendKeys(<%= fieldName %>);
+    }
+    <%_ } _%>
 <%_ }); _%>
 
-  beforeAll(async () => {
-    loginPage = new LoginPage();
-    await loginPage.navigateTo('/');
-    await loginPage.signInButton.click();
-    const username = process.env.E2E_USERNAME || 'admin';
-    const password = process.env.E2E_PASSWORD || 'admin';
-    <%_ if (authenticationType !== 'oauth2') { _%>
-    await browser.wait(ec.elementToBeClickable(loginPage.loginButton), 3000);
-    <%_ } _%>
-    await loginPage.login(username, password);
-    <%_ if (authenticationType !== 'oauth2') { _%>
-    await browser.wait(ec.visibilityOf(loginPage.logoutButton), 1000);
-    <%_ }_%>
+    async save(): Promise<void> {
+        await this.saveButton.click();
+    }
+}
 
-  });
+export class <%= entityClass %>DetailPage {
+    pageTitle = element.all(by.css('ion-title')).get(3);
+    deleteButton = element(by.css('ion-button[color="danger"]'));
+    <%_ for (idx in fields) {
+    const fieldName = fields[idx].fieldName;
+    const fieldType = fields[idx].fieldType;
+    const fieldTypeBlobContent = fields[idx].fieldTypeBlobContent;
+    const fieldIsEnum = fields[idx].fieldIsEnum;
+    const newIndex = parseInt(idx) + 1;
+    _%>
+    <%_ if (fieldType === 'Boolean') { _%>
+    <%_ } else if (['Instant', 'ZonedDateTime', 'LocalDate'].includes(fieldType)) { _%>
+    <%_ } else if (fieldIsEnum) { _%>
+    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
+    <%= fieldName %>Input = element.all(by.css('span')).get(<%=newIndex%>);
+    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType)) { _%>
+    <%= fieldName %>Input = element.all(by.css('span')).get(<%=newIndex%>);
+    <%_ } else { _%>
+    <%= fieldName %>Input = element.all(by.css('span')).get(<%=newIndex%>);
+    <%_ }; _%>
 
-  it('should load <%= entityClassPlural %>', async () => {
-    // go to entity component page
-    const tabEntities = element(by.css('ion-tab-button[tab="entities"]'));
-    await browser.wait(ec.elementToBeClickable(tabEntities), 3000);
-    await tabEntities.click();
-    await element.all(by.css('ion-item'))
-      .filter(async el => (await el.element(by.css('h2')).getText()) === '<%= entityClass %>').first().click();
-
-    <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
-    await browser.wait(ec.visibilityOf(<%= entityInstance %>ComponentsPage.title), 5000);
-    expect(await <%= entityInstance %>ComponentsPage.getTitle())
-      .toEqual(COMPONENT_TITLE);
-    await browser.wait(ec.or(ec.visibilityOf(<%= entityInstance %>ComponentsPage.entities.get(0)), ec.visibilityOf(<%= entityInstance %>ComponentsPage.noResult)), 5000);
-  });
-
-  <%_ if (!readOnly) { _%>
-  it('should create <%= entityClass %>', async () => {
-    initNumberOfEntities = await <%= entityInstance %>ComponentsPage.getEntitiesNumber();
-    await browser.wait(ec.elementToBeClickable(<%= entityInstance %>ComponentsPage.createButton), 5000);
-    await <%= entityInstance %>ComponentsPage.clickOnCreateButton();
-    <%= entityInstance %>UpdatePage = new <%= entityClass %>UpdatePage();
-    await browser.wait(ec.visibilityOf(<%= entityInstance %>UpdatePage.pageTitle), 1000);
-    expect(await <%= entityInstance %>UpdatePage.getPageTitle())
-      .toEqual(SUBCOMPONENT_TITLE);
+    <%_ }; _%>
 
     <%_ fields.forEach((field) => {
       const fieldName = field.fieldName;
@@ -122,85 +147,29 @@ _%>
       const fieldIsEnum = field.fieldIsEnum;
       let fieldInputType = 'text';
       let ngModelOption = '';
-    _%>
-    <%_ if (fieldType === 'Boolean') { _%>
-    <%_ } else if (fieldIsEnum) { _%>
-    await <%= entityInstance %>UpdatePage.<%= fieldName %>SelectLastOption();
-    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
-    await <%= entityInstance %>UpdatePage.set<%= fieldNameCapitalized %>Input(<%= fieldName %>);
-    <%_ } else if (['Instant', 'ZonedDateTime', 'LocalDate'].includes(fieldType)) { _%>
-    <%_ } else { _%>
-    await <%= entityInstance %>UpdatePage.set<%= fieldNameCapitalized %>Input(<%= fieldName %>);
-    <%_ } _%>
-    <%_ }); _%>
-
-    await <%= entityInstance %>UpdatePage.save();
-    await browser.wait(ec.visibilityOf(<%= entityInstance %>ComponentsPage.title), 1000);
-    expect(await <%= entityInstance %>ComponentsPage.getTitle())
-      .toEqual(COMPONENT_TITLE);
-    expect(await <%= entityInstance %>ComponentsPage.getEntitiesNumber())
-      .toEqual(initNumberOfEntities + 1);
-  });
-
-  it('should scroll to last <%= entityClass %>', async () => {
-    await browser.wait(ec.visibilityOf(<%= entityInstance %>ComponentsPage.title), 5000);
-    const lastElement = await <%= entityInstance %>ComponentsPage.viewButtons.last().getWebElement();
-    await browser.executeScript('arguments[0].scrollIntoView()', lastElement);
-    await browser.wait(ec.elementToBeClickable(<%= entityInstance %>ComponentsPage.viewButtons.last()), 5000);
-    await browser.executeScript('arguments[0].click()', lastElement);
-  });
-
-  it('should view the last <%= entityClass %>', async () => {
-    <%= entityInstance %>DetailPage = new <%= entityClass %>DetailPage();
-    await browser.wait(ec.visibilityOf(<%= entityInstance %>DetailPage.pageTitle), 1000);
-    expect(await <%= entityInstance %>DetailPage.getPageTitle())
-      .toEqual(SUBCOMPONENT_TITLE);
-
-      <%_ fields.forEach((field) => {
-        const fieldName = field.fieldName;
-        const fieldNameCapitalized = field.fieldNameCapitalized;
-        const fieldNameHumanized = field.fieldNameHumanized;
-        const fieldType = field.fieldType;
-        const fieldTypeBlobContent = field.fieldTypeBlobContent;
-        const fieldIsEnum = field.fieldIsEnum;
-        let fieldInputType = 'text';
-        let ngModelOption = '';
       _%>
 
     <%_ if (fieldType === 'Boolean') { _%>
     <%_ } else if (fieldIsEnum) { _%>
+
     <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
-    expect(await <%= entityInstance %>DetailPage.get<%= fieldNameCapitalized %>Input()).toEqual(<%=fieldName%>);
+    async get<%= fieldNameCapitalized %>Input(): Promise<string> {
+        return await this.<%= fieldName %>Input.<%- elementGetter %>;
+    }
     <%_ } else if (['Instant', 'ZonedDateTime', 'LocalDate'].includes(fieldType)) { _%>
     <%_ } else { _%>
-    expect(await <%= entityInstance %>DetailPage.get<%= fieldNameCapitalized %>Input()).toEqual(<%=fieldName%>);
+    async get<%= fieldNameCapitalized %>Input(): Promise<string> {
+        return await this.<%= fieldName %>Input.<%- elementGetter %>;
+    }
     <%_ } _%>
     <%_ }); _%>
-  });
 
-  it('should delete last <%= entityClass %>', async () => {
-    await browser.wait(ec.elementToBeClickable(<%= entityInstance %>DetailPage.deleteButton), 3000);
-    await browser.executeScript('arguments[0].click()', await <%= entityInstance %>DetailPage.deleteButton.getWebElement());
+    async clickOnDeleteButton(): Promise<void> {
+      await this.deleteButton.click();
+    }
 
-    const alertConfirmButton = element.all(by.className('alert-button')).last();
-
-    await browser.wait(ec.elementToBeClickable(alertConfirmButton), 3000);
-    alertConfirmButton.click();
-    await browser.wait(ec.visibilityOf(<%= entityInstance %>ComponentsPage.title), 1000);
-    expect(await <%= entityInstance %>ComponentsPage.getTitle())
-      .toEqual(COMPONENT_TITLE);
-    expect(await <%= entityInstance %>ComponentsPage.getEntitiesNumber())
-      .toEqual(initNumberOfEntities);
-  });
-
-  <%_ } _%>
-
-  it('finish <%= entityClassPlural %> tests performing logout', async () => {
-    // go to home page
-    const tabHome = element(by.css('ion-tab-button[tab="home"]'));
-    await browser.wait(ec.elementToBeClickable(tabHome), 3000);
-    await tabHome.click();
-    await browser.wait(ec.elementToBeClickable(loginPage.logoutButton), 3000);
-    await loginPage.logout();
-  });
-});
+    async getPageTitle(): Promise<string> {
+      return this.pageTitle.<%- elementGetter %>;
+    }
+}
+<%_ } _%>

@@ -24,36 +24,46 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { <%= entityAngularName %>DetailPage } from './<%= entityFileName %>-detail';
+import { IonicModule } from '@ionic/angular';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UserService } from '../../../services/user/user.service';
+import { <%= entityAngularName %>UpdatePage } from './<%= entityFileName %>-update';
 
-describe('<%= entityAngularName %>DetailPage', () => {
-  let component: <%= entityAngularName %>DetailPage ;
-  let fixture: ComponentFixture<<%= entityAngularName %>DetailPage>;
-  const entityMock =  {
-    id: <% if (pkType === 'String') { %>'16198999-42bf-4dfe-90f4-52e1bb0555ac'<% } else { %>0<% } %>,
-    user: {}
+
+describe('<%= entityAngularName %>UpdatePage', () => {
+  let component: <%= entityAngularName %>UpdatePage ;
+  let fixture: ComponentFixture<<%= entityAngularName %>UpdatePage>;
+
+ const entityMock =  {
+  id: <% if (primaryKey.type === 'String') { %>'16198999-42bf-4dfe-90f4-52e1bb0555ac'<% } else { %>0<% } %>,
+  user: {}
   };
 
-  const activatedRouteMock = ({ data: of({ data: entityMock }) } as any) as ActivatedRoute;
+const userServiceMock = {
+  findAll: (): any => of([])
+};
+
+const activatedRouteMock = ({ data: of({ data: entityMock }) } as any) as ActivatedRoute;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [<%= entityAngularName %>DetailPage],
+      declarations: [<%= entityAngularName %>UpdatePage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [
         TranslateModule.forRoot(),
         NgxWebstorageModule.forRoot(),
         HttpClientTestingModule,
         RouterTestingModule,
-      ],
-      providers: [
-        { provide: ActivatedRoute, useValue: activatedRouteMock }
-      ]
+        FormsModule, ReactiveFormsModule, IonicModule ],
+        providers: [
+         { provide: ActivatedRoute, useValue: activatedRouteMock },
+         { provide: UserService, useValue:  userServiceMock },
+       ]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(<%= entityAngularName %>DetailPage);
+    fixture = TestBed.createComponent(<%= entityAngularName %>UpdatePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

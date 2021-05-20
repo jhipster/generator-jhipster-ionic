@@ -29,5 +29,5 @@ npm link generator-jhipster-ionic
 # Uncomment if you want to use the cloned generator-jhipster for generator-jhipster-ionic
 # cd node_modules/generator-jhipster-ionic && npm link generator-jhipster
 # cd ../..
-yo jhipster-ionic:import-jdl "$HOME/$APP_FOLDER"/"$JHIPSTER".jdl
+yo jhipster-ionic:import-jdl "$HOME/$APP_FOLDER"/"$JHIPSTER".jdl --force
 
