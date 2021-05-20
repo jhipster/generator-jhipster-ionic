@@ -6,7 +6,7 @@
 
 ## Introduction
 
-This is a [JHipster](http://www.jhipster.tech/) module. You can use it to generate an Ionic app that talks to a JHipster backend. It uses the [Ionic JHipster Starter](https://github.com/oktadeveloper/ionic-jhipster-starter) as a base template, then applies functionality (e.g. entity generation) on top of it.
+This is a [JHipster](http://www.jhipster.tech/) module. You can use it to generate an Ionic app that talks to a JHipster backend. It uses the [Ionic JHipster Starter](https://github.com/oktadev/ionic-jhipster-starter) as a base template, then applies functionality (e.g. entity generation) on top of it.
 
 To learn more about this module, see [Build Mobile Apps with Angular, Ionic 4, and Spring Boot](https://developer.okta.com/blog/2019/06/24/ionic-4-angular-spring-boot-jhipster).
 
@@ -81,7 +81,7 @@ docker-compose -f src/main/docker/keycloak up -d
 
 See [JHipster's security docs](https://www.jhipster.tech/security/#-oauth2-and-openid-connect) to see how to configure JHipster for Okta.
 
-**NEW:** You can use the [Okta CLI](https://github.com/oktadeveloper/okta-cli) to add JHipster integration in seconds! After running `okta register`, run `okta apps create jhipster`. Then, source the created `.okta.env` file and start your app.
+**NEW:** You can use the [Okta CLI](https://github.com/oktadev/okta-cli) to add JHipster integration in seconds! After running `okta register`, run `okta apps create jhipster`. Then, source the created `.okta.env` file and start your app.
 
 ```shell
 source .okta.env
@@ -160,7 +160,23 @@ Add your custom scheme to `ios/App/App/Info.plist`:
 </array>
 ```
 
-Open your project in Xcode and configure code signing.
+Then, run your project using the Capacitor CLI:
+
+```
+npx cap run ios
+```
+
+In order to communicate with your JHipster app, you'll need to modify its CORS settings (in `src/main/resources/config/application-dev.yml`) to allow `capacitor://localhost` as an origin.
+
+To run your app in iOS Simulator with hot-reload, run:
+
+```
+npx cap run ios -l --external
+```
+
+You will need to modify your JHipster app to allow your external IP as a trusted origin for this to work!
+
+You can also open your project in Xcode and configure code signing.
 
 ```
 npx cap open ios
@@ -191,13 +207,29 @@ npx jetify
 npx cap sync android
 ```   
 
-Then, open your project in Android Studio and run your app.
+Then, run your project using the Capacitor CLI:
+
+```
+npx cap run android
+```
+
+In order to communicate with your JHipster app, you'll need to modify its CORS settings (in `src/main/resources/config/application-dev.yml`) to allow `http://localhost` as an origin.
+
+To run your app in iOS Simulator with hot-reload, run:
+
+```
+npx cap run android -l --external
+```
+
+You will need to modify your JHipster app to allow your external IP as a trusted origin for this to work!
+
+You can also open your project in Android Studio and run your app.
 
 ```
 npx cap open android
 ```
 
-You'll need to run a couple commands to allow the emulator to communicate with your API and Keycloak.
+You'll need to run a couple commands to allow the emulator to communicate with JHipster (and Keycloak if you're using OIDC for authentication).
 
 ```
 adb reverse tcp:8080 tcp:8080
@@ -212,9 +244,7 @@ If you see `java.io.IOException: Cleartext HTTP traffic to localhost not permitt
     android:usesCleartextTraffic="true">
 ```
         
-See [this Stack Overflow Q&A](https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted) for more information. 
-
-If that doesn't work, just use Okta (and its HTTPS-by-default feature 😉).
+See [this Stack Overflow Q&A](https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted) for more information.
 
 ### Entity Generator
 
@@ -232,7 +262,7 @@ You can run unit tests with:
 npm test
 ```
 
-See the [testing section](https://github.com/oktadeveloper/ionic-jhipster-starter#testing) of the Ionic JHipster Starter for more information.
+See the [testing section](https://github.com/oktadev/ionic-jhipster-starter#testing) of the Ionic JHipster Starter for more information.
 
 ## Contributing
 
@@ -244,8 +274,8 @@ Apache-2.0 © [Okta, Inc](https://developer.okta.com)
 
 [npm-image]: https://img.shields.io/npm/v/generator-jhipster-ionic.svg
 [npm-url]: https://npmjs.org/package/generator-jhipster-ionic
-[github-actions-image]: https://github.com/oktadeveloper/generator-jhipster-ionic/workflows/Ionic/badge.svg
-[github-actions-url]: https://github.com/oktadeveloper/generator-jhipster-ionic/actions
+[github-actions-image]: https://github.com/oktadev/generator-jhipster-ionic/workflows/Ionic/badge.svg
+[github-actions-url]: https://github.com/oktadev/generator-jhipster-ionic/actions
 [daviddm-image]: https://david-dm.org/oktadeveloper/generator-jhipster-ionic.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/oktadeveloper/generator-jhipster-ionic
-[feature-template]: https://github.com/oktadeveloper/generator-jhipster-ionic/issues/new?body=*%20**Overview%20of%20the%20request**%0A%0A%3C!--%20what%20is%20the%20query%20or%20request%20--%3E%0A%0A*%20**Motivation%20for%20or%20Use%20Case**%20%0A%0A%3C!--%20explain%20why%20this%20is%20a%20required%20for%20you%20--%3E%0A%0A%0A*%20**Browsers%20and%20Operating%20System**%20%0A%0A%3C!--%20is%20this%20a%20problem%20with%20all%20browsers%20or%20only%20IE8%3F%20--%3E%0A%0A%0A*%20**Related%20issues**%20%0A%0A%3C!--%20has%20a%20similar%20issue%20been%20reported%20before%3F%20--%3E%0A%0A*%20**Suggest%20a%20Fix**%20%0A%0A%3C!--%20if%20you%20can%27t%20fix%20this%20yourself%2C%20perhaps%20you%20can%20point%20to%20what%20might%20be%0A%20%20causing%20the%20problem%20(line%20of%20code%20or%20commit)%20--%3E
+[feature-template]: https://github.com/oktadev/generator-jhipster-ionic/issues/new?body=*%20**Overview%20of%20the%20request**%0A%0A%3C!--%20what%20is%20the%20query%20or%20request%20--%3E%0A%0A*%20**Motivation%20for%20or%20Use%20Case**%20%0A%0A%3C!--%20explain%20why%20this%20is%20a%20required%20for%20you%20--%3E%0A%0A%0A*%20**Browsers%20and%20Operating%20System**%20%0A%0A%3C!--%20is%20this%20a%20problem%20with%20all%20browsers%20or%20only%20IE8%3F%20--%3E%0A%0A%0A*%20**Related%20issues**%20%0A%0A%3C!--%20has%20a%20similar%20issue%20been%20reported%20before%3F%20--%3E%0A%0A*%20**Suggest%20a%20Fix**%20%0A%0A%3C!--%20if%20you%20can%27t%20fix%20this%20yourself%2C%20perhaps%20you%20can%20point%20to%20what%20might%20be%0A%20%20causing%20the%20problem%20(line%20of%20code%20or%20commit)%20--%3E

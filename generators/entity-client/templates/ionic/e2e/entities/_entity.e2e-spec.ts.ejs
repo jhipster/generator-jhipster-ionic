@@ -77,6 +77,8 @@ _%>
   beforeAll(async () => {
     loginPage = new LoginPage();
     await loginPage.navigateTo('/');
+    await browser.sleep(1000);
+    await browser.wait(ec.visibilityOf(loginPage.signInButton), 3000);
     await loginPage.signInButton.click();
     const username = process.env.E2E_USERNAME || 'admin';
     const password = process.env.E2E_PASSWORD || 'admin';

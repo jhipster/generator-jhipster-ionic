@@ -242,8 +242,8 @@ _%>
         }
         this.isSaving = false;
         const toast = await this.toastCtrl.create({message: `<%= entityAngularName %> ${action} successfully.`, duration: 2000, position: 'middle'});
-        toast.present();
-        this.navController.navigateBack('/tabs/entities/<%= entityFileName %>');
+        await toast.present();
+        await this.navController.navigateBack('/tabs/entities/<%= entityFileName %>');
     }
 
     previousState() {
@@ -254,7 +254,7 @@ _%>
         this.isSaving = false;
         console.error(error);
         const toast = await this.toastCtrl.create({message: 'Failed to load data', duration: 2000, position: 'middle'});
-        toast.present();
+        await toast.present();
     }
 
     private createFromForm(): <%= entityAngularName %> {

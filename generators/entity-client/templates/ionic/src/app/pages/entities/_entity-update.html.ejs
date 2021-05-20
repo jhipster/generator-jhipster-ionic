@@ -45,9 +45,12 @@ _%>
                 <ion-label>ID</ion-label>
                 <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
             </ion-item>
-            // ignore ID as it's rendered above
-            <%_ for (idx in fields.filter(f => !f.id)) {
+            <%_ for (idx in fields) {
                 const fieldName = fields[idx].fieldName;
+                // skip id since it's already rendered above
+                if (fieldName === 'id') {
+                  continue;
+                }
                 const fieldNameCapitalized = fields[idx].fieldNameCapitalized;
                 const fieldNameHumanized = fields[idx].fieldNameHumanized;
                 const fieldType = fields[idx].fieldType;
