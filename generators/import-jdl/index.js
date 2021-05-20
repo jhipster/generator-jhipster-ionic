@@ -20,17 +20,18 @@ const _ = require('lodash');
 const path = require('path');
 const shelljs = require('shelljs');
 const chalk = require('chalk');
-const jhiCore = require('jhipster-core');
+const { createImporterFromFiles } = require('generator-jhipster/jdl/jdl-importer');
 const { logger } = require('generator-jhipster/cli/utils');
 const BaseGenerator = require('generator-jhipster/generators/generator-base');
 const pluralize = require('pluralize');
-const jhipsterUtils = require('generator-jhipster/generators/utils');
 const fs = require('fs-extra');
+
+const baseMixin = require('../generator-base-mixin');
 
 function importJDL() {
   logger.info('The JDL is being parsed...');
 
-  const jdlImporter = jhiCore.JDLImporter.createImporterFromFiles(this.jdlFiles, {
+  const jdlImporter = createImporterFromFiles(this.jdlFiles, {
     databaseType: this.prodDatabaseType,
     applicationType: this.applicationType,
     applicationName: this.baseName
@@ -62,25 +63,24 @@ function importJDL() {
 }
 
 function generateEntityFiles(generator, entity) {
-  callSubGenerator(generator, '..', 'entity', {
+  callSubGenerator(generator, '..', 'entity', [entity.name], {
     force: true,
     debug: generator.options.debug,
     regenerate: true,
-    'skip-install': true,
-    'skip-prompt': true,
-    arguments: entity.name
+    skipInstall: true,
+    skipPrompt: true
   });
 }
 
-function callSubGenerator(generator, subgenPath, name, args) {
-  generator.composeWith(require.resolve(path.join(subgenPath, name)), args);
+function callSubGenerator(generator, subgenPath, name, args, options) {
+  generator.composeWith(require.resolve(path.join(subgenPath, name)), args, options);
 }
 
-class ImportJDLGenerator extends BaseGenerator {
+class ImportJDLGenerator extends baseMixin(BaseGenerator) {
   constructor(args, opts) {
     super(args, opts);
+
     this.argument('jdlFiles', { type: Array, required: true });
-    this.jdlFiles = this.options.jdlFiles;
 
     // This adds support for a `--json-only` flag
     this.option('json-only', {
@@ -89,17 +89,24 @@ class ImportJDLGenerator extends BaseGenerator {
       defaults: false
     });
 
+    if (this.options.help) {
+      return;
+    }
+
+    this.jdlFiles = this.options.jdlFiles;
+
     try {
       this.configRootPath = fs.readJSONSync('.jhipster-ionic.json').directoryPath;
-      const configuration = jhipsterUtils.getAllJhipsterConfig(null, true, this.configRootPath);
-      this.applicationType = configuration.applicationType;
-      this.baseName = configuration.baseName;
-      this.prodDatabaseType = configuration.prodDatabaseType || this.options.db;
+      const yoRc = fs.readJSONSync(`${this.configRootPath}/.yo-rc.json`);
+      this.jhipsterConfig = yoRc ? yoRc['generator-jhipster'] : {};
+      this.applicationType = this.jhipsterConfig.applicationType;
+      this.baseName = this.jhipsterConfig.baseName;
+      this.prodDatabaseType = this.jhipsterConfig.prodDatabaseType || this.options.db;
 
       this.importState = importJDL.call(this);
     } catch (error) {
       logger.info('File .jhipster-ionic.json not found. Please run this command in an Ionic project.');
-      logger.error(error);
+      throw error;
     }
   }
 
@@ -124,7 +131,7 @@ class ImportJDLGenerator extends BaseGenerator {
           logger.info('Entities not generated');
           return;
         }
-        if (this.options['json-only']) {
+        if (this.options.jsonOnly) {
           logger.info('Entity JSON files created. Entity generation skipped.');
           return;
         }

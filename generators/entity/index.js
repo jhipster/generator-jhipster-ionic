@@ -17,27 +17,36 @@
  * limitations under the License.
  */
 const BaseEntityGenerator = require('generator-jhipster/generators/entity');
+const fs = require('fs-extra');
+
 const prompts = require('./prompts');
+const baseMixin = require('../generator-base-mixin');
 
 let skipPrompt = false;
 
-class EntityGenerator extends BaseEntityGenerator {
+class EntityGenerator extends baseMixin(BaseEntityGenerator) {
   constructor(args, opts) {
-    const suppressWarning = { 'from-cli': true };
-    super(args, { ...opts, ...suppressWarning });
-    skipPrompt = opts['skip-prompt'];
+    super(args, opts);
+
+    skipPrompt = this.options.skipPrompt;
+
+    if (this.options.help) {
+      return;
+    }
+
+    try {
+      this.configRootPath = fs.readJSONSync('.jhipster-ionic.json').directoryPath;
+      const yoRc = fs.readJSONSync(`${this.configRootPath}/.yo-rc.json`);
+      this.jhipsterConfig = yoRc ? yoRc['generator-jhipster'] : {};
+    } catch (error) {
+      this.log('File .jhipster-ionic.json not found. Please run this command in an Ionic project.');
+      throw error;
+    }
   }
 
   get initializing() {
     // Here we are not overriding this phase and hence its being handled by JHipster
-    // return super._initializing();
-    const phaseFromJHipster = super._initializing();
-    const myCustomPhaseSteps = {
-      loadConfig() {
-        this.configRootPath = this.options.configRootPath = this.fs.readJSON('.jhipster-ionic.json').directoryPath;
-      }
-    };
-    return Object.assign(myCustomPhaseSteps, phaseFromJHipster);
+    return super._initializing();
   }
 
   get prompting() {
@@ -57,6 +66,31 @@ class EntityGenerator extends BaseEntityGenerator {
     return super._configuring();
   }
 
+  get composing() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return {};
+  }
+
+  get loading() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return { ...super._loading(), composing: undefined };
+  }
+
+  get preparing() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return super._preparing();
+  }
+
+  get preparingFields() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return super._preparingFields();
+  }
+
+  get preparingRelationships() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return super._preparingRelationships();
+  }
+
   get default() {
     // Here we are not overriding this phase and hence its being handled by JHipster
     return super._default();
@@ -71,10 +105,10 @@ class EntityGenerator extends BaseEntityGenerator {
 
         this.composeWith(require.resolve(entityClientDirectory), {
           context,
-          'skip-install': context.options['skip-install'],
-          'from-cli': true,
-          force: context.options.force,
-          debug: context.isDebugEnabled
+          skipInstall: this.options.skipInstall,
+          fromCli: true,
+          force: this.options.force,
+          debug: this.configOptions.isDebugEnabled
         });
       }
     };

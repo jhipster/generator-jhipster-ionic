@@ -28,29 +28,32 @@ const spawn = require('cross-spawn');
 const fs = require('fs');
 const packagejs = require('../../package.json');
 const utils = require('./utils');
+const baseMixin = require('../generator-base-mixin');
 
-module.exports = class extends BaseGenerator {
+module.exports = class extends baseMixin(BaseGenerator) {
   constructor(args, opts) {
     super(args, opts);
 
-    this.configOptions = {};
     // This adds support for a `--interactive` flag
     this.option('interactive', {
-      desc: 'Don\'t prompt user when running ionic start',
+      desc: "Don't prompt user when running ionic start",
       type: Boolean,
       defaults: false
     });
 
     // This adds support for a `--install` flag
     this.option('installDeps', {
-      desc: 'Don\'t install dependencies when running ionic start',
+      desc: "Don't install dependencies when running ionic start",
       type: Boolean,
       defaults: true
     });
 
+    if (this.options.help) {
+      return;
+    }
+
     this.interactive = this.options.interactive;
     this.installDeps = this.options.installDeps;
-    this.conflicter = this.conflicter || this.env.conflicter;
   }
 
   get initializing() {
@@ -75,8 +78,7 @@ module.exports = class extends BaseGenerator {
     };
   }
 
-  prompting() {
-    const done = this.async();
+  async prompting() {
     const messageAskForPath = 'Enter the directory where your JHipster app is located:';
     const prompts = [
       {
@@ -106,13 +108,10 @@ module.exports = class extends BaseGenerator {
     if (this.defaultApp) {
       this.ionicAppName = 'ionic4j';
       this.directoryPath = path.resolve('backend');
-      done();
     } else {
-      this.prompt(prompts).then((props) => {
-        this.ionicAppName = props.appName;
-        this.directoryPath = path.resolve(props.directoryPath);
-        done();
-      });
+      const answers = await this.prompt(prompts);
+      this.ionicAppName = answers.appName;
+      this.directoryPath = path.resolve(answers.directoryPath);
     }
   }
 
@@ -194,7 +193,12 @@ module.exports = class extends BaseGenerator {
     jsonfile.writeFileSync(packagePath, packageJSON);
 
     // force overwriting of files since prompting will confuse developers on initial install
-    this.conflicter.force = true;
+    if (this.conflicter) {
+      this.conflicter.force = true;
+    } else {
+      // yeoman-environment@3 conflicter is not instantiated yet.
+      this.env.options.force = true;
+    }
 
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
       this.packageName = this.jhipsterAppConfig.packageName;
@@ -221,9 +225,7 @@ module.exports = class extends BaseGenerator {
       // fix paths for login.module and tabs.module
       const tsConfigPath = `${this.ionicAppName}/tsconfig.app.json`;
       const tsConfig = this.fs.readJSON(tsConfigPath) || {};
-      const tsConfigJSON = JSON.stringify(tsConfig)
-        .replace('login/', 'pages/login/')
-        .replace('tabs/', 'pages/tabs/');
+      const tsConfigJSON = JSON.stringify(tsConfig).replace('login/', 'pages/login/').replace('tabs/', 'pages/tabs/');
       jsonfile.writeFileSync(tsConfigPath, JSON.parse(tsConfigJSON));
 
       this.log('Updating Ionic AppAuth to work with JHipster...');
@@ -268,9 +270,9 @@ module.exports = class extends BaseGenerator {
 
       filesToDelete.forEach((path) => {
         if (path.endsWith('.ts') || path.endsWith('.html')) {
-          this.deleteFile(path);
+          this._deleteFile(path);
         } else {
-          this.removeDirectory(path);
+          this._removeDirectory(path);
         }
       });
     } else {
@@ -295,7 +297,7 @@ module.exports = class extends BaseGenerator {
     done();
   }
 
-  deleteFile(path) {
+  _deleteFile(path) {
     // check to see if the file exists before deleting
     try {
       fs.unlinkSync(path);
@@ -304,16 +306,16 @@ module.exports = class extends BaseGenerator {
     }
   }
 
-  removeDirectory(path) {
+  _removeDirectory(path) {
     if (fs.existsSync(path)) {
       fs.readdirSync(path).forEach((file, index) => {
         const curPath = `${path}/${file}`;
         if (fs.lstatSync(curPath).isDirectory()) {
           // recurse
-          this.removeDirectory(curPath);
+          this._removeDirectory(curPath);
         } else {
           // delete file
-          this.deleteFile(curPath);
+          this._deleteFile(curPath);
         }
       });
       fs.rmdirSync(path);

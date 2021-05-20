@@ -30,7 +30,7 @@ describe('<%= entityAngularName %>DetailPage', () => {
   let component: <%= entityAngularName %>DetailPage ;
   let fixture: ComponentFixture<<%= entityAngularName %>DetailPage>;
   const entityMock =  {
-    id: <% if (pkType === 'String') { %>'16198999-42bf-4dfe-90f4-52e1bb0555ac'<% } else { %>0<% } %>,
+    id: <% if (primaryKey.type === 'String') { %>'16198999-42bf-4dfe-90f4-52e1bb0555ac'<% } else { %>0<% } %>,
     user: {}
   };
 

@@ -20,17 +20,61 @@
 const chalk = require('chalk');
 const _ = require('lodash');
 const utils = require('generator-jhipster/generators/utils');
-const BaseGenerator = require('generator-jhipster/generators/generator-base');
+const BaseGenerator = require('generator-jhipster/generators/entity-client');
+const fs = require('fs-extra');
+
 const writeFiles = require('./files').writeFiles;
+const baseMixin = require('../generator-base-mixin');
 
 let useBlueprint;
 
-module.exports = class extends BaseGenerator {
+module.exports = class extends baseMixin(BaseGenerator) {
   constructor(args, opts) {
     super(args, opts);
-    utils.copyObjectProps(this, this.options.context);
-    const blueprint = this.config.get('blueprint');
-    useBlueprint = this.composeBlueprint(blueprint, 'entity'); // use global variable since getters dont have access to instance property
+
+    if (this.options.help) {
+      return;
+    }
+
+    // Load readonly jhipsterConfig
+    try {
+      this.configRootPath = fs.readJSONSync('.jhipster-ionic.json').directoryPath;
+      const yoRc = fs.readJSONSync(`${this.configRootPath}/.yo-rc.json`);
+      this.jhipsterConfig = yoRc ? yoRc['generator-jhipster'] : {};
+    } catch (error) {
+      this.log('File .jhipster-ionic.json not found. Please run this command in an Ionic project.');
+      throw error;
+    }
+  }
+
+  get composing() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return {};
+  }
+
+  get loading() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return super._loading();
+  }
+
+  get preparing() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return super._preparing();
+  }
+
+  get preparingFields() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return super._preparingFields();
+  }
+
+  get preparingRelationships() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return super._preparingRelationships();
+  }
+
+  get default() {
+    // Here we are not overriding this phase and hence its being handled by JHipster
+    return super._default();
   }
 
   get writing() {
@@ -53,7 +97,7 @@ module.exports = class extends BaseGenerator {
    * @param {string} entityFileName - Entity File Name
    * @param {boolean} enableTranslation - If translations are enabled or not
    */
-  addEntityToModule(entityInstance, entityClass, entityAngularName, entityFolderName, entityFileName, enableTranslation) {
+  _addEntityToModule(entityInstance, entityClass, entityAngularName, entityFolderName, entityFileName, enableTranslation) {
     // workaround method being called on initialization
     if (!entityAngularName) {
       return;
@@ -63,9 +107,7 @@ module.exports = class extends BaseGenerator {
       const isSpecificEntityAlreadyGenerated = utils.checkStringInFile(entityPagePath, `route: '${entityFileName}'`, this);
 
       if (!isSpecificEntityAlreadyGenerated) {
-        const isAnyEntityAlreadyGenerated = utils.checkStringInFile(entityPagePath, 'route:', this);
-        const prefix = isAnyEntityAlreadyGenerated ? ',' : '';
-        const pageEntry = `${prefix}{ name: '${entityAngularName}', component: '${entityAngularName}Page', route: '${entityFileName}' }`;
+        const pageEntry = `{ name: '${entityAngularName}', component: '${entityAngularName}Page', route: '${entityFileName}' },`;
         utils.rewriteFile(
           {
             file: entityPagePath,
@@ -78,9 +120,9 @@ module.exports = class extends BaseGenerator {
     } catch (e) {
       this.log(
         `${
-          chalk.yellow('\nUnable to find ') +
-          entityPagePath +
-          chalk.yellow(' or missing required jhipster-needle. Reference to ') +
+          chalk.yellow('\nUnable to find ')
+          + entityPagePath
+          + chalk.yellow(' or missing required jhipster-needle. Reference to ') +
           entityAngularName
         } ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`
       );
@@ -98,7 +140,7 @@ module.exports = class extends BaseGenerator {
    * @param {string} entityFileName - Entity File Name
    * @param {boolean} enableTranslation - If translations are enabled or not
    */
-  addEntityRouteToModule(entityInstance, entityClass, entityAngularName, entityFolderName, entityFileName, enableTranslation) {
+  _addEntityRouteToModule(entityInstance, entityClass, entityAngularName, entityFolderName, entityFileName, enableTranslation) {
     // workaround method being called on initialization
     if (!entityAngularName) {
       return;
@@ -107,12 +149,10 @@ module.exports = class extends BaseGenerator {
     try {
       const isSpecificEntityAlreadyGenerated = utils.checkStringInFile(entityPagePath, `path: '${entityFileName}'`, this);
       if (!isSpecificEntityAlreadyGenerated) {
-        const isAnyEntityAlreadyGenerated = utils.checkStringInFile(entityPagePath, 'loadChildren', this);
-        const prefix = isAnyEntityAlreadyGenerated ? ',' : '';
-        const route = `|${prefix} {
+        const route = `| {
                     |    path: '${entityFileName}',
                     |    loadChildren: './${entityFolderName}/${entityFileName}.module#${entityAngularName}PageModule'
-                    |  }`;
+                    |  },`;
         utils.rewriteFile(
           {
             file: entityPagePath,
@@ -125,9 +165,9 @@ module.exports = class extends BaseGenerator {
     } catch (e) {
       this.log(
         `${
-          chalk.yellow('\nUnable to find ') +
-          entityPagePath +
-          chalk.yellow(' or missing required jhipster-needle. Reference to ') +
+          chalk.yellow('\nUnable to find ')
+          + entityPagePath
+          + chalk.yellow(' or missing required jhipster-needle. Reference to ') +
           entityAngularName
         } ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`
       );
@@ -143,7 +183,7 @@ module.exports = class extends BaseGenerator {
    * @param {string} dto - dto
    * @returns {{queries: Array, variables: Array, hasManyToMany: boolean}}
    */
-  generateEntityQueries(relationships, entityInstance, dto) {
+  _generateEntityQueries(relationships, entityInstance, dto) {
     // workaround method being called on initialization
     if (!relationships) {
       return;
@@ -185,7 +225,7 @@ module.exports = class extends BaseGenerator {
         query = `this.${relationship.otherEntityName}Service.query()
             .subscribe(data => { this.${variableName} = data.body; }, (error) => this.onError(error));`;
       }
-      if (variableName && !this.contains(queries, query)) {
+      if (variableName && !queries.includes(query)) {
         queries.push(query);
         variables.push(`${variableName}: ${relationship.otherEntityAngularName}[];`);
       }

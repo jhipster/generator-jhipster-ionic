@@ -31,12 +31,13 @@
     "cross-spawn": "7.0.3",
     "fs-extra": "10.0.0",
     "generator-jhipster": ">=7.0.0",
-    "jhipster-core": "7.3.4",
     "jsonfile": "6.1.0",
     "lodash": "^4.17.21",
     "pluralize": "8.0.0",
     "semver": "7.3.5",
-    "shelljs": "0.8.4"
+    "shelljs": "0.8.4",
+    "yeoman-environment": "^3.4.0",
+    "yo": "4.1.0"
   },
   "devDependencies": {
     "@angular-devkit/schematics-cli": "0.1102.12",
@@ -48,10 +49,7 @@
     "mocha": "8.4.0",
     "prettier": "2.3.0",
     "yeoman-assert": "3.1.1",
-    "yeoman-environment": "3.3.0",
-    "yeoman-generator": "5.2.0",
-    "yeoman-test": "6.0.0",
-    "yo": "4.1.0"
+    "yeoman-test": "6.1.0"
   },
   "scripts": {
     "test": "mocha --timeout 10000 test/*",
