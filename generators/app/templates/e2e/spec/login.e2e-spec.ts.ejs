@@ -46,7 +46,7 @@ describe('Login', () => {
     await loginPage.login(username, password);
 
     const welcome = /Welcome, Admin<% if (authenticationType === 'jwt') { %>istrator<% } %>/;
-    await browser.wait(ec.visibilityOf(loginPage.logoutButton), 5000);
+    await browser.wait(ec.visibilityOf(loginPage.logoutButton));
     expect(element.all(by.css('ion-title')).getText()).toMatch(welcome);
   });
 
