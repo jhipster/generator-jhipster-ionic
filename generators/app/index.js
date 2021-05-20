@@ -115,6 +115,21 @@ module.exports = class extends baseMixin(BaseGenerator) {
     }
   }
 
+  get default() {
+    return {
+      forceOverwrite() {
+        // force overwriting of files since prompting will confuse developers on initial install
+        const conflicter = this.conflicter || this.env.conflicter;
+        if (conflicter) {
+          conflicter.force = true;
+        } else {
+          // yeoman-environment@3 conflicter is not instantiated yet.
+          this.env.options.force = true;
+        }
+      }
+    };
+  }
+
   writing() {
     const fromPath = `${this.directoryPath}/.yo-rc.json`;
     this.jhipsterAppConfig = this.fs.readJSON(fromPath)['generator-jhipster'];
@@ -191,14 +206,6 @@ module.exports = class extends baseMixin(BaseGenerator) {
     // add prettier script
     packageJSON.scripts.prettier = 'prettier --write "{,e2e/**/,src/**/}*.{js,json,html,md,ts,css,scss,yml}" --loglevel silent';
     jsonfile.writeFileSync(packagePath, packageJSON);
-
-    // force overwriting of files since prompting will confuse developers on initial install
-    if (this.conflicter) {
-      this.conflicter.force = true;
-    } else {
-      // yeoman-environment@3 conflicter is not instantiated yet.
-      this.env.options.force = true;
-    }
 
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
       this.packageName = this.jhipsterAppConfig.packageName;
