@@ -133,9 +133,9 @@ Navigate to **Security** > **API** > **Authorization Servers**, click the **Auth
 
 Add another claim, name it `given_name`, include it in the access token, use `Expression` in the value type, and set the value to `user.firstName`. Optionally, include it in the `profile` scope. Perform the same actions to create a `family_name` claim and use expression `user.lastName`.
 
-### iOS
+## iOS
 
-Generate a native project with the following commands:
+Generate a native iOS project with the following commands:
 
 ```
 ionic build
@@ -166,6 +166,8 @@ Then, run your project using the Capacitor CLI:
 npx cap run ios
 ```
 
+### Modify CORS Settings in JHipster
+
 In order to communicate with your JHipster app, you'll need to modify its CORS settings (in `src/main/resources/config/application-dev.yml`) to allow `capacitor://localhost` as an origin.
 
 To run your app in iOS Simulator with hot-reload, run:
@@ -184,7 +186,7 @@ npx cap open ios
 
 Then, run your app from Xcode.
 
-### Android
+## Android
 
 Generate a native project with the following commands:
 
@@ -212,6 +214,8 @@ Then, run your project using the Capacitor CLI:
 ```
 npx cap run android
 ```
+
+### Modify CORS Settings in JHipster
 
 In order to communicate with your JHipster app, you'll need to modify its CORS settings (in `src/main/resources/config/application-dev.yml`) to allow `http://localhost` as an origin.
 
@@ -246,11 +250,11 @@ If you see `java.io.IOException: Cleartext HTTP traffic to localhost not permitt
         
 See [this Stack Overflow Q&A](https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted) for more information.
 
-### Entity Generator
+## Entity Generator
 
 To generate entities, run `ionic4j entity <name>` or `yo jhipster-ionic:entity <name>`.
 
-### Import JDL
+## Import JDL
 
 To import JDL, run `ionic4j import-jdl <entities.jdl>` or `yo jhipster-ionic:import-jdl <entities.jdl>`.
 
