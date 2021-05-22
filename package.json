@@ -8,7 +8,7 @@
     "jhipster-module",
     "ionic"
   ],
-  "homepage": "https://github.com/oktadeveloper/generator-jhipster-ionic#readme",
+  "homepage": "https://github.com/oktadev/generator-jhipster-ionic#readme",
   "author": {
     "name": "Matt Raible",
     "email": "matt.raible@okta.com",
@@ -24,7 +24,7 @@
   "main": "generators/app/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oktadeveloper/generator-jhipster-ionic.git"
+    "url": "git+https://github.com/oktadev/generator-jhipster-ionic.git"
   },
   "dependencies": {
     "chalk": "4.1.1",
@@ -61,6 +61,6 @@
   },
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/oktadeveloper/generator-jhipster-ionic/issues"
+    "url": "https://github.com/oktadev/generator-jhipster-ionic/issues"
   }
 }
