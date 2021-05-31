@@ -45,7 +45,7 @@
     "chai": "4.3.4",
     "eslint": "7.27.0",
     "eslint-config-airbnb-base": "14.2.1",
-    "eslint-plugin-import": "2.23.3",
+    "eslint-plugin-import": "2.23.4",
     "mocha": "8.4.0",
     "prettier": "2.3.0",
     "yeoman-assert": "3.1.1",
