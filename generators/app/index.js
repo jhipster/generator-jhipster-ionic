@@ -358,12 +358,18 @@ module.exports = class extends baseMixin(BaseGenerator) {
       },
 
       afterRunHook() {
+        const SPONSOR_MESSAGE = 'Sponsored with ❤️  by @oktadev.';
+
         this.log('\nIonic for JHipster App created successfully! 🎉\n');
+        this.log(`${chalk.yellowBright('You will need to update your JHipster app\'s CORS settings when running this app on an emulator or device. ⚠️\n')}`);
+        this.log(`${chalk.yellowBright('    iOS: capacitor://localhost')}`);
+        this.log(`${chalk.yellowBright('    Android: http://localhost')}\n`);
         this.log('Run the following commands (in separate terminal windows) to see everything working:\n');
         this.log(
           `${chalk.green(`    cd ${this.directoryPath} && ${this.jhipsterAppConfig.buildTool === 'maven' ? './mvnw' : './gradlew'}`)}`
         );
         this.log(`${chalk.green(`    cd ${this.ionicAppName} && ionic serve`)}\n`);
+        this.log(chalk.cyan.bold(SPONSOR_MESSAGE));
         if (this.interactive) {
           // force quit; needed because of this.conflicter.force = true
           process.exit(0);
