@@ -36,7 +36,7 @@
     "pluralize": "8.0.0",
     "semver": "7.3.5",
     "shelljs": "0.8.4",
-    "yeoman-environment": "3.4.1",
+    "yeoman-environment": "3.5.1",
     "yo": "4.2.0"
   },
   "devDependencies": {
