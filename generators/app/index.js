@@ -149,8 +149,6 @@ module.exports = class extends baseMixin(BaseGenerator) {
       );
     }
 
-    const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster --type angular --capacitor${this.interactive ? '' : ' --no-interactive'}`;
-    this.log(`\nCreating Ionic app with command: ${chalk.green(`${cmd}`)}`);
     const params = ['start', this.ionicAppName, 'oktadeveloper/jhipster'];
     params.push('--type');
     params.push('angular');
@@ -163,6 +161,8 @@ module.exports = class extends baseMixin(BaseGenerator) {
       params.push('--no-deps');
       params.push('--no-git');
     }
+
+    this.log(`\nCreating Ionic app with command: ${chalk.green(`ionic ${params.join(' ')}`)}`);
     spawn.sync('ionic', params, { stdio: 'inherit' });
 
     const config = {
