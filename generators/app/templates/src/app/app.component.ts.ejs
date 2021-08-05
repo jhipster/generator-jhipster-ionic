@@ -3,6 +3,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from 'ionic-appauth';
 
 @Component({
   selector: 'app-root',
@@ -13,15 +14,19 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private translate: TranslateService
-  ) {
+    private translate: TranslateService,
+    private authService: AuthService
+) {
     this.initializeApp();
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
+    this.platform.ready().then(async () => {
+      await this.authService.init();
+      if (this.platform.is('mobile') && !this.platform.is('mobileweb')) {
+        this.statusBar.styleDefault();
+        this.splashScreen.hide();
+      }
     });
     this.initTranslate();
   }

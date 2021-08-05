@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthActions, AuthObserver, AuthService, IAuthAction } from 'ionic-appauth';
 import { NavController } from '@ionic/angular';
+import { AuthActions, AuthService, IAuthAction } from 'ionic-appauth';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-welcome',
@@ -9,17 +10,20 @@ import { NavController } from '@ionic/angular';
 })
 export class WelcomePage implements OnInit, OnDestroy {
   action: IAuthAction;
-  authObserver: AuthObserver;
+  sub: Subscription;
 
-  constructor(private authService: AuthService, private navController: NavController) {}
+constructor(private authService: AuthService, private navController: NavController) {}
 
   ngOnInit() {
-    this.authService.loadTokenFromStorage();
-    this.authObserver = this.authService.addActionListener((action) => this.onAction(action));
+    this.sub = this.authService.events$.subscribe((action) => this.onAction(action));
   }
 
   ngOnDestroy() {
-    this.authService.removeActionObserver(this.authObserver);
+    this.sub.unsubscribe();
+  }
+
+  signIn() {
+    this.authService.signIn().catch((error) => console.error(`Sign in error: ${error}`));
   }
 
   private onAction(action: IAuthAction) {
@@ -27,9 +31,5 @@ export class WelcomePage implements OnInit, OnDestroy {
       action.action === AuthActions.SignInSuccess) {
       this.navController.navigateRoot('/tabs');
     }
-  }
-
-  signIn() {
-    this.authService.signIn().catch((error) => console.error(`Sign in error: ${error}`));
   }
 }
