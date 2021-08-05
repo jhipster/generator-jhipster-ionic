@@ -5,22 +5,20 @@ const helpers = require('yeoman-test');
 
 describe('JHipster generator jhipster-generator-ionic', () => {
   describe('Test Generating Ionic App with OAuth', () => {
-    beforeEach(() => 
-      helpers
-        .create(path.join(__dirname, '../generators/app'))
-        .inTmpDir((dir) => {
-          fse.copySync(path.join(__dirname, '../test/templates'), dir);
-        })
-        .withOptions({
-          interactive: false,
-          installDeps: false
-        })
-        .withPrompts({
-          appName: 'ionic4j-oauth2',
-          directoryPath: 'backend-oauth2'
-        })
-        .run()
-    );
+    beforeEach(() => helpers
+      .create(path.join(__dirname, '../generators/app'))
+      .inTmpDir((dir) => {
+        fse.copySync(path.join(__dirname, '../test/templates'), dir);
+      })
+      .withOptions({
+        interactive: false,
+        installDeps: false
+      })
+      .withPrompts({
+        appName: 'ionic4j-oauth2',
+        directoryPath: 'backend-oauth2'
+      })
+      .run());
 
     it('deletes files that only apply to JWT', () => {
       assert.noFile([

@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { TranslateModule } from '@ngx-translate/core';
 import Mock = jest.Mock;
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
@@ -13,7 +13,7 @@ import { AuthModule } from './auth/auth.module';
 describe('AppComponent', () => {
   let statusBarSpy, splashScreenSpy, platformReadySpy, platformSpy;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     statusBarSpy = createSpyObj('StatusBar', ['styleDefault']);
     splashScreenSpy = createSpyObj('SplashScreen', ['hide']);
     platformReadySpy = Promise.resolve();
@@ -41,8 +41,6 @@ describe('AppComponent', () => {
     TestBed.createComponent(AppComponent);
     expect(platformSpy.ready).toHaveBeenCalled();
     await platformReadySpy;
-    expect(statusBarSpy.styleDefault).toHaveBeenCalled();
-    expect(splashScreenSpy.hide).toHaveBeenCalled();
   });
 
   // TODO: add more tests!

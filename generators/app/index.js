@@ -149,11 +149,10 @@ module.exports = class extends baseMixin(BaseGenerator) {
       );
     }
 
-    const cmd = `ionic start ${this.ionicAppName} oktadeveloper/jhipster --type angular${this.interactive ? '' : ' --no-interactive'}`;
-    this.log(`\nCreating Ionic app with command: ${chalk.green(`${cmd}`)}`);
     const params = ['start', this.ionicAppName, 'oktadeveloper/jhipster'];
     params.push('--type');
     params.push('angular');
+    params.push('--capacitor');
     if (!this.interactive) {
       params.push('--no-interactive');
       params.push('--quiet');
@@ -162,6 +161,8 @@ module.exports = class extends baseMixin(BaseGenerator) {
       params.push('--no-deps');
       params.push('--no-git');
     }
+
+    this.log(`\nCreating Ionic app with command: ${chalk.green(`ionic ${params.join(' ')}`)}`);
     spawn.sync('ionic', params, { stdio: 'inherit' });
 
     const config = {
@@ -191,7 +192,7 @@ module.exports = class extends baseMixin(BaseGenerator) {
 
     if (this.jhipsterAppConfig.authenticationType === 'oauth2') {
       // add @ionic/storage and @ionic/storage-angular
-      packageJSON.dependencies['@ionic/storage'] = '^3.0.4';
+      packageJSON.dependencies['@ionic/storage'] = '^3.0.6';
       packageJSON.dependencies['@ionic/storage-angular'] = '^3.0.6';
       // update jest config to ignore more patterns
       packageJSON.jest.transformIgnorePatterns = [
