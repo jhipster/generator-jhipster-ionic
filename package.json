@@ -52,7 +52,7 @@
     "yeoman-test": "6.2.0"
   },
   "scripts": {
-    "test": "mocha --timeout 10000 test/*",
+    "test": "mocha --timeout 20000 test/*",
     "prettier": "prettier --write \"{,cli/,generators/**/}*.{js,json,html,md,ts}\" --loglevel silent"
   },
   "engines": {
