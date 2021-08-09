@@ -40,7 +40,7 @@
     "yo": "4.3.0"
   },
   "devDependencies": {
-    "@angular-devkit/schematics-cli": "12.1.4",
+    "@angular-devkit/schematics-cli": "12.2.0",
     "@oktadev/schematics": "5.0.0",
     "chai": "4.3.4",
     "eslint": "7.32.0",
