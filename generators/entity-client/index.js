@@ -122,8 +122,8 @@ module.exports = class extends baseMixin(BaseGenerator) {
         `${
           chalk.yellow('\nUnable to find ')
           + entityPagePath
-          + chalk.yellow(' or missing required jhipster-needle. Reference to ') +
-          entityAngularName
+          + chalk.yellow(' or missing required jhipster-needle. Reference to ')
+          + entityAngularName
         } ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`
       );
       this.debug('Error:', e);
@@ -151,7 +151,7 @@ module.exports = class extends baseMixin(BaseGenerator) {
       if (!isSpecificEntityAlreadyGenerated) {
         const route = `| {
                     |    path: '${entityFileName}',
-                    |    loadChildren: './${entityFolderName}/${entityFileName}.module#${entityAngularName}PageModule'
+                    |    loadChildren: () => import('./${entityFolderName}/${entityFileName}.module').then(m => m.${entityAngularName}PageModule)
                     |  },`;
         utils.rewriteFile(
           {
@@ -167,8 +167,8 @@ module.exports = class extends baseMixin(BaseGenerator) {
         `${
           chalk.yellow('\nUnable to find ')
           + entityPagePath
-          + chalk.yellow(' or missing required jhipster-needle. Reference to ') +
-          entityAngularName
+          + chalk.yellow(' or missing required jhipster-needle. Reference to ')
+          + entityAngularName
         } ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`
       );
       this.debug('Error:', e);
@@ -201,8 +201,7 @@ module.exports = class extends baseMixin(BaseGenerator) {
           variableName += 'Collection';
         }
         const relationshipFieldName = `this.${entityInstance}.${relationship.relationshipFieldName}`;
-        const relationshipFieldNameIdCheck =
-          dto === 'no' ? `!${relationshipFieldName} || !${relationshipFieldName}.id` : `!${relationshipFieldName}Id`;
+        const relationshipFieldNameIdCheck = dto === 'no' ? `!${relationshipFieldName} || !${relationshipFieldName}.id` : `!${relationshipFieldName}Id`;
 
         query = `this.${relationship.otherEntityName}Service
             .query({filter: '${relationship.otherEntityRelationshipName.toLowerCase()}-is-null'})
