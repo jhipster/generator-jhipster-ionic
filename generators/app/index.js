@@ -162,7 +162,7 @@ module.exports = class extends baseMixin(BaseGenerator) {
       params.push('--no-git');
     }
 
-    this.log(`\nCreating Ionic app with command: ${chalk.green(`ionic ${params.join(' ')}`)}`);
+    this.log(`\nCreating Ionic app with command:\n${chalk.green(`> ionic ${params.join(' ')}`)}`);
     spawn.sync('ionic', params, { stdio: 'inherit' });
 
     const config = {
@@ -213,7 +213,7 @@ module.exports = class extends baseMixin(BaseGenerator) {
       this.packageFolder = this.jhipsterAppConfig.packageFolder;
 
       let installAuthCmd;
-      const params = '--configUri=auth-info --issuer=http://localhost:9080/auth/realms/jhipster --clientId=web_app';
+      const params = '--configUri=auth-info --issuer=http://localhost:9080/auth/realms/jhipster --clientId=web_app --skip-confirmation';
       const schematicsVersion = packagejs.devDependencies['@oktadev/schematics'];
 
       // use `schematics` when testing and expect it to be installed

@@ -18,7 +18,7 @@
 -%>
 import { Component, OnInit } from '@angular/core';
 <%_ if (fieldsContainBlob) { _%>
-import { JhiDataUtils } from 'src/app/services/utils/data-util.service';
+import { JhiDataUtils } from '../../../services/utils/data-util.service';
 <%_ } _%>
 import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
 import { <%= entityAngularName %>Service } from './<%= entityFileName %>.service';

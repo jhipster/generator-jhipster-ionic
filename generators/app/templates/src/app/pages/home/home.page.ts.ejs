@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { AccountService } from 'src/app/services/auth/account.service';
-import { LoginService } from 'src/app/services/login/login.service';
+import { AccountService } from '../../services/auth/account.service';
+import { LoginService } from '../../services/login/login.service';
 import { Account } from 'src/model/account.model';
 
 @Component({
