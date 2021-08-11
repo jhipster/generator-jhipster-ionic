@@ -162,7 +162,7 @@ module.exports = class extends baseMixin(BaseGenerator) {
       params.push('--no-git');
     }
 
-    this.log(`\nCreating Ionic app with command: ${chalk.green(`ionic ${params.join(' ')}`)}`);
+    this.log(`\nCreating Ionic app with command:\n${chalk.green(`> ionic ${params.join(' ')}`)}`);
     spawn.sync('ionic', params, { stdio: 'inherit' });
 
     const config = {
