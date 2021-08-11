@@ -213,7 +213,7 @@ module.exports = class extends baseMixin(BaseGenerator) {
       this.packageFolder = this.jhipsterAppConfig.packageFolder;
 
       let installAuthCmd;
-      const params = '--configUri=auth-info --issuer=http://localhost:9080/auth/realms/jhipster --clientId=web_app';
+      const params = '--configUri=auth-info --issuer=http://localhost:9080/auth/realms/jhipster --clientId=web_app --skip-confirmation';
       const schematicsVersion = packagejs.devDependencies['@oktadev/schematics'];
 
       // use `schematics` when testing and expect it to be installed
