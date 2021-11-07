@@ -18,13 +18,13 @@ If you have a question on using Ionic for JHipster, or if you need help with you
 
 ## <a name="issue"></a> Issues and Bugs
 
-If you find a bug in the source code or a mistake in the documentation, you can help us by [submitting a ticket](https://opensource.guide/how-to-contribute/#opening-an-issue) to our [GitHub issues](https://github.com/oktadeveloper/generator-jhipster-ionic/issues). Even better, you can submit a pull request to the [Ionic for JHipster generator project](https://github.com/oktadeveloper/generator-jhipster-ionic).
+If you find a bug in the source code or a mistake in the documentation, you can help us by [submitting a ticket](https://opensource.guide/how-to-contribute/#opening-an-issue) to our [GitHub issues](https://github.com/jhipster/generator-jhipster-ionic/issues). Even better, you can submit a pull request to the [Ionic for JHipster generator project](https://github.com/jhipster/generator-jhipster-ionic).
 
 **Please see the Submission Guidelines below**.
 
 ## <a name="feature"></a> Feature Requests
 
-You can request a new feature by submitting a ticket to our [GitHub issues](https://github.com/oktadeveloper/generator-jhipster-ionic/issues). If you
+You can request a new feature by submitting a ticket to our [GitHub issues](https://github.com/jhipster/generator-jhipster-ionic/issues). If you
 would like to implement a new feature then consider what kind of change it is:
 
 - **Major Changes** that you wish to contribute to the project should be discussed first. Please open a ticket which clearly states that it is a feature request in the title and explain clearly what you want to achieve in the description, and the JHipster team will discuss with you what should be done in that ticket. You can then start working on a Pull Request.
@@ -34,7 +34,7 @@ would like to implement a new feature then consider what kind of change it is:
 
 ### [Submitting an Issue](https://opensource.guide/how-to-contribute/#opening-an-issue)
 
-Before you submit your issue search the [archive](https://github.com/oktadeveloper/generator-jhipster-ionic/issues?utf8=%E2%9C%93&q=is%3Aissue), maybe your question was already answered.
+Before you submit your issue search the [archive](https://github.com/jhipster/generator-jhipster-ionic/issues?utf8=%E2%9C%93&q=is%3Aissue), maybe your question was already answered.
 
 If your issue appears to be a bug, and has not been reported, open a new issue.
 Help us to maximize the effort we can spend fixing issues and adding new
@@ -55,7 +55,7 @@ chances of your issue being dealt with quickly:
 
 You can use `jhipster info` to provide us the information we need.
 
-Click [here](https://github.com/oktadeveloper/generator-jhipster-ionic/issues/new) to open a bug issue with a pre-filled template. For feature requests and enquiries you can use [this template][feature-template].
+Click [here](https://github.com/jhipster/generator-jhipster-ionic/issues/new) to open a bug issue with a pre-filled template. For feature requests and enquiries you can use [this template][feature-template].
 
 You can run `jhipster info` in your project folder to get most of the above required info.
 
@@ -65,7 +65,7 @@ Issues opened without any of these info will be **closed** without any explanati
 
 Before you submit your pull request consider the following guidelines:
 
-- Search [GitHub](https://github.com/oktadeveloper/generator-jhipster-ionic/pulls?utf8=%E2%9C%93&q=is%3Apr) for an open or closed Pull Request
+- Search [GitHub](https://github.com/jhipster/generator-jhipster-ionic/pulls?utf8=%E2%9C%93&q=is%3Apr) for an open or closed Pull Request
   that relates to your submission.
 - If you want to modify the JHipster generator, read our [Generator development setup](#setup)
 - Make your changes in a new git branch
@@ -104,7 +104,7 @@ Before you submit your pull request consider the following guidelines:
   git push origin my-fix-branch
   ```
 
-- In GitHub, send a pull request to `oktadeveloper/generator-jhipster-ionic:main`.
+- In GitHub, send a pull request to `jhipster/generator-jhipster-ionic:main`.
 - If we suggest changes then
 
   - Make the required updates.
@@ -186,7 +186,7 @@ Here are the most important steps.
 
 ### Fork the generator-jhipster-ionic project
 
-Go to the [generator-jhipster-ionic project](https://github.com/oktadeveloper/generator-jhipster-ionic) and click on the "fork" button. You can then clone your own fork of the project, and start working on it.
+Go to the [generator-jhipster-ionic project](https://github.com/jhipster/generator-jhipster-ionic) and click on the "fork" button. You can then clone your own fork of the project, and start working on it.
 
 [Please read the GitHub forking documentation for more information](https://help.github.com/articles/fork-a-repo)
 
@@ -284,4 +284,4 @@ see http://www.jhipster.tech/2017/11/26/jhipster-release-4.11.1.html
 Fix #1234
 ```
 
-[feature-template]: https://github.com/oktadeveloper/generator-jhipster-ionic/issues/new?body=*%20**Overview%20of%20the%20request**%0A%0A%3C!--%20what%20is%20the%20query%20or%20request%20--%3E%0A%0A*%20**Motivation%20for%20or%20Use%20Case**%20%0A%0A%3C!--%20explain%20why%20this%20is%20a%20required%20for%20you%20--%3E%0A%0A%0A*%20**Browsers%20and%20Operating%20System**%20%0A%0A%3C!--%20is%20this%20a%20problem%20with%20all%20browsers%20or%20only%20IE8%3F%20--%3E%0A%0A%0A*%20**Related%20issues**%20%0A%0A%3C!--%20has%20a%20similar%20issue%20been%20reported%20before%3F%20--%3E%0A%0A*%20**Suggest%20a%20Fix**%20%0A%0A%3C!--%20if%20you%20can%27t%20fix%20this%20yourself%2C%20perhaps%20you%20can%20point%20to%20what%20might%20be%0A%20%20causing%20the%20problem%20(line%20of%20code%20or%20commit)%20--%3E
+[feature-template]: https://github.com/jhipster/generator-jhipster-ionic/issues/new?body=*%20**Overview%20of%20the%20request**%0A%0A%3C!--%20what%20is%20the%20query%20or%20request%20--%3E%0A%0A*%20**Motivation%20for%20or%20Use%20Case**%20%0A%0A%3C!--%20explain%20why%20this%20is%20a%20required%20for%20you%20--%3E%0A%0A%0A*%20**Browsers%20and%20Operating%20System**%20%0A%0A%3C!--%20is%20this%20a%20problem%20with%20all%20browsers%20or%20only%20IE8%3F%20--%3E%0A%0A%0A*%20**Related%20issues**%20%0A%0A%3C!--%20has%20a%20similar%20issue%20been%20reported%20before%3F%20--%3E%0A%0A*%20**Suggest%20a%20Fix**%20%0A%0A%3C!--%20if%20you%20can%27t%20fix%20this%20yourself%2C%20perhaps%20you%20can%20point%20to%20what%20might%20be%0A%20%20causing%20the%20problem%20(line%20of%20code%20or%20commit)%20--%3E
