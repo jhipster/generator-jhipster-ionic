@@ -44,7 +44,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node_version: [16.13.2]
+        node_version: [14,15,16]
         java_version: [11]
         jhipster-version: [7.5.0]
         os: [ubuntu-latest]
