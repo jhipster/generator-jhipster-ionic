@@ -44,9 +44,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node_version: [14.16.0]
+        node_version: [16.13.2]
         java_version: [11]
-        jhipster-version: [7.1.0]
+        jhipster-version: [7.5.0]
         os: [ubuntu-latest]
         app-type:
           - monolith-jwt
