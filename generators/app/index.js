@@ -362,7 +362,11 @@ module.exports = class extends baseMixin(BaseGenerator) {
         const SPONSOR_MESSAGE = 'Sponsored with ❤️  by @oktadev.';
 
         this.log('\nIonic for JHipster App created successfully! 🎉\n');
-        this.log(`${chalk.yellowBright('You will need to update your JHipster app\'s CORS settings when running this app on an emulator or device. ⚠️\n')}`);
+        this.log(
+          `${chalk.yellowBright(
+            "You will need to update your JHipster app's CORS settings when running this app on an emulator or device. ⚠️\n"
+          )}`
+        );
         this.log(`${chalk.yellowBright('    iOS: capacitor://localhost')}`);
         this.log(`${chalk.yellowBright('    Android: http://localhost')}\n`);
         this.log('Run the following commands (in separate terminal windows) to see everything working:\n');
