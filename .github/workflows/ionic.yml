@@ -46,7 +46,7 @@ jobs:
       matrix:
         node_version: [14,16]
         java_version: [11]
-        jhipster-version: [7.5.0]
+        jhipster-version: [7.4.1]
         os: [ubuntu-latest]
         app-type:
           - monolith-jwt
