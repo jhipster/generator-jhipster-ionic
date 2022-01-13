@@ -37,14 +37,14 @@ env:
   NG_CLI_ANALYTICS: false
 jobs:
   build:
-    name: ${{ matrix.app-type }}
+    name: ${{ matrix.app-type }}-node-v${{ matrix.node_version }}
     runs-on: ${{ matrix.os }}
     if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]') && !contains(github.event.ref_type, '[tag]')"
     timeout-minutes: 40
     strategy:
       fail-fast: false
       matrix:
-        node_version: [14,15,16]
+        node_version: [14,16]
         java_version: [11]
         jhipster-version: [7.5.0]
         os: [ubuntu-latest]
