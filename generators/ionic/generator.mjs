@@ -167,7 +167,7 @@ export default class extends GeneratorBaseWithEntity {
       async writeEntities({ entities }) {
         await Promise.all(
           entities.map(async entity => {
-            this.writeFiles({
+            await this.writeFiles({
               sections: entityFiles,
               context: entity,
             });

@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { relative } from 'path';
 import AppGenerator from 'generator-jhipster/esm/generators/app';
-import { PRIORITY_PREFIX, INITIALIZING_PRIORITY, COMPOSING_PRIORITY } from 'generator-jhipster/esm/priorities';
+import { PRIORITY_PREFIX, PROMPTING_PRIORITY, COMPOSING_PRIORITY } from 'generator-jhipster/esm/priorities';
 
 import { DEFAULT_IONIC_PATH, IONIC_NAMESPACE } from '../constants.mjs';
 
@@ -34,7 +34,7 @@ export default class extends AppGenerator {
     this.sbsBlueprint = true;
   }
 
-  get [INITIALIZING_PRIORITY]() {
+  get [PROMPTING_PRIORITY]() {
     return {
       async promptyForIonicDir() {
         await this.prompt(
