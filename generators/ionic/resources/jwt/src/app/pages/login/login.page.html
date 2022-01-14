@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'LOGIN_TITLE' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form (submit)="doLogin()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">{{ 'USERNAME' | translate }}</ion-label>
+        <ion-input type="string" [(ngModel)]="account.username" name="username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">{{ 'PASSWORD' | translate }}</ion-label>
+        <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{ 'REMEMBER_ME' | translate }}</ion-label>
+        <ion-toggle [(ngModel)]="account.rememberMe" name="rememberMe"></ion-toggle>
+      </ion-item>
+      <ion-row class="ion-padding">
+        <ion-col>
+          <ion-button expand="block" type="submit" color="primary" id="login">{{ 'LOGIN_BUTTON' | translate }}</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-list>
+  </form>
+</ion-content>

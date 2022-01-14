@@ -1,0 +1,58 @@
+{
+  "NAME": "Ime",
+  "FIRST_NAME": "First Name",
+  "LAST_NAME": "Last Name",
+  "PASSWORD": "Šifra",
+  "REMEMBER_ME": "Remember Me",
+  "EMAIL": "E-mail",
+  "USERNAME": "Username",
+  "LOGIN": "Prijava",
+  "SIGNUP": "Registracija",
+  "NO_ACCOUNT_MESSAGE": "Don't have an account yet?",
+
+  "TAB1_TITLE": "Stavke",
+  "TAB2_TITLE": "Traži",
+  "TAB3_TITLE": "Account",
+
+  "MAP_TITLE": "Mapa",
+
+  "TUTORIAL_SLIDE1_TITLE": "Dobrodošli u Ionic Super Starter",
+  "TUTORIAL_SLIDE1_DESCRIPTION": "<b>Ionic Super Starter</b> je potpuno funkcionalna početna aplikacija sa mnogim unaprijed pripremljenim stranicama uz korištenje najboljih praksi.",
+
+  "TUTORIAL_SLIDE2_TITLE": "Kako koristiti Super Starter",
+  "TUTORIAL_SLIDE2_DESCRIPTION": "Sastavite različite vrste stranica koje želite, a uklonite one koje ne želite. Obezbjedili smo vam mnoge uobičajne izglede stranica, kao što su stranice za registraciju i prijavu korisnika, tabulatore, a i ovu stranicu za učenje.",
+
+  "TUTORIAL_SLIDE3_TITLE": "Počinjemo",
+  "TUTORIAL_SLIDE3_DESCRIPTION": "Trebate pomoć? Pročitajte Super Starter README za cijeli tutorial.",
+
+  "SETTINGS_TITLE": "Postavke",
+  "SETTINGS_OPTION1": "Opcija 1",
+  "SETTINGS_OPTION2": "Opcija 2",
+  "SETTINGS_OPTION3": "Opcija 3",
+  "SETTINGS_OPTION4": "Opcija 4",
+
+  "SETTINGS_PAGE_PROFILE": "Uredi profil",
+
+  "WELCOME_TITLE": "Dobrodošli",
+  "LOGOUT_TITLE": "Logout",
+
+  "LOGIN_TITLE": "Prijavi se",
+  "LOGIN_ERROR": "Prijava nije uspjela. Molimo provjerite vaše podatke za prijavu, a zatim pokušajte ponovo.",
+  "LOGIN_BUTTON": "Prijava",
+  "SIGNUP_TITLE": "Registruj se",
+  "SIGNUP_ERROR": "Nije moguće kreirati novi korisnički račun. Molimo vas provjerite podatke, a zatim pokušajte ponovo.",
+  "SIGNUP_SUCCESS": "Registration saved! Please check your email for confirmation.",
+  "EXISTING_USER_ERROR": "Email is already in use! Please choose another one.",
+  "INVALID_PASSWORD_ERROR": "Invalid password, please try again.",
+  "SIGNUP_BUTTON": "Registracija",
+
+  "LIST_MASTER_TITLE": "Stavke",
+
+  "ITEM_CREATE_TITLE": "Nova stavka",
+  "ITEM_CREATE_CHOOSE_IMAGE": "Dodaj sliku",
+
+  "CARDS_TITLE": "Socijalno",
+
+  "SEARCH_TITLE": "Traži",
+  "EMPTY_ENTITIES_MESSAGE": "You haven't generated entities yet. Run `yo jhipster-ionic:entity <name>`"
+}

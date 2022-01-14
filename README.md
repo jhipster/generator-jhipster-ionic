@@ -42,7 +42,7 @@ npm update -g generator-jhipster-ionic
 
 Create a JHipster app using `jhipster`, or a backend-only with `yo jhipster:server`. Choose `JWT` or `OAuth 2.0` as the authentication type.
 
-In a directory alongside your JHipster app, run this module. 
+In a directory alongside your JHipster app, run this module.
 
 ```bash
 - jhipster-app
@@ -163,7 +163,7 @@ The [SafariViewController Cordova Plugin](https://github.com/EddyVerbruggen/cord
 npm install jetifier
 npx jetify
 npx cap sync android
-```   
+```
 
 Then, run your project using the Capacitor CLI:
 

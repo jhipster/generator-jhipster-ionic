@@ -1,0 +1,58 @@
+{
+  "NAME": "Імя",
+  "FIRST_NAME": "First Name",
+  "LAST_NAME": "Last Name",
+  "EMAIL": "Email",
+  "USERNAME": "Username",
+  "PASSWORD": "Пароль",
+  "REMEMBER_ME": "Remember Me",
+  "LOGIN": "Увайсці",
+  "SIGNUP": "Зарэгістравацца",
+  "NO_ACCOUNT_MESSAGE": "Don't have an account yet?",
+
+  "TAB1_TITLE": "Спіс",
+  "TAB2_TITLE": "Пошук",
+  "TAB3_TITLE": "Профіль",
+
+  "MAP_TITLE": "Мапа",
+
+  "TUTORIAL_SLIDE1_TITLE": "Вітаем ў Ionic Super Starter",
+  "TUTORIAL_SLIDE1_DESCRIPTION": "<b>Ionic Super Starter</b> – гэта паўнавартасны пачатаковы пакет для Ionic са шматлікімі ўзорамі старонак і прыкладамі лепшых практык.",
+
+  "TUTORIAL_SLIDE2_TITLE": "Як карыстацца",
+  "TUTORIAL_SLIDE2_DESCRIPTION": "Складайце старонкі розных кшталтаў з патрэбных вам элементаў і выдаляйце непатрэбныя. Сярод шматлікіх тыповых макетаў – \"Уваход\" і \"Рэгістрацыя\", старонка з закладкамі і гэтая пачатковая старонка з падказкамі.",
+
+  "TUTORIAL_SLIDE3_TITLE": "З чаго пачаць",
+  "TUTORIAL_SLIDE3_DESCRIPTION": "Патрэбна дапамога? Кіраўніцтвы ды тлумачэнні можна знайсці ў README-файлах унутры праекту.",
+
+  "SETTINGS_TITLE": "Налады",
+  "SETTINGS_OPTION1": "Налада 1",
+  "SETTINGS_OPTION2": "Налада 2",
+  "SETTINGS_OPTION3": "Налада 3",
+  "SETTINGS_OPTION4": "Налада 4",
+
+  "SETTINGS_PAGE_PROFILE": "Профіль",
+
+  "WELCOME_TITLE": "Прывітанне",
+  "LOGOUT_TITLE": "Logout",
+
+  "LOGIN_TITLE": "Уваход",
+  "LOGIN_ERROR": "Не атрымалася ўвайсці ў сістэму. Калі ласка, праверце ўведзеныя ўліковыя дадзеныя і паспрабуйце зноў.",
+  "LOGIN_BUTTON": "Увайсці",
+  "SIGNUP_TITLE": "Рэгістрацыя",
+  "SIGNUP_ERROR": "Не атрымалася стварыць уліковы запіс. Калі ласка, праверце ўведзеныя ўліковыя дадзеныя і паспрабуйце зноў.",
+  "SIGNUP_SUCCESS": "Registration saved! Please check your email for confirmation.",
+  "EXISTING_USER_ERROR": "Email is already in use! Please choose another one.",
+  "INVALID_PASSWORD_ERROR": "Invalid password, please try again.",
+  "SIGNUP_BUTTON": "Зарэгістравацца",
+
+  "LIST_MASTER_TITLE": "Спіс",
+
+  "ITEM_CREATE_TITLE": "Дадаць у спіс",
+  "ITEM_CREATE_CHOOSE_IMAGE": "Дадаць выяву",
+
+  "CARDS_TITLE": "Суполкі",
+
+  "SEARCH_TITLE": "Пошук",
+  "EMPTY_ENTITIES_MESSAGE": "You haven't generated entities yet. Run `yo jhipster-ionic:entity <name>`"
+}

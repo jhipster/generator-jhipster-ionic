@@ -1,0 +1,14 @@
+name: Generator
+on: [push, pull_request]
+jobs:
+  ionic:
+    name: npm-test
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - run: npm ci
+      - run: npm run test

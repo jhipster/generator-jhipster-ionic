@@ -7,7 +7,7 @@ application {
     prodDatabaseType mysql
     buildTool maven
     clientFramework angularX
-    testFrameworks [protractor]
+    testFrameworks [cypress]
   }
   entities *
 }

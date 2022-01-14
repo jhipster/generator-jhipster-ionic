@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> {{ 'WELCOME_TITLE' | translate }}, {{account?.firstName}} </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()" id="logout">
+        {{ 'LOGOUT_TITLE' | translate }}
+        <ion-icon slot="end" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <p>{{ 'WELCOME_INTRO' | translate }}</p>
+
+  <span class="hipster"></span>
+</ion-content>

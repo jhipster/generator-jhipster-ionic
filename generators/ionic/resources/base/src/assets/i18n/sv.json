@@ -1,0 +1,58 @@
+{
+  "NAME": "Namn",
+  "FIRST_NAME": "First Name",
+  "LAST_NAME": "Last Name",
+  "PASSWORD": "Lösenord",
+  "REMEMBER_ME": "Remember Me",
+  "EMAIL": "E-post",
+  "USERNAME": "Username",
+  "LOGIN": "Logga in",
+  "SIGNUP": "Skapa konto",
+  "NO_ACCOUNT_MESSAGE": "Don't have an account yet?",
+
+  "TAB1_TITLE": "Inlägg",
+  "TAB2_TITLE": "Sök",
+  "TAB3_TITLE": "Konto",
+
+  "MAP_TITLE": "Karta",
+
+  "TUTORIAL_SLIDE1_TITLE": "Välkommen till Ionic Super Starter",
+  "TUTORIAL_SLIDE1_DESCRIPTION": "<b>Ionic Super Starter</b> är ett fullfjädrat startpaket för Ionic med många färdigbyggda sidor skapade med bästa praxis.",
+
+  "TUTORIAL_SLIDE2_TITLE": "Hur man använder Super Starter",
+  "TUTORIAL_SLIDE2_DESCRIPTION": "Använd de sidor du önskar och ta bort de övriga. Startpaketet innehåller många vanliga vyer för mobilappar, såsom inloggning och kontoregistrering, flikar och denna introduktionsvy.",
+
+  "TUTORIAL_SLIDE3_TITLE": "Komma igång",
+  "TUTORIAL_SLIDE3_DESCRIPTION": "Behöver du hjälp? Läs README-dokumentet som innehåller en fullständig handledning för Super Starter.",
+
+  "SETTINGS_TITLE": "Inställningar",
+  "SETTINGS_OPTION1": "Alternativ 1",
+  "SETTINGS_OPTION2": "Alternativ 2",
+  "SETTINGS_OPTION3": "Alternativ 3",
+  "SETTINGS_OPTION4": "Alternativ 4",
+
+  "SETTINGS_PAGE_PROFILE": "Redigera profil",
+
+  "WELCOME_TITLE": "Välkommen",
+  "LOGOUT_TITLE": "Logout",
+
+  "LOGIN_TITLE": "Logga in",
+  "LOGIN_ERROR": "Det gick inte att logga in. Kontrollera inloggningsuppgifterna och försök igen.",
+  "LOGIN_BUTTON": "Logga in",
+  "SIGNUP_TITLE": "Skapa konto",
+  "SIGNUP_ERROR": "Det gick inte att skapa ett konto. Kontrollera dina uppgifter och försök igen.",
+  "SIGNUP_SUCCESS": "Registration saved! Please check your email for confirmation.",
+  "EXISTING_USER_ERROR": "Email is already in use! Please choose another one.",
+  "INVALID_PASSWORD_ERROR": "Invalid password, please try again.",
+  "SIGNUP_BUTTON": "Skapa konto",
+
+  "LIST_MASTER_TITLE": "Inlägg",
+
+  "ITEM_CREATE_TITLE": "Nytt inlägg",
+  "ITEM_CREATE_CHOOSE_IMAGE": "Lägg till bild",
+
+  "CARDS_TITLE": "Socialt",
+
+  "SEARCH_TITLE": "Sök",
+  "EMPTY_ENTITIES_MESSAGE": "You haven't generated entities yet. Run `yo jhipster-ionic:entity <name>`"
+}
