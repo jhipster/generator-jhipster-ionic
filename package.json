@@ -44,7 +44,7 @@
     "pluralize": "8.0.0",
     "semver": "7.3.5",
     "shelljs": "0.8.5",
-    "yeoman-environment": "^3.9.0"
+    "yeoman-environment": "^3.9.1"
   },
   "devDependencies": {
     "@angular-devkit/schematics-cli": "13.1.3",
