@@ -73,7 +73,7 @@ function generateEntityFiles(generator, entity) {
 }
 
 function callSubGenerator(generator, subgenPath, name, args, options) {
-  generator.composeWith('jhipster-ionic:entity', args, options);
+  generator.composeWith(require.resolve(path.join(subgenPath, name)), args, options);
 }
 
 class ImportJDLGenerator extends baseMixin(BaseGenerator) {

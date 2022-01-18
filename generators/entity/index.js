@@ -101,7 +101,9 @@ class EntityGenerator extends baseMixin(BaseEntityGenerator) {
       composeClient() {
         const context = this.context;
 
-        this.composeWith('jhipster-ionic:entity-client', {
+        const entityClientDirectory = '../entity-client';
+
+        this.composeWith(require.resolve(entityClientDirectory), {
           context,
           skipInstall: this.options.skipInstall,
           fromCli: true,
