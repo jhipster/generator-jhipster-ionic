@@ -98,12 +98,12 @@ class EntityGenerator extends baseMixin(BaseEntityGenerator) {
 
   get install() {
     return {
-      composeClient() {
+      async composeClient() {
         const context = this.context;
 
         const entityClientDirectory = '../entity-client';
 
-        this.composeWith(require.resolve(entityClientDirectory), {
+        await this.composeWith(require.resolve(entityClientDirectory), {
           context,
           skipInstall: this.options.skipInstall,
           fromCli: true,

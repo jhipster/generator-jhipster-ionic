@@ -63,7 +63,7 @@ function importJDL() {
 }
 
 function generateEntityFiles(generator, entity) {
-  callSubGenerator(generator, '..', 'entity', [entity.name], {
+  return callSubGenerator(generator, '..', 'entity', [entity.name], {
     force: true,
     debug: generator.options.debug,
     regenerate: true,
@@ -73,7 +73,7 @@ function generateEntityFiles(generator, entity) {
 }
 
 function callSubGenerator(generator, subgenPath, name, args, options) {
-  generator.composeWith(require.resolve(path.join(subgenPath, name)), args, options);
+  return generator.composeWith(require.resolve(path.join(subgenPath, name)), args, options);
 }
 
 class ImportJDLGenerator extends baseMixin(BaseGenerator) {
@@ -126,7 +126,7 @@ class ImportJDLGenerator extends baseMixin(BaseGenerator) {
 
   get writing() {
     return {
-      generateEntities() {
+      async generateEntities() {
         if (this.importState.exportedEntities.length === 0) {
           logger.info('Entities not generated');
           return;
@@ -139,9 +139,7 @@ class ImportJDLGenerator extends baseMixin(BaseGenerator) {
           logger.info(
             `Generating ${this.importState.exportedEntities.length} ` + `${pluralize('entity', this.importState.exportedEntities.length)}.`
           );
-          this.importState.exportedEntities.forEach((exportedEntity) => {
-            generateEntityFiles(this, exportedEntity);
-          });
+          await Promise.all(this.importState.exportedEntities.map((exportedEntity) => generateEntityFiles(this, exportedEntity)));
         } catch (error) {
           logger.error(`Error while generating entities from the parsed JDL\n${error}`, error);
         }
