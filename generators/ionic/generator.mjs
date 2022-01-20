@@ -42,6 +42,11 @@ export default class extends GeneratorBaseWithEntity {
       type: String,
     });
 
+    this.option('standalone', {
+      desc: 'Skip backend',
+      type: Boolean,
+    });
+
     if (this.options.help) return;
 
     if (this.blueprintConfig.ionicDir) {
@@ -54,6 +59,9 @@ export default class extends GeneratorBaseWithEntity {
     this.localJHipsterStorage = this._config;
     this.localJHipsterConfig = this.jhipsterConfig;
 
+    if (this.options.standalone) {
+      this.ionicConfig.appDir = false;
+    }
     if (this.options.appDir !== undefined) {
       this.ionicConfig.appDir = this.options.appDir;
     }
