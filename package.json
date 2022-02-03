@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "chalk": "4.1.2",
-    "generator-jhipster": "github:mshima/generator-jhipster#skip_ci-rfc_entities_priorities_impl"
+    "generator-jhipster": "github:jhipster/generator-jhipster#main"
   },
   "devDependencies": {
     "ejs-lint": "1.2.1",
@@ -51,7 +51,7 @@
     "husky": "7.0.2",
     "lint-staged": "11.0.0",
     "mocha": "9.1.3",
-    "mocha-expect-snapshot": "1.1.1",
+    "mocha-expect-snapshot": "3.0.0",
     "prettier": "2.5.1",
     "prettier-plugin-java": "1.6.1",
     "prettier-plugin-packagejson": "2.2.15",

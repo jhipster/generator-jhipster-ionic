@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { relative } from 'path';
 import _ from 'lodash';
-import { GeneratorBaseWithEntity, utils } from 'generator-jhipster';
+import { GeneratorBaseEntities, utils } from 'generator-jhipster';
 import {
   PRIORITY_PREFIX,
   INITIALIZING_PRIORITY,
@@ -18,7 +18,7 @@ import {
 import { DEFAULT_BACKEND_PATH, SPONSOR_MESSAGE } from '../constants.mjs';
 import { files, entityFiles } from './files.mjs';
 
-export default class extends GeneratorBaseWithEntity {
+export default class extends GeneratorBaseEntities {
   constructor(args, opts, features) {
     super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
 
@@ -108,6 +108,9 @@ export default class extends GeneratorBaseWithEntity {
         if (this.jhipsterConfig.authenticationType) {
           this.localJHipsterConfig.authenticationType = this.jhipsterConfig.authenticationType;
         }
+        if (this.jhipsterConfig.enableTranslation !== undefined) {
+          this.localJHipsterConfig.enableTranslation = this.jhipsterConfig.enableTranslation;
+        }
       },
     };
   }
@@ -137,6 +140,7 @@ export default class extends GeneratorBaseWithEntity {
       loadConfig() {
         this.application = {};
         this.loadAppConfig(this.localJHipsterConfig, this.application);
+        this.loadTranslationConfig(this.localJHipsterConfig, this.application);
       },
     };
   }
@@ -173,11 +177,15 @@ export default class extends GeneratorBaseWithEntity {
   get [WRITING_ENTITIES_PRIORITY]() {
     return {
       async writeEntities({ entities }) {
+        const { enableTranslation } = this.application;
         await Promise.all(
-          entities.map(async entity => {
+          entities.filter(entity => !entity.builtIn).map(async entity => {
             await this.writeFiles({
               sections: entityFiles,
-              context: entity,
+              context: {
+                ...entity,
+                enableTranslation,
+              },
             });
             // write client side files for angular
             this.addEntityToModule(
