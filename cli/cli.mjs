@@ -16,7 +16,7 @@ const packageFolderName = basename(packagePath);
 
   runJHipster({
     executableName,
-    version,
+    executableVersion: version,
     defaultCommand: 'ionic',
     blueprints: {
       [packageFolderName]: version,

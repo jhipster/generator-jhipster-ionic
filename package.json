@@ -37,25 +37,25 @@
   },
   "dependencies": {
     "chalk": "4.1.2",
-    "generator-jhipster": "github:jhipster/generator-jhipster#main"
+    "generator-jhipster": "7.7.0"
   },
   "devDependencies": {
     "ejs-lint": "1.2.1",
-    "eslint": "8.6.0",
+    "eslint": "8.9.0",
     "eslint-config-airbnb-base": "15.0.0",
-    "eslint-config-prettier": "8.3.0",
+    "eslint-config-prettier": "8.4.0",
     "eslint-plugin-import": "2.25.4",
     "eslint-plugin-mocha": "10.0.3",
     "eslint-plugin-prettier": "4.0.0",
-    "expect": "27.4.2",
+    "expect": "27.5.1",
     "husky": "7.0.2",
     "lint-staged": "11.0.0",
-    "mocha": "9.1.3",
-    "mocha-expect-snapshot": "3.0.0",
+    "mocha": "9.2.1",
+    "mocha-expect-snapshot": "3.1.0",
     "prettier": "2.5.1",
     "prettier-plugin-java": "1.6.1",
     "prettier-plugin-packagejson": "2.2.15",
-    "yeoman-test": "6.2.0"
+    "yeoman-test": "6.3.0"
   },
   "engines": {
     "node": ">=16.13.0"

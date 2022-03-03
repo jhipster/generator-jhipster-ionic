@@ -5,13 +5,23 @@
     "generators": {
       "app": {
         "command": false,
-        "priorities": ["initializing", "composing"],
+        "priorities": ["prompting", "composing"],
         "sbs": true,
         "written": true
       },
       "ionic": {
         "command": true,
-        "priorities": ["configuring", "loading", "preparing", "writing", "writingEntities", "postWriting", "end"],
+        "priorities": [
+          "initializing",
+          "configuring",
+          "loading",
+          "preparing",
+          "writing",
+          "writingEntities",
+          "postWriting",
+          "install",
+          "end"
+        ],
         "sbs": true,
         "written": true
       }
