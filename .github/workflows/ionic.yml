@@ -46,7 +46,7 @@ jobs:
       matrix:
         node_version: [14,16]
         java_version: [11]
-        jhipster-version: [7.5.0]
+        jhipster-version: [7.7]
         os: [ubuntu-latest]
         app-type:
           - monolith-jwt
@@ -81,10 +81,10 @@ jobs:
       # Install all tools and check configuration
       #----------------------------------------------------------------------
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v2.5.0
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node_version }}
-      - uses: actions/setup-java@v2
+      - uses: actions/setup-java@v3
         with:
           distribution: 'adopt'
           java-version: ${{ matrix.java_version }}
