@@ -38,7 +38,7 @@ export default class extends GeneratorBaseEntities {
     });
 
     this.option('app-dir', {
-      desc: 'Directory for jhipster application',
+      desc: 'Directory for JHipster application',
       type: String,
     });
 
@@ -50,7 +50,7 @@ export default class extends GeneratorBaseEntities {
     if (this.options.help) return;
 
     if (this.blueprintConfig.ionicDir) {
-      throw new Error('Ionic generator must run at ionic application folder');
+      throw new Error('Ionic generator must run in Ionic application directory');
     }
 
     this.ionicStorage = this.blueprintStorage;
@@ -82,7 +82,7 @@ export default class extends GeneratorBaseEntities {
         {
           type: 'input',
           name: 'appDir',
-          message: 'Where JHipster backend application is located?',
+          message: 'Enter the directory where your JHipster app is located:',
           default: DEFAULT_BACKEND_PATH,
         },
       ],

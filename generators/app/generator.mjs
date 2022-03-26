@@ -10,7 +10,7 @@ export default class extends AppGenerator {
     super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
 
     this.option('ionic-dir', {
-      desc: 'Directory for jhipster application',
+      desc: 'Directory of JHipster application',
       type: String,
     });
 
@@ -21,7 +21,7 @@ export default class extends AppGenerator {
     }
 
     if (this.blueprintConfig.appDir) {
-      throw new Error('jhipster-ionic:app generator must run at backend application folder');
+      throw new Error('jhipster-ionic:app generator must run in backend application directory');
     }
 
     if (this.options.ionicDir) {
@@ -42,7 +42,7 @@ export default class extends AppGenerator {
             {
               type: 'input',
               name: 'ionicDir',
-              message: 'Where do you want to generate ionic application?',
+              message: 'Where do you want to generate an Ionic application?',
               default: DEFAULT_IONIC_PATH,
             },
           ],

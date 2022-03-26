@@ -26,7 +26,6 @@
         "written": true
       }
     },
-    "jhipsterVersion": "7.5.0",
     "prettierDefaultIndent": 2,
     "projectName": "JHipster Ionic Blueprint v2",
     "subGenerators": ["app", "ionic"]

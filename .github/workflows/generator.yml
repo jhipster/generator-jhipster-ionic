@@ -3,11 +3,11 @@ on: [push, pull_request]
 jobs:
   ionic:
     name: npm-test
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: '16'
       - run: npm ci
