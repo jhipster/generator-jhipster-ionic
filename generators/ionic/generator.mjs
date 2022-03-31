@@ -62,6 +62,9 @@ export default class extends GeneratorBaseEntities {
     this.localJHipsterStorage = this._config;
     this.localJHipsterConfig = this.jhipsterConfig;
 
+    // Set defaultIndent to 2 to hide prompt
+    this.jhipsterConfig.prettierDefaultIndent = 2;
+
     if (this.options.standalone) {
       this.ionicConfig.appDir = false;
     }
