@@ -49,6 +49,9 @@ export default class extends GeneratorBaseEntities {
 
     if (this.options.help) return;
 
+    // Don't show modularized generators hello message
+    this.configOptions.showHello = false;
+
     if (this.blueprintConfig.ionicDir) {
       throw new Error('Ionic generator must run in Ionic application directory');
     }
