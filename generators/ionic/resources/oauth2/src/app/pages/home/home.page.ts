@@ -28,8 +28,9 @@ export class HomePage implements OnInit {
     return this.accountService.isAuthenticated();
   }
 
-  logout() {
-    this.loginService.logout();
+  async logout() {
+    await this.loginService.logout();
+    this.goBackToHomePage();
   }
 
   private goBackToHomePage(): void {

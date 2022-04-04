@@ -26,8 +26,8 @@ export class LoginService {
       });
   }
 
-  logout() {
-    this.authService.signOut();
+  async logout() {
+    await this.authService.signOut();
     this.accountService.authenticate(null);
   }
 }
