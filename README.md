@@ -18,7 +18,7 @@ To install or update this blueprint:
 npm install -g generator-jhipster-ionic
 ```
 
-To update this module:
+To update this blueprint:
 
 ```bash
 npm update -g generator-jhipster-ionic
