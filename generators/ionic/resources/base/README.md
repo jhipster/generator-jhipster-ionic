@@ -12,8 +12,9 @@
 1. [Getting Started](#getting-started)
 2. [Run on iOS](#run-on-ios)
 3. [Run on Android](#run-on-android)
-4. [Use Okta for Authentication](#use-okta-for-authentication)
-5. [Use Auth0 for Authentication](#use-auth0-for-authentication)
+4. [Use OpenID Connect for Authentication](#use-openid-connect-for-authentication)
+    - Configure [Okta](#use-okta)
+    - Configure [Auth0](#use-auth0)
 6. [Services](#services)
 8. [i18n](#i18n) (adding languages)
 9. [Testing](#testing)
@@ -145,7 +146,7 @@ If you see `java.io.IOException: Cleartext HTTP traffic to localhost not permitt
 
 See [this Stack Overflow Q&A](https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted) for more information.
 
-## Use Okta for Authentication
+## Use OpenID Connect for Authentication
 
 Choosing OAuth 2.0 / OIDC for authentication will allow you to use Keycloak or Okta for identity. In theory, you should be able to use any OIDC-compliant identity provider, and these are the only ones we've tested against. JHipster ships with Keycloak configured and ready to go by default. You simply have to start it in your JHipster backend.
 
@@ -153,164 +154,13 @@ Choosing OAuth 2.0 / OIDC for authentication will allow you to use Keycloak or O
 docker-compose -f src/main/docker/keycloak up -d
 ```
 
-See [JHipster's security docs](https://www.jhipster.tech/security/#-oauth2-and-openid-connect) to see how to configure JHipster for Okta.
+### Use Okta
 
-**NEW:** You can use the [Okta CLI](https://github.com/oktadev/okta-cli) to add JHipster integration in seconds! After running `okta register`, run `okta apps create jhipster`. Then, source the created `.okta.env` file and start your app.
+See [JHipster's Okta Guide](https://www.jhipster.tech/security/#okta) to see how to configure JHipster for Okta. In addition to having a OIDC app for your JHipster backend, you'll need to [create a Native app on Okta](https://www.jhipster.tech/security/#create-a-native-okta-app-for-mobile) too.
 
-```shell
-source .okta.env
-./gradlew # or ./mvnw
-```
+### Use Auth0
 
-In addition to having a OIDC app for your JHipster backend, you'll need to create a Native app on Okta too.
-
-### Create a Native Application in Okta
-
-Run `okta apps create`. Select the default app name, or change it as you see fit. Choose **Native** and press **Enter**.
-
-Change the Redirect URI to `[http://localhost:8100/callback,dev.localhost.ionic:/callback]` and the Logout Redirect URI to `[http://localhost:8100/logout,dev.localhost.ionic:/logout]`.
-
-**NOTE:** `dev.localhost.ionic` is the default scheme, but you can also use something more traditional like `com.okta.dev-133337` (where `dev-133337.okta.com` is your Okta Org URL). If you change it, be sure to update the `scheme` in `src/environments/environment.ts` and the redirect URLs in `src/app/auth/factories/auth.factory.ts`.
-
-The Okta CLI will create an OIDC App in your Okta Org. It will add the redirect URIs you specified and grant access to the Everyone group.
-
-```shell
-Okta application configuration:
-Issuer:    https://dev-133337.okta.com/oauth2/default
-Client ID: 0oab8eb55Kb9jdMIr5d6
-```
-
-**NOTE**: You can also use the Okta Admin Console to create your app. See [Create a Native App](https://developer.okta.com/docs/guides/sign-into-mobile-app/create-okta-application/) for more information.
-
-Open `ionic/src/app/auth/auth-config.service.ts` and add the client ID from your Native app. For example:
-
-```ts
-environment.oidcConfig.server_host = this.authConfig.issuer;
-environment.oidcConfig.client_id = '<your-client-id>';
-```
-
-You'll also need to add a trusted origin for `http://localhost:8100`. In your Okta Admin Console, go to **Security** > **API** > **Trusted Origins** > **Add Origin**. Use the following values:
-
-- Name: `http://localhost:8100`
-- Origin URL: `http://localhost:8100`
-- Type: Check **both** CORS and Redirect
-
-Click **Save**.
-
-### Add Claims to Access Token
-
-In order to authentication successfully with your Ionic app, you have to do a bit more configuration in Okta. Since the Ionic client will only send an access token to JHipster, you need to 1) add a `groups` claim to the access token and 2) add a couple more claims so the user's name will be available in JHipster.
-
-**NOTE:** These steps are not necessary if you're using a version of JHipster with [a `CustomClaimConverter`](https://github.com/jhipster/generator-jhipster/pull/12609). In other words, if you're using Spring a MVC-based monolith, you don't need it. Support has not been added to WebFlux, yet.
-
-Navigate to **Security** > **API** > **Authorization Servers**, click the **Authorization Servers** tab and edit the **default** one. Click the **Claims** tab and **Add Claim**. Name it "groups" and include it in the Access Token. Set the value type to "Groups" and set the filter to be a Regex of `.*`. Click **Create**.
-
-Add another claim, name it `given_name`, include it in the access token, use `Expression` in the value type, and set the value to `user.firstName`. Optionally, include it in the `profile` scope. Perform the same actions to create a `family_name` claim and use expression `user.lastName`.
-
-## Use Auth0 for Authentication
-
-1. Log in to your Auth0 account (or https://auth0.com/signup[sign up] if you don't have an account). You should have a unique domain like `dev-xxx.us.auth0.com`.
-
-2. Press the *Create Application* button in https://manage.auth0.com/#/applications[Applications section]. Use a name like `Ionic Rocks!`, select `Regular Web Applications`, and click *Create*.
-
-3. Switch to the *Settings* tab and configure your application settings:
-    - Allowed Callback URLs: `http://localhost:8080/login/oauth2/code/oidc`
-    - Allowed Logout URLs: `http://localhost:8080/`
-
-4. Scroll to the bottom and click *Save Changes*.
-
-5. In the [roles](https://manage.auth0.com/#/roles) section, create new roles named `ROLE_ADMIN` and `ROLE_USER`.
-
-6. Create a new user account in the https://manage.auth0.com/#/users[users] section. Click on the *Role* tab to assign the roles you just created to the new account.
-
-    _Make sure your new user's email is verified before attempting to log in!_
-
-7. Next, head to *Auth Pipeline* > *Rules* > *Create*. Select the `Empty rule` template. Provide a meaningful name like `Group claims` and replace the Script content with the following.
-
-    ```js
-    function(user, context, callback) {
-      user.preferred_username = user.email;
-      const roles = (context.authorization || {}).roles;
-    
-      function prepareCustomClaimKey(claim) {
-        return `https://www.jhipster.tech/${claim}`;
-      }
-    
-      const rolesClaim = prepareCustomClaimKey('roles');
-    
-      if (context.idToken) {
-        context.idToken[rolesClaim] = roles;
-      }
-    
-      if (context.accessToken) {
-        context.accessToken[rolesClaim] = roles;
-      }
-    
-      callback(null, user, context);
-    }
-    ```
-
-    This code is adding the user's roles to a custom claim (prefixed with `https://www.jhipster.tech/roles`). This claim is mapped to Spring Security authorities in `SecurityUtils.java`.
-
-8. Click **Save changes** to continue.
-
-9. Create a `backend/.auth0.env` file and populate it with your Auth0 settings.
-
-    ```
-    export SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_OIDC_ISSUER_URI=https://<your-auth0-domain>/
-    export SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_ID=<your-client-id>
-    export SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_SECRET=<your-client-secret>
-    export JHIPSTER_SECURITY_OAUTH2_AUDIENCE=https://<your-auth0-domain>/api/v2/
-   ```
-
-    You can use the default `Auth0 Management API` audience value from the *Applications* > *API* > *API Audience* field. You can also define your own custom API and use the identifier as the API audience.
-
-### Create a Native OIDC App
-
-1. For Ionic, create a **Native** app and add the following Allowed Callback URLs:
-
-   ```
-   http://localhost:8100/callback,dev.localhost.ionic:/callback
-   ```
-
-2. Set the Allowed Logout URLs to:
-
-    ```
-    http://localhost:8100/logout,dev.localhost.ionic:/logout
-   ```
-
-3. Set the Allowed Origins (CORS):
-
-    ```
-    http://localhost:8100 
-    # todo: is capacitor://localhost needed?
-    ```
-
-4. Update `ionic/src/app/auth/auth-config.service.ts` to use the generated client ID:
-
-    ```ts
-    environment.oidcConfig.server_host = this.authConfig.issuer;
-    environment.oidcConfig.client_id = 'Dz7Oc9Zv9onjUBsdC55wReC4ifGMlA7G';
-    ```
-
-5. Update `environment.ts` to specify your audience.
-
-    ```ts
-    export const environment = {
-      ...
-      oidcConfig: {
-        ...
-        audience: 'https://<your-auth0-domain>/api/v2/'
-      },
-      ...
-    };
-    ```
-
-6. Restart your Ionic app and log in with Auth0!
-
-    ```
-    npx cap run ios
-    ```
+See [JHipster's Auth0 Guide](https://www.jhipster.tech/security/#auth0) to see how to configure JHipster for Auth0. In addition to having a OIDC app for your JHipster backend, you'll need to [create a Native app on Auth0](https://www.jhipster.tech/security/#create-a-native-auth0-app-for-mobile) too.
 
 ## Services
 
