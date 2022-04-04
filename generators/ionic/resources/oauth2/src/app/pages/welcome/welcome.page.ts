@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AuthActions, AuthService, IAuthAction } from 'ionic-appauth';
 import { Subscription } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-welcome',
@@ -23,7 +24,8 @@ export class WelcomePage implements OnInit, OnDestroy {
   }
 
   signIn() {
-    this.authService.signIn().catch((error) => console.error(`Sign in error: ${error}`));
+    this.authService.signIn({ audience: environment.oidcConfig.audience })
+      .catch((error) => console.error(`Sign in error: ${error}`));
   }
 
   private onAction(action: IAuthAction) {

@@ -12,6 +12,7 @@ export const environment = {
     end_session_redirect_url: window.location.origin + '/logout',
     scopes: 'openid profile',
     pkce: true,
+    audience: 'api://default'
   },
   scheme: 'dev.localhost.ionic:/',
 };

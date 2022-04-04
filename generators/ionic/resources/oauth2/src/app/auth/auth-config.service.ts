@@ -16,6 +16,9 @@ export class AuthConfigService {
       .toPromise()
       .then((data) => {
         this.authConfig = data;
+        if (this.authConfig.issuer.endsWith('/')) {
+          this.authConfig.issuer = this.authConfig.issuer.substring(0, this.authConfig.issuer.length - 1);
+        }
         // Override issuer and client ID with values from API
         environment.oidcConfig.server_host = this.authConfig.issuer;
         environment.oidcConfig.client_id = this.authConfig.clientId;
