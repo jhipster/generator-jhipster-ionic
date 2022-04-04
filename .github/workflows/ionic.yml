@@ -1,5 +1,5 @@
 #
-# Copyright 2013-2020 the original author or authors from the JHipster project.
+# Copyright 2013-2022 the original author or authors from the JHipster project.
 #
 # This file is part of the JHipster project, see https://www.jhipster.tech/
 # for more information.
@@ -76,10 +76,10 @@ jobs:
           npm ci
           npm link
         working-directory: ${{ github.workspace }}/generator-jhipster-ionic
-      - uses: actions/setup-node@v2.5.0
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node_version }}
-      - uses: actions/setup-java@v2
+      - uses: actions/setup-java@v3
         with:
           distribution: 'adopt'
           java-version: ${{ matrix.java_version }}
