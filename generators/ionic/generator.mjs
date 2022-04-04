@@ -15,7 +15,7 @@ import {
   END_PRIORITY,
 } from 'generator-jhipster/esm/priorities';
 
-import { DEFAULT_BACKEND_PATH, SPONSOR_MESSAGE } from '../constants.mjs';
+import { DEFAULT_BACKEND_PATH } from '../constants.mjs';
 import { files, entityFiles } from './files.mjs';
 
 export default class extends GeneratorBaseEntities {
@@ -291,7 +291,6 @@ ${chalk.yellowBright('    Android: http://localhost')}
 Run the following commands (in separate terminal window) to see everything working:${changeDirMessage}
 ${chalk.green(`    npm run backend:start`)}
 ${chalk.green(`    ionic serve`)}
-${chalk.cyan.bold(SPONSOR_MESSAGE)}
 `);
       },
     };
