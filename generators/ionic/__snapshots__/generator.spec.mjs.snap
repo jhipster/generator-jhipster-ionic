@@ -32,9 +32,6 @@ Object {
   ".yo-rc.json": Object {
     "stateCleared": "modified",
   },
-  "LICENSE": Object {
-    "stateCleared": "modified",
-  },
   "README.md": Object {
     "stateCleared": "modified",
   },
@@ -509,9 +506,6 @@ Object {
     "stateCleared": "modified",
   },
   ".yo-rc.json": Object {
-    "stateCleared": "modified",
-  },
-  "LICENSE": Object {
     "stateCleared": "modified",
   },
   "README.md": Object {

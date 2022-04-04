@@ -32,9 +32,6 @@ Object {
   "../ionic4j/.yo-rc.json": Object {
     "stateCleared": "modified",
   },
-  "../ionic4j/LICENSE": Object {
-    "stateCleared": "modified",
-  },
   "../ionic4j/README.md": Object {
     "stateCleared": "modified",
   },
@@ -542,9 +539,6 @@ Object {
     "stateCleared": "modified",
   },
   "../ionic-app/.yo-rc.json": Object {
-    "stateCleared": "modified",
-  },
-  "../ionic-app/LICENSE": Object {
     "stateCleared": "modified",
   },
   "../ionic-app/README.md": Object {
