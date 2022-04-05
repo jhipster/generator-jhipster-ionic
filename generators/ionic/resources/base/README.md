@@ -12,9 +12,7 @@
 1. [Getting Started](#getting-started)
 2. [Run on iOS](#run-on-ios)
 3. [Run on Android](#run-on-android)
-4. [Use OpenID Connect for Authentication](#use-openid-connect-for-authentication)
-    - Configure [Okta](#use-okta)
-    - Configure [Auth0](#use-auth0)
+4. [Use OpenID Connect for Authentication](#use-openid-connect-for-authentication) { Keycloak, Okta, or Auth0 }
 5. [Services](#services)
 6. [i18n](#i18n) (adding languages)
 7. [Testing](#testing)
