@@ -62,17 +62,17 @@ Watch [use the Angular CLI to transform your Ionic app into a PWA](https://youtu
 To use an unreleased version, install it using npm + git repository.
 
 ```bash
-npm install -g jhipster/generator-jhipster-native
-jhipster-native --skip-jhipster-dependencies
+npm install -g jhipster/generator-jhipster-ionic
+jhipster-ionic --skip-jhipster-dependencies
 ```
 
 # Updated (or pre-release) generator-jhipster
 
-This blueprint embeds a compatible generator-jhipster version, but it's possible to use an updated generator-jhipster by running the `jhipster` cli with `blueprints` option instead of the builtin `jhipster-native`, like:
+This blueprint embeds a compatible generator-jhipster version, but it's possible to use an updated generator-jhipster by running the `jhipster` cli with `blueprints` option instead of the builtin `jhipster-ionic`, like:
 
 ```bash
 npm install -g jhipster@latest
-jhipster --blueprints native
+jhipster --blueprints ionic
 ```
 
 ## Contributing
@@ -83,8 +83,8 @@ Please read our [guidelines](/CONTRIBUTING.md#submitting-an-issue) before submit
 
 Apache 2.0, see [LICENSE](LICENSE).
 
-[npm-image]: https://img.shields.io/npm/v/generator-jhipster-native.svg
-[npm-url]: https://npmjs.org/package/generator-jhipster-native
+[npm-image]: https://img.shields.io/npm/v/generator-jhipster-ionic.svg
+[npm-url]: https://npmjs.org/package/generator-jhipster-ionic
 [github-generator-image]: https://github.com/jhipster/generator-jhipster-ionic/actions/workflows/generator.yml/badge.svg
 [github-generator-url]: https://github.com/jhipster/generator-jhipster-ionic/actions/workflows/generator.yml
 [github-integration-image]: https://github.com/jhipster/generator-jhipster-ionic/actions/workflows/ionic.yml/badge.svg
