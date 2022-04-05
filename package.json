@@ -1,7 +1,7 @@
 {
   "name": "generator-jhipster-ionic",
   "version": "7.1.0",
-  "description": "A JHipster Module that generates an Ionic Client.",
+  "description": "A JHipster blueprint that generates an Ionic Client.",
   "keywords": [
     "yeoman-generator",
     "jhipster-blueprint",
