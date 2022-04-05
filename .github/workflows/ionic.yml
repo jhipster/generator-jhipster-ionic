@@ -1,5 +1,5 @@
 #
-# Copyright 2013-2020 the original author or authors from the JHipster project.
+# Copyright 2013-2022 the original author or authors from the JHipster project.
 #
 # This file is part of the JHipster project, see https://www.jhipster.tech/
 # for more information.
@@ -20,71 +20,66 @@
 name: Ionic
 on: [push, pull_request]
 env:
-  PROFILE: dev
-  RUN_APP: 1
-  PROTRACTOR: 1
-  JHI_GITHUB_CI: ${{ github.workspace }}/test-integration
-  JHIPSTER_INSTALL: ${{ github.workspace }}/test-integration/install
-  JHIPSTER_SAMPLES: ${{ github.workspace }}/test-integration/jdl
-  JHIPSTER_SCRIPTS: ${{ github.workspace }}/test-integration/scripts
-  APP_FOLDER: backend
-  IONIC_FOLDER: ionic4j
-  TZ: America/Denver
+  JHIPSTER_INSTALL: ${{ github.workspace }}/generator-jhipster-ionic/test-integration/install
+  JHIPSTER_SAMPLES: ${{ github.workspace }}/generator-jhipster-ionic/test-integration/jdl
 
   #environment properties
+  TZ: America/Denver
   SPRING_OUTPUT_ANSI_ENABLED: ALWAYS
   SPRING_JPA_SHOW_SQL: false
   NG_CLI_ANALYTICS: false
 jobs:
   build:
-    name: ${{ matrix.app-type }}
+    name: ${{ matrix.jdl }}
     runs-on: ${{ matrix.os }}
     if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]') && !contains(github.event.ref_type, '[tag]')"
     timeout-minutes: 40
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}/backend
     strategy:
       fail-fast: false
       matrix:
-        node_version: [14.16.0]
+        node_version: [16]
         java_version: [11]
-        jhipster-version: [7.1.0]
         os: [ubuntu-latest]
-        app-type:
+        jdl:
           - monolith-jwt
           - monolith-oauth2
           - gateway-oauth2
           - reactive-oauth2
           - 21-points
         include:
-          - app-type: monolith-jwt
-            profile: dev
-            protractor: 1
-          - app-type: monolith-oauth2
-            profile: dev
-            protractor: 1
-          - app-type: gateway-oauth2
-            profile: dev
-            protractor: 1
-          - app-type: reactive-oauth2
-            profile: dev
-            protractor: 1
-          - app-type: 21-points
-            profile: dev
-            protractor: 1
-    env:
-      JHI_APP: ${{ matrix.app-type }}
-      JHI_PROFILE: ${{ matrix.profile }}
-      JHIPSTER: ${{ matrix.app-type }}
-      JHI_PROTRACTOR: ${{ matrix.protractor }}
+          - jdl: monolith-jwt
+            e2e: 0
+          - jdl: monolith-oauth2
+            e2e: 0
+          - jdl: gateway-oauth2
+            e2e: 0
+          - jdl: reactive-oauth2
+            e2e: 0
+          - jdl: 21-points
+            e2e: 0
 
     steps:
       #----------------------------------------------------------------------
       # Install all tools and check configuration
       #----------------------------------------------------------------------
+      - name: Create backend folder
+        run: mkdir backend
+        working-directory: ${{ github.workspace }}
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v2.5.0
+        with:
+          path: generator-jhipster-ionic
+      - name: Link Ionic blueprint
+        run: |
+          npm ci
+          npm link
+        working-directory: ${{ github.workspace }}/generator-jhipster-ionic
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node_version }}
-      - uses: actions/setup-java@v2
+      - uses: actions/setup-java@v3
         with:
           distribution: 'adopt'
           java-version: ${{ matrix.java_version }}
@@ -93,28 +88,26 @@ jobs:
           sudo apt update
           sudo apt --only-upgrade install google-chrome-stable
           google-chrome --version
-      - name: Install Ionic CLI + JHipster BOM
-        run: |
-          date
-          npm -g install yo @ionic/cli generator-jhipster@${{ matrix.jhipster-version }}
-          #git clone https://github.com/jhipster/jhipster-bom.git
-          #cd jhipster-bom && ./mvnw install -q -ntp -DskipTests -Dgpg.skip=true
-          chmod +x $JHIPSTER_INSTALL/*.sh
-          chmod +x $JHIPSTER_SCRIPTS/*.sh
-      - name: Link ionic
-        run: |
-          npm ci
-          npm link
       - name: Check Version
         run: $JHIPSTER_INSTALL/02-checkVersion.sh
       #----------------------------------------------------------------------
       # Script
       #----------------------------------------------------------------------
       - name: Generate Project
-        run: $JHIPSTER_SCRIPTS/01-generate-project.sh
-      - name: Docker Compose
-        run: $JHIPSTER_SCRIPTS/02-docker-compose.sh
-      - name: Tests
-        run: $JHIPSTER_SCRIPTS/03-tests.sh
-      - name: Run
-        run: xvfb-run --server-args="-screen 0 1024x768x24" --auto-servernum $JHIPSTER_SCRIPTS/04-run.sh
+        run: 'jhipster-ionic jdl "$JHIPSTER_SAMPLES"/"${{ matrix.jdl }}".jdl --force --no-insight --skip-checks --skip-git --skip-commit-hook --skip-install --blueprints ionic --skip-jhipster-dependencies'
+      - name: Ionic tests
+        run: cat package.json; npm install; npm test
+        working-directory: ${{ github.workspace }}/ionic4j
+      - name: Build application docker image
+        run: npm run java:docker:prod
+      - name: Launch backend application
+        run: npm run docker:app:up
+      - name: Wait for backend to start
+        run: npm run ci:server:await
+      - name: Launch ionic e2e test
+        if: ${{ matrix.e2e == 1 }}
+        run: xvfb-run --server-args="-screen 0 1024x768x24" --auto-servernum npm run e2e
+        working-directory: ${{ github.workspace }}/ionic4j
+      - name: Dump docker logs on failure
+        if: failure()
+        uses: jwalton/gh-docker-logs@v2

@@ -1,0 +1,974 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SubGenerator ionic of ionic JHipster blueprint with jwt authentication should succeed 1`] = `
+Object {
+  ".browserslistrc": Object {
+    "stateCleared": "modified",
+  },
+  ".editorconfig": Object {
+    "stateCleared": "modified",
+  },
+  ".eslintrc.json": Object {
+    "stateCleared": "modified",
+  },
+  ".gitattributes": Object {
+    "stateCleared": "modified",
+  },
+  ".gitignore": Object {
+    "stateCleared": "modified",
+  },
+  ".husky/pre-commit": Object {
+    "stateCleared": "modified",
+  },
+  ".lintstagedrc.cjs": Object {
+    "stateCleared": "modified",
+  },
+  ".prettierignore": Object {
+    "stateCleared": "modified",
+  },
+  ".prettierrc.yml": Object {
+    "stateCleared": "modified",
+  },
+  ".yo-rc.json": Object {
+    "stateCleared": "modified",
+  },
+  "README.md": Object {
+    "stateCleared": "modified",
+  },
+  "angular.json": Object {
+    "stateCleared": "modified",
+  },
+  "capacitor.config.ts": Object {
+    "stateCleared": "modified",
+  },
+  "e2e/pages/app.po.ts": Object {
+    "stateCleared": "modified",
+  },
+  "e2e/pages/login.po.ts": Object {
+    "stateCleared": "modified",
+  },
+  "e2e/protractor.conf.js": Object {
+    "stateCleared": "modified",
+  },
+  "e2e/spec/app.e2e-spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "e2e/spec/login.e2e-spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "e2e/tsconfig.json": Object {
+    "stateCleared": "modified",
+  },
+  "ionic.config.json": Object {
+    "stateCleared": "modified",
+  },
+  "karma.conf.js": Object {
+    "stateCleared": "modified",
+  },
+  "package.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/app-routing.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/app.component.html": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/app.component.scss": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/app.component.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/app.component.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/app.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/interceptors/auth-expired.interceptor.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/interceptors/auth.interceptor.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/account/account.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/account/account.page.html": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/account/account.page.scss": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/account/account.page.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/account/account.page.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/entities/entities.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/entities/entities.page.html": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/entities/entities.page.scss": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/entities/entities.page.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/entities/entities.page.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/home/home.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/home/home.page.html": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/home/home.page.scss": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/home/home.page.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/home/home.page.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/login/login.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/login/login.page.html": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/login/login.page.scss": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/login/login.page.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/login/login.page.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/signup/signup.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/signup/signup.page.html": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/signup/signup.page.scss": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/signup/signup.page.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/signup/signup.page.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/tabs/tabs.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/tabs/tabs.page.html": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/tabs/tabs.page.scss": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/tabs/tabs.page.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/tabs/tabs.page.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/tabs/tabs.router.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/welcome/welcome.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/welcome/welcome.page.html": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/welcome/welcome.page.scss": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/welcome/welcome.page.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/welcome/welcome.page.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/api/api.service.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/api/api.service.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/auth/account.service.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/auth/account.service.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/auth/auth-jwt.service.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/auth/auth-jwt.service.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/auth/user-route-access.service.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/auth/user-route-access.service.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/login/login.service.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/login/login.service.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/user/user.model.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/user/user.service.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/user/user.service.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/utils/data-util.service.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/utils/data-util.service.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/shared/index.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/shared/util/request-util.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/ar.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/bs.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/by.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/da.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/de.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/el.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/en.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/es-eu.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/es.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/fil.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/fr.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/he.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/it.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/ja.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/nb.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/nl.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/pl.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/pt-PT.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/pt-br.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/ru.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/sk.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/sl.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/sn.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/sv.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/th.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/tr.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/ua.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/icon/favicon.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/appicon.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/hipster.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/hipster2x.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/ionic-logo.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster-logo.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_0.svg": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_0_head-192.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_0_head-256.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_0_head-384.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_0_head-512.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_1.svg": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_1_head-192.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_1_head-256.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_1_head-384.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_1_head-512.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_2.svg": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_2_head-192.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_2_head-256.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_2_head-384.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_2_head-512.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_3.svg": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_3_head-192.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_3_head-256.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_3_head-384.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_3_head-512.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/logo.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/shapes.svg": Object {
+    "stateCleared": "modified",
+  },
+  "src/environments/environment.prod.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/environments/environment.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/global.scss": Object {
+    "stateCleared": "modified",
+  },
+  "src/index.html": Object {
+    "stateCleared": "modified",
+  },
+  "src/jestGlobalMocks.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/main.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/model/account.model.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/model/base-entity.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/polyfills.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/setupJest.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/setupTests.js": Object {
+    "stateCleared": "modified",
+  },
+  "src/test.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/theme/variables.scss": Object {
+    "stateCleared": "modified",
+  },
+  "src/zone-flags.ts": Object {
+    "stateCleared": "modified",
+  },
+  "tsconfig.app.json": Object {
+    "stateCleared": "modified",
+  },
+  "tsconfig.json": Object {
+    "stateCleared": "modified",
+  },
+  "tsconfig.spec.json": Object {
+    "stateCleared": "modified",
+  },
+  "tslint.json": Object {
+    "stateCleared": "modified",
+  },
+  "welcome.message.js": Object {
+    "stateCleared": "modified",
+  },
+}
+`;
+
+exports[`SubGenerator ionic of ionic JHipster blueprint with oauth2 authentication should succeed 1`] = `
+Object {
+  ".browserslistrc": Object {
+    "stateCleared": "modified",
+  },
+  ".editorconfig": Object {
+    "stateCleared": "modified",
+  },
+  ".eslintrc.json": Object {
+    "stateCleared": "modified",
+  },
+  ".gitattributes": Object {
+    "stateCleared": "modified",
+  },
+  ".gitignore": Object {
+    "stateCleared": "modified",
+  },
+  ".husky/pre-commit": Object {
+    "stateCleared": "modified",
+  },
+  ".lintstagedrc.cjs": Object {
+    "stateCleared": "modified",
+  },
+  ".prettierignore": Object {
+    "stateCleared": "modified",
+  },
+  ".prettierrc.yml": Object {
+    "stateCleared": "modified",
+  },
+  ".yo-rc.json": Object {
+    "stateCleared": "modified",
+  },
+  "README.md": Object {
+    "stateCleared": "modified",
+  },
+  "angular.json": Object {
+    "stateCleared": "modified",
+  },
+  "capacitor.config.ts": Object {
+    "stateCleared": "modified",
+  },
+  "e2e/pages/app.po.ts": Object {
+    "stateCleared": "modified",
+  },
+  "e2e/pages/login.po.ts": Object {
+    "stateCleared": "modified",
+  },
+  "e2e/protractor.conf.js": Object {
+    "stateCleared": "modified",
+  },
+  "e2e/spec/app.e2e-spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "e2e/spec/login.e2e-spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "e2e/tsconfig.json": Object {
+    "stateCleared": "modified",
+  },
+  "ionic.config.json": Object {
+    "stateCleared": "modified",
+  },
+  "karma.conf.js": Object {
+    "stateCleared": "modified",
+  },
+  "package.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/app-routing.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/app.component.html": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/app.component.scss": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/app.component.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/app.component.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/app.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/auth/auth-callback/auth-callback.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/auth/auth-callback/auth-callback.page.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/auth/auth-config.service.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/auth/auth-guard.service.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/auth/auth-http.service.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/auth/auth.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/auth/end-session/end-session.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/auth/end-session/end-session.page.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/auth/factories/auth.factory.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/auth/factories/browser.factory.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/auth/factories/http.factory.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/auth/factories/index.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/auth/factories/storage.factory.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/auth/ng-http.service.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/auth/user-info.model.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/interceptors/auth.interceptor.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/account/account.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/account/account.page.html": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/account/account.page.scss": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/account/account.page.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/account/account.page.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/entities/entities.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/entities/entities.page.html": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/entities/entities.page.scss": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/entities/entities.page.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/entities/entities.page.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/home/home.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/home/home.page.html": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/home/home.page.scss": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/home/home.page.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/home/home.page.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/login/login.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/login/login.page.html": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/login/login.page.scss": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/login/login.page.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/login/login.page.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/tabs/tabs.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/tabs/tabs.page.html": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/tabs/tabs.page.scss": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/tabs/tabs.page.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/tabs/tabs.page.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/tabs/tabs.router.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/welcome/welcome.module.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/welcome/welcome.page.html": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/welcome/welcome.page.scss": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/welcome/welcome.page.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/pages/welcome/welcome.page.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/api/api.service.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/api/api.service.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/auth/account.service.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/auth/account.service.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/auth/user-route-access.service.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/auth/user-route-access.service.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/login/login.service.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/login/login.service.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/user/user.model.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/user/user.service.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/user/user.service.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/utils/data-util.service.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/services/utils/data-util.service.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/shared/index.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/app/shared/util/request-util.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/ar.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/bs.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/by.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/da.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/de.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/el.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/en.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/es-eu.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/es.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/fil.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/fr.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/he.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/it.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/ja.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/nb.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/nl.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/pl.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/pt-PT.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/pt-br.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/ru.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/sk.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/sl.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/sn.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/sv.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/th.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/tr.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/i18n/ua.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/icon/favicon.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/appicon.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/hipster.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/hipster2x.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/ionic-logo.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster-logo.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_0.svg": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_0_head-192.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_0_head-256.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_0_head-384.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_0_head-512.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_1.svg": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_1_head-192.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_1_head-256.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_1_head-384.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_1_head-512.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_2.svg": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_2_head-192.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_2_head-256.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_2_head-384.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_2_head-512.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_3.svg": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_3_head-192.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_3_head-256.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_3_head-384.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/jhipster_family_member_3_head-512.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/img/logo.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/assets/shapes.svg": Object {
+    "stateCleared": "modified",
+  },
+  "src/environments/environment.prod.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/environments/environment.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/global.scss": Object {
+    "stateCleared": "modified",
+  },
+  "src/index.html": Object {
+    "stateCleared": "modified",
+  },
+  "src/jestGlobalMocks.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/main.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/model/account.model.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/model/base-entity.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/polyfills.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/setupJest.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/setupTests.js": Object {
+    "stateCleared": "modified",
+  },
+  "src/test.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/theme/variables.scss": Object {
+    "stateCleared": "modified",
+  },
+  "src/zone-flags.ts": Object {
+    "stateCleared": "modified",
+  },
+  "tsconfig.app.json": Object {
+    "stateCleared": "modified",
+  },
+  "tsconfig.json": Object {
+    "stateCleared": "modified",
+  },
+  "tsconfig.spec.json": Object {
+    "stateCleared": "modified",
+  },
+  "tslint.json": Object {
+    "stateCleared": "modified",
+  },
+  "welcome.message.js": Object {
+    "stateCleared": "modified",
+  },
+}
+`;

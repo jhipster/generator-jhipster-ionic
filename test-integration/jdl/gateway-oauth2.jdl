@@ -7,7 +7,7 @@ application {
     prodDatabaseType postgresql
     buildTool maven
     clientFramework angular
-    testFrameworks [protractor]
+    testFrameworks [cypress]
     serviceDiscoveryType eureka
   }
   entities *

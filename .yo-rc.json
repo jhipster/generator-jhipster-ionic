@@ -1,10 +1,52 @@
 {
-  "generator-jhipster-module": {
-    "promptValues": {
-      "githubName": "oktadeveloper",
-      "authorName": "Matt Raible",
-      "authorEmail": "matt.raible@okta.com",
-      "authorUrl": "https://developer.okta.com"
-    }
+  "generator-jhipster": {
+    "baseName": "ionic",
+    "cli": true,
+    "generators": {
+      "app": {
+        "command": false,
+        "priorities": ["prompting", "composing"],
+        "sbs": true,
+        "written": true
+      },
+      "ionic": {
+        "command": true,
+        "priorities": [
+          "initializing",
+          "configuring",
+          "loading",
+          "preparing",
+          "writing",
+          "writingEntities",
+          "postWriting",
+          "install",
+          "end"
+        ],
+        "sbs": true,
+        "written": true
+      },
+      "project-name": {
+        "command": false,
+        "priorities": [
+          "initializing",
+          "prompting",
+          "configuring",
+          "composing",
+          "loading",
+          "preparing",
+          "default",
+          "writing",
+          "postWriting",
+          "install",
+          "end"
+        ],
+        "sbs": false,
+        "written": true
+      }
+    },
+    "jhipsterVersion": "7.7.0",
+    "prettierDefaultIndent": 2,
+    "projectName": "JHipster Ionic Blueprint v2",
+    "subGenerators": ["app", "ionic", "project-name"]
   }
 }

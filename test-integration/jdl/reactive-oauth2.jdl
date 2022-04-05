@@ -11,6 +11,6 @@ application {
     prodDatabaseType mongodb,
     buildTool maven
     clientFramework angular
-    testFrameworks [protractor]
+    testFrameworks [cypress]
   }
 }
