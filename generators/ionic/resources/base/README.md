@@ -15,9 +15,9 @@
 4. [Use OpenID Connect for Authentication](#use-openid-connect-for-authentication)
     - Configure [Okta](#use-okta)
     - Configure [Auth0](#use-auth0)
-6. [Services](#services)
-8. [i18n](#i18n) (adding languages)
-9. [Testing](#testing)
+5. [Services](#services)
+6. [i18n](#i18n) (adding languages)
+7. [Testing](#testing)
 
 ## Getting Started
 
@@ -156,11 +156,11 @@ docker-compose -f src/main/docker/keycloak up -d
 
 ### Use Okta
 
-See [JHipster's Okta Guide](https://www.jhipster.tech/security/#okta) to see how to configure JHipster for Okta. In addition to having a OIDC app for your JHipster backend, you'll need to [create a Native app on Okta](https://www.jhipster.tech/security/#create-a-native-okta-app-for-mobile) too.
+See [JHipster's Okta Guide](https://www.jhipster.tech/security/#okta) to see how to configure JHipster for Okta. In addition to having an OIDC app for your JHipster backend, you'll need to [create a Native app on Okta](https://www.jhipster.tech/security/#create-native-app-okta) too.
 
 ### Use Auth0
 
-See [JHipster's Auth0 Guide](https://www.jhipster.tech/security/#auth0) to see how to configure JHipster for Auth0. In addition to having a OIDC app for your JHipster backend, you'll need to [create a Native app on Auth0](https://www.jhipster.tech/security/#create-a-native-auth0-app-for-mobile) too.
+See [JHipster's Auth0 Guide](https://www.jhipster.tech/security/#auth0) to see how to configure JHipster for Auth0. In addition to having an OIDC app for your JHipster backend, you'll need to [create a Native app on Auth0](https://www.jhipster.tech/security/#create-native-app-auth0) too.
 
 ## Services
 
