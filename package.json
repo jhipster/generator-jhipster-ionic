@@ -1,14 +1,19 @@
 {
   "name": "generator-jhipster-ionic",
-  "version": "0.0.0",
-  "private": true,
-  "description": "JHipster Ionic Blueprint v2",
+  "version": "7.1.0",
+  "description": "A JHipster Module that generates an Ionic Client.",
   "keywords": [
     "yeoman-generator",
     "jhipster-blueprint",
-    "jhipster-7"
+    "jhipster-7",
+    "jhipster",
+    "ionic"
   ],
-  "license": "UNLICENSED",
+  "homepage": "https://github.com/jhipster/generator-jhipster-ionic#readme",
+  "bugs": {
+    "url": "https://github.com/jhipster/generator-jhipster-ionic/issues"
+  },
+  "license": "Apache-2.0",
   "type": "module",
   "imports": {
     "#test-utils": "./test/utils.mjs"
