@@ -106,6 +106,7 @@
     "@angular/compiler-cli": "~13.3.0",
     "@angular/language-service": "~13.3.0",
     "@capacitor/cli": "3.4.3",
+    "@cypress/schematic": "^1.6.0",
     "@ionic/angular-toolkit": "^6.1.0",
     "@oktadev/schematics": "5.2.2",
     "@types/jasmine": "~4.0.0",
