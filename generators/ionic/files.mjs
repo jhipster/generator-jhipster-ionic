@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 const PAGES_DIR = 'src/app/pages/';
-const E2E_TEST_DIR = 'e2e/';
+const E2E_TEST_DIR = 'cypress/integration/';
 
 export const files = {
   client: [
@@ -25,7 +25,7 @@ export const files = {
       templates: [
         'capacitor.config.ts',
         'ionic.config.json',
-        'e2e/pages/login.po.ts',
+        'cypress/fixtures/login.po.ts',
         'src/app/interceptors/auth.interceptor.ts',
         'src/app/pages/home/home.page.scss',
         'src/app/pages/welcome/welcome.page.scss',
