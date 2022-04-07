@@ -1,74 +1,63 @@
-import { browser, by, element } from 'protractor';
 import { Page } from './app.po';
 
 export class LoginPage extends Page {
   <%_ if (authenticationType === 'oauth2') { _%>
-  username = element(by.name('username'));
-  password = element(by.name('password'));
+  username = cy.get('input[name="username"');
+  passowrd = cy.get('input[name="password"');
   // button on IdP sign-in form
-  loginButton = element(by.css('input[type=submit]'));
+  loginButton = cy.get('input[type=submit]');
   <%_ } else { _%>
-  username = element(by.css('ion-input[name="username"] input'));
-  password = element(by.css('ion-input[name="password"] input'));
-  loginButton = element(by.id('login'));
+  username = cy.get('.ion-input[name="username"] input');
+  password = cy.get('.ion-input[name="password"] input');
+  loginButton = cy.get('#login');
   <%_ } _%>
-  signInButton = element(by.id('signIn'));
-  logoutButton = element(by.id('logout'));
-  header = element(by.css('ion-title'));
+  signInButton = cy.get('#signIn');
+  logoutButton = cy.get('#logout');
+  header = cy.get('.ion-title');
 
-  async getHeader() {
-    return this.header.getText();
+  getHeader() {
+    return this.header;
   }
 
-  async setUserName(username) {
-    await this.username.sendKeys(username);
+  setUserName(username) {
+    await this.username.type(username);
   }
 
-  async getUserName() {
-    return this.username.getAttribute('value');
+  getUserName() {
+    return this.username;
   }
 
-  async clearUserName() {
-    await this.username.clear();
+  clearUserName() {
+    this.username.clear();
   }
 
-  async setPassword(password) {
-    await this.password.sendKeys(password);
+  setPassword(password) {
+    this.password.type(password);
   }
 
-  async getPassword() {
-    return this.password.getAttribute('value');
+  getPassword() {
+    return this.password;
   }
 
-  async clearPassword() {
-    await this.password.clear();
+  clearPassword() {
+    this.password.clear();
   }
 
-  async login(username: string, password: string): Promise<void> {
+  login(username: string, password: string) {
     <%_ if (authenticationType === 'oauth2') { _%>
-    // Entering non angular site, tell webdriver to switch to synchronous mode.
-    await browser.waitForAngularEnabled(false);
-    await browser.sleep(1000);
-
-    if (await this.username.isPresent()) {
-      await this.username.sendKeys(username);
-      await this.password.sendKeys(password);
-      await this.loginButton.click();
-      if (!(await this.username.isPresent())) {
-        await browser.waitForAngularEnabled(true);
-      }
-    } else {
-      // redirected back because already logged in
-      await browser.waitForAngularEnabled(true);
+    if (this.username) {
+      this.username.type(username);
+      this.password.type(password);
+      this.loginButton.click();
     }
     <%_ } else { _%>
-    await this.setUserName(username);
-    await this.setPassword(password);
-    await this.loginButton.click();
+    this.setUserName(username);
+    this.setPassword(password);
+    this.loginButton.click();
     <%_ } _%>
   }
 
-  async logout() {
-    await this.logoutButton.click();
+  logout() {
+    this.logoutButton.click();
   }
 }
