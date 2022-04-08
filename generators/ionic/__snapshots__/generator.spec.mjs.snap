@@ -41,28 +41,40 @@ Object {
   "capacitor.config.ts": Object {
     "stateCleared": "modified",
   },
-  "e2e/pages/app.po.ts": Object {
+  "cypress.json": Object {
     "stateCleared": "modified",
   },
-  "e2e/pages/login.po.ts": Object {
+  "cypress/fixtures/app.po.ts": Object {
     "stateCleared": "modified",
   },
-  "e2e/protractor.conf.js": Object {
+  "cypress/fixtures/login.po.ts": Object {
     "stateCleared": "modified",
   },
-  "e2e/spec/app.e2e-spec.ts": Object {
+  "cypress/integration/app.e2e-spec.ts": Object {
     "stateCleared": "modified",
   },
-  "e2e/spec/login.e2e-spec.ts": Object {
+  "cypress/integration/login.e2e-spec.ts": Object {
     "stateCleared": "modified",
   },
-  "e2e/tsconfig.json": Object {
+  "cypress/plugins/index.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/commands.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/index.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/tsconfig.json": Object {
     "stateCleared": "modified",
   },
   "ionic.config.json": Object {
     "stateCleared": "modified",
   },
   "karma.conf.js": Object {
+    "stateCleared": "modified",
+  },
+  "package-lock.json": Object {
     "stateCleared": "modified",
   },
   "package.json": Object {
@@ -517,28 +529,40 @@ Object {
   "capacitor.config.ts": Object {
     "stateCleared": "modified",
   },
-  "e2e/pages/app.po.ts": Object {
+  "cypress.json": Object {
     "stateCleared": "modified",
   },
-  "e2e/pages/login.po.ts": Object {
+  "cypress/fixtures/app.po.ts": Object {
     "stateCleared": "modified",
   },
-  "e2e/protractor.conf.js": Object {
+  "cypress/fixtures/login.po.ts": Object {
     "stateCleared": "modified",
   },
-  "e2e/spec/app.e2e-spec.ts": Object {
+  "cypress/integration/app.e2e-spec.ts": Object {
     "stateCleared": "modified",
   },
-  "e2e/spec/login.e2e-spec.ts": Object {
+  "cypress/integration/login.e2e-spec.ts": Object {
     "stateCleared": "modified",
   },
-  "e2e/tsconfig.json": Object {
+  "cypress/plugins/index.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/commands.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/index.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/tsconfig.json": Object {
     "stateCleared": "modified",
   },
   "ionic.config.json": Object {
     "stateCleared": "modified",
   },
   "karma.conf.js": Object {
+    "stateCleared": "modified",
+  },
+  "package-lock.json": Object {
     "stateCleared": "modified",
   },
   "package.json": Object {
