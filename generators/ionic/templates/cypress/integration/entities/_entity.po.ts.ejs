@@ -22,7 +22,7 @@ export class <%= entityClass %>ComponentsPage {
     <%_ } _%>
     viewButtons = cy.get('.ion-item');
     title = cy.get('.ion-title').get(2);
-    noResult = cy.getContainingText('ion-label', 'No <%= entityClassPluralHumanized %> found.'));
+    noResult = cy.getContainingText('ion-label', 'No <%= entityClassPluralHumanized %> found.');
     entities = cy.get('.page-<%= entityFileName %> ion-item');
 
     <%_ if (!readOnly) { _%>

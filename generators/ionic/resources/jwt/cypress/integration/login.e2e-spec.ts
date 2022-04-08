@@ -36,7 +36,7 @@ describe('Login', () => {
     if (loginPage.logoutButton) {
       loginPage.logout();
       cy.url().should('include', '/');
-      loginPage.signInButton.shoule('exist');
+      loginPage.signInButton.should('exist');
     }
   });
 });
