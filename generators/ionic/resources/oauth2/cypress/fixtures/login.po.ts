@@ -6,6 +6,7 @@ export class LoginPage extends Page {
   }
 
   setUserName(username) {
+    this.clearUserName();
     cy.get('input[name="username"]').type(username);
   }
 
@@ -18,6 +19,7 @@ export class LoginPage extends Page {
   }
 
   setPassword(password) {
+    this.clearPassword();
     cy.get('input[name="password"]').type(password);
   }
 
@@ -30,7 +32,6 @@ export class LoginPage extends Page {
   }
 
   login(username: string, password: string) {
-    cy.get('#signIn').click();
     this.setUserName(username);
     this.setPassword(password);
     cy.get('input[type=submit]').click();

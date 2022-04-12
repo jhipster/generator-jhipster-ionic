@@ -11,10 +11,11 @@ describe('Login', () => {
 
   it('should show a login button', () => {
     loginPage.getHeader().invoke('text').should('match', /Welcome, Java Hipster/);
-    cy.get('input[type=submit]').should('exist');
+    cy.get('#signIn').should('exist');
   });
 
   it('should fail to login with bad password', () => {
+    cy.get('#signIn').click();
     loginPage.login(username, 'foo');
     // Keycloak
     const alert = cy.get('#input-error');
