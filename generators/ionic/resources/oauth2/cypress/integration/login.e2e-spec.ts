@@ -20,11 +20,11 @@ describe('Login', () => {
     // Keycloak
     const alert = cy.get('#input-error');
     if (alert) {
-      alert.should('have.text', 'Invalid username or password.');
+      alert.should('include.text', 'Invalid username or password.');
     } else {
       // Okta
       const error = cy.get('.infobox-error');
-      error.should('have.text', 'Sign in failed!');
+      error.should('include.text', 'Sign in failed!');
     }
   });
 
