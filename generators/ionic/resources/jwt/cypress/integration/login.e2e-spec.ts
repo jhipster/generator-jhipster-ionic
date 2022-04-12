@@ -7,16 +7,15 @@ describe('Login', () => {
 
   beforeEach(() => {
     loginPage = new LoginPage();
-    loginPage.navigateTo('/');
   });
 
   it('should show a login button', () => {
     loginPage.getHeader().invoke('text').should('match', /Welcome, Java Hipster/);
-    loginPage.loginButton.should('exist');
+    cy.get('#signIn').should('exist');
   });
 
   it('should fail to login with bad password', () => {
-    loginPage.signInButton.click();
+    cy.visit('/');
     loginPage.login(username, 'foo');
     const error = cy.get('.toast-message');
     if (error) {
@@ -25,18 +24,18 @@ describe('Login', () => {
   });
 
   it('should login successfully with admin account', () => {
-    loginPage.signInButton.click();
+    cy.visit('/');
     loginPage.login(username, password);
 
     const welcome = /Welcome, Administrator/;
-    cy.get('.ion-title').invoke('text').should('match', welcome);
+    cy.get('#logout').should('exist');
+    cy.get('ion-title').invoke('text').should('match', welcome);
   });
 
   it('should logout successfully', () => {
-    if (loginPage.logoutButton) {
-      loginPage.logout();
-      cy.url().should('include', '/');
-      loginPage.signInButton.should('exist');
-    }
+    cy.get('#logout').should('exist');
+    loginPage.logout();
+    cy.url().should('include', '/');
+    cy.get('#signIn').should('exist');
   });
 });

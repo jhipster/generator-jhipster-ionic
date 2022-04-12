@@ -136,7 +136,8 @@
           "options": {
             "devServerTarget": "app:serve",
             "watch": true,
-            "headless": false
+            "headless": false,
+            "browserTarget": "chrome"
           },
           "configurations": {
             "production": {

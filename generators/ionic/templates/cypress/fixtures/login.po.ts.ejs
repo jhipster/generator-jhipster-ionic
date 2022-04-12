@@ -1,63 +1,42 @@
 import { Page } from './app.po';
 
 export class LoginPage extends Page {
-  <%_ if (authenticationType === 'oauth2') { _%>
-  username = cy.get('input[name="username"');
-  passowrd = cy.get('input[name="password"');
-  // button on IdP sign-in form
-  loginButton = cy.get('input[type=submit]');
-  <%_ } else { _%>
-  username = cy.get('.ion-input[name="username"] input');
-  password = cy.get('.ion-input[name="password"] input');
-  loginButton = cy.get('#login');
-  <%_ } _%>
-  signInButton = cy.get('#signIn');
-  logoutButton = cy.get('#logout');
-  header = cy.get('.ion-title');
-
   getHeader() {
-    return this.header;
+    return cy.get('ion-title');
   }
 
   setUserName(username) {
-    this.username.type(username);
+    cy.get('ion-input[name="username"] input').type(username);
   }
 
   getUserName() {
-    return this.username;
+    return cy.get('ion-input[name="username"] input');
   }
 
   clearUserName() {
-    this.username.clear();
+    cy.get('ion-input[name="username"] input').clear();
   }
 
   setPassword(password) {
-    this.password.type(password);
+    cy.get('ion-input[name="password"] input').type(password);
   }
 
   getPassword() {
-    return this.password;
+    return cy.get('ion-input[name="password"] input');
   }
 
   clearPassword() {
-    this.password.clear();
+    cy.get('ion-input[name="password"] input').clear();
   }
 
   login(username: string, password: string) {
-    <%_ if (authenticationType === 'oauth2') { _%>
-    if (this.username) {
-      this.username.type(username);
-      this.password.type(password);
-      this.loginButton.click();
-    }
-    <%_ } else { _%>
-    this.setUserName(username);
+    cy.get('#signIn').click();
+    this.setUsername(username);
     this.setPassword(password);
-    this.loginButton.click();
-    <%_ } _%>
+    cy.get('#login').click();
   }
 
   logout() {
-    this.logoutButton.click();
+    cy.get('#logout').click();
   }
 }

@@ -1,51 +1,42 @@
 import { Page } from './app.po';
 
 export class LoginPage extends Page {
-  username = cy.get('input[name="username"]');
-  password = cy.get('input[name="password"]')
-  // button on IdP sign-in form
-  loginButton = cy.get('input[type=submit]');
-  signInButton = cy.get('#signIn');
-  logoutButton = cy.get('#logout');
-  header = cy.get('.ion-title');
-
   getHeader() {
-    return this.header;
+    return cy.get('ion-title');
   }
 
   setUserName(username) {
-    this.username.type(username);
+    cy.get('input[name="username"]').type(username);
   }
 
   getUserName() {
-    return this.username;
+    return cy.get('input[name="username"]');
   }
 
   clearUserName() {
-    this.username.clear();
+    cy.get('input[name="username"]').clear();
   }
 
   setPassword(password) {
-    this.password.type(password);
+    cy.get('input[name="password"]').type(password);
   }
 
   getPassword() {
-    return this.password;
+    return cy.get('input[name="password"]');
   }
 
   clearPassword() {
-    this.password.clear();
+    cy.get('input[name="password"]').clear();
   }
 
   login(username: string, password: string) {
-    if (this.username) {
-      this.username.type(username);
-      this.password.type(password);
-      this.loginButton.click();
-    }
+    cy.get('#signIn').click();
+    this.setUserName(username);
+    this.setPassword(password);
+    cy.get('input[type=submit]').click();
   }
 
   logout() {
-    this.logoutButton.click();
+    cy.get('#logout').click();
   }
 }
