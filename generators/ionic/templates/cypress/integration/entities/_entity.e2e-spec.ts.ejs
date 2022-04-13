@@ -16,7 +16,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-import { LoginPage } from '../../fixtures/login.po';
+import { LoginPage } from '../../../fixtures/login.po';
 import {
   <%= entityClass %>ComponentsPage,
   <%_ if (!readOnly) { _%>
@@ -73,7 +73,7 @@ _%>
 <%_ } _%>
 <%_ }); _%>
 
-  beforeAll(() => {
+  before(() => {
     loginPage = new LoginPage();
     loginPage.navigateTo('/');
     cy.get('#signIn').click();
@@ -90,16 +90,16 @@ _%>
 
     <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
     <%= entityInstance %>ComponentsPage.getTitle()
-      .contains(COMPONENT_TITLE);
+      .should('include.text', COMPONENT_TITLE);
   });
 
   <%_ if (!readOnly) { _%>
   it('should create <%= entityClass %>', () => {
-    initNumberOfEntities = <%= entityInstance %>ComponentsPage.getEntitiesNumber();
+    initNumberOfEntities = <%= entityInstance %>ComponentsPage.getEntitiesNumber().length;
     <%= entityInstance %>ComponentsPage.clickOnCreateButton();
     <%= entityInstance %>UpdatePage = new <%= entityClass %>UpdatePage();
     <%= entityInstance %>UpdatePage.getPageTitle()
-      .contains(SUBCOMPONENT_TITLE);
+      .should('have.text', SUBCOMPONENT_TITLE);
 
     <%_ fields.filter(f => !f.id).forEach((field) => {
       const fieldName = field.fieldName;
@@ -126,12 +126,12 @@ _%>
     <%= entityInstance %>ComponentsPage.getTitle()
       .contains(COMPONENT_TITLE);
     <%= entityInstance %>ComponentsPage.getEntitiesNumber()
-      .contains(initNumberOfEntities + 1);
+      .should('have.length', initNumberOfEntities + 1);
   });
 
-  it('should get the last <%= entityClass %>', async () => {
+  it('should get the last <%= entityClass %>', () => {
     <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
-    lastElement = await <%= entityInstance %>ComponentsPage.viewButtons.last().getWebElement();
+    lastElement = cy.get('ion-item').last();
   });
 
   it('should scroll the last <%= entityClass %>', async () => {
@@ -174,15 +174,15 @@ _%>
   it('should delete last <%= entityClass %>', async () => {
     <%= entityInstance %>DetailPage = new <%= entityClass %>DetailPage();
     if (isVisible && <%= entityInstance %>DetailPage.deleteButton.should('be.visible')) {
-    cy.get(<%= entityInstance %>DetailPage.deleteButton).click();
+    <%= entityInstance %>DetailPage.deleteButton.click();
 
     const alertConfirmButton = cy.get('alert-button').last();
 
     alertConfirmButton.click();
     <%= entityInstance %>ComponentsPage.getTitle()
-      .contains(COMPONENT_TITLE);
+      .should('have.text', COMPONENT_TITLE);
     <%= entityInstance %>ComponentsPage.getEntitiesNumber()
-      .contains(initNumberOfEntities);
+      .should('have.length', initNumberOfEntities);
     }
   });
 
