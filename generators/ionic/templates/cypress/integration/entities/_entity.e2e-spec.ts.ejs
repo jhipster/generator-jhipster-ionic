@@ -16,7 +16,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-import { browser, by, element, ExpectedConditions as ec } from 'protractor';
 import { LoginPage } from '../../fixtures/login.po';
 import {
   <%= entityClass %>ComponentsPage,
@@ -77,7 +76,7 @@ _%>
   beforeAll(() => {
     loginPage = new LoginPage();
     loginPage.navigateTo('/');
-    loginPage.signInButton.click();
+    cy.get('#signIn').click();
     const username = process.env.E2E_USERNAME || 'admin';
     const password = process.env.E2E_PASSWORD || 'admin';
     loginPage.login(username, password);
@@ -85,13 +84,12 @@ _%>
 
   it('should load <%= entityClassPlural %>', () => {
     // go to entity component page
-    const tabEntities = cy.get('.ion-tab-button[tab="entities"]');
+    const tabEntities = cy.get('ion-tab-button[tab="entities"]');
     tabEntities.click();
-    cy.get('.ion-item')
-      .filter(async el => (await el.element(by.css('h2')).getText()) === '<%= entityClass %>').first().click();
+    cy.get('ion-item h2').contains('<%= entityClass %>').first().click();
 
     <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
-    await <%= entityInstance %>ComponentsPage.getTitle()
+    <%= entityInstance %>ComponentsPage.getTitle()
       .contains(COMPONENT_TITLE);
   });
 
@@ -100,7 +98,7 @@ _%>
     initNumberOfEntities = <%= entityInstance %>ComponentsPage.getEntitiesNumber();
     <%= entityInstance %>ComponentsPage.clickOnCreateButton();
     <%= entityInstance %>UpdatePage = new <%= entityClass %>UpdatePage();
-    await <%= entityInstance %>UpdatePage.getPageTitle()
+    <%= entityInstance %>UpdatePage.getPageTitle()
       .contains(SUBCOMPONENT_TITLE);
 
     <%_ fields.filter(f => !f.id).forEach((field) => {
@@ -137,17 +135,11 @@ _%>
   });
 
   it('should scroll the last <%= entityClass %>', async () => {
-    browser.executeScript('arguments[0].scrollIntoView()', lastElement)
-      .then(async () => {
-        if (await lastElement.isEnabled() && await lastElement.isDisplayed()) {
-          browser.executeScript('arguments[0].click()', lastElement)
-            .then(async () => {
-              isVisible = true;
-            })
-            .catch();
-        }
-      })
-      .catch();
+    cy.get(lastElement).scrollIntoView();
+    if (cy.get(lastElement).should('be.enabled').and('not.be.disabled') && cy.get(lastElement).should('be.visible')) {
+      cy.get(lastElement).click();
+      isVisible = true;
+    }
   });
 
   it('should view the last <%= entityClass %>', async () => {
@@ -182,9 +174,9 @@ _%>
   it('should delete last <%= entityClass %>', async () => {
     <%= entityInstance %>DetailPage = new <%= entityClass %>DetailPage();
     if (isVisible && <%= entityInstance %>DetailPage.deleteButton.should('be.visible')) {
-    await browser.executeScript('arguments[0].click()', await <%= entityInstance %>DetailPage.deleteButton.getWebElement());
+    cy.get(<%= entityInstance %>DetailPage.deleteButton).click();
 
-    const alertConfirmButton = cy.get('.alert-button').last();
+    const alertConfirmButton = cy.get('alert-button').last();
 
     alertConfirmButton.click();
     <%= entityInstance %>ComponentsPage.getTitle()

@@ -17,38 +17,32 @@
  limitations under the License.
 -%>
 export class <%= entityClass %>ComponentsPage {
-    <%_ if (!readOnly) { _%>
-    createButton = cy.get('.ion-fab-button');
-    <%_ } _%>
-    viewButtons = cy.get('.ion-item');
-    title = cy.get('.ion-title').get(2);
     noResult = cy.getContainingText('ion-label', 'No <%= entityClassPluralHumanized %> found.');
-    entities = cy.get('.page-<%= entityFileName %> ion-item');
 
     <%_ if (!readOnly) { _%>
     clickOnCreateButton() {
-        this.createButton.click();
+        cy.get('ion-fab-button').click();
     }
     <%_ } _%>
 
     clickOnLastViewButton() {
-      this.viewButtons.last().click();
+        cy.get('ion-item').last().click();
     }
 
     getTitle() {
-        return this.title;
+        return cy.get('ion-title').get(2);
     }
 
     getEntitiesNumber() {
-      return this.entities.count();
+      return cy.get('page-<%= entityFileName %> ion-item').count();
     }
 }
 
 <%_ if (!readOnly) { _%>
 
 export class <%= entityClass %>UpdatePage {
-    pageTitle = cy.get('.ion-title').get(3);
-    saveButton = cy.get('.ion-button').get(1);
+    pageTitle = cy.get('ion-title').get(3);
+    saveButton = cy.get('ion-button').get(1);
 
 <%_ fields.forEach((field) => {
     const fieldName = field.fieldName;
@@ -58,15 +52,15 @@ export class <%= entityClass %>UpdatePage {
 _%>
     <%_ if (fieldType === 'Boolean') { _%>
     <%_ } else if (fieldIsEnum) { _%>
-    <%= fieldName %>Select = cy.get('.ion-select[formControlName="<%= fieldName %>"]');
+    <%= fieldName %>Select = cy.get('ion-select[formControlName="<%= fieldName %>"]');
     <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
-    <%= fieldName %>Input = cy.get('.ion-textarea[formControlName="<%= fieldName %>"] textarea');
+    <%= fieldName %>Input = cy.get('ion-textarea[formControlName="<%= fieldName %>"] textarea');
     <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType)) { _%>
-    <%= fieldName %>Input = cy.get('.ion-input[formControlName="<%= fieldName %>"] input');
+    <%= fieldName %>Input = cy.get('ion-input[formControlName="<%= fieldName %>"] input');
     <%_ } else if (fieldType === 'LocalDate') { _%>
     <%_ } else if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
     <%_ } else { _%>
-    <%= fieldName %>Input = cy.get('.ion-input[formControlName="<%= fieldName %>"] input');
+    <%= fieldName %>Input = cy.get('ion-input[formControlName="<%= fieldName %>"] input');
     <%_ } _%>
 <%_ }); _%>
 
@@ -89,8 +83,8 @@ _%>
     <%_ } else if (fieldIsEnum) { _%>
     <%= fieldName %>SelectLastOption() {
         this.<%= fieldName %>Select.click();
-        cy.get('.alert-radio').last().click();
-        cy.get('.alert-button').last().click();
+        cy.get('alert-radio').last().click();
+        cy.get('alert-button').last().click();
     }
     <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
     set<%= fieldNameCapitalized %>Input(<%= fieldName %>: string) {
@@ -110,8 +104,8 @@ _%>
 }
 
 export class <%= entityClass %>DetailPage {
-    pageTitle = cy.get('.ion-title').get(3);
-    deleteButton = cy.get('.ion-button[color="danger"]');
+    pageTitle = cy.get('ion-title').get(3);
+    deleteButton = cy.get('ion-button[color="danger"]');
     <%_ for (idx in fields) {
     const fieldName = fields[idx].fieldName;
     const fieldType = fields[idx].fieldType;
