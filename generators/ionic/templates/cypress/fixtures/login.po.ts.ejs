@@ -30,7 +30,7 @@ export class LoginPage extends Page {
   }
 
   login(username: string, password: string) {
-    this.setUsername(username);
+    this.setUserName(username);
     this.setPassword(password);
     cy.get('#login').click();
   }
