@@ -3,6 +3,10 @@
   "include": ["**/*.ts"],
   "compilerOptions": {
     "sourceMap": false,
-    "types": ["cypress", "node"]
+    "types": [
+      "cypress",
+      "cypress-localstorage-commands",
+      "node"
+    ]
   }
 }

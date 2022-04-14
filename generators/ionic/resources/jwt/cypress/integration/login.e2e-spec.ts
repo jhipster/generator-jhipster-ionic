@@ -9,6 +9,10 @@ describe('Login', () => {
     loginPage = new LoginPage();
   });
 
+  afterEach(() => {
+    cy.saveLocalStorage();
+  });
+
   it('should show a login button', () => {
     loginPage.getHeader().invoke('text').should('match', /Welcome, Java Hipster/);
     cy.get('#signIn').should('exist');

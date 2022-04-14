@@ -116,6 +116,7 @@
     "@typescript-eslint/eslint-plugin": "5.16.0",
     "@typescript-eslint/parser": "5.16.0",
     "cypress": "latest",
+    "cypress-localstorage-commands": "^1.7.0",
     "eslint": "^8.11.0",
     "eslint-plugin-import": "2.25.4",
     "eslint-plugin-jsdoc": "38.0.6",
