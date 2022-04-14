@@ -74,9 +74,6 @@ Object {
   "karma.conf.js": Object {
     "stateCleared": "modified",
   },
-  "package-lock.json": Object {
-    "stateCleared": "modified",
-  },
   "package.json": Object {
     "stateCleared": "modified",
   },
@@ -560,9 +557,6 @@ Object {
     "stateCleared": "modified",
   },
   "karma.conf.js": Object {
-    "stateCleared": "modified",
-  },
-  "package-lock.json": Object {
     "stateCleared": "modified",
   },
   "package.json": Object {

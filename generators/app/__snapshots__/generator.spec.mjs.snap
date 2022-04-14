@@ -74,9 +74,6 @@ Object {
   "../ionic4j/karma.conf.js": Object {
     "stateCleared": "modified",
   },
-  "../ionic4j/package-lock.json": Object {
-    "stateCleared": "modified",
-  },
   "../ionic4j/package.json": Object {
     "stateCleared": "modified",
   },
@@ -593,9 +590,6 @@ Object {
     "stateCleared": "modified",
   },
   "../ionic-app/karma.conf.js": Object {
-    "stateCleared": "modified",
-  },
-  "../ionic-app/package-lock.json": Object {
     "stateCleared": "modified",
   },
   "../ionic-app/package.json": Object {
