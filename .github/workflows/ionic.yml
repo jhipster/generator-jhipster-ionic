@@ -106,8 +106,10 @@ jobs:
         run: npm run ci:server:await
       - name: Launch ionic e2e test
         if: ${{ matrix.e2e == 1 }}
-        run: xvfb-run --server-args="-screen 0 1024x768x24" --auto-servernum npm run e2e
-        working-directory: ${{ github.workspace }}/ionic4j
+        uses: cypress-io/github-action@v2
+        with:
+          browser: chrome
+          working-directory: ${{ github.workspace }}/ionic4j
       - name: Dump docker logs on failure
         if: failure()
         uses: jwalton/gh-docker-logs@v2
