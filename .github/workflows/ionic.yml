@@ -51,15 +51,15 @@ jobs:
           - 21-points
         include:
           - jdl: monolith-jwt
-            e2e: 0
+            e2e: 1
           - jdl: monolith-oauth2
-            e2e: 0
+            e2e: 1
           - jdl: gateway-oauth2
-            e2e: 0
+            e2e: 1
           - jdl: reactive-oauth2
-            e2e: 0
+            e2e: 1
           - jdl: 21-points
-            e2e: 0
+            e2e: 1
 
     steps:
       #----------------------------------------------------------------------
