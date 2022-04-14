@@ -79,6 +79,7 @@ _%>
     cy.get('#signIn').click();
     const username = process.env.E2E_USERNAME || 'admin';
     const password = process.env.E2E_PASSWORD || 'admin';
+    cy.get('#kc-login').click();
     loginPage.login(username, password);
   });
 
@@ -95,7 +96,7 @@ _%>
 
   <%_ if (!readOnly) { _%>
   it('should create <%= entityClass %>', () => {
-    initNumberOfEntities = <%= entityInstance %>ComponentsPage.getEntitiesNumber().length;
+    initNumberOfEntities = <%= entityInstance %>ComponentsPage.getEntitiesNumber().children.length;
     <%= entityInstance %>ComponentsPage.clickOnCreateButton();
     <%= entityInstance %>UpdatePage = new <%= entityClass %>UpdatePage();
     <%= entityInstance %>UpdatePage.getPageTitle()

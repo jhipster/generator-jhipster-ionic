@@ -20,6 +20,7 @@ describe('Login', () => {
 
   it('should fail to login with bad password', () => {
     cy.visit('/');
+    cy.get('#signIn').click();
     loginPage.login(username, 'foo');
     const error = cy.get('.toast-message');
     if (error) {
@@ -29,6 +30,7 @@ describe('Login', () => {
 
   it('should login successfully with admin account', () => {
     cy.visit('/');
+    cy.get('#signIn').click();
     loginPage.login(username, password);
 
     const welcome = /Welcome, Administrator/;

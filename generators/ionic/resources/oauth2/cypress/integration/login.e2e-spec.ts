@@ -21,6 +21,7 @@ describe('Login', () => {
 
   it('should fail to login with bad password', () => {
     cy.visit('/');
+    cy.get('#signIn').click();
     loginPage.login(username, 'foo');
     // Keycloak
     const alert = cy.get('#input-error');
@@ -35,6 +36,7 @@ describe('Login', () => {
 
   it('should login successfully with admin account', () => {
     cy.visit('/');
+    cy.get('#signIn').click();
     loginPage.login(username, password);
 
     const welcome = /Welcome, Admin/;
