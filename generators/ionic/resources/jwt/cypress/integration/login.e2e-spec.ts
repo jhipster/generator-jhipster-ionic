@@ -14,6 +14,7 @@ describe('Login', () => {
   });
 
   it('should show a login button', () => {
+    cy.visit('/');
     loginPage.getHeader().invoke('text').should('match', /Welcome, Java Hipster/);
     cy.get('#signIn').should('exist');
   });
