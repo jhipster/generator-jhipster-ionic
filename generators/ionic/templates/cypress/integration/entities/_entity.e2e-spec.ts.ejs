@@ -16,14 +16,14 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-import { LoginPage } from '../../../fixtures/login.po';
+import { LoginPage } from '../../../support/pages/login.po';
 import {
   <%= entityClass %>ComponentsPage,
   <%_ if (!readOnly) { _%>
       <%= entityClass %>DetailPage,
       <%= entityClass %>UpdatePage
   <%_ } _%>
-} from './<%= entityFileName %>.po';
+} from '../../../support/pages/entities/<%= entityFileName %>/<%= entityFileName %>.po';
 
 describe('<%= entityClass %> e2e test', () => {
 
@@ -79,7 +79,7 @@ _%>
     cy.get('#signIn').click();
     const username = process.env.E2E_USERNAME || 'admin';
     const password = process.env.E2E_PASSWORD || 'admin';
-    <%_ if (authenticationType =npm run ci:server:await== 'oauth2') { _%>
+    <%_ if (authenticationType === 'oauth2') { _%>
     cy.get('#kc-login').click();
     <%_ } else { _%>
     cy.get('#login').click();

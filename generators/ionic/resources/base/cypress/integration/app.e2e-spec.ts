@@ -1,4 +1,4 @@
-import { Page } from '../fixtures/app.po';
+import { Page } from '../support/pages/app.po';
 
 describe('App', () => {
   let page: Page;

@@ -1,4 +1,4 @@
-import { LoginPage } from '../fixtures/login.po';
+import { LoginPage } from '../support/pages/login.po';
 
 describe('Login', () => {
   let loginPage;

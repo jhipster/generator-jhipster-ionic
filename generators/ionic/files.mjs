@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 const PAGES_DIR = 'src/app/pages/';
+const E2E_ENTITY_DIR = 'cypress/support/pages/';
 const E2E_TEST_DIR = 'cypress/integration/';
 
 export const files = {
@@ -25,7 +26,7 @@ export const files = {
       templates: [
         'capacitor.config.ts',
         'ionic.config.json',
-        'cypress/fixtures/login.po.ts',
+        'cypress/support/pages/login.po.ts',
         'src/app/interceptors/auth.interceptor.ts',
         'src/app/pages/home/home.page.scss',
         'src/app/pages/welcome/welcome.page.scss',
@@ -104,12 +105,17 @@ export const entityFiles = {
   ],
   e2e: [
     {
-      path: E2E_TEST_DIR,
+      path: E2E_ENTITY_DIR,
       templates: [
         {
           file: 'entities/_entity.po.ts',
           renameTo: ctx => `entities/${ctx.entityFolderName}/${ctx.entityFileName}.po.ts`,
         },
+      ],
+    },
+    {
+      path: E2E_TEST_DIR,
+      templates: [
         {
           file: 'entities/_entity.e2e-spec.ts',
           renameTo: ctx => `entities/${ctx.entityFolderName}/${ctx.entityFileName}.e2e-spec.ts`,

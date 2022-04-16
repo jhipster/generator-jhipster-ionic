@@ -44,12 +44,6 @@ Object {
   "cypress.json": Object {
     "stateCleared": "modified",
   },
-  "cypress/fixtures/app.po.ts": Object {
-    "stateCleared": "modified",
-  },
-  "cypress/fixtures/login.po.ts": Object {
-    "stateCleared": "modified",
-  },
   "cypress/integration/app.e2e-spec.ts": Object {
     "stateCleared": "modified",
   },
@@ -63,6 +57,12 @@ Object {
     "stateCleared": "modified",
   },
   "cypress/support/index.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/pages/app.po.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/pages/login.po.ts": Object {
     "stateCleared": "modified",
   },
   "cypress/tsconfig.json": Object {
@@ -529,12 +529,6 @@ Object {
   "cypress.json": Object {
     "stateCleared": "modified",
   },
-  "cypress/fixtures/app.po.ts": Object {
-    "stateCleared": "modified",
-  },
-  "cypress/fixtures/login.po.ts": Object {
-    "stateCleared": "modified",
-  },
   "cypress/integration/app.e2e-spec.ts": Object {
     "stateCleared": "modified",
   },
@@ -548,6 +542,12 @@ Object {
     "stateCleared": "modified",
   },
   "cypress/support/index.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/pages/app.po.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/pages/login.po.ts": Object {
     "stateCleared": "modified",
   },
   "cypress/tsconfig.json": Object {
