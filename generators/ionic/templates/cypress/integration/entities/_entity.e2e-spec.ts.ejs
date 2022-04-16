@@ -79,7 +79,11 @@ _%>
     cy.get('#signIn').click();
     const username = process.env.E2E_USERNAME || 'admin';
     const password = process.env.E2E_PASSWORD || 'admin';
+    <%_ if (authenticationType =npm run ci:server:await== 'oauth2') { _%>
     cy.get('#kc-login').click();
+    <%_ } else { _%>
+    cy.get('#login').click();
+    <%_ } _%>
     loginPage.login(username, password);
   });
 
