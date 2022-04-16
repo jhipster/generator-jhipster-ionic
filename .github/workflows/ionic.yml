@@ -104,6 +104,10 @@ jobs:
         run: npm run docker:app:up
       - name: Wait for backend to start
         run: npm run ci:server:await
+      - name: Modify /etc/hosts
+        run: |
+          echo '127.0.0.1       keycloak' | sudo tee -a /etc/hosts
+          cat /etc/hosts
       - name: Launch ionic e2e test
         if: ${{ matrix.e2e == 1 }}
         uses: cypress-io/github-action@v2
