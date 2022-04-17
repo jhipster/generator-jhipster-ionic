@@ -7,7 +7,7 @@
   "scripts": {
     "build": "ionic build",
     "e2e": "ng e2e",
-    "e2e:ci": "ng run app:cypress-run",
+    "e2e:ci": "ng run app:cypress-run --browser chrome",
     "lint": "ng lint",
     "ng": "ng",
     "prettier": "prettier --write \"{,e2e/**/,src/**/}*.{js,json,html,md,ts,css,scss,yml}\" --loglevel silent",
