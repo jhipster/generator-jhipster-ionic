@@ -16,15 +16,14 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-import { browser, by, element, ExpectedConditions as ec } from 'protractor';
-import { LoginPage } from '../../pages/login.po';
+import { LoginPage } from '../../../support/pages/login.po';
 import {
   <%= entityClass %>ComponentsPage,
   <%_ if (!readOnly) { _%>
       <%= entityClass %>DetailPage,
       <%= entityClass %>UpdatePage
   <%_ } _%>
-} from './<%= entityFileName %>.po';
+} from '../../../support/pages/entities/<%= entityFileName %>/<%= entityFileName %>.po';
 
 describe('<%= entityClass %> e2e test', () => {
 
@@ -74,48 +73,38 @@ _%>
 <%_ } _%>
 <%_ }); _%>
 
-  beforeAll(async () => {
+  before(() => {
     loginPage = new LoginPage();
-    await loginPage.navigateTo('/');
-    await browser.sleep(1000);
-    await browser.wait(ec.visibilityOf(loginPage.signInButton), 3000);
-    await loginPage.signInButton.click();
+    loginPage.navigateTo('/');
+    cy.get('#signIn').click();
     const username = process.env.E2E_USERNAME || 'admin';
     const password = process.env.E2E_PASSWORD || 'admin';
     <%_ if (authenticationType !== 'oauth2') { _%>
-    await browser.wait(ec.elementToBeClickable(loginPage.loginButton), 3000);
+    cy.get('#login').click();
+    <%_ } else { _%>
+    cy.get('#signIn').click();
     <%_ } _%>
-    await loginPage.login(username, password);
-    <%_ if (authenticationType !== 'oauth2') { _%>
-    await browser.wait(ec.visibilityOf(loginPage.logoutButton), 1000);
-    <%_ }_%>
-
+    loginPage.login(username, password);
   });
 
-  it('should load <%= entityClassPlural %>', async () => {
+  it('should load <%= entityClassPlural %>', () => {
     // go to entity component page
-    const tabEntities = element(by.css('ion-tab-button[tab="entities"]'));
-    await browser.wait(ec.elementToBeClickable(tabEntities), 3000);
-    await tabEntities.click();
-    await element.all(by.css('ion-item'))
-      .filter(async el => (await el.element(by.css('h2')).getText()) === '<%= entityClass %>').first().click();
+    const tabEntities = cy.get('ion-tab-button[tab="entities"]');
+    tabEntities.click();
+    cy.get('ion-item h2').contains('<%= entityClass %>').first().click();
 
     <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
-    await browser.wait(ec.visibilityOf(<%= entityInstance %>ComponentsPage.title), 5000);
-    expect(await <%= entityInstance %>ComponentsPage.getTitle())
-      .toEqual(COMPONENT_TITLE);
-    await browser.wait(ec.or(ec.visibilityOf(<%= entityInstance %>ComponentsPage.entities.get(0)), ec.visibilityOf(<%= entityInstance %>ComponentsPage.noResult)), 5000);
+    <%= entityInstance %>ComponentsPage.getTitle()
+      .should('include.text', COMPONENT_TITLE);
   });
 
   <%_ if (!readOnly) { _%>
-  it('should create <%= entityClass %>', async () => {
-    initNumberOfEntities = await <%= entityInstance %>ComponentsPage.getEntitiesNumber();
-    await browser.wait(ec.elementToBeClickable(<%= entityInstance %>ComponentsPage.createButton), 5000);
-    await <%= entityInstance %>ComponentsPage.clickOnCreateButton();
+  it('should create <%= entityClass %>', () => {
+    initNumberOfEntities = <%= entityInstance %>ComponentsPage.getEntitiesNumber().children.length;
+    <%= entityInstance %>ComponentsPage.clickOnCreateButton();
     <%= entityInstance %>UpdatePage = new <%= entityClass %>UpdatePage();
-    await browser.wait(ec.visibilityOf(<%= entityInstance %>UpdatePage.pageTitle), 3000);
-    expect(await <%= entityInstance %>UpdatePage.getPageTitle())
-      .toEqual(SUBCOMPONENT_TITLE);
+    <%= entityInstance %>UpdatePage.getPageTitle()
+      .should('have.text', SUBCOMPONENT_TITLE);
 
     <%_ fields.filter(f => !f.id).forEach((field) => {
       const fieldName = field.fieldName;
@@ -129,48 +118,40 @@ _%>
     _%>
     <%_ if (fieldType === 'Boolean') { _%>
     <%_ } else if (fieldIsEnum) { _%>
-    await <%= entityInstance %>UpdatePage.<%= fieldName %>SelectLastOption();
+    <%= entityInstance %>UpdatePage.<%= fieldName %>SelectLastOption();
     <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
-    await <%= entityInstance %>UpdatePage.set<%= fieldNameCapitalized %>Input(<%= fieldName %>);
+    <%= entityInstance %>UpdatePage.set<%= fieldNameCapitalized %>Input(<%= fieldName %>);
     <%_ } else if (['Instant', 'ZonedDateTime', 'LocalDate'].includes(fieldType)) { _%>
     <%_ } else { _%>
-    await <%= entityInstance %>UpdatePage.set<%= fieldNameCapitalized %>Input(<%= fieldName %>);
+     <%= entityInstance %>UpdatePage.set<%= fieldNameCapitalized %>Input(<%= fieldName %>);
     <%_ } _%>
     <%_ }); _%>
 
-    await <%= entityInstance %>UpdatePage.save();
-    await browser.wait(ec.visibilityOf(<%= entityInstance %>ComponentsPage.title), 3000);
-    expect(await <%= entityInstance %>ComponentsPage.getTitle())
-      .toEqual(COMPONENT_TITLE);
-    expect(await <%= entityInstance %>ComponentsPage.getEntitiesNumber())
-      .toEqual(initNumberOfEntities + 1);
+    <%= entityInstance %>UpdatePage.save();
+    <%= entityInstance %>ComponentsPage.getTitle()
+      .contains(COMPONENT_TITLE);
+    <%= entityInstance %>ComponentsPage.getEntitiesNumber()
+      .should('have.length', initNumberOfEntities + 1);
   });
 
-  it('should get the last <%= entityClass %>', async () => {
+  it('should get the last <%= entityClass %>', () => {
     <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
-    await browser.wait(ec.visibilityOf(<%= entityInstance %>ComponentsPage.title), 5000);
-    lastElement = await <%= entityInstance %>ComponentsPage.viewButtons.last().getWebElement();
+    lastElement = cy.get('ion-item').last();
   });
 
   it('should scroll the last <%= entityClass %>', async () => {
-    browser.executeScript('arguments[0].scrollIntoView()', lastElement)
-      .then(async () => {
-        if (await lastElement.isEnabled() && await lastElement.isDisplayed()) {
-          browser.executeScript('arguments[0].click()', lastElement)
-            .then(async () => {
-              isVisible = true;
-            })
-            .catch();
-        }
-      })
-      .catch();
+    cy.get(lastElement).scrollIntoView();
+    if (cy.get(lastElement).should('be.enabled').and('not.be.disabled') && cy.get(lastElement).should('be.visible')) {
+      cy.get(lastElement).click();
+      isVisible = true;
+    }
   });
 
   it('should view the last <%= entityClass %>', async () => {
     <%= entityInstance %>DetailPage = new <%= entityClass %>DetailPage();
-    if (isVisible && await <%= entityInstance %>DetailPage.pageTitle.isDisplayed()) {
-    expect(await <%= entityInstance %>DetailPage.getPageTitle())
-      .toEqual(SUBCOMPONENT_TITLE);
+    if (isVisible && <%= entityInstance %>DetailPage.pageTitle.should('be.visible')) {
+    <%= entityInstance %>DetailPage.getPageTitle()
+      .contains(SUBCOMPONENT_TITLE);
 
       <%_ fields.forEach((field) => {
         const fieldName = field.fieldName;
@@ -186,10 +167,10 @@ _%>
     <%_ if (fieldType === 'Boolean') { _%>
     <%_ } else if (fieldIsEnum) { _%>
     <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
-    expect(await <%= entityInstance %>DetailPage.get<%= fieldNameCapitalized %>Input()).toEqual(<%=fieldName%>);
+    <%= entityInstance %>DetailPage.get<%= fieldNameCapitalized %>Input().contains(<%=fieldName%>);
     <%_ } else if (['Instant', 'ZonedDateTime', 'LocalDate'].includes(fieldType)) { _%>
     <%_ } else { _%>
-    expect(await <%= entityInstance %>DetailPage.get<%= fieldNameCapitalized %>Input()).toEqual(<%=fieldName%>);
+    <%= entityInstance %>DetailPage.get<%= fieldNameCapitalized %>Input().contains(<%=fieldName%>);
     <%_ } _%>
     <%_ }); _%>
     }
@@ -197,29 +178,25 @@ _%>
 
   it('should delete last <%= entityClass %>', async () => {
     <%= entityInstance %>DetailPage = new <%= entityClass %>DetailPage();
-    if (isVisible && await <%= entityInstance %>DetailPage.deleteButton.isDisplayed()) {
-    await browser.executeScript('arguments[0].click()', await <%= entityInstance %>DetailPage.deleteButton.getWebElement());
+    if (isVisible && <%= entityInstance %>DetailPage.deleteButton.should('be.visible')) {
+    <%= entityInstance %>DetailPage.deleteButton.click();
 
-    const alertConfirmButton = element.all(by.className('alert-button')).last();
+    const alertConfirmButton = cy.get('alert-button').last();
 
-    await browser.wait(ec.elementToBeClickable(alertConfirmButton), 3000);
     alertConfirmButton.click();
-    await browser.wait(ec.visibilityOf(<%= entityInstance %>ComponentsPage.title), 3000);
-    expect(await <%= entityInstance %>ComponentsPage.getTitle())
-      .toEqual(COMPONENT_TITLE);
-    expect(await <%= entityInstance %>ComponentsPage.getEntitiesNumber())
-      .toEqual(initNumberOfEntities);
+    <%= entityInstance %>ComponentsPage.getTitle()
+      .should('have.text', COMPONENT_TITLE);
+    <%= entityInstance %>ComponentsPage.getEntitiesNumber()
+      .should('have.length', initNumberOfEntities);
     }
   });
 
   <%_ } _%>
 
-  it('finish <%= entityClassPlural %> tests performing logout', async () => {
+  it('finish <%= entityClassPlural %> tests performing logout', () => {
     // go to home page
-    const tabHome = element(by.css('ion-tab-button[tab="home"]'));
-    await browser.wait(ec.elementToBeClickable(tabHome), 3000);
-    await tabHome.click();
-    await browser.wait(ec.elementToBeClickable(loginPage.logoutButton), 3000);
-    await loginPage.logout();
+    const tabHome = cy.get('ion-tab-button[tab="home"]');
+    tabHome.click();
+    loginPage.logout();
   });
 });

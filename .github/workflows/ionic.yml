@@ -51,15 +51,15 @@ jobs:
           - 21-points
         include:
           - jdl: monolith-jwt
-            e2e: 0
+            e2e: 1
           - jdl: monolith-oauth2
-            e2e: 0
+            e2e: 1
           - jdl: gateway-oauth2
-            e2e: 0
+            e2e: 1
           - jdl: reactive-oauth2
-            e2e: 0
+            e2e: 1
           - jdl: 21-points
-            e2e: 0
+            e2e: 1
 
     steps:
       #----------------------------------------------------------------------
@@ -104,10 +104,17 @@ jobs:
         run: npm run docker:app:up
       - name: Wait for backend to start
         run: npm run ci:server:await
+      - name: Modify /etc/hosts
+        run: |
+          echo '127.0.0.1       keycloak' | sudo tee -a /etc/hosts
+          cat /etc/hosts
       - name: Launch ionic e2e test
         if: ${{ matrix.e2e == 1 }}
-        run: xvfb-run --server-args="-screen 0 1024x768x24" --auto-servernum npm run e2e
-        working-directory: ${{ github.workspace }}/ionic4j
+        uses: cypress-io/github-action@v2
+        with:
+          browser: chrome
+          command: npm run e2e:ci
+          working-directory: ${{ github.workspace }}/ionic4j
       - name: Dump docker logs on failure
         if: failure()
         uses: jwalton/gh-docker-logs@v2

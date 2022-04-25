@@ -6,7 +6,8 @@
   "author": "Ionic Framework + JHipster",
   "scripts": {
     "build": "ionic build",
-    "e2e": "ng e2e --port 8100",
+    "e2e": "ng e2e",
+    "e2e:ci": "ng run app:cypress-run --browser chrome",
     "lint": "ng lint",
     "ng": "ng",
     "prettier": "prettier --write \"{,e2e/**/,src/**/}*.{js,json,html,md,ts,css,scss,yml}\" --loglevel silent",
@@ -14,7 +15,9 @@
     "test": "jest",
     "test:ci": "jest --runInBand",
     "test:coverage": "jest --coverage",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -104,6 +107,7 @@
     "@angular/compiler-cli": "~13.3.0",
     "@angular/language-service": "~13.3.0",
     "@capacitor/cli": "3.4.3",
+    "@cypress/schematic": "^1.6.0",
     "@ionic/angular-toolkit": "^6.1.0",
     "@oktadev/schematics": "5.2.2",
     "@types/jasmine": "~4.0.0",
@@ -112,6 +116,8 @@
     "@types/node": "^17.0.23",
     "@typescript-eslint/eslint-plugin": "5.16.0",
     "@typescript-eslint/parser": "5.16.0",
+    "cypress": "latest",
+    "cypress-localstorage-commands": "^1.7.0",
     "eslint": "^8.11.0",
     "eslint-plugin-import": "2.25.4",
     "eslint-plugin-jsdoc": "38.0.6",
@@ -131,7 +137,6 @@
     "karma-jasmine-html-reporter": "^1.7.0",
     "null-loader": "4.0.1",
     "prettier": "2.6.1",
-    "protractor": "~7.0.0",
     "ts-loader": "9.2.8",
     "ts-node": "~10.7.0",
     "typescript": "~4.6.3"
