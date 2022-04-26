@@ -13,5 +13,13 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
+before(() => {
+  /**
+   * Workaround for https://github.com/cypress-io/cypress/issues/17805
+   * @see https://docs.cypress.io/api/commands/session#Explicitly-clearing-sessions
+   */
+  Cypress.session.clearAllSavedSessions();
+});
+
 // When a command from ./commands is ready to use, import with `import './commands'` syntax
 import './commands';

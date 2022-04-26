@@ -1,6 +1,10 @@
 import { Page } from './app.po';
 
 export class LoginPage extends Page {
+  signIn() {
+    cy.get('#signIn').click();
+  }
+
   getHeader() {
     return cy.get('ion-title');
   }

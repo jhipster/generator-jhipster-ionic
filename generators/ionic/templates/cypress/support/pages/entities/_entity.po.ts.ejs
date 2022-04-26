@@ -16,146 +16,36 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-export class <%= entityClass %>ComponentsPage {
-    <%_ if (!readOnly) { _%>
-    clickOnCreateButton() {
-        cy.get('ion-fab-button').click();
-    }
-    <%_ } _%>
+import { EntityComponentsPage, EntityDetailPage, EntityUpdatePage } from '../../entity.po';
 
-    clickOnLastViewButton() {
-        cy.get('ion-item').last().click();
-    }
-
-    getTitle() {
-        return cy.get('ion-title').its(2);
-    }
-
-    getEntitiesNumber() {
-      return cy.get('page-<%= entityFileName %> ion-item');
-    }
+export class <%= entityClass %>ComponentsPage extends EntityComponentsPage {
+  pageSeletor = 'page-<%= entityFileName %>';
 }
 
-<%_ if (!readOnly) { _%>
+export class <%= entityClass %>UpdatePage extends EntityUpdatePage{
+  pageSeletor = 'page-<%= entityFileName %>-update';
 
-export class <%= entityClass %>UpdatePage {
-    pageTitle = cy.get('ion-title').its(3);
-    saveButton = cy.get('ion-button').its(1);
-
-<%_ fields.forEach((field) => {
-    const fieldName = field.fieldName;
-    const fieldType = field.fieldType;
-    const fieldIsEnum = field.fieldIsEnum;
-    const fieldTypeBlobContent = field.fieldTypeBlobContent;
-_%>
-    <%_ if (fieldType === 'Boolean') { _%>
-    <%_ } else if (fieldIsEnum) { _%>
-    <%= fieldName %>Select = cy.get('ion-select[formControlName="<%= fieldName %>"]');
-    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
-    <%= fieldName %>Input = cy.get('ion-textarea[formControlName="<%= fieldName %>"] textarea');
-    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType)) { _%>
-    <%= fieldName %>Input = cy.get('ion-input[formControlName="<%= fieldName %>"] input');
-    <%_ } else if (fieldType === 'LocalDate') { _%>
-    <%_ } else if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
-    <%_ } else { _%>
-    <%= fieldName %>Input = cy.get('ion-input[formControlName="<%= fieldName %>"] input');
-    <%_ } _%>
-<%_ }); _%>
-
-
-    getPageTitle() {
-        return this.pageTitle;
-    }
-
-<%_ fields.forEach((field) => {
-    const fieldName = field.fieldName;
-    const fieldNameCapitalized = field.fieldNameCapitalized;
-    const fieldNameHumanized = field.fieldNameHumanized;
-    const fieldType = field.fieldType;
-    const fieldTypeBlobContent = field.fieldTypeBlobContent;
-    const fieldIsEnum = field.fieldIsEnum;
-    let fieldInputType = 'text';
-    let ngModelOption = '';
-_%>
-    <%_ if (fieldType === 'Boolean') { _%>
-    <%_ } else if (fieldIsEnum) { _%>
-    <%= fieldName %>SelectLastOption() {
-        this.<%= fieldName %>Select.click();
-        cy.get('alert-radio').last().click();
-        cy.get('alert-button').last().click();
-    }
-    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
-    set<%= fieldNameCapitalized %>Input(<%= fieldName %>: string) {
-        this.<%= fieldName %>Input.type(<%= fieldName %>);
-    }
-    <%_ } else if (['Instant', 'ZonedDateTime', 'LocalDate'].includes(fieldType)) { _%>
-    <%_ } else { _%>
-    set<%= fieldNameCapitalized %>Input(<%= fieldName %>: string) {
-        this.<%= fieldName %>Input.type(<%= fieldName %>);
-    }
-    <%_ } _%>
-<%_ }); _%>
-
-    save() {
-        this.saveButton.click();
-    }
-}
-
-export class <%= entityClass %>DetailPage {
-    pageTitle = cy.get('ion-title').its(3);
-    deleteButton = cy.get('ion-button[color="danger"]');
-    <%_ for (idx in fields) {
-    const fieldName = fields[idx].fieldName;
-    const fieldType = fields[idx].fieldType;
-    const fieldTypeBlobContent = fields[idx].fieldTypeBlobContent;
-    const fieldIsEnum = fields[idx].fieldIsEnum;
-    const newIndex = parseInt(idx) + 1;
-    _%>
-    <%_ if (fieldType === 'Boolean') { _%>
-    <%_ } else if (['Instant', 'ZonedDateTime', 'LocalDate'].includes(fieldType)) { _%>
-    <%_ } else if (fieldIsEnum) { _%>
-    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
-    <%= fieldName %>Input = cy.get('span').its(<%=newIndex%>);
-    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType)) { _%>
-    <%= fieldName %>Input = cy.get('span').its(<%=newIndex%>);
-    <%_ } else { _%>
-    <%= fieldName %>Input = cy.get('span').its(<%=newIndex%>);
-    <%_ }; _%>
-
-    <%_ }; _%>
-
-    <%_ fields.forEach((field) => {
-      const fieldName = field.fieldName;
-      const fieldNameCapitalized = field.fieldNameCapitalized;
-      const fieldNameHumanized = field.fieldNameHumanized;
-      const fieldType = field.fieldType;
-      const fieldTypeBlobContent = field.fieldTypeBlobContent;
-      const fieldIsEnum = field.fieldIsEnum;
-      let fieldInputType = 'text';
-      let ngModelOption = '';
-      _%>
-
-    <%_ if (fieldType === 'Boolean') { _%>
-    <%_ } else if (fieldIsEnum) { _%>
-
-    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
-    get<%= fieldNameCapitalized %>Input() {
-        return this.<%= fieldName %>Input;
-    }
-    <%_ } else if (['Instant', 'ZonedDateTime', 'LocalDate'].includes(fieldType)) { _%>
-    <%_ } else { _%>
-    get<%= fieldNameCapitalized %>Input() {
-        return this.<%= fieldName %>Input;
-    }
-    <%_ } _%>
-    <%_ }); _%>
-
-    clickOnDeleteButton() {
-      this.deleteButton.click();
-    }
-
-    getPageTitle() {
-      return this.pageTitle;
-    }
-}
+<%_ for (field of fields.filter(field => !field.id)) { _%>
+  <%_ if (field.fieldTypeZonedDateTime) { _%>
+  <%= field.fieldName %>InputSelector = `${this.pageSeletor} ion-datetime[formControlName="<%= field.fieldName %>"] input`;
+  <%_ } else { _%>
+  <%= field.fieldName %>InputSelector = `${this.pageSeletor} ion-input[formControlName="<%= field.fieldName %>"] input`;
+  <%_ } _%>
 <%_ } _%>
+<%_ for (field of fields.filter(field => !field.id)) { _%>
+
+  set<%= field.fieldNameCapitalized %>Input(<%= field.fieldName %>: string) {
+    cy.get(this.<%= field.fieldName %>InputSelector).type(<%= field.fieldName %>);
+  }
+<%_ } _%>
+}
+
+export class <%= entityClass %>DetailPage extends EntityDetailPage {
+  pageSeletor = 'page-<%= entityFileName %>-detail';
+<%_ for (field of fields.filter(field => !field.id)) { _%>
+
+  get<%= field.fieldNameCapitalized %>Content() {
+    return cy.get('#<%= field.fieldName %>-content');
+  }
+<%_ } _%>
+}

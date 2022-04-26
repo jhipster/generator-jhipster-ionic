@@ -16,187 +16,178 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-import { LoginPage } from '../../../support/pages/login.po';
+import { userUsername, userPassword } from '../../../support/config';
 import {
   <%= entityClass %>ComponentsPage,
-  <%_ if (!readOnly) { _%>
-      <%= entityClass %>DetailPage,
-      <%= entityClass %>UpdatePage
-  <%_ } _%>
+  <%= entityClass %>DetailPage,
+  <%= entityClass %>UpdatePage
 } from '../../../support/pages/entities/<%= entityFileName %>/<%= entityFileName %>.po';
+import <%= entityInstance %>Sample from './<%= entityFileName %>.json';
 
-describe('<%= entityClass %> e2e test', () => {
-
-  let loginPage: LoginPage;
-  let <%= entityInstance %>ComponentsPage: <%= entityClass %>ComponentsPage;
-  <%_ if (!readOnly) { _%>
-  let <%= entityInstance %>UpdatePage: <%= entityClass %>UpdatePage;
-  let <%= entityInstance %>DetailPage: <%= entityClass %>DetailPage;
-  <%_ } _%>
-  let initNumberOfEntities: number;
+describe('<%= entityClass %> entity', () => {
   const COMPONENT_TITLE = '<%= entityClassPluralHumanized %>';
   const SUBCOMPONENT_TITLE = '<%= entityClassHumanized %>';
-  let lastElement: any;
-  let isVisible = false;
 
-  <%_ fields.forEach((field) => {
-    const fieldName = field.fieldName;
-    const fieldNameCapitalized = field.fieldNameCapitalized;
-    const fieldType = field.fieldType;
-    const fieldTypeBlobContent = field.fieldTypeBlobContent;
-    const fieldIsEnum = field.fieldIsEnum;
-    const fieldValidateSampleString = field.fieldValidateSampleString;
-    const minLength = field.fieldValidateRulesMinlength;
-_%>
-<%_ if (['Integer', 'Long', 'Float', 'Double', 'BigDecimal'].includes(fieldType)) { _%>
-  const <%= fieldName %> = '10';
-<%_ } else if (fieldType === 'LocalDate') { _%>
-<%_ } else if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
-<%_ } else if (fieldType === 'Duration') { _%>
-  const <%= fieldName %> = 'PT12S';
-<%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
-  const <%= fieldName %> = '<%= fieldName %>';
-<%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType)) { _%>
-  <%# nothing field to upload byte image -%>
-<%_ } else if (fieldIsEnum) { _%>
-  <%# it will be set last choose -%>
-<%_ } else if (fieldType === 'UUID') { _%>
-  const <%= fieldName %> ='64c99148-3908-465d-8c4a-e510e3ade974';
-<%_ } else if (fieldType === 'String' && fieldValidateSampleString) { _%>
-  const <%= fieldName %> = '<%= fieldValidateSampleString %>';
-<%_ } else if (fieldType === 'String' && fieldName.length < minLength) { _%>
-  <%_ let value = 'A'.repeat(minLength - fieldName.length );
-   value = fieldName + value; _%>
-  const <%= fieldName %> =  '<%= value_%>';
-<%_ } else if (fieldType !== 'Boolean') { _%>
-  const <%= fieldName %> = '<%= fieldName %>';
+  const <%= entityInstance %>PageUrl = '/tabs/entities/<%= entityFileName %>';
+  const <%= entityInstance %>ApiUrl = '/<%= entityApi %>api/<%= entityApiUrl %>';
+
+  const <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
+  const <%= entityInstance %>UpdatePage = new <%= entityClass %>UpdatePage();
+  const <%= entityInstance %>DetailPage = new <%= entityClass %>DetailPage();
+
+  let <%= entityInstance %>: any;
+
+  beforeEach(() => {
+    <%= entityInstance %> = undefined;
+    cy.login(userUsername, userPassword);
+  });
+
+  describe('navigation test', () => {
+    it('should load <%= entityClassPlural %> page using menu and go back', () => {
+      cy.visit('/');
+      // go to entity component page
+      const tabEntities = cy.get('ion-tab-button[tab="entities"]');
+      tabEntities.click();
+      cy.get('ion-item h2').contains(SUBCOMPONENT_TITLE).first().click();
+
+      <%= entityInstance %>ComponentsPage.getPageTitle().should('have.text', COMPONENT_TITLE).should('be.visible');
+      cy.url().should('include', <%= entityInstance %>PageUrl);
+
+      <%= entityInstance %>ComponentsPage.back();
+      cy.url().should('include', '/tabs/entities');
+    });
+
+    it('should load create <%= entityClass %> page and go back', () => {
+      cy.visit(<%= entityInstance %>PageUrl);
+      <%= entityInstance %>ComponentsPage.clickOnCreateButton();
+
+      <%= entityInstance %>UpdatePage.getPageTitle().should('have.text', SUBCOMPONENT_TITLE);
+
+      <%= entityInstance %>UpdatePage.back();
+      cy.url().should('include', <%= entityInstance %>PageUrl);
+    });
+  });
+
+  describe('navigation test with items', () => {
+    beforeEach(() => {
+      cy.authenticatedRequest({
+        method: 'POST',
+        url: <%= entityInstance %>ApiUrl,
+        body: <%= entityInstance %>Sample,
+      }).then(({ body }) => {
+        <%= entityInstance %> = body;
+
+        cy.intercept(
+          {
+            method: 'GET',
+            url: `${<%= entityInstance %>ApiUrl}+(?*|)`,
+            times: 1,
+          },
+          {
+            statusCode: 200,
+            body: [<%= entityInstance %>],
+          }
+        ).as('entitiesRequestInternal');
+      });
+    });
+
+    afterEach(() => {
+      if (<%= entityInstance %>) {
+        cy.authenticatedRequest({
+          method: 'DELETE',
+          url: `${<%= entityInstance %>ApiUrl}/${<%= entityInstance %>.<%= primaryKey.name %>}`,
+        }).then(() => {
+          <%= entityInstance %> = undefined;
+        });
+      }
+    });
+
+    it('should open <%= entityClass %> view, open <%= entityClass %> edit and go back', () => {
+      cy.visit(<%= entityInstance %>PageUrl);
+      <%= entityInstance %>ComponentsPage.getPageTitle().should('be.visible');
+
+      cy.wait('@entitiesRequestInternal');
+      cy.get('ion-item').last().click();
+
+      <%= entityInstance %>DetailPage.getPageTitle().contains(SUBCOMPONENT_TITLE).should('be.visible');
+<%_ for (field of fields.filter(field => !field.id)) { _%>
+      if (<%= entityInstance %>.<%= field.fieldName %> !== undefined && <%= entityInstance %>.<%= field.fieldName %> !== null) {
+        <%= entityInstance %>DetailPage.get<%= field.fieldNameCapitalized %>Content().contains(<%= entityInstance %>.<%= field.fieldName %>);
+      }
 <%_ } _%>
-<%_ }); _%>
+      <%= entityInstance %>DetailPage.edit();
 
-  before(() => {
-    loginPage = new LoginPage();
-    loginPage.navigateTo('/');
-    cy.get('#signIn').click();
-    const username = process.env.E2E_USERNAME || 'admin';
-    const password = process.env.E2E_PASSWORD || 'admin';
-    <%_ if (authenticationType !== 'oauth2') { _%>
-    cy.get('#login').click();
-    <%_ } else { _%>
-    cy.get('#signIn').click();
-    <%_ } _%>
-    loginPage.login(username, password);
+      <%= entityInstance %>UpdatePage.back();
+      <%= entityInstance %>DetailPage.back();
+      cy.url().should('include', <%= entityInstance %>PageUrl);
+    });
+
+    it('should open <%= entityClass %> view, open <%= entityClass %> edit and save', () => {
+      cy.visit(<%= entityInstance %>PageUrl);
+      <%= entityInstance %>ComponentsPage.getPageTitle().should('be.visible');
+
+      cy.wait('@entitiesRequestInternal');
+      cy.get('ion-item').last().click();
+
+      <%= entityInstance %>DetailPage.getPageTitle().contains(SUBCOMPONENT_TITLE).should('be.visible');
+      <%= entityInstance %>DetailPage.edit();
+
+      <%= entityInstance %>UpdatePage.save();
+      cy.url().should('include', <%= entityInstance %>PageUrl);
+    });
+
+    it('should delete <%= entityClass %>', () => {
+      cy.visit(<%= entityInstance %>PageUrl);
+      <%= entityInstance %>ComponentsPage.getPageTitle().should('be.visible');
+
+      cy.wait('@entitiesRequestInternal');
+      cy.get('ion-item').last().click();
+
+      <%= entityInstance %>DetailPage.delete();
+      cy.get('ion-alert button:not(.alert-button-role-cancel)').click();
+
+      <%= entityInstance %>ComponentsPage.getPageTitle().should('have.text', COMPONENT_TITLE);
+      <%= entityInstance %> = undefined;
+    });
   });
 
-  it('should load <%= entityClassPlural %>', () => {
-    // go to entity component page
-    const tabEntities = cy.get('ion-tab-button[tab="entities"]');
-    tabEntities.click();
-    cy.get('ion-item h2').contains('<%= entityClass %>').first().click();
+  describe('creation test', () => {
+    beforeEach(() => {
+      cy.intercept({
+        method: 'POST',
+        url: <%= entityInstance %>ApiUrl,
+        times: 1,
+      }).as('entitiesPost');
+    });
 
-    <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
-    <%= entityInstance %>ComponentsPage.getTitle()
-      .should('include.text', COMPONENT_TITLE);
-  });
+    afterEach(() => {
+      if (<%= entityInstance %>) {
+        cy.authenticatedRequest({
+          method: 'DELETE',
+          url: `${<%= entityInstance %>ApiUrl}/${<%= entityInstance %>.<%= primaryKey.name %>}`,
+        }).then(() => {
+          <%= entityInstance %> = undefined;
+        });
+      }
+    });
 
-  <%_ if (!readOnly) { _%>
-  it('should create <%= entityClass %>', () => {
-    initNumberOfEntities = <%= entityInstance %>ComponentsPage.getEntitiesNumber().children.length;
-    <%= entityInstance %>ComponentsPage.clickOnCreateButton();
-    <%= entityInstance %>UpdatePage = new <%= entityClass %>UpdatePage();
-    <%= entityInstance %>UpdatePage.getPageTitle()
-      .should('have.text', SUBCOMPONENT_TITLE);
+    it('should create <%= entityClass %>', () => {
+      cy.visit(<%= entityInstance %>PageUrl + '/new');
 
-    <%_ fields.filter(f => !f.id).forEach((field) => {
-      const fieldName = field.fieldName;
-      const fieldNameCapitalized = field.fieldNameCapitalized;
-      const fieldNameHumanized = field.fieldNameHumanized;
-      const fieldType = field.fieldType;
-      const fieldTypeBlobContent = field.fieldTypeBlobContent;
-      const fieldIsEnum = field.fieldIsEnum;
-      let fieldInputType = 'text';
-      let ngModelOption = '';
-    _%>
-    <%_ if (fieldType === 'Boolean') { _%>
-    <%_ } else if (fieldIsEnum) { _%>
-    <%= entityInstance %>UpdatePage.<%= fieldName %>SelectLastOption();
-    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
-    <%= entityInstance %>UpdatePage.set<%= fieldNameCapitalized %>Input(<%= fieldName %>);
-    <%_ } else if (['Instant', 'ZonedDateTime', 'LocalDate'].includes(fieldType)) { _%>
-    <%_ } else { _%>
-     <%= entityInstance %>UpdatePage.set<%= fieldNameCapitalized %>Input(<%= fieldName %>);
-    <%_ } _%>
-    <%_ }); _%>
+      <%= entityInstance %>UpdatePage.getPageTitle().should('have.text', SUBCOMPONENT_TITLE);
+<%_ for (field of fields.filter(field => !field.id)) { _%>
+      if (<%= entityInstance %>Sample.<%= field.fieldName %> !== undefined && <%= entityInstance %>Sample.<%= field.fieldName %> !== null) {
+        <%= entityInstance %>UpdatePage.set<%= field.fieldNameCapitalized %>Input(<%= entityInstance %>Sample.<%= field.fieldName %>);
+      }
+<%_ } _%>
+      <%= entityInstance %>UpdatePage.save();
 
-    <%= entityInstance %>UpdatePage.save();
-    <%= entityInstance %>ComponentsPage.getTitle()
-      .contains(COMPONENT_TITLE);
-    <%= entityInstance %>ComponentsPage.getEntitiesNumber()
-      .should('have.length', initNumberOfEntities + 1);
-  });
+      cy.wait('@entitiesPost').then(({ response }) => {
+        const { body } = response;
+        <%= entityInstance %> = body;
+      });
 
-  it('should get the last <%= entityClass %>', () => {
-    <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
-    lastElement = cy.get('ion-item').last();
-  });
-
-  it('should scroll the last <%= entityClass %>', async () => {
-    cy.get(lastElement).scrollIntoView();
-    if (cy.get(lastElement).should('be.enabled').and('not.be.disabled') && cy.get(lastElement).should('be.visible')) {
-      cy.get(lastElement).click();
-      isVisible = true;
-    }
-  });
-
-  it('should view the last <%= entityClass %>', async () => {
-    <%= entityInstance %>DetailPage = new <%= entityClass %>DetailPage();
-    if (isVisible && <%= entityInstance %>DetailPage.pageTitle.should('be.visible')) {
-    <%= entityInstance %>DetailPage.getPageTitle()
-      .contains(SUBCOMPONENT_TITLE);
-
-      <%_ fields.forEach((field) => {
-        const fieldName = field.fieldName;
-        const fieldNameCapitalized = field.fieldNameCapitalized;
-        const fieldNameHumanized = field.fieldNameHumanized;
-        const fieldType = field.fieldType;
-        const fieldTypeBlobContent = field.fieldTypeBlobContent;
-        const fieldIsEnum = field.fieldIsEnum;
-        let fieldInputType = 'text';
-        let ngModelOption = '';
-      _%>
-
-    <%_ if (fieldType === 'Boolean') { _%>
-    <%_ } else if (fieldIsEnum) { _%>
-    <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
-    <%= entityInstance %>DetailPage.get<%= fieldNameCapitalized %>Input().contains(<%=fieldName%>);
-    <%_ } else if (['Instant', 'ZonedDateTime', 'LocalDate'].includes(fieldType)) { _%>
-    <%_ } else { _%>
-    <%= entityInstance %>DetailPage.get<%= fieldNameCapitalized %>Input().contains(<%=fieldName%>);
-    <%_ } _%>
-    <%_ }); _%>
-    }
-  });
-
-  it('should delete last <%= entityClass %>', async () => {
-    <%= entityInstance %>DetailPage = new <%= entityClass %>DetailPage();
-    if (isVisible && <%= entityInstance %>DetailPage.deleteButton.should('be.visible')) {
-    <%= entityInstance %>DetailPage.deleteButton.click();
-
-    const alertConfirmButton = cy.get('alert-button').last();
-
-    alertConfirmButton.click();
-    <%= entityInstance %>ComponentsPage.getTitle()
-      .should('have.text', COMPONENT_TITLE);
-    <%= entityInstance %>ComponentsPage.getEntitiesNumber()
-      .should('have.length', initNumberOfEntities);
-    }
-  });
-
-  <%_ } _%>
-
-  it('finish <%= entityClassPlural %> tests performing logout', () => {
-    // go to home page
-    const tabHome = cy.get('ion-tab-button[tab="home"]');
-    tabHome.click();
-    loginPage.logout();
+      <%= entityInstance %>ComponentsPage.getPageTitle().contains(COMPONENT_TITLE);
+    });
   });
 });

@@ -24,9 +24,7 @@ _%>
         <ion-buttons slot="start">
             <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title>
-            <%= entityClassHumanized %>
-        </ion-title>
+        <ion-title><%= entityClassHumanized %></ion-title>
 
         <ion-buttons slot="end">
             <ion-button [disabled]="!isReadyToSave" (click)="save()" color="primary">

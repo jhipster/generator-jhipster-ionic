@@ -1,9 +1,11 @@
 export class Page {
-  navigateTo(destination) {
-    return cy.visit(destination);
+  pageSeletor: string;
+
+  back() {
+    cy.get(`${this.pageSeletor} ion-back-button`).click();
   }
 
-  getTitle() {
-    return cy.title();
+  getPageTitle() {
+    return cy.get(`${this.pageSeletor} ion-title`).should('be.visible');
   }
 }

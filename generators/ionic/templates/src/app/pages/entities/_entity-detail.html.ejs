@@ -22,9 +22,7 @@
         <ion-buttons slot="start">
             <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title>
-            <%= entityClassHumanized %>
-        </ion-title>
+        <ion-title><%= entityClassHumanized %></ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -38,25 +36,25 @@
             <ion-label position="fixed"><%= fields[idx].fieldNameHumanized %></ion-label>
             <div item-content>
                 <%_ if (fields[idx].fieldIsEnum) { _%>
-                <span>{{<%= entityInstance %>.<%= fieldName %>}}</span>
+                <span id="<%= fieldName %>-content">{{<%= entityInstance %>.<%= fieldName %>}}</span>
                 <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'image') { _%>
-                <div *ngIf="<%= entityInstance %>.<%= fieldName %>">
+                <div id="<%= fieldName %>-content" *ngIf="<%= entityInstance %>.<%= fieldName %>">
                     <a (click)="openFile(<%= entityInstance %>.<%= fieldName %>ContentType, <%= entityInstance %>.<%= fieldName %>)">
                         <img [src]="'data:' + <%=entityInstance %>.<%= fieldName %>ContentType + ';base64,' + <%= entityInstance %>.<%= fieldName %>" style="max-width: 100%;" alt="<%=entityInstance %> image"/>
                     </a>
                     {{<%= entityInstance %>.<%= fieldName %>ContentType}}, {{byteSize(<%= entityInstance %>.<%= fieldName %>)}}
                 </div>
                 <%_ } else if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
-                <span>{{<%=entityInstance %>.<%= fieldName %> | date:'medium'}}</span>
+                <span id="<%= fieldName %>-content">{{<%=entityInstance %>.<%= fieldName %> | date:'medium'}}</span>
                 <%_ } else if (fieldType === 'LocalDate') { _%>
-                <span>{{<%=entityInstance %>.<%= fieldName %> | date:'mediumDate'}}</span>
+                <span id="<%= fieldName %>-content">{{<%=entityInstance %>.<%= fieldName %> | date:'mediumDate'}}</span>
                 <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'any') { _%>
-                <div *ngIf="<%= entityInstance %>.<%= fieldName %>">
+                <div id="<%= fieldName %>-content" *ngIf="<%= entityInstance %>.<%= fieldName %>">
                     <a (click)="openFile(<%= entityInstance %>.<%= fieldName %>ContentType, <%= entityInstance %>.<%= fieldName %>)" jhiTranslate="entity.action.open">open</a>
                     {{<%= entityInstance %>.<%= fieldName %>ContentType}}, {{byteSize(<%= entityInstance %>.<%= fieldName %>)}}
                 </div>
                 <%_ } else { _%>
-                <span>{{<%= entityInstance %>.<%= fieldName %>}}</span>
+                <span id="<%= fieldName %>-content">{{<%= entityInstance %>.<%= fieldName %>}}</span>
                 <%_ } _%>
             </div>
         </ion-item>

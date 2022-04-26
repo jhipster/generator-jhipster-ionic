@@ -26,7 +26,6 @@ export const files = {
       templates: [
         'capacitor.config.ts',
         'ionic.config.json',
-        'cypress/support/pages/login.po.ts',
         'src/app/interceptors/auth.interceptor.ts',
         'src/app/pages/home/home.page.scss',
         'src/app/pages/welcome/welcome.page.scss',
@@ -119,6 +118,10 @@ export const entityFiles = {
         {
           file: 'entities/_entity.e2e-spec.ts',
           renameTo: ctx => `entities/${ctx.entityFolderName}/${ctx.entityFileName}.e2e-spec.ts`,
+        },
+        {
+          file: 'entities/_entity.json',
+          renameTo: ctx => `entities/${ctx.entityFolderName}/${ctx.entityFileName}.json`,
         },
       ],
     },
