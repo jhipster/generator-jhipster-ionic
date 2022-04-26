@@ -56,10 +56,16 @@ Object {
   "cypress/support/commands.ts": Object {
     "stateCleared": "modified",
   },
+  "cypress/support/config.ts": Object {
+    "stateCleared": "modified",
+  },
   "cypress/support/index.ts": Object {
     "stateCleared": "modified",
   },
   "cypress/support/pages/app.po.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/pages/entity.po.ts": Object {
     "stateCleared": "modified",
   },
   "cypress/support/pages/login.po.ts": Object {
@@ -541,10 +547,16 @@ Object {
   "cypress/support/commands.ts": Object {
     "stateCleared": "modified",
   },
+  "cypress/support/config.ts": Object {
+    "stateCleared": "modified",
+  },
   "cypress/support/index.ts": Object {
     "stateCleared": "modified",
   },
   "cypress/support/pages/app.po.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/pages/entity.po.ts": Object {
     "stateCleared": "modified",
   },
   "cypress/support/pages/login.po.ts": Object {

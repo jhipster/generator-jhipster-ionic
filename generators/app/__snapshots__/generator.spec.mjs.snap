@@ -56,10 +56,16 @@ Object {
   "../ionic4j/cypress/support/commands.ts": Object {
     "stateCleared": "modified",
   },
+  "../ionic4j/cypress/support/config.ts": Object {
+    "stateCleared": "modified",
+  },
   "../ionic4j/cypress/support/index.ts": Object {
     "stateCleared": "modified",
   },
   "../ionic4j/cypress/support/pages/app.po.ts": Object {
+    "stateCleared": "modified",
+  },
+  "../ionic4j/cypress/support/pages/entity.po.ts": Object {
     "stateCleared": "modified",
   },
   "../ionic4j/cypress/support/pages/login.po.ts": Object {
@@ -574,10 +580,16 @@ Object {
   "../ionic-app/cypress/support/commands.ts": Object {
     "stateCleared": "modified",
   },
+  "../ionic-app/cypress/support/config.ts": Object {
+    "stateCleared": "modified",
+  },
   "../ionic-app/cypress/support/index.ts": Object {
     "stateCleared": "modified",
   },
   "../ionic-app/cypress/support/pages/app.po.ts": Object {
+    "stateCleared": "modified",
+  },
+  "../ionic-app/cypress/support/pages/entity.po.ts": Object {
     "stateCleared": "modified",
   },
   "../ionic-app/cypress/support/pages/login.po.ts": Object {
