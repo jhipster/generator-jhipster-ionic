@@ -36,7 +36,9 @@ export class EntityUpdatePage extends Page {
   }
 
   select(formControlName: string, value: string) {
-    cy.get(`${this.pageSeletor} ion-select[formControlName="${formControlName}"] select`).select(value);
+    cy.get(`${this.pageSeletor} ion-select[formControlName="${formControlName}"]`).click();
+    cy.get('ion-alert div.alert-radio-group button').contains(value).first().click();
+    cy.get('ion-alert div.alert-button-group button:not(.alert-button-role-cancel)').click();
   }
 }
 
