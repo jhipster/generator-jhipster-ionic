@@ -109,7 +109,7 @@ describe('<%= entityClass %> entity', () => {
       cy.get('ion-item').last().click();
 
       <%= entityInstance %>DetailPage.getPageTitle().contains(SUBCOMPONENT_TITLE).should('be.visible');
-<%_ for (field of fields.filter(field => !field.id)) { _%>
+<%_ for (field of fields.filter(field => !field.id && (field.fieldTypeCharSequence || field.fieldTypeNumeric) )) { _%>
       if (<%= entityInstance %>.<%= field.fieldName %> !== undefined && <%= entityInstance %>.<%= field.fieldName %> !== null) {
         <%= entityInstance %>DetailPage.get<%= field.fieldNameCapitalized %>Content().contains(<%= entityInstance %>.<%= field.fieldName %>);
       }

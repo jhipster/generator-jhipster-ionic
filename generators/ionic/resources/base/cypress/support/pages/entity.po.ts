@@ -10,6 +10,34 @@ export class EntityUpdatePage extends Page {
   save() {
     cy.get(`${this.pageSeletor} ion-buttons[slot="end"] ion-button`).click();
   }
+
+  setInputValue(formControlName: string, value: string) {
+    cy.get(`${this.pageSeletor} ion-input[formControlName="${formControlName}"] input`).type(value);
+  }
+
+  setDateTime(formControlName: string, value: string) {
+    // cy.get(`${this.pageSeletor} ion-datetime[formControlName="${formControlName}"] input`).type(value);
+  }
+
+  setDate(formControlName: string, value: string) {
+    // cy.get(`${this.pageSeletor} ion-datetime[formControlName="${formControlName}"] input`).type(value);
+  }
+
+  setTextAreaContent(formControlName: string, value: string) {
+    cy.get(`${this.pageSeletor} ion-textarea[formControlName="${formControlName}"] textarea`).type(value);
+  }
+
+  setBoolean(formControlName: string, value: string) {
+    cy.get(`${this.pageSeletor} ion-checkbox[formControlName="${formControlName}"] checkbox`).click();
+  }
+
+  setBlob(formControlName: string, value: string) {
+    // cy.get(`${this.pageSeletor} ion-datetime[formControlName="${formControlName}"] input`).type(value);
+  }
+
+  select(formControlName: string, value: string) {
+    cy.get(`${this.pageSeletor} ion-select[formControlName="${formControlName}"] select`).select(value);
+  }
 }
 
 export class EntityDetailPage extends Page {

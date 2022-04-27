@@ -69,7 +69,7 @@ Cypress.Commands.addAll({
         cy.url().then(url => {
           const { protocol, host } = new URL(url);
           // eslint-disable-next-line @typescript-eslint/no-shadow
-          cy.origin(`${protocol}//${host}/`, { args: { url, username, password } }, ({ url, username, password }) => {
+          cy.origin(`${protocol}//${host}`, { args: { url, username, password } }, ({ url, username, password }) => {
             // Reload oauth2 login page due to cypress origin change.
             cy.visit(url);
             cy.get('input[name="username"]').type(username);

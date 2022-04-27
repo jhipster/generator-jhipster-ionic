@@ -24,18 +24,28 @@ export class <%= entityClass %>ComponentsPage extends EntityComponentsPage {
 
 export class <%= entityClass %>UpdatePage extends EntityUpdatePage{
   pageSeletor = 'page-<%= entityFileName %>-update';
-
-<%_ for (field of fields.filter(field => !field.id)) { _%>
-  <%_ if (field.fieldTypeZonedDateTime) { _%>
-  <%= field.fieldName %>InputSelector = `${this.pageSeletor} ion-datetime[formControlName="<%= field.fieldName %>"] input`;
-  <%_ } else { _%>
-  <%= field.fieldName %>InputSelector = `${this.pageSeletor} ion-input[formControlName="<%= field.fieldName %>"] input`;
-  <%_ } _%>
-<%_ } _%>
 <%_ for (field of fields.filter(field => !field.id)) { _%>
 
   set<%= field.fieldNameCapitalized %>Input(<%= field.fieldName %>: string) {
-    cy.get(this.<%= field.fieldName %>InputSelector).type(<%= field.fieldName %>);
+  <%_ if (field.fieldTypeCharSequence || field.fieldTypeNumeric) { _%>
+    this.setInputValue('<%= field.fieldName %>', <%= field.fieldName %>);
+  <%_ } else if (field.fieldTypeTimed) { _%>
+    this.setDateTime('<%= field.fieldName %>', <%= field.fieldName %>);
+  <%_ } else if (field.fieldTypeLocalDate) { _%>
+    this.setDate('<%= field.fieldName %>', <%= field.fieldName %>);
+  <%_ } else if (field.blobContentTypeText) { _%>
+    this.setTextAreaContent('<%= field.fieldName %>', <%= field.fieldName %>);
+  <%_ } else if (field.fieldTypeBoolean) { _%>
+    this.setBoolean('<%= field.fieldName %>', <%= field.fieldName %>);
+  <%_ } else if (field.fieldTypeBinary) { _%>
+    this.setBlob('<%= field.fieldName %>', <%= field.fieldName %>);
+  <%_ } else if (field.fieldTypeDuration) { _%>
+    this.setDuration('<%= field.fieldName %>', <%= field.fieldName %>);
+  <%_ } else if (field.fieldIsEnum) { _%>
+    this.select('<%= field.fieldName %>', <%= field.fieldName %>);
+  <%_ } else { _%>
+    // Unsuported field type <%= field.fieldType %>
+  <%_ } _%>
   }
 <%_ } _%>
 }
