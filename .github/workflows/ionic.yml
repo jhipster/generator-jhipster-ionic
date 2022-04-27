@@ -109,12 +109,25 @@ jobs:
           echo '127.0.0.1       keycloak' | sudo tee -a /etc/hosts
           cat /etc/hosts
       - name: Launch ionic e2e test
+        id: e2e
         if: ${{ matrix.e2e == 1 }}
         uses: cypress-io/github-action@v2
         with:
           browser: chrome
           command: npm run e2e:ci
           working-directory: ${{ github.workspace }}/ionic4j
+      - name: 'E2E: Store failure screenshots'
+        uses: actions/upload-artifact@v3
+        if: always() && steps.e2e.outcome == 'failure'
+        with:
+          name: screenshots-${{ matrix.jdl }}
+          path: ${{ github.workspace }}/ionic4j/cypress/screenshots
+      - name: 'E2E: Store failure videos'
+        uses: actions/upload-artifact@v3
+        if: always() && steps.e2e.outcome == 'failure'
+        with:
+          name: videos-${{ matrix.jdl }}
+          path: ${{ github.workspace }}/ionic4j/cypress/videos
       - name: Dump docker logs on failure
         if: failure()
         uses: jwalton/gh-docker-logs@v2
