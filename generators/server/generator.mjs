@@ -37,10 +37,8 @@ JHIPSTER_CORS_MAX_AGE=1800
       async postWritingTemplateTask() {
         this.editFile('src/main/docker/app.yml', content =>
           content.replace(
-            `
-  jhipster-app:`,
-            `
-  jhipster-app:
+            `-app:`,
+            `-app:
     env_file: ./cors.env`
           )
         );
