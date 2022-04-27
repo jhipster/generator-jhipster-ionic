@@ -5,11 +5,19 @@ export class LoginPage extends Page {
     cy.get('#signIn').click();
   }
 
+  submit() {
+    cy.get('#login').click();
+  }
+
+  logout() {
+    cy.get('#logout').click();
+  }
+
   getHeader() {
     return cy.get('ion-title');
   }
 
-  setUserName(username) {
+  typeUserName(username) {
     cy.get('ion-input[name="username"] input').type(username);
   }
 
@@ -21,7 +29,7 @@ export class LoginPage extends Page {
     cy.get('ion-input[name="username"] input').clear();
   }
 
-  setPassword(password) {
+  typePassword(password) {
     cy.get('ion-input[name="password"] input').type(password);
   }
 
@@ -34,12 +42,8 @@ export class LoginPage extends Page {
   }
 
   login(username: string, password: string) {
-    this.setUserName(username);
-    this.setPassword(password);
-    cy.get('#login').click();
-  }
-
-  logout() {
-    cy.get('#logout').click();
+    this.typeUserName(username);
+    this.typePassword(password);
+    this.submit();
   }
 }

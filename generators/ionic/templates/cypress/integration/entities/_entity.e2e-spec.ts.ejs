@@ -44,10 +44,9 @@ describe('<%= entityClass %> entity', () => {
 
   describe('navigation test', () => {
     it('should load <%= entityClassPlural %> page using menu and go back', () => {
-      cy.visit('/');
+      cy.visit('/tabs/home');
       // go to entity component page
-      const tabEntities = cy.get('ion-tab-button[tab="entities"]');
-      tabEntities.click();
+      cy.get('ion-tab-button[tab="entities"]').click();
       cy.get('ion-item h2').contains(SUBCOMPONENT_TITLE).first().click();
 
       <%= entityInstance %>ComponentsPage.getPageTitle().should('have.text', COMPONENT_TITLE).should('be.visible');

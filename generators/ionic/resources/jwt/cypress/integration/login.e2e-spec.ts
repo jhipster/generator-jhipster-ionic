@@ -17,7 +17,7 @@ describe('Login', () => {
     cy.visit('/');
     loginPage.signIn();
     loginPage.login(adminUsername, 'foo');
-    cy.get('.toast-message').invoke('text').should('match', /Unable to sign in/);
+    cy.get('ion-toast').shadow().find('.toast-message').contains('Unable to sign in');
   });
 
   it('should login successfully with admin account', () => {
@@ -26,12 +26,12 @@ describe('Login', () => {
     loginPage.login(adminUsername, adminPassword);
 
     const welcome = /Welcome, Administrator/;
-    cy.get('ion-title').invoke('text').should('match', welcome);
+    cy.get('app-home ion-title').invoke('text').should('match', welcome);
   });
 
   it('should logout successfully', () => {
     cy.login(userUsername, userPassword);
-    cy.visit('/');
+    cy.visit('/tabs/home');
     cy.get('#logout').should('exist');
     loginPage.logout();
     cy.url().should('include', '/');
