@@ -553,6 +553,9 @@ Object {
   "cypress/support/index.ts": Object {
     "stateCleared": "modified",
   },
+  "cypress/support/oauth2.ts": Object {
+    "stateCleared": "modified",
+  },
   "cypress/support/pages/app.po.ts": Object {
     "stateCleared": "modified",
   },
