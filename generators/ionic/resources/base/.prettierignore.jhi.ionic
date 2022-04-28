@@ -1,0 +1,6 @@
+<&_ if (!fragment.section) { -&>
+# ionic rules:
+.angular
+cypress/screnshots
+cyresss/videos
+<&_ } -&>
