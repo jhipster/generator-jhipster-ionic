@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention, @typescript-eslint/no-namespace */
-import 'cypress-localstorage-commands';
 import './oauth2';
 import { apiHost } from './config';
 

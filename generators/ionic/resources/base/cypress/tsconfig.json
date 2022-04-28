@@ -5,7 +5,6 @@
     "sourceMap": false,
     "types": [
       "cypress",
-      "cypress-localstorage-commands",
       "node"
     ]
   }

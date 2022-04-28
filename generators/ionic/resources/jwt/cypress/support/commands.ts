@@ -41,7 +41,6 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
-import 'cypress-localstorage-commands';
 import { apiHost } from './config';
 import { LoginPage } from './pages/login.po';
 
