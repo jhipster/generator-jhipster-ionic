@@ -93,7 +93,7 @@ _%>
                         </ion-button>
                         <%_ } _%>
                     </div>
-                    <input type="file" #fileInput<% if (fieldTypeBlobContent === 'image') { %> style="display: none"<% } %> (change)="setFileData($event, '<%= fieldName %>', <% if (fieldTypeBlobContent === 'image') { %>true)" accept="image/*"<% } else { %>false)"<% } %>/>
+                    <input type="file" data-cy="<%= fieldName %>" #fileInput<% if (fieldTypeBlobContent === 'image') { %> style="display: none"<% } %> (change)="setFileData($event, '<%= fieldName %>', <% if (fieldTypeBlobContent === 'image') { %>true)" accept="image/*"<% } else { %>false)"<% } %>/>
                     <%_ if (fieldTypeBlobContent === 'image') { _%>
                     <ion-button *ngIf="!<%= entityInstance %>?.<%= fieldName %>" (click)="getPicture('<%= fieldName %>')">
                         <ion-icon name="add-circle" slot="start"></ion-icon>

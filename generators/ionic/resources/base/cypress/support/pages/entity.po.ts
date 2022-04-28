@@ -31,8 +31,20 @@ export class EntityUpdatePage extends Page {
     cy.get(`${this.pageSeletor} ion-checkbox[formControlName="${formControlName}"] checkbox`).click();
   }
 
-  setBlob(formControlName: string, value: string) {
-    // cy.get(`${this.pageSeletor} ion-datetime[formControlName="${formControlName}"] input`).type(value);
+  setBlob(inputName: string, fileName: string) {
+    const mimeType = 'image/png';
+    cy.fixture('integration-test.png')
+      .as('image')
+      .get(`${this.pageSeletor} input[data-cy="${inputName}"]`)
+      .then(function (el) {
+        const blob = Cypress.Blob.base64StringToBlob(this.image, mimeType);
+        const file = new File([blob], fileName, { type: mimeType });
+        const list = new DataTransfer();
+        list.items.add(file);
+        const myFileList = list.files;
+        (el[0] as HTMLInputElement).files = myFileList;
+        el[0].dispatchEvent(new Event('change', { bubbles: true }));
+      });
   }
 
   select(formControlName: string, value: string) {
