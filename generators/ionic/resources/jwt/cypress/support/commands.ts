@@ -42,7 +42,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 import 'cypress-localstorage-commands';
-import { apiBaseUrl } from './config';
+import { apiHost } from './config';
 import { LoginPage } from './pages/login.po';
 
 Cypress.Commands.addAll({
@@ -50,7 +50,7 @@ Cypress.Commands.addAll({
     const token = JSON.parse(localStorage.getItem('jhi-authenticationtoken') || sessionStorage.getItem('jhi-authenticationtoken'));
     return cy.request({
       ...data,
-      url: apiBaseUrl + data.url,
+      url: apiHost + data.url,
       headers: {
         ...data.headers,
         // eslint-disable-next-line @typescript-eslint/naming-convention

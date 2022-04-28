@@ -13,7 +13,8 @@ describe('Login', () => {
     cy.get('#signIn').should('exist');
   });
 
-  it('should fail to login with bad password', () => {
+  // Incompatible with oauth login by api
+  it.skip('should fail to login with bad password', () => {
     cy.visit('/');
     loginPage.signIn();
     loginPage.login(adminUsername, 'foo');
@@ -28,7 +29,8 @@ describe('Login', () => {
     }
   });
 
-  it('should login successfully with admin account', () => {
+  // Incompatible with oauth login by api
+  it.skip('should login successfully with admin account', () => {
     cy.visit('/');
     loginPage.signIn();
     loginPage.login(adminUsername, adminPassword);

@@ -8,7 +8,7 @@ describe('App', () => {
     });
   });
 
-  it.skip('entrypoint should redirect to home when logged in', () => {
+  it('entrypoint should redirect to home when logged in', () => {
     cy.login(userUsername, userPassword);
     cy.visit('/');
     cy.url().should('eq', Cypress.config().baseUrl + 'tabs/home');
