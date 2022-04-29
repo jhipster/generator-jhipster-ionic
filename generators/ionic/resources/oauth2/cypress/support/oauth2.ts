@@ -5,7 +5,7 @@ import { apiHost } from './config';
 import { environment } from '../../src/environments/environment';
 
 const {
-  oidcConfig: { redirect_url: redirect_uri, scopes: scope, audience },
+  oidcConfig: { scopes: scope, audience, client_id },
 } = environment;
 
 // Get oauth2 basic data
@@ -16,7 +16,7 @@ const getOauth2Data = () =>
       followRedirect: false,
     })
     .then(({ body: info }) => {
-      const { issuer, clientId } = info;
+      const { issuer } = info;
       return cy
         .request({
           url: `${issuer.replace(/\/$/, '')}/.well-known/openid-configuration`,
@@ -27,7 +27,7 @@ const getOauth2Data = () =>
           configuration,
           qs: {
             redirect_uri: window.location.origin,
-            client_id: clientId,
+            client_id,
             response_type: 'code',
             scope,
             audience,
