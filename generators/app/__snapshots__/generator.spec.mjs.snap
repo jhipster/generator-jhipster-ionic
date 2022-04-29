@@ -44,6 +44,9 @@ Object {
   "../ionic4j/cypress.json": Object {
     "stateCleared": "modified",
   },
+  "../ionic4j/cypress/fixtures/integration-test.png": Object {
+    "stateCleared": "modified",
+  },
   "../ionic4j/cypress/integration/app.e2e-spec.ts": Object {
     "stateCleared": "modified",
   },
@@ -566,6 +569,9 @@ Object {
     "stateCleared": "modified",
   },
   "../ionic-app/cypress.json": Object {
+    "stateCleared": "modified",
+  },
+  "../ionic-app/cypress/fixtures/integration-test.png": Object {
     "stateCleared": "modified",
   },
   "../ionic-app/cypress/integration/app.e2e-spec.ts": Object {

@@ -71,9 +71,6 @@ Object {
   "src/main/docker/app.yml": Object {
     "stateCleared": "modified",
   },
-  "src/main/docker/cors.env": Object {
-    "stateCleared": "modified",
-  },
   "src/main/docker/grafana/provisioning/dashboards/JVM.json": Object {
     "stateCleared": "modified",
   },

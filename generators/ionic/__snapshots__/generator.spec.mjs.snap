@@ -44,6 +44,9 @@ Object {
   "cypress.json": Object {
     "stateCleared": "modified",
   },
+  "cypress/fixtures/integration-test.png": Object {
+    "stateCleared": "modified",
+  },
   "cypress/integration/app.e2e-spec.ts": Object {
     "stateCleared": "modified",
   },
@@ -533,6 +536,9 @@ Object {
     "stateCleared": "modified",
   },
   "cypress.json": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/fixtures/integration-test.png": Object {
     "stateCleared": "modified",
   },
   "cypress/integration/app.e2e-spec.ts": Object {
