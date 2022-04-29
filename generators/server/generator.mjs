@@ -30,7 +30,7 @@ spring:
       on-profile: 'ionic-dev'
 jhipster:
   cors:
-    allowed-origins: "http://localhost:4200,http://localhost:8100"
+    allowed-origins: "http://localhost:8100"
     allowed-methods: "*"
     allowed-headers: "*"
     exposed-headers: "Authorization,Link,X-Total-Count,X-\${jhipster.clientApp.name}-alert,X-\${jhipster.clientApp.name}-error,X-\${jhipster.clientApp.name}-params"
