@@ -114,7 +114,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           browser: chrome
-          command: npm run e2e:ci
+          command: npm run e2e
           working-directory: ${{ github.workspace }}/ionic4j
       - name: 'E2E: Store failure screenshots'
         uses: actions/upload-artifact@v3
