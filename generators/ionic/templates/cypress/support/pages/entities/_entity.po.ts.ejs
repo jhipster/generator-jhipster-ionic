@@ -19,11 +19,11 @@
 import { EntityComponentsPage, EntityDetailPage, EntityUpdatePage } from '../../entity.po';
 
 export class <%= entityClass %>ComponentsPage extends EntityComponentsPage {
-  pageSeletor = 'page-<%= entityFileName %>';
+  pageSelector = 'page-<%= entityFileName %>';
 }
 
 export class <%= entityClass %>UpdatePage extends EntityUpdatePage{
-  pageSeletor = 'page-<%= entityFileName %>-update';
+  pageSelector = 'page-<%= entityFileName %>-update';
 <%_ for (field of fields.filter(field => !field.id)) { _%>
 
   set<%= field.fieldNameCapitalized %>Input(<%= field.fieldName %>: string) {
@@ -51,7 +51,7 @@ export class <%= entityClass %>UpdatePage extends EntityUpdatePage{
 }
 
 export class <%= entityClass %>DetailPage extends EntityDetailPage {
-  pageSeletor = 'page-<%= entityFileName %>-detail';
+  pageSelector = 'page-<%= entityFileName %>-detail';
 <%_ for (field of fields.filter(field => !field.id)) { _%>
 
   get<%= field.fieldNameCapitalized %>Content() {
