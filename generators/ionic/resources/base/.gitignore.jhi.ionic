@@ -1,5 +1,5 @@
 <&_ if (!fragment.section) { -&>
 # ionic rules:
-cypress/screnshots
-cyresss/videos
+cypress/screenshots
+cypress/videos
 <&_ } -&>
