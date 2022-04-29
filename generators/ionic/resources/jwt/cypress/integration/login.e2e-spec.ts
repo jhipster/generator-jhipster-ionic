@@ -1,5 +1,5 @@
 import { LoginPage } from '../support/pages/login.po';
-import { adminUsername, adminPassword, userUsername, userPassword } from '../support/config';
+import { ADMIN_USERNAME, ADMIN_PASSWORD, USER_USERNAME, USER_PASSWORD } from '../support/config';
 
 describe('Login', () => {
   const loginPage = new LoginPage();
@@ -16,21 +16,21 @@ describe('Login', () => {
   it('should fail to login with bad password', () => {
     cy.visit('/');
     loginPage.signIn();
-    loginPage.login(adminUsername, 'foo');
+    loginPage.login(ADMIN_USERNAME, 'foo');
     cy.get('ion-toast').shadow().find('.toast-message').contains('Unable to sign in');
   });
 
   it('should login successfully with admin account', () => {
     cy.visit('/');
     loginPage.signIn();
-    loginPage.login(adminUsername, adminPassword);
+    loginPage.login(ADMIN_USERNAME, ADMIN_PASSWORD);
 
     const welcome = /Welcome, Administrator/;
     cy.get('app-home ion-title').invoke('text').should('match', welcome);
   });
 
   it('should logout successfully', () => {
-    cy.login(userUsername, userPassword);
+    cy.login(USER_USERNAME, USER_PASSWORD);
     cy.visit('/tabs/home');
     cy.get('#logout').should('exist');
     loginPage.logout();

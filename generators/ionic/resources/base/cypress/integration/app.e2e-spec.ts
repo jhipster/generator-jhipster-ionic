@@ -1,4 +1,4 @@
-import { userUsername, userPassword } from '../support/config';
+import { USER_USERNAME, USER_PASSWORD } from '../support/config';
 
 describe('App', () => {
   describe('default screen', () => {
@@ -9,7 +9,7 @@ describe('App', () => {
   });
 
   it('entrypoint should redirect to home when logged in', () => {
-    cy.login(userUsername, userPassword);
+    cy.login(USER_USERNAME, USER_PASSWORD);
     cy.visit('/');
     cy.url().should('eq', Cypress.config().baseUrl + 'tabs/home');
   });

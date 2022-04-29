@@ -16,7 +16,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-import { userUsername, userPassword } from '../../../support/config';
+import { USER_USERNAME, USER_PASSWORD } from '../../../support/config';
 import {
   <%= entityClass %>ComponentsPage,
   <%= entityClass %>DetailPage,
@@ -39,7 +39,7 @@ describe('<%= entityClass %> entity', () => {
 
   beforeEach(() => {
     <%= entityInstance %> = undefined;
-    cy.login(userUsername, userPassword);
+    cy.login(USER_USERNAME, USER_PASSWORD);
   });
 
   describe('navigation test', () => {
