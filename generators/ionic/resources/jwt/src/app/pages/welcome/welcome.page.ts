@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
+import { AccountService } from '../../services/auth/account.service';
 
 @Component({
   selector: 'app-welcome',
@@ -6,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['welcome.page.scss'],
 })
 export class WelcomePage implements OnInit {
-  constructor() {}
+  constructor(private accountService: AccountService, private navController: NavController) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.accountService.identity().then(account => {
+      if (account) {
+        this.navController.navigateRoot('/tabs');
+      }
+    });
+  }
 }
