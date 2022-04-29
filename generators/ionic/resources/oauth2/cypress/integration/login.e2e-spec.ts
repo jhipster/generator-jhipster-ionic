@@ -19,7 +19,7 @@ describe('Login', () => {
     cy.visit('/');
 
     const welcome = /Welcome, Admin/;
-    cy.get('ion-title').invoke('text').should('match', welcome);
+    cy.get('app-home ion-title').invoke('text').should('match', welcome);
   });
 
   it('should logout successfully', () => {
