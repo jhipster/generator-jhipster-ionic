@@ -18,6 +18,7 @@ export default class extends ServerGenerator {
   get [WRITING_PRIORITY]() {
     return {
       async postWritingTemplateTask() {
+        /*
         this.writeDestination(
           'src/main/docker/cors.env',
           `JHIPSTER_CORS_ALLOWED_ORIGINS=http://localhost:4200,http://localhost:8100
@@ -28,6 +29,7 @@ JHIPSTER_CORS_ALLOW_CREDENTIALS=true
 JHIPSTER_CORS_MAX_AGE=1800
 `
         );
+        */
       },
     };
   }
@@ -35,6 +37,30 @@ JHIPSTER_CORS_MAX_AGE=1800
   get [POST_WRITING_PRIORITY]() {
     return {
       async postWritingTemplateTask() {
+        this.editFile(
+          'src/main/resources/config/application.yml',
+          content =>
+            `${content}
+---
+# Enable cors for ionic
+spring:
+  config:
+    activate:
+      on-profile: 'ionic-dev'
+jhipster:
+  cors:
+    allowed-origins: "http://localhost:4200,http://localhost:8100"
+    allowed-methods: "*"
+    allowed-headers: "*"
+    exposed-headers: "Authorization,Link,X-Total-Count,X-\${jhipster.clientApp.name}-alert,X-\${jhipster.clientApp.name}-error,X-\${jhipster.clientApp.name}-params"
+    allow-credentials: true
+    max-age: 1800
+`
+        );
+        this.editFile('src/main/docker/app.yml', content =>
+          content.replace('SPRING_PROFILES_ACTIVE=prod,api-docs', 'SPRING_PROFILES_ACTIVE=prod,api-docs,ionic-dev')
+        );
+        /*
         this.editFile('src/main/docker/app.yml', content =>
           content.replace(
             `-app:`,
@@ -42,6 +68,7 @@ JHIPSTER_CORS_MAX_AGE=1800
     env_file: ./cors.env`
           )
         );
+        */
       },
     };
   }
