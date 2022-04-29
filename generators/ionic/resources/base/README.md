@@ -24,7 +24,7 @@ To run this app:
 ```
 npm install
 # start the backend manually or run `npm run backend:start`
-npm start # or run `ionic serve`
+ionic serve
 ```
 
 ## Run on iOS

@@ -26,7 +26,7 @@ const getOauth2Data = () =>
           info,
           configuration,
           qs: {
-            redirect_uri,
+            redirect_uri: window.location.origin,
             client_id: clientId,
             response_type: 'code',
             scope,
@@ -136,9 +136,10 @@ const oauthLogin = (username: string, password: string) => {
     } else {
       authorizeCode = keycloakLogin(oauth2Data, username, password);
     }
-    authorizeCode.then(({ headers }) => {
+    authorizeCode.then(({ headers, redirects }) => {
       const { location } = headers;
-      const locationUrl = new URL(location as string);
+      // redirects is returned by OAuth0
+      const locationUrl = new URL((redirects) ? redirects.pop().split(' ').pop() : location as string);
       const code = locationUrl.searchParams.get('code');
 
       // Retrieve token.
@@ -151,7 +152,7 @@ const oauthLogin = (username: string, password: string) => {
           grant_type: 'authorization_code',
           code,
           refresh_token: undefined,
-          redirect_uri,
+          redirect_uri: window.location.origin,
           client_id: clientId,
         },
       }).then(({ body }) => {
