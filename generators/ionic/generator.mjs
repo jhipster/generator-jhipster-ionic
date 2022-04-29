@@ -194,22 +194,9 @@ export default class extends GeneratorBaseEntities {
               },
             });
             // write client side files for angular
-            this.addEntityToModule(
-              entity.entityentityInstance,
-              entity.entityClass,
-              entity.entityAngularName,
-              entity.entityFolderName,
-              entity.entityFileName,
-              entity.enableTranslation
-            );
-            this.addEntityRouteToModule(
-              entity.entityInstance,
-              entity.entityClass,
-              entity.entityAngularName,
-              entity.entityFolderName,
-              entity.entityFileName,
-              entity.enableTranslation
-            );
+            const { entityClassHumanized, entityAngularName, entityFileName, entityFolderName } = entity;
+            this.addEntityToModule({ entityClassHumanized, entityAngularName, entityFileName });
+            this.addEntityRouteToModule({ entityAngularName, entityFolderName, entityFileName });
           })
         );
       },
@@ -312,14 +299,12 @@ ${chalk.green(`    ionic serve`)}
    * @private
    * Add a new entity in the TS modules file.
    *
-   * @param {string} entityInstance - Entity Instance
-   * @param {string} entityClass - Entity Class
-   * @param {string} entityAngularName - Entity Angular Name
-   * @param {string} entityFolderName - Entity Folder Name
-   * @param {string} entityFileName - Entity File Name
-   * @param {boolean} enableTranslation - If translations are enabled or not
+   * @param {string} options - Entity Instance
+   * @param {string} options.entityClassHumanized - Entity Class
+   * @param {string} options.entityAngularName - Entity Angular Name
+   * @param {string} options.entityFileName - Entity File Name
    */
-  addEntityToModule(entityInstance, entityClass, entityAngularName, entityFolderName, entityFileName, enableTranslation) {
+  addEntityToModule({ entityClassHumanized, entityAngularName, entityFileName }) {
     // workaround method being called on initialization
     if (!entityAngularName) {
       return;
@@ -329,7 +314,7 @@ ${chalk.green(`    ionic serve`)}
       const isSpecificEntityAlreadyGenerated = utils.checkStringInFile(entityPagePath, `route: '${entityFileName}'`, this);
 
       if (!isSpecificEntityAlreadyGenerated) {
-        const pageEntry = `{ name: '${entityAngularName}', component: '${entityAngularName}Page', route: '${entityFileName}' },`;
+        const pageEntry = `{ name: '${entityClassHumanized}', component: '${entityAngularName}Page', route: '${entityFileName}' },`;
         utils.rewriteFile(
           {
             file: entityPagePath,
@@ -363,7 +348,7 @@ ${chalk.green(`    ionic serve`)}
    * @param {string} entityFileName - Entity File Name
    * @param {boolean} enableTranslation - If translations are enabled or not
    */
-  addEntityRouteToModule(entityInstance, entityClass, entityAngularName, entityFolderName, entityFileName, enableTranslation) {
+  addEntityRouteToModule({ entityAngularName, entityFolderName, entityFileName }) {
     // workaround method being called on initialization
     if (!entityAngularName) {
       return;

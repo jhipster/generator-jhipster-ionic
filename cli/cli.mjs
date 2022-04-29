@@ -22,7 +22,7 @@ const packageFolderName = basename(packagePath);
       [packageFolderName]: version,
     },
     printBlueprintLogo: () => {
-      console.log('===================== JHipster ionic =====================');
+      console.log('===================== JHipster Ionic =====================');
       console.log('');
     },
     lookups: [{ packagePaths: [packagePath], lookups: ['generators'] }],

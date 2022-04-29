@@ -1,10 +1,11 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
+export const apiHost = 'http://localhost:8080/';
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080/api',
+  apiUrl: `${apiHost}api`,
   oidcConfig: {
     client_id: 'web_app',
     server_host: 'http://localhost:9080/auth/realms/jhipster',
