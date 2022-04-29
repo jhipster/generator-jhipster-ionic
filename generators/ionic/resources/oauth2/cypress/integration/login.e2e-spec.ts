@@ -14,26 +14,9 @@ describe('Login', () => {
   });
 
   // Incompatible with oauth login by api
-  it.skip('should fail to login with bad password', () => {
+  it('should login successfully with admin account', () => {
+    cy.login(ADMIN_USERNAME, ADMIN_PASSWORD);
     cy.visit('/');
-    loginPage.signIn();
-    loginPage.login(ADMIN_USERNAME, 'foo');
-    // Keycloak
-    const alert = cy.get('#input-error');
-    if (alert) {
-      alert.should('include.text', 'Invalid username or password.');
-    } else {
-      // Okta
-      const error = cy.get('.infobox-error');
-      error.should('include.text', 'Sign in failed!');
-    }
-  });
-
-  // Incompatible with oauth login by api
-  it.skip('should login successfully with admin account', () => {
-    cy.visit('/');
-    loginPage.signIn();
-    loginPage.login(ADMIN_USERNAME, ADMIN_PASSWORD);
 
     const welcome = /Welcome, Admin/;
     cy.get('ion-title').invoke('text').should('match', welcome);
