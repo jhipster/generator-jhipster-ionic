@@ -136,8 +136,7 @@
           "builder": "@cypress/schematic:cypress",
           "options": {
             "devServerTarget": "app:serve",
-            "headless": false,
-            "browserTarget": "chrome"
+            "browser": "chrome"
           },
           "configurations": {
             "production": {
