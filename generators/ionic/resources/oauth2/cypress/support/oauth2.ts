@@ -5,7 +5,7 @@ import { apiHost } from './config';
 import { environment } from '../../src/environments/environment';
 
 const {
-  oidcConfig: { redirect_url: redirect_uri, scopes: scope, audience, client_id },
+  oidcConfig: { scopes: scope, audience, client_id },
 } = environment;
 
 // Get oauth2 basic data
@@ -71,7 +71,8 @@ Cypress.Commands.addAll({
 declare global {
   namespace Cypress {
     interface Chainable<Subject> {
-      oauthLogin(username: string, password: string): Cypress.Chainable;
+      getOauth2Data(): Cypress.Chainable;
+      keycloakLogin(oauthData: any, username: string, password: string): Cypress.Chainable;
     }
   }
 }
