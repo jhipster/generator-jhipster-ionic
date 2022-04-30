@@ -41,22 +41,40 @@ Object {
   "capacitor.config.ts": Object {
     "stateCleared": "modified",
   },
-  "e2e/pages/app.po.ts": Object {
+  "cypress.json": Object {
     "stateCleared": "modified",
   },
-  "e2e/pages/login.po.ts": Object {
+  "cypress/fixtures/integration-test.png": Object {
     "stateCleared": "modified",
   },
-  "e2e/protractor.conf.js": Object {
+  "cypress/integration/app.e2e-spec.ts": Object {
     "stateCleared": "modified",
   },
-  "e2e/spec/app.e2e-spec.ts": Object {
+  "cypress/integration/login.e2e-spec.ts": Object {
     "stateCleared": "modified",
   },
-  "e2e/spec/login.e2e-spec.ts": Object {
+  "cypress/plugins/index.ts": Object {
     "stateCleared": "modified",
   },
-  "e2e/tsconfig.json": Object {
+  "cypress/support/commands.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/config.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/index.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/pages/app.po.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/pages/entity.po.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/pages/login.po.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/tsconfig.json": Object {
     "stateCleared": "modified",
   },
   "ionic.config.json": Object {
@@ -517,22 +535,43 @@ Object {
   "capacitor.config.ts": Object {
     "stateCleared": "modified",
   },
-  "e2e/pages/app.po.ts": Object {
+  "cypress.json": Object {
     "stateCleared": "modified",
   },
-  "e2e/pages/login.po.ts": Object {
+  "cypress/fixtures/integration-test.png": Object {
     "stateCleared": "modified",
   },
-  "e2e/protractor.conf.js": Object {
+  "cypress/integration/app.e2e-spec.ts": Object {
     "stateCleared": "modified",
   },
-  "e2e/spec/app.e2e-spec.ts": Object {
+  "cypress/integration/login.e2e-spec.ts": Object {
     "stateCleared": "modified",
   },
-  "e2e/spec/login.e2e-spec.ts": Object {
+  "cypress/plugins/index.ts": Object {
     "stateCleared": "modified",
   },
-  "e2e/tsconfig.json": Object {
+  "cypress/support/commands.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/config.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/index.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/oauth2.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/pages/app.po.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/pages/entity.po.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/support/pages/login.po.ts": Object {
+    "stateCleared": "modified",
+  },
+  "cypress/tsconfig.json": Object {
     "stateCleared": "modified",
   },
   "ionic.config.json": Object {

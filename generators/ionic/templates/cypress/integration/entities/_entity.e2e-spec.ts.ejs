@@ -1,0 +1,192 @@
+<%#
+ Copyright 2019-Present the original author or authors from the JHipster project.
+
+ This file is part of the JHipster project, see http://www.jhipster.tech/
+ for more information.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-%>
+import { USER_USERNAME, USER_PASSWORD } from '../../../support/config';
+import {
+  <%= entityClass %>ComponentsPage,
+  <%= entityClass %>DetailPage,
+  <%= entityClass %>UpdatePage
+} from '../../../support/pages/entities/<%= entityFileName %>/<%= entityFileName %>.po';
+import <%= entityInstance %>Sample from './<%= entityFileName %>.json';
+
+describe('<%= entityClass %> entity', () => {
+  const COMPONENT_TITLE = '<%= entityClassPluralHumanized %>';
+  const SUBCOMPONENT_TITLE = '<%= entityClassHumanized %>';
+
+  const <%= entityInstance %>PageUrl = '/tabs/entities/<%= entityFileName %>';
+  const <%= entityInstance %>ApiUrl = '/<%= entityApi %>api/<%= entityApiUrl %>';
+
+  const <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
+  const <%= entityInstance %>UpdatePage = new <%= entityClass %>UpdatePage();
+  const <%= entityInstance %>DetailPage = new <%= entityClass %>DetailPage();
+
+  let <%= entityInstance %>: any;
+
+  beforeEach(() => {
+    <%= entityInstance %> = undefined;
+    cy.login(USER_USERNAME, USER_PASSWORD);
+  });
+
+  describe('navigation test', () => {
+    it('should load <%= entityClassPlural %> page using menu and go back', () => {
+      cy.visit('/tabs/home');
+      // go to entity component page
+      cy.get('ion-tab-button[tab="entities"]').click();
+      cy.get('ion-item h2').contains(SUBCOMPONENT_TITLE).first().click();
+
+      <%= entityInstance %>ComponentsPage.getPageTitle().should('have.text', COMPONENT_TITLE).should('be.visible');
+      cy.url().should('include', <%= entityInstance %>PageUrl);
+
+      <%= entityInstance %>ComponentsPage.back();
+      cy.url().should('include', '/tabs/entities');
+    });
+
+    it('should load create <%= entityClass %> page and go back', () => {
+      cy.visit(<%= entityInstance %>PageUrl);
+      <%= entityInstance %>ComponentsPage.clickOnCreateButton();
+
+      <%= entityInstance %>UpdatePage.getPageTitle().should('have.text', SUBCOMPONENT_TITLE);
+
+      <%= entityInstance %>UpdatePage.back();
+      cy.url().should('include', <%= entityInstance %>PageUrl);
+    });
+  });
+
+  describe('navigation test with items', () => {
+    beforeEach(() => {
+      cy.authenticatedRequest({
+        method: 'POST',
+        url: <%= entityInstance %>ApiUrl,
+        body: <%= entityInstance %>Sample,
+      }).then(({ body }) => {
+        <%= entityInstance %> = body;
+
+        cy.intercept(
+          {
+            method: 'GET',
+            url: `${<%= entityInstance %>ApiUrl}+(?*|)`,
+            times: 1,
+          },
+          {
+            statusCode: 200,
+            body: [<%= entityInstance %>],
+          }
+        ).as('entitiesRequestInternal');
+      });
+    });
+
+    afterEach(() => {
+      if (<%= entityInstance %>) {
+        cy.authenticatedRequest({
+          method: 'DELETE',
+          url: `${<%= entityInstance %>ApiUrl}/${<%= entityInstance %>.<%= primaryKey.name %>}`,
+        }).then(() => {
+          <%= entityInstance %> = undefined;
+        });
+      }
+    });
+
+    it('should open <%= entityClass %> view, open <%= entityClass %> edit and go back', () => {
+      cy.visit(<%= entityInstance %>PageUrl);
+      <%= entityInstance %>ComponentsPage.getPageTitle().should('be.visible');
+
+      cy.wait('@entitiesRequestInternal');
+      cy.get('ion-item').last().click();
+
+      <%= entityInstance %>DetailPage.getPageTitle().contains(SUBCOMPONENT_TITLE).should('be.visible');
+<%_ for (field of fields.filter(field => !field.id && (field.fieldTypeCharSequence || field.fieldTypeNumeric) )) { _%>
+      if (<%= entityInstance %>.<%= field.fieldName %> !== undefined && <%= entityInstance %>.<%= field.fieldName %> !== null) {
+        <%= entityInstance %>DetailPage.get<%= field.fieldNameCapitalized %>Content().contains(<%= entityInstance %>.<%= field.fieldName %>);
+      }
+<%_ } _%>
+      <%= entityInstance %>DetailPage.edit();
+
+      <%= entityInstance %>UpdatePage.back();
+      <%= entityInstance %>DetailPage.back();
+      cy.url().should('include', <%= entityInstance %>PageUrl);
+    });
+
+    it('should open <%= entityClass %> view, open <%= entityClass %> edit and save', () => {
+      cy.visit(<%= entityInstance %>PageUrl);
+      <%= entityInstance %>ComponentsPage.getPageTitle().should('be.visible');
+
+      cy.wait('@entitiesRequestInternal');
+      cy.get('ion-item').last().click();
+
+      <%= entityInstance %>DetailPage.getPageTitle().contains(SUBCOMPONENT_TITLE).should('be.visible');
+      <%= entityInstance %>DetailPage.edit();
+
+      <%= entityInstance %>UpdatePage.save();
+      cy.url().should('include', <%= entityInstance %>PageUrl);
+    });
+
+    it('should delete <%= entityClass %>', () => {
+      cy.visit(<%= entityInstance %>PageUrl);
+      <%= entityInstance %>ComponentsPage.getPageTitle().should('be.visible');
+
+      cy.wait('@entitiesRequestInternal');
+      cy.get('ion-item').last().click();
+
+      <%= entityInstance %>DetailPage.delete();
+      cy.get('ion-alert button:not(.alert-button-role-cancel)').click();
+
+      <%= entityInstance %>ComponentsPage.getPageTitle().should('have.text', COMPONENT_TITLE);
+      <%= entityInstance %> = undefined;
+    });
+  });
+
+  describe('creation test', () => {
+    beforeEach(() => {
+      cy.intercept({
+        method: 'POST',
+        url: <%= entityInstance %>ApiUrl,
+        times: 1,
+      }).as('entitiesPost');
+    });
+
+    afterEach(() => {
+      if (<%= entityInstance %>) {
+        cy.authenticatedRequest({
+          method: 'DELETE',
+          url: `${<%= entityInstance %>ApiUrl}/${<%= entityInstance %>.<%= primaryKey.name %>}`,
+        }).then(() => {
+          <%= entityInstance %> = undefined;
+        });
+      }
+    });
+
+    it('should create <%= entityClass %>', () => {
+      cy.visit(<%= entityInstance %>PageUrl + '/new');
+
+      <%= entityInstance %>UpdatePage.getPageTitle().should('have.text', SUBCOMPONENT_TITLE);
+<%_ for (field of fields.filter(field => !field.id)) { _%>
+      if (<%= entityInstance %>Sample.<%= field.fieldName %> !== undefined && <%= entityInstance %>Sample.<%= field.fieldName %> !== null) {
+        <%= entityInstance %>UpdatePage.set<%= field.fieldNameCapitalized %>Input(<%= entityInstance %>Sample.<%= field.fieldName %>);
+      }
+<%_ } _%>
+      <%= entityInstance %>UpdatePage.save();
+
+      cy.wait('@entitiesPost').then(({ response }) => {
+        const { body } = response;
+        <%= entityInstance %> = body;
+      });
+
+      <%= entityInstance %>ComponentsPage.getPageTitle().contains(COMPONENT_TITLE);
+    });
+  });
+});
