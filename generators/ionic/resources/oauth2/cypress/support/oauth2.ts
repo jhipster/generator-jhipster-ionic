@@ -5,7 +5,7 @@ import { apiHost } from './config';
 import { environment } from '../../src/environments/environment';
 
 const {
-  oidcConfig: { redirect_url: redirect_uri, scopes: scope, audience },
+  oidcConfig: { scopes: scope, audience, client_id },
 } = environment;
 
 // Get oauth2 basic data
@@ -16,7 +16,7 @@ const getOauth2Data = () =>
       followRedirect: false,
     })
     .then(({ body: info }) => {
-      const { issuer, clientId } = info;
+      const { issuer } = info;
       return cy
         .request({
           url: `${issuer.replace(/\/$/, '')}/.well-known/openid-configuration`,
@@ -26,8 +26,8 @@ const getOauth2Data = () =>
           info,
           configuration,
           qs: {
-            redirect_uri,
-            client_id: clientId,
+            redirect_uri: window.location.origin,
+            client_id,
             response_type: 'code',
             scope,
             audience,
@@ -136,9 +136,10 @@ const oauthLogin = (username: string, password: string) => {
     } else {
       authorizeCode = keycloakLogin(oauth2Data, username, password);
     }
-    authorizeCode.then(({ headers }) => {
+    authorizeCode.then(({ headers, redirects }) => {
       const { location } = headers;
-      const locationUrl = new URL(location as string);
+      // redirects is returned by OAuth0
+      const locationUrl = new URL((redirects) ? redirects.pop().split(' ').pop() : location as string);
       const code = locationUrl.searchParams.get('code');
 
       // Retrieve token.
@@ -151,7 +152,7 @@ const oauthLogin = (username: string, password: string) => {
           grant_type: 'authorization_code',
           code,
           refresh_token: undefined,
-          redirect_uri,
+          redirect_uri: window.location.origin,
           client_id: clientId,
         },
       }).then(({ body }) => {
