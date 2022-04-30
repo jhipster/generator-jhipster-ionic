@@ -21,36 +21,36 @@ const authenticatedRequest = (data: any) => {
 };
 
 const login = (username: string, password: string) => {
-  cy.session(
-    [username, password],
-    () => {
-      cy.oauthLogin(username, password);
-
-      /* Login by ui, use it once cypress origin becomes stable enough.
-      cy.visit('/');
-      cy.get('#signIn').click();
-      cy.url({ timeout: 10000 }).should('includes', '/realms/');
-      cy.url().then(url => {
-        const { protocol, host } = new URL(url);
-        // eslint-disable-next-line @typescript-eslint/no-shadow
-        // `${protocol}//${host}/`
-        cy.origin('http://keycloak:9080', { args: { url, username, password } }, ({ url, username, password }) => {
-          // Reload oauth2 login page due to cypress origin change.
-          cy.visit(url);
-          cy.get('input[name="username"]').type(username);
-          cy.get('input[name="password"]').type(password);
-          cy.get('input[type="submit"]').click();
+  cy.getOauth2Data().then(oauth2Data => {
+    const { configuration: { authorization_endpoint } } = oauth2Data;
+    cy.session(
+      [username, password],
+      () => {
+        cy.visit('/');
+        cy.get('#signIn').click();
+        cy.origin(authorization_endpoint, {
+          args: { authorization_endpoint, username, password }
+          // eslint-disable-next-line @typescript-eslint/no-shadow
+        }, ({ authorization_endpoint, username, password }) => {
+          let usernameElement = 'username';
+          let passwordElement = 'password';
+          if (authorization_endpoint.includes('okta')) {
+            usernameElement = 'identifier';
+            passwordElement = 'credentials.passcode';
+          }
+          cy.get(`input[name="${usernameElement}"]`).type(username);
+          cy.get(`input[name="${passwordElement}"]`).type(password);
+          cy.get('[type="submit"]').first().click();
         });
-      });
-      cy.url({ timeout: 10000 }).should('eq', Cypress.config().baseUrl + 'tabs/home');
-      */
-    },
-    {
-      validate: () => {
-        cy.authenticatedRequest({ url: '/api/account' }).its('status').should('eq', 200);
+        cy.url({timeout: 10000}).should('eq', Cypress.config().baseUrl + 'tabs/home');
       },
-    }
-  );
+      {
+        validate: () => {
+          cy.authenticatedRequest({url: '/api/account'}).its('status').should('eq', 200);
+        },
+      }
+    );
+  });
 };
 
 Cypress.Commands.addAll({
