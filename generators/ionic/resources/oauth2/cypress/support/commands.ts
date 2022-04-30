@@ -24,30 +24,61 @@ const login = (username: string, password: string) => {
   cy.session(
     [username, password],
     () => {
-      cy.oauthLogin(username, password);
+      cy.getOauth2Data().then(oauth2Data => {
+        const {
+          info: { clientId },
+          configuration: { authorization_endpoint, token_endpoint },
+        } = oauth2Data;
+        // Keycloak is using login by api because https://github.com/cypress-io/cypress/issues/21201
+        if (authorization_endpoint.includes('realm')) {
+          cy.keycloakLogin(oauth2Data, username, password).then(({ headers }) => {
+            const { location } = headers;
+            const locationUrl = new URL(location as string);
+            const code = locationUrl.searchParams.get('code');
 
-      /* Login by ui, use it once cypress origin becomes stable enough.
-      cy.visit('/');
-      cy.get('#signIn').click();
-      cy.url({ timeout: 10000 }).should('includes', '/realms/');
-      cy.url().then(url => {
-        const { protocol, host } = new URL(url);
-        // eslint-disable-next-line @typescript-eslint/no-shadow
-        // `${protocol}//${host}/`
-        cy.origin('http://keycloak:9080', { args: { url, username, password } }, ({ url, username, password }) => {
-          // Reload oauth2 login page due to cypress origin change.
-          cy.visit(url);
-          cy.get('input[name="username"]').type(username);
-          cy.get('input[name="password"]').type(password);
-          cy.get('input[type="submit"]').click();
-        });
+            // Retrieve token.
+            cy.request({
+              method: 'POST',
+              url: token_endpoint,
+              followRedirect: false,
+              form: true,
+              body: {
+                grant_type: 'authorization_code',
+                code,
+                refresh_token: undefined,
+                redirect_uri: window.location.origin,
+                client_id: clientId,
+              },
+            }).then(({ body }) => {
+              localStorage.setItem('CapacitorStorage.token_response', JSON.stringify(body));
+              cy.visit('/');
+              cy.url().should('eq', Cypress.config().baseUrl + 'tabs/home');
+            });
+          });
+        } else {
+          cy.visit('/');
+          cy.get('#signIn').click();
+          cy.origin(authorization_endpoint, {
+            args: {authorization_endpoint, username, password}
+            // eslint-disable-next-line @typescript-eslint/no-shadow
+          }, ({authorization_endpoint, username, password}) => {
+            let usernameElement = 'username';
+            let passwordElement = 'password';
+            if (authorization_endpoint.includes('okta')) {
+              usernameElement = 'identifier';
+              passwordElement = 'credentials.passcode';
+            }
+            cy.get(`input[name="${usernameElement}"]`).type(username);
+            cy.get(`input[name="${passwordElement}"]`).type(password);
+            cy.get('[type="submit"]').first().click();
+          });
+          cy.url({timeout: 10000}).should('eq', Cypress.config().baseUrl + 'tabs/home');
+        }
       });
-      cy.url({ timeout: 10000 }).should('eq', Cypress.config().baseUrl + 'tabs/home');
-      */
     },
     {
       validate: () => {
-        cy.authenticatedRequest({ url: '/api/account' }).its('status').should('eq', 200);
+        cy.authenticatedRequest({url: '/api/account'}).its('status').should('eq', 200);
       },
     }
   );
