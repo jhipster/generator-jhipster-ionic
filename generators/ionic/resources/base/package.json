@@ -49,9 +49,6 @@
     "setupFilesAfterEnv": [
       "<rootDir>/src/setupJest.ts"
     ],
-    "testPathIgnorePatterns": [
-      "src/test.ts"
-    ],
     "testURL": "http://localhost/",
     "transformIgnorePatterns": [
       "node_modules/(?!.*\\.mjs|$@ngrx|@ionic-native|@ionic)"
@@ -96,6 +93,7 @@
     "zone.js": "~0.11.5"
   },
   "devDependencies": {
+    "@angular-builders/jest": "~13.0.3",
     "@angular-devkit/build-angular": "~13.3.4",
     "@angular-eslint/builder": "~13.2.1",
     "@angular-eslint/eslint-plugin": "~13.2.1",
