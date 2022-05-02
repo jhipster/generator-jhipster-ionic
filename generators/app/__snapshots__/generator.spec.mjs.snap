@@ -80,9 +80,6 @@ Object {
   "../ionic4j/ionic.config.json": Object {
     "stateCleared": "modified",
   },
-  "../ionic4j/karma.conf.js": Object {
-    "stateCleared": "modified",
-  },
   "../ionic4j/package.json": Object {
     "stateCleared": "modified",
   },
@@ -467,9 +464,6 @@ Object {
   "../ionic4j/src/setupTests.js": Object {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/test.ts": Object {
-    "stateCleared": "modified",
-  },
   "../ionic4j/src/theme/variables.scss": Object {
     "stateCleared": "modified",
   },
@@ -486,9 +480,6 @@ Object {
     "stateCleared": "modified",
   },
   "../ionic4j/tslint.json": Object {
-    "stateCleared": "modified",
-  },
-  "../ionic4j/welcome.message.js": Object {
     "stateCleared": "modified",
   },
   ".editorconfig": Object {
@@ -605,9 +596,6 @@ Object {
     "stateCleared": "modified",
   },
   "../ionic-app/ionic.config.json": Object {
-    "stateCleared": "modified",
-  },
-  "../ionic-app/karma.conf.js": Object {
     "stateCleared": "modified",
   },
   "../ionic-app/package.json": Object {
@@ -994,9 +982,6 @@ Object {
   "../ionic-app/src/setupTests.js": Object {
     "stateCleared": "modified",
   },
-  "../ionic-app/src/test.ts": Object {
-    "stateCleared": "modified",
-  },
   "../ionic-app/src/theme/variables.scss": Object {
     "stateCleared": "modified",
   },
@@ -1013,9 +998,6 @@ Object {
     "stateCleared": "modified",
   },
   "../ionic-app/tslint.json": Object {
-    "stateCleared": "modified",
-  },
-  "../ionic-app/welcome.message.js": Object {
     "stateCleared": "modified",
   },
   ".editorconfig": Object {

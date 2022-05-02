@@ -80,9 +80,6 @@ Object {
   "ionic.config.json": Object {
     "stateCleared": "modified",
   },
-  "karma.conf.js": Object {
-    "stateCleared": "modified",
-  },
   "package.json": Object {
     "stateCleared": "modified",
   },
@@ -467,9 +464,6 @@ Object {
   "src/setupTests.js": Object {
     "stateCleared": "modified",
   },
-  "src/test.ts": Object {
-    "stateCleared": "modified",
-  },
   "src/theme/variables.scss": Object {
     "stateCleared": "modified",
   },
@@ -486,9 +480,6 @@ Object {
     "stateCleared": "modified",
   },
   "tslint.json": Object {
-    "stateCleared": "modified",
-  },
-  "welcome.message.js": Object {
     "stateCleared": "modified",
   },
 }
@@ -575,9 +566,6 @@ Object {
     "stateCleared": "modified",
   },
   "ionic.config.json": Object {
-    "stateCleared": "modified",
-  },
-  "karma.conf.js": Object {
     "stateCleared": "modified",
   },
   "package.json": Object {
@@ -985,9 +973,6 @@ Object {
   "src/setupTests.js": Object {
     "stateCleared": "modified",
   },
-  "src/test.ts": Object {
-    "stateCleared": "modified",
-  },
   "src/theme/variables.scss": Object {
     "stateCleared": "modified",
   },
@@ -1004,9 +989,6 @@ Object {
     "stateCleared": "modified",
   },
   "tslint.json": Object {
-    "stateCleared": "modified",
-  },
-  "welcome.message.js": Object {
     "stateCleared": "modified",
   },
 }
