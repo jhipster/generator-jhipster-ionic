@@ -443,9 +443,6 @@ Object {
   "src/index.html": Object {
     "stateCleared": "modified",
   },
-  "src/jestGlobalMocks.ts": Object {
-    "stateCleared": "modified",
-  },
   "src/main.ts": Object {
     "stateCleared": "modified",
   },
@@ -456,12 +453,6 @@ Object {
     "stateCleared": "modified",
   },
   "src/polyfills.ts": Object {
-    "stateCleared": "modified",
-  },
-  "src/setupJest.ts": Object {
-    "stateCleared": "modified",
-  },
-  "src/setupTests.js": Object {
     "stateCleared": "modified",
   },
   "src/theme/variables.scss": Object {
@@ -952,9 +943,6 @@ Object {
   "src/index.html": Object {
     "stateCleared": "modified",
   },
-  "src/jestGlobalMocks.ts": Object {
-    "stateCleared": "modified",
-  },
   "src/main.ts": Object {
     "stateCleared": "modified",
   },
@@ -965,12 +953,6 @@ Object {
     "stateCleared": "modified",
   },
   "src/polyfills.ts": Object {
-    "stateCleared": "modified",
-  },
-  "src/setupJest.ts": Object {
-    "stateCleared": "modified",
-  },
-  "src/setupTests.js": Object {
     "stateCleared": "modified",
   },
   "src/theme/variables.scss": Object {
