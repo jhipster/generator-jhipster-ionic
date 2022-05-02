@@ -12,47 +12,10 @@
     "ng": "ng",
     "prettier": "prettier --write \"{,e2e/**/,src/**/}*.{js,json,html,md,ts,css,scss,yml}\" --loglevel silent",
     "start": "ionic serve",
-    "test": "jest",
-    "test:ci": "jest --runInBand",
-    "test:coverage": "jest --coverage",
-    "test:watch": "jest --watch",
+    "test": "ng test --coverage",
+    "test:watch": "ng test --watch",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/app/**/*.{js,ts}",
-      "!src/app/**/index.ts",
-      "!src/app/**/*.module.ts",
-      "!<rootDir>/node_modules/"
-    ],
-    "coverageDirectory": "./public/coverage",
-    "coveragePathIgnorePatterns": [
-      "<rootDir>/e2e/"
-    ],
-    "coverageReporters": [
-      "json",
-      "lcov",
-      "text"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "js",
-      "json"
-    ],
-    "preset": "jest-preset-angular",
-    "resolver": "jest-preset-angular/build/resolvers/ng-jest-resolver.js",
-    "setupFiles": [
-      "jest-localstorage-mock",
-      "<rootDir>/src/setupTests.js"
-    ],
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/setupJest.ts"
-    ],
-    "testURL": "http://localhost/",
-    "transformIgnorePatterns": [
-      "node_modules/(?!.*\\.mjs|$@ngrx|@ionic-native|@ionic)"
-    ]
   },
   "dependencies": {
     "@angular/common": "~13.3.5",
