@@ -15,7 +15,7 @@ export const environment = {
     pkce: true,
     audience: 'api://default'
   },
-  scheme: 'dev.localhost.ionic:/',
+  scheme: 'dev.localhost.ionic',
 };
 
 /*
