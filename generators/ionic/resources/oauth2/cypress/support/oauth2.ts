@@ -5,7 +5,8 @@ import { apiHost } from './config';
 import { environment } from '../../src/environments/environment';
 
 const {
-  oidcConfig: { scopes: scope, audience, client_id },
+  audience,
+  oidcConfig: { scopes: scope, client_id },
 } = environment;
 
 // Get oauth2 basic data

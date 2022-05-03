@@ -4,6 +4,8 @@ import { AuthActions, AuthService, IAuthAction } from 'ionic-appauth';
 import { Subscription } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
+const { audience } = environment;
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -25,7 +27,7 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   public async signIn() {
-    await this.authService.signIn({ audience: environment.oidcConfig.audience });
+    await this.authService.signIn({ audience });
   }
 
   private async onSignInSuccess(action: IAuthAction) {
