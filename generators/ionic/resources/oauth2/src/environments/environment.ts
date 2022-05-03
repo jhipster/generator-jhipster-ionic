@@ -7,8 +7,8 @@ import type { IAuthConfig } from 'ionic-appauth';
 export const apiHost = 'http://localhost:8080/';
 
 const oidcConfig: IAuthConfig = {
-  client_id: 'D8kB8gP8ziVZHE8RIPaT33VtmmlHq6FO',
-  server_host: undefined,
+  client_id: 'web_app',
+  server_host: 'http://localhost:9080/auth/realms/jhipster',
   redirect_url: window.location.origin + '/callback',
   end_session_redirect_url: window.location.origin + '/logout',
   scopes: 'openid profile',
@@ -20,7 +20,7 @@ export const environment = {
   apiUrl: `${apiHost}api`,
   oidcConfig,
   audience: 'api://default',
-  scheme: 'dev.localhost.ionic:/',
+  scheme: 'dev.localhost.ionic',
 };
 
 /*
