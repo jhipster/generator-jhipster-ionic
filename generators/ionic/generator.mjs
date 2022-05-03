@@ -227,10 +227,6 @@ export default class extends GeneratorBaseEntities {
             'cordova-plugin-secure-storage-echo': undefined,
             'ionic-appauth': undefined,
           });
-          this.packageJson.set('devDependencies', {
-            ...this.packageJson.get('devDependencies'),
-            '@oktadev/schematics': undefined,
-          });
         }
         if (this.application.authenticationTypeOauth2) {
           this.packageJson.merge({
@@ -277,7 +273,7 @@ ${chalk.yellowBright('    Android: http://localhost')}
 
 Run the following commands (in separate terminal window) to see everything working:${changeDirMessage}
 ${chalk.green(`    npm run backend:start`)}
-${chalk.green(`    ionic serve`)}
+${chalk.green(`    npm start`)}
 `);
       },
     };

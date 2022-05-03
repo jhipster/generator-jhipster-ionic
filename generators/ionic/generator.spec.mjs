@@ -32,10 +32,6 @@ describe('SubGenerator ionic of ionic JHipster blueprint', () => {
     it('should generate app/services/auth/auth-jwt.service.ts', () => {
       result.assertFile(expectedJwtFiles);
     });
-
-    it('should not generate oauth specific dependencies to package.json', () => {
-      result.assertNoFileContent('package.json', /@oktadev\/schematics/);
-    });
   });
   describe('with oauth2 authentication', () => {
     let result;
@@ -61,8 +57,7 @@ describe('SubGenerator ionic of ionic JHipster blueprint', () => {
       result.assertNoFile(expectedJwtFiles);
     });
 
-    it('should add @oktadev/schematics and cordova-plugin-camera to package.json', () => {
-      result.assertFileContent('package.json', /@oktadev\/schematics/);
+    it('should add cordova-plugin-camera to package.json', () => {
       result.assertFileContent('package.json', /CAMERA_USAGE_DESCRIPTION/);
     });
   });
