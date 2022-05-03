@@ -47,6 +47,8 @@ describe('Data Utils Service Test', () => {
     const tempLink = document.createElement('a');
     jest.spyOn(tempLink, 'click');
     jest.spyOn(document, 'createElement').mockReturnValue(tempLink);
+    window.URL.createObjectURL = jest.fn();
+
     // call downloadFile function
     // csv content:
     // ID,Name

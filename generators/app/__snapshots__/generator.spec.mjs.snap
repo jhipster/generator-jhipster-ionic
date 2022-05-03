@@ -80,6 +80,9 @@ Object {
   "../ionic4j/ionic.config.json": Object {
     "stateCleared": "modified",
   },
+  "../ionic4j/jest.config.js": Object {
+    "stateCleared": "modified",
+  },
   "../ionic4j/package.json": Object {
     "stateCleared": "modified",
   },
@@ -443,9 +446,6 @@ Object {
   "../ionic4j/src/index.html": Object {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/jestGlobalMocks.ts": Object {
-    "stateCleared": "modified",
-  },
   "../ionic4j/src/main.ts": Object {
     "stateCleared": "modified",
   },
@@ -456,12 +456,6 @@ Object {
     "stateCleared": "modified",
   },
   "../ionic4j/src/polyfills.ts": Object {
-    "stateCleared": "modified",
-  },
-  "../ionic4j/src/setupJest.ts": Object {
-    "stateCleared": "modified",
-  },
-  "../ionic4j/src/setupTests.js": Object {
     "stateCleared": "modified",
   },
   "../ionic4j/src/theme/variables.scss": Object {
@@ -596,6 +590,9 @@ Object {
     "stateCleared": "modified",
   },
   "../ionic-app/ionic.config.json": Object {
+    "stateCleared": "modified",
+  },
+  "../ionic-app/jest.config.js": Object {
     "stateCleared": "modified",
   },
   "../ionic-app/package.json": Object {
@@ -961,9 +958,6 @@ Object {
   "../ionic-app/src/index.html": Object {
     "stateCleared": "modified",
   },
-  "../ionic-app/src/jestGlobalMocks.ts": Object {
-    "stateCleared": "modified",
-  },
   "../ionic-app/src/main.ts": Object {
     "stateCleared": "modified",
   },
@@ -974,12 +968,6 @@ Object {
     "stateCleared": "modified",
   },
   "../ionic-app/src/polyfills.ts": Object {
-    "stateCleared": "modified",
-  },
-  "../ionic-app/src/setupJest.ts": Object {
-    "stateCleared": "modified",
-  },
-  "../ionic-app/src/setupTests.js": Object {
     "stateCleared": "modified",
   },
   "../ionic-app/src/theme/variables.scss": Object {
