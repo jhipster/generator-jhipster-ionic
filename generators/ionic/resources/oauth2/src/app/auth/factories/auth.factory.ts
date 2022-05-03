@@ -10,8 +10,8 @@ export const authFactory = (platform: Platform, ngZone: NgZone, requestor: Reque
 
   if (platform.is('mobile') && !platform.is('mobileweb')) {
     environment.oidcConfig.scopes += ' offline_access';
-    environment.oidcConfig.redirect_url = 'dev.localhost.ionic:/callback';
-    environment.oidcConfig.end_session_redirect_url = 'dev.localhost.ionic:/logout';
+    environment.oidcConfig.redirect_url = `${environment.scheme}:/callback`;
+    environment.oidcConfig.end_session_redirect_url = `${environment.scheme}:/logout`;
   }
   authService.authConfig = environment.oidcConfig;
 
