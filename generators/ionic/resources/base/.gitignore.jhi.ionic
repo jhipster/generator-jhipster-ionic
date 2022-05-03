@@ -1,5 +1,6 @@
 <&_ if (!fragment.section) { -&>
-# ionic rules:
+# Ionic rules:
 cypress/screenshots
 cypress/videos
+public
 <&_ } -&>

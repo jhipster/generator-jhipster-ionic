@@ -80,6 +80,9 @@ Object {
   "../ionic4j/ionic.config.json": Object {
     "stateCleared": "modified",
   },
+  "../ionic4j/jest.config.js": Object {
+    "stateCleared": "modified",
+  },
   "../ionic4j/package.json": Object {
     "stateCleared": "modified",
   },
@@ -587,6 +590,9 @@ Object {
     "stateCleared": "modified",
   },
   "../ionic-app/ionic.config.json": Object {
+    "stateCleared": "modified",
+  },
+  "../ionic-app/jest.config.js": Object {
     "stateCleared": "modified",
   },
   "../ionic-app/package.json": Object {
