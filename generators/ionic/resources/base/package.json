@@ -116,15 +116,11 @@
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jsdoc": "39.2.9",
     "eslint-plugin-prefer-arrow": "1.2.3",
-    "html-loader": "3.1.0",
     "ionic-mocks-jest": "1.3.3",
     "jest": "27.5.1",
     "jest-localstorage-mock": "2.4.21",
     "jest-preset-angular": "11.1.2",
-    "null-loader": "4.0.1",
     "prettier": "2.6.2",
-    "ts-loader": "9.2.9",
-    "ts-node": "~10.7.0",
     "typescript": "~4.6.4"
   },
   "cordova": {
