@@ -24,7 +24,7 @@ To run this app:
 ```
 npm install
 # start the backend manually or run `npm run backend:start`
-npx ionic serve
+npm start
 ```
 
 ## Run on iOS
@@ -32,8 +32,8 @@ npx ionic serve
 Generate a native iOS project with the following commands:
 
 ```
-ionic build
-ionic capacitor add ios
+npx ionic build
+npx ionic capacitor add ios
 ```
 
 Add your custom scheme to `ios/App/App/Info.plist`:
@@ -85,8 +85,8 @@ Then, run your app from Xcode.
 Generate a native project with the following commands:
 
 ```
-ionic build
-ionic capacitor add android
+npx ionic build
+npx ionic capacitor add android
 ```
 
 Change the custom scheme in `android/app/src/main/res/values/strings.xml` to use `dev.localhost.ionic` or your reverse domain name:
@@ -182,18 +182,17 @@ To add new languages, add new files to the `src/assets/i18n` directory, followin
 
 ## Testing
 
-This starter borrows its testing infrastructure from Daniel Sogl's [Ionic Super Starter](https://github.com/danielsogl/ionic-super-starter). Thanks Daniel!
-
-### Usage
-
 There are a number of scripts in `package.json` you can use to run tests:
 
 ```json
-"test": "jest",
-"test:watch": "jest --watch",
-"test:ci": "jest --runInBand",
-"test:coverage": "jest --coverage",
-"e2e": "ng e2e --port 8100"
+"e2e": "ng e2e",
+"e2e:ci": "ng run app:cypress-headless",
+"e2e:open": "ng run app:cypress-open",
+...
+"test": "ng test --coverage",
+"test:watch": "ng test --watch",
+"cypress:open": "cypress open",
+"cypress:run": "cypress run"
 ```
 
 ### Unit Tests
@@ -204,33 +203,27 @@ There are a number of scripts in `package.json` you can use to run tests:
 - Built-in code coverage reports
 - Zero configuration
 
-**NOTE:** If you'd like to convert your project so you can run `ng test` to run your tests, see [Angular CLI: "ng test" with Jest in 3 minutes](https://codeburst.io/angular-6-ng-test-with-jest-in-3-minutes-b1fe5ed3417c).
+To run all your unit tests:
 
-To run a unit test you have three options.
+```bash
+npm test
+```
 
-1. Run `npm test` runs all your created unit-tests
-2. Run `npm run test:ci` if you want to run the unit-tests with you favorite CI
-3. To create a test-coverage report you can run `npm run test:coverage`
+A test coverage report will be created at `public/coverage/lcov-report/index.html`.
 
 Daniel created Ionic Mocks with Jest Support by forking the [ionic-mocks](https://github.com/stonelasley/ionic-mocks) ionic-mock repository. There are still some issues. Feel free to help him out with his [ionic-mocks-jest](https://github.com/danielsogl/ionic-mocks-jest) repository.
 
 If you want to add ionic-native mocks you should definitely check out Chris Griffith's [ionic-native-mocks](https://github.com/chrisgriffith/ionic-native-mocks) repository
 
-See the unit test example at [`src/app/app.component.spec.ts`](src/app/app.component.spec.ts).
+See a unit test example at [`src/app/app.component.spec.ts`](src/app/app.component.spec.ts).
 
 ### E2E Tests
 
-The E2E test configuration is from the official [ionic-unit-testing-example](https://github.com/ionic-team/ionic-unit-testing-example) repository. The e2e folder structure has been changed a bit.
+The end-to-end (E2E) tests are powered by [Cypress](https://cypress.io).
 
-```
-/e2e
-  - pages
-  - spec
-```
+Add your tests in the `cypress/integration` folder.
 
-Add your pages into the `/pages` folder and your tests into the `/spec` folder.
-
-See the example end-to-end test in [`e2e/spec/app.e2e-spec.ts`](e2e/spec/app.e2e-spec.ts).
+See the example end-to-end test in [`cypress/integration/app.e2e-spec.ts`](cypress/integration/app.e2e-spec.ts).
 
 To run the e2e tests:
 
