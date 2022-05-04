@@ -207,7 +207,7 @@ export default class extends GeneratorBaseEntities {
     return {
       customizePackageJson() {
         this.packageJson.merge({
-          name: this.localJHipsterConfig.baseName,
+          name: _.kebabCase(this.localJHipsterConfig.baseName),
           scripts: {
             'backend:start': `cd ${this.ionicConfig.appDir} && npm run app:start`,
           },
