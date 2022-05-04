@@ -109,7 +109,7 @@ export default class extends GeneratorBaseEntities {
     return {
       loadConfigFromJHipster() {
         if (this.jhipsterConfig.baseName && !this.localJHipsterConfig.baseName) {
-          this.localJHipsterConfig.baseName = `${this.jhipsterConfig.authenticationType}Ionic`;
+          this.localJHipsterConfig.baseName = `${this.jhipsterConfig.baseName}Ionic`;
         }
         if (this.jhipsterConfig.authenticationType) {
           this.localJHipsterConfig.authenticationType = this.jhipsterConfig.authenticationType;
