@@ -4,6 +4,8 @@ import { AuthActions, AuthService, IAuthAction } from 'ionic-appauth';
 import { Subscription } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
+const { audience } = environment;
+
 @Component({
   selector: 'app-welcome',
   templateUrl: 'welcome.page.html',
@@ -24,7 +26,7 @@ export class WelcomePage implements OnInit, OnDestroy {
   }
 
   signIn() {
-    this.authService.signIn({ audience: environment.oidcConfig.audience })
+    this.authService.signIn({ audience })
       .catch((error) => console.error(`Sign in error: ${error}`));
   }
 
