@@ -8,14 +8,14 @@ import { App } from '@capacitor/app';
 export const authFactory = (platform: Platform, ngZone: NgZone, requestor: Requestor, browser: Browser, storage: StorageBackend) => {
   const authService = new AuthService(browser, storage, requestor);
 
-  if (platform.is('mobile') && !platform.is('mobileweb')) {
+  if (platform.is('capacitor')) {
     environment.oidcConfig.scopes += ' offline_access';
     environment.oidcConfig.redirect_url = `${environment.scheme}:/callback`;
     environment.oidcConfig.end_session_redirect_url = `${environment.scheme}:/logout`;
   }
   authService.authConfig = environment.oidcConfig;
 
-  if (platform.is('mobile') && !platform.is('mobileweb')) {
+  if (platform.is('capacitor')) {
     App.addListener('appUrlOpen', (data: any) => {
       if (data.url !== undefined) {
         ngZone.run(() => {
