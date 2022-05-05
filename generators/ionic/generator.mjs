@@ -108,6 +108,9 @@ export default class extends GeneratorBaseEntities {
   get [INITIALIZING_PRIORITY]() {
     return {
       loadConfigFromJHipster() {
+        if (this.jhipsterConfig.baseName && !this.localJHipsterConfig.projectName) {
+          this.localJHipsterConfig.projectName = `${_.startCase(this.jhipsterConfig.baseName)}Ionic`;
+        }
         if (this.jhipsterConfig.authenticationType) {
           this.localJHipsterConfig.authenticationType = this.jhipsterConfig.authenticationType;
         }
@@ -124,9 +127,6 @@ export default class extends GeneratorBaseEntities {
         // Set default baseName.
         if (this.jhipsterConfig.baseName && !this.localJHipsterConfig.baseName) {
           this.localJHipsterConfig.baseName = `${this.jhipsterConfig.baseName}Ionic`;
-        }
-        if (this.localJHipsterConfig.baseName && !this.localJHipsterConfig.projectName) {
-          this.localJHipsterConfig.projectName = `${_.startCase(this.localJHipsterConfig.baseName)}Ionic`;
         }
 
         // Add blueprint config to generator-jhipster namespace, so we can omit blueprint parameter when executing jhipster command
@@ -211,10 +211,9 @@ export default class extends GeneratorBaseEntities {
   get [POST_WRITING_PRIORITY]() {
     return {
       customizePackageJson() {
-        const { projectName, baseName } = this.localJHipsterConfig.projectName;
+        const { baseName } = this.localJHipsterConfig;
         this.packageJson.merge({
           name: _.kebabCase(baseName),
-          description: projectName,
           scripts: {
             'backend:start': `cd ${this.ionicConfig.appDir} && npm run app:start`,
           },
