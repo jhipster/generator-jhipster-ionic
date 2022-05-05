@@ -108,9 +108,6 @@ export default class extends GeneratorBaseEntities {
   get [INITIALIZING_PRIORITY]() {
     return {
       loadConfigFromJHipster() {
-        if (this.jhipsterConfig.baseName && !this.localJHipsterConfig.baseName) {
-          this.localJHipsterConfig.baseName = `${this.jhipsterConfig.baseName}Ionic`;
-        }
         if (this.jhipsterConfig.authenticationType) {
           this.localJHipsterConfig.authenticationType = this.jhipsterConfig.authenticationType;
         }
@@ -124,6 +121,14 @@ export default class extends GeneratorBaseEntities {
   get [CONFIGURING_PRIORITY]() {
     return {
       configure() {
+        // Set default baseName.
+        if (this.jhipsterConfig.baseName && !this.localJHipsterConfig.baseName) {
+          this.localJHipsterConfig.baseName = `${this.jhipsterConfig.baseName}Ionic`;
+        }
+        if (this.localJHipsterConfig.baseName && !this.localJHipsterConfig.projectName) {
+          this.localJHipsterConfig.projectName = `${_.startCase(this.localJHipsterConfig.baseName)}Ionic`;
+        }
+
         // Add blueprint config to generator-jhipster namespace, so we can omit blueprint parameter when executing jhipster command
         const localBlueprints = this.localJHipsterConfig.blueprints;
         if (!localBlueprints || !localBlueprints.find(blueprint => blueprint.name === 'generator-jhipster-ionic')) {
@@ -206,11 +211,10 @@ export default class extends GeneratorBaseEntities {
   get [POST_WRITING_PRIORITY]() {
     return {
       customizePackageJson() {
-        // todo: look up 'JHipster project' from project-name/constants
-        const projectName = (this.localJHipsterConfig.projectName !== 'JHipster project') ?
-          this.localJHipsterConfig.projectName : this.localJHipsterConfig.baseName;
+        const { projectName, baseName } = this.localJHipsterConfig.projectName;
         this.packageJson.merge({
-          name: _.kebabCase(projectName),
+          name: _.kebabCase(baseName),
+          description: projectName,
           scripts: {
             'backend:start': `cd ${this.ionicConfig.appDir} && npm run app:start`,
           },
