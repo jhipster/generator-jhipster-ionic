@@ -47,6 +47,14 @@ export default class extends GeneratorBaseEntities {
       type: Boolean,
     });
 
+    this.jhipsterOptions({
+      skipCommitHook: {
+        desc: 'Skip adding husky commit hooks',
+        type: Boolean,
+        scope: 'storage',
+      },
+    });
+
     if (this.options.help) return;
 
     // Don't show modularized generators hello message
