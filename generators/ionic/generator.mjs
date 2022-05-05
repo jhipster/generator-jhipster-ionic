@@ -206,8 +206,11 @@ export default class extends GeneratorBaseEntities {
   get [POST_WRITING_PRIORITY]() {
     return {
       customizePackageJson() {
+        // todo: look up 'JHipster project' from project-name/constants
+        const projectName = (this.localJHipsterConfig.projectName !== 'JHipster project') ?
+          this.localJHipsterConfig.projectName : this.localJHipsterConfig.baseName;
         this.packageJson.merge({
-          name: _.kebabCase(this.localJHipsterConfig.baseName),
+          name: _.kebabCase(projectName),
           scripts: {
             'backend:start': `cd ${this.ionicConfig.appDir} && npm run app:start`,
           },
