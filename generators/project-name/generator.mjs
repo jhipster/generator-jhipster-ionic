@@ -14,6 +14,9 @@ import {
   INSTALL_PRIORITY,
   END_PRIORITY,
 } from 'generator-jhipster/esm/priorities';
+import lodash from 'lodash';
+
+const { startCase } = lodash;
 
 export default class extends ProjectNameGenerator {
   constructor(args, opts, features) {
@@ -40,20 +43,26 @@ export default class extends ProjectNameGenerator {
       // Replace prompts with custom questions
       async showPrompts() {
         if (this.shouldSkipPrompts()) return;
+        const appYoRc = `${this.blueprintConfig.appDir}/.yo-rc.json`;
+        const backendAppStorage = this.createStorage(appYoRc, 'generator-jhipster', { sorted: true });
+        const backendAppConfig = backendAppStorage.getAll();
+        const { baseName: backendAppBaseName = 'hipster' } = backendAppConfig || {};
+        const defaultIonicName = `${backendAppBaseName}Ionic`;
+
         await this.prompt(
           [
             {
               name: 'baseName',
               type: 'input',
               validate: input => this._validateBaseName(input),
-              message: 'What is the base name of your application?',
-              default: () => this.getDefaultAppName(),
+              message: 'What do you want to name your Ionic application?',
+              default: defaultIonicName,
             },
             {
               name: 'projectName',
               type: 'input',
-              message: 'What do you want to name your Ionic application?',
-              default: () => this._getDefaultProjectName(),
+              message: 'What do you want to title your Ionic application?',
+              default: ({ baseName }) => `${baseName ? startCase(baseName) : startCase(defaultIonicName)} Application`,
             },
           ],
           this.config
