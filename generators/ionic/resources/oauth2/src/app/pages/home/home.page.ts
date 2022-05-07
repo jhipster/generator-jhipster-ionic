@@ -3,6 +3,7 @@ import { NavController } from '@ionic/angular';
 import { Account } from 'src/model/account.model';
 import { AccountService } from '../../services/auth/account.service';
 import { LoginService } from '../../services/login/login.service';
+import { environment } from "../../../environments/environment";
 
 @Component({
   selector: 'app-home',
@@ -31,6 +32,10 @@ export class HomePage implements OnInit {
   async logout() {
     await this.loginService.logout();
     this.goBackToHomePage();
+    // special handling for Auth0 and Okta; it breaks logout for Keycloak
+    if (!environment.oidcConfig.server_host.includes('jhipster')) {
+      window.location.reload();
+    }
   }
 
   private goBackToHomePage(): void {
