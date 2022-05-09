@@ -36,7 +36,7 @@ npx ionic build
 npx ionic capacitor add ios
 ```
 
-Add your custom scheme to `ios/App/App/Info.plist`:
+Add `dev.localhost.ionic` as a custom scheme to `ios/App/App/Info.plist`. You can also use your reverse domain name.
 
 ```xml
 <key>CFBundleURLTypes</key>
@@ -48,7 +48,7 @@ Add your custom scheme to `ios/App/App/Info.plist`:
     <array>
       <string>capacitor</string>
       <string>dev.localhost.ionic</string>
-      <string>com.okta.dev-737523</string>
+      <!--string>com.okta.dev-133337</string-->
     </array>
   </dict>
 </array>
@@ -89,24 +89,37 @@ npx ionic build
 npx ionic capacitor add android
 ```
 
-Change the custom scheme in `android/app/src/main/res/values/strings.xml` to use `dev.localhost.ionic` or your reverse domain name:
+Enable clear text traffic and add `dev.localhost.ionic` as a scheme in `android/app/src/main/AndroidManifest.xml` (or use your reverse domain name):
 
 ```xml
-<string name="custom_url_scheme">com.okta.dev-737523</string>
-```
-
-The [SafariViewController Cordova Plugin](https://github.com/EddyVerbruggen/cordova-plugin-safariviewcontroller) is installed as part of this project. Capacitor uses AndroidX dependencies, but the SafariViewController plugin uses an older non-AndroidX dependency. Use [jetifier](https://developer.android.com/studio/command-line/jetifier) to [patch usages of old support libraries](https://capacitorjs.com/docs/android/troubleshooting#error-package-android-support-does-not-exist) with the following commands:
-
-```
-npm install jetifier
-npx jetify
-npx cap sync android
+<activity ... android:usesCleartextTraffic="true">
+  <!-- You'll need to add this intent filter so redirects work -->
+  <intent-filter>
+    <action android:name="android.intent.action.VIEW" />
+    <category android:name="android.intent.category.DEFAULT"/>
+    <category android:name="android.intent.category.BROWSABLE" />
+    <data android:scheme="dev.localhost.ionic" />
+    <!--data android:scheme="com.okta.dev-133337" /-->
+  </intent-filter>
+  
+  <intent-filter>
+    <action android:name="android.intent.action.MAIN" />
+    <category android:name="android.intent.category.LAUNCHER" />
+  </intent-filter>
+</activity>
 ```
 
 Then, run your project using the Capacitor CLI:
 
 ```
 npx cap run android
+```
+
+You'll need to run a couple commands to allow the emulator to communicate with JHipster (and Keycloak if you're using OIDC for authentication).
+
+```
+adb reverse tcp:8080 tcp:8080
+adb reverse tcp:9080 tcp:9080
 ```
 
 ### Modify CORS Settings in JHipster
@@ -126,23 +139,6 @@ You can also open your project in Android Studio and run your app.
 ```
 npx cap open android
 ```
-
-You'll need to run a couple commands to allow the emulator to communicate with JHipster (and Keycloak if you're using OIDC for authentication).
-
-```
-adb reverse tcp:8080 tcp:8080
-adb reverse tcp:9080 tcp:9080
-```
-
-If you see `java.io.IOException: Cleartext HTTP traffic to localhost not permitted` in your Android Studio console, enable clear text traffic in `android/app/src/main/AndroidManifest.xml`:
-
-```xml
-<application
-    ...
-    android:usesCleartextTraffic="true">
-```
-
-See [this Stack Overflow Q&A](https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted) for more information.
 
 ## Use OpenID Connect for Authentication
 

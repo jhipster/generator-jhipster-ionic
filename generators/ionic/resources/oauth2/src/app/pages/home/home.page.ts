@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { Account } from 'src/model/account.model';
 import { AccountService } from '../../services/auth/account.service';
 import { LoginService } from '../../services/login/login.service';
-import { environment } from "../../../environments/environment";
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +13,8 @@ import { environment } from "../../../environments/environment";
 export class HomePage implements OnInit {
   account: Account;
 
-  constructor(public navController: NavController, private accountService: AccountService, private loginService: LoginService) {}
+  constructor(public navController: NavController, private accountService: AccountService,
+              private loginService: LoginService, private platform: Platform) {}
 
   ngOnInit() {
     this.accountService.identity().then((account) => {
@@ -33,8 +34,9 @@ export class HomePage implements OnInit {
     await this.loginService.logout();
     this.goBackToHomePage();
     // special handling for Auth0 and Okta; it breaks logout for Keycloak
-    if (!environment.oidcConfig.server_host.includes('jhipster')) {
-      window.location.reload();
+    if (this.platform.is('capacitor') &&
+      !environment.oidcConfig.server_host.includes('jhipster')) {
+      window.location.reload(); // enabling fails with Keycloak and iOS
     }
   }
 

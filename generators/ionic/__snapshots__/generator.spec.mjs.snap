@@ -604,6 +604,9 @@ Object {
   "src/app/auth/auth.module.ts": Object {
     "stateCleared": "modified",
   },
+  "src/app/auth/cap-http.service.ts": Object {
+    "stateCleared": "modified",
+  },
   "src/app/auth/end-session/end-session.module.ts": Object {
     "stateCleared": "modified",
   },
