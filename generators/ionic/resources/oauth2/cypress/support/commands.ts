@@ -60,18 +60,23 @@ const login = (username: string, password: string) => {
           cy.get('#signIn').click();
           cy.origin(authorization_endpoint, {
             args: {authorization_endpoint, username, password}
-            // eslint-disable-next-line @typescript-eslint/no-shadow
-          }, ({authorization_endpoint, username, password}) => {
+          },
+          // eslint-disable-next-line @typescript-eslint/no-shadow
+          ({ authorization_endpoint, username, password }) => {
             if (authorization_endpoint.includes('okta')) {
+              let usernameElement = 'username';
+              let passwordElement = 'password';
               // Element names have changed for Okta Identity Engine.
               // Identity-first flow might require additional changes, for example:
               // https://github.com/okta/okta-react/blob/master/test/e2e/page-objects/okta-oie-signin-page.js#L30
               cy.get('h2').contains('Sign In');
               cy.get('body').then(body => {
                 if (body.find('input[name="identifier"]').length) {
-                  cy.get(`input[name="identifier"]`).type(username);
-                  cy.get(`input[name="credentials.passcode"]`).type(password);
+                  usernameElement = 'identifier';
+                  passwordElement = 'credentials.passcode';
                 }
+                cy.get(`input[name="${usernameElement}"]`).type(username);
+                cy.get(`input[name="${passwordElement}"]`).type(password);
               });
             } else {
               cy.get(`input[name="username"]`).type(username);
