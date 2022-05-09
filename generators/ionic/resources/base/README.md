@@ -89,18 +89,23 @@ npx ionic build
 npx ionic capacitor add android
 ```
 
-Change the custom scheme in `android/app/src/main/res/values/strings.xml` to use `dev.localhost.ionic` or your reverse domain name:
+Add your custom scheme in `android/app/src/main/AndroidManifest.xml` to use `dev.localhost.ionic` or your reverse domain name:
 
 ```xml
-<string name="custom_url_scheme">com.okta.dev-737523</string>
-```
-
-The [SafariViewController Cordova Plugin](https://github.com/EddyVerbruggen/cordova-plugin-safariviewcontroller) is installed as part of this project. Capacitor uses AndroidX dependencies, but the SafariViewController plugin uses an older non-AndroidX dependency. Use [jetifier](https://developer.android.com/studio/command-line/jetifier) to [patch usages of old support libraries](https://capacitorjs.com/docs/android/troubleshooting#error-package-android-support-does-not-exist) with the following commands:
-
-```
-npm install jetifier
-npx jetify
-npx cap sync android
+<activity ...>
+  <!-- You'll need to add this intent filter so redirects work -->
+  <intent-filter>
+    <action android:name="android.intent.action.VIEW" />
+    <category android:name="android.intent.category.DEFAULT"/>
+    <category android:name="android.intent.category.BROWSABLE" />
+    <data android:scheme="dev.localhost.ionic" />
+  </intent-filter>
+  
+  <intent-filter>
+    <action android:name="android.intent.action.MAIN" />
+    <category android:name="android.intent.category.LAUNCHER" />
+  </intent-filter>
+</activity>
 ```
 
 Then, run your project using the Capacitor CLI:
