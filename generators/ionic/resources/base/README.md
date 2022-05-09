@@ -89,7 +89,7 @@ npx ionic build
 npx ionic capacitor add android
 ```
 
-Add your custom scheme in `android/app/src/main/AndroidManifest.xml` to use `dev.localhost.ionic` or your reverse domain name:
+Add `dev.localhost.ionic` as a scheme in `android/app/src/main/AndroidManifest.xml` or use your reverse domain name:
 
 ```xml
 <activity ...>
