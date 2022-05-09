@@ -56,9 +56,5 @@ describe('SubGenerator ionic of ionic JHipster blueprint', () => {
     it('should not generate jwt files', () => {
       result.assertNoFile(expectedJwtFiles);
     });
-
-    it('should add cordova-plugin-camera to package.json', () => {
-      result.assertFileContent('package.json', /CAMERA_USAGE_DESCRIPTION/);
-    });
   });
 });
