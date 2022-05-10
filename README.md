@@ -47,6 +47,8 @@ For available options, you can run:
 jhipster-ionic app --help
 ```
 
+See your project's generated [README](https://github.com/jhipster/generator-jhipster-ionic/blob/main/generators/ionic/resources/base/README.md) for iOS, Android, OpenID Connect, and testing instructions.
+
 ## Add PWA Support
 
 To add PWA support to your Ionic app, run:
