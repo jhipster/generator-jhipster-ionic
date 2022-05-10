@@ -24,8 +24,7 @@ If you find a bug in the source code or a mistake in the documentation, you can 
 
 ## <a name="feature"></a> Feature Requests
 
-You can request a new feature by submitting a ticket to our [GitHub issues](https://github.com/jhipster/generator-jhipster-ionic/issues). If you
-would like to implement a new feature then consider what kind of change it is:
+You can request a new feature by submitting a ticket to our [GitHub issues](https://github.com/jhipster/generator-jhipster-ionic/issues). If you would like to implement a new feature then consider what kind of change it is:
 
 - **Major Changes** that you wish to contribute to the project should be discussed first. Please open a ticket which clearly states that it is a feature request in the title and explain clearly what you want to achieve in the description, and the JHipster team will discuss with you what should be done in that ticket. You can then start working on a Pull Request.
 - **Small Changes** can be proposed without any discussion. Open up a ticket which clearly states that it is a feature request in the title. Explain your change in the description, and you can propose a Pull Request straight away.
@@ -71,7 +70,7 @@ Before you submit your pull request consider the following guidelines:
 - Make your changes in a new git branch
 
   ```shell
-  git checkout -b my-fix-branch master
+  git checkout -b my-fix-branch main
   ```
 
 - Create your patch, **including appropriate test cases**.
@@ -112,7 +111,7 @@ Before you submit your pull request consider the following guidelines:
   - Rebase your branch and force push to your GitHub repository (this will update your Pull Request):
 
     ```shell
-    git rebase master -i
+    git rebase main -i
     git push -f
     ```
 
@@ -175,12 +174,12 @@ from the main (upstream) repository:
 - Update your main with the latest upstream version:
 
   ```shell
-  git pull --ff upstream master
+  git pull --ff upstream main
   ```
 
 ## <a name="setup"></a> Generator development setup
 
-Ionic for JHipster is a [JHipster Module](http://www.jhipster.tech/modules/creating-a-module/). You might want to follow the [Yeoman authoring documentation](http://yeoman.io/authoring/) in order to be able to run and test your changes.
+Ionic for JHipster is a [JHipster Blueprint](https://www.jhipster.tech/modules/creating-a-blueprint/). 
 
 Here are the most important steps.
 
@@ -192,23 +191,23 @@ Go to the [generator-jhipster-ionic project](https://github.com/jhipster/generat
 
 ### Set NPM/YARN to use the cloned project
 
-In your cloned `generator-jhipster-ionic` project, type `npm link` or `yarn link` depending on the package manager you use.
+In your cloned `generator-jhipster-ionic` project, type `npm link`.
 
-This will do a symbolic link from the global `node_modules` version to point to this folder, so when you run `yo jhipster-ionic`, you will now use the development version of Ionic for JHipster.
+This will do a symbolic link from the global `node_modules` version to point to this folder, so when you run `jhipster-ionic`, you will now use the development version of Ionic for JHipster.
 
-For testing, you will want to generate an application, and there is a specific issue here: for each application, Ionic for JHipster installs a local version of itself. This is made to enable several applications to each use a specific Ionic for JHipster version (application A uses Ionic for JHipster 3.1.0, and application B uses Ionic for JHipster 3.2.0).
+For testing, you will want to generate an application, and there is a specific issue here: for each application, Ionic for JHipster installs a local version of itself. This is made to enable several applications to each use a specific Ionic for JHipster version (application A uses Ionic for JHipster 7.1.0, and application B uses Ionic for JHipster 7.2.0).
 
-To overcome this you need to run `npm link generator-jhipster-ionic` or `yarn link generator-jhipster-ionic` on the generated project folder as well, so that the local version has a symbolic link to the development version of JHipster.
+To overcome this you need to run `npm link generator-jhipster-ionic` in the generated project folder as well, so that the local version has a symbolic link to the development version of JHipster.
 
 To put it in a nutshell, you need to:
 
-1. run `npm link` or `yarn link` on the `generator-jhipster-ionic` project
-2. run `npm link generator-jhipster-ionic` or `yarn link generator-jhipster-ionic` on the generated application folder (you need to do this for each application you create)
+1. run `npm link` in the `generator-jhipster-ionic` project
+2. run `npm link generator-jhipster-ionic` on the generated application folder (you need to do this for each application you create)
 
-Now, running the `yo jhipster-ionic` command should use your specific Ionic for JHipster version. You can test it by making a small change in your cloned generator, and running again on an existing Ionic project:
+Now, running the `jhipster-ionic` command should use your specific Ionic for JHipster version. You can test it by making a small change in your cloned generator, and running again on an existing Ionic project:
 
 ```shell
-yo jhipster-ionic:entity <name>
+jhipster-ionic entity <name>
 ```
 
 You should see your changes reflected in the generated project.
@@ -221,8 +220,8 @@ To ensure consistency throughout the source code, keep these rules in mind as yo
 - All files must follow the [.editorconfig file](http://editorconfig.org/) located at the root of the JHipster generator project. Please note that generated projects use the same `.editorconfig` file, so that both the generator and the generated projects share the same configuration.
 - Java files **must be** formatted using [Intellij IDEA's code style](http://confluence.jetbrains.com/display/IntelliJIDEA/Code+Style+and+Formatting). Please note that JHipster committers have a free Intellij IDEA Ultimate Edition for developing the project.
 - Generators JavaScript files **must follow** the eslint configuration defined at the project root, which is based on [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript).
-- Web apps JavaScript files **must follow** [Google's JavaScript Style Guide](https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml).
-- Typescript files **must follow** [Official Angular style guide](https://angular.io/styleguide).
+- Web apps JavaScript files **must follow** [Google's JavaScript Style Guide](https://google.github.io/styleguide/jsguide.html).
+- TypeScript files **must follow** [Official Angular style guide](https://angular.io/guide/styleguide).
 
 Please ensure to run `npm run lint` and `npm test` on the project root before submitting a pull request. You can also run `npm run lint-fix` to fix some of the lint issues automatically.
 
