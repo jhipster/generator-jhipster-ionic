@@ -106,7 +106,7 @@ jobs:
         run: npm run ci:server:await
       - name: Modify /etc/hosts
         run: |
-          echo '127.0.0.1       keycloak' | sudo tee -a /etc/hosts
+          sudo docker container inspect docker-compose_keycloak_1 | jq -r '.[0].NetworkSettings.Networks."docker-compose_default".IPAddress' | echo "`cat -` keycloak" | sudo tee -a /etc/hosts
           cat /etc/hosts
       - name: Launch ionic e2e test
         id: e2e
