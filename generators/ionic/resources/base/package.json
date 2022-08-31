@@ -49,7 +49,7 @@
     "@ionic/storage-angular": "^3.0.6",
     "@ngx-translate/core": "14.0.0",
     "@ngx-translate/http-loader": "7.0.0",
-    "ionic-appauth": "0.8.5",
+    "ionic-appauth": "github:wi3land/ionic-appauth",
     "ngx-webstorage": "10.0.1",
     "rxjs": "~6.6.7",
     "tslib": "^2.4.0",
