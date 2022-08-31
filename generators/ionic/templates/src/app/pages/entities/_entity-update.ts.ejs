@@ -119,7 +119,7 @@ export class <%= entityAngularName %>UpdatePage implements OnInit {
     constructor(
         protected activatedRoute: ActivatedRoute,
         protected navController: NavController,
-        protected formBuilder: UntypedFormBuilder,
+        protected formBuilder: FormBuilder,
         public platform: Platform,
         protected toastCtrl: ToastController,
 <%_ if (fieldsContainBlob) { _%>
