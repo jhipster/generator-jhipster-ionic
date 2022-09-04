@@ -100,14 +100,14 @@ jobs:
         working-directory: ${{ github.workspace }}/ionic4j
       - name: Build application docker image
         run: npm run java:docker:prod
-      - name: Launch backend application
-        run: npm run docker:app:up
-      - name: Wait for backend to start
-        run: npm run ci:server:await
       - name: Modify /etc/hosts
         run: |
           echo '127.0.0.1       keycloak' | sudo tee -a /etc/hosts
           cat /etc/hosts
+      - name: Launch backend application
+        run: npm run docker:app:up
+      - name: Wait for backend to start
+        run: npm run ci:server:await
       - name: Launch ionic e2e test
         id: e2e
         if: ${{ matrix.e2e == 1 }}
