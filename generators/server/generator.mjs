@@ -44,12 +44,4 @@ jhipster:
       },
     };
   }
-
-  editFile(filePath, ...transformCallbacks) {
-    let content = this.readDestination(filePath);
-    for (const cb of transformCallbacks) {
-      content = cb(content);
-    }
-    this.writeDestination(filePath, content);
-  }
 }
