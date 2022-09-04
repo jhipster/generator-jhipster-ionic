@@ -93,12 +93,13 @@ _%>
                         </ion-button>
                         <%_ } _%>
                     </div>
-                    <input type="file" data-cy="<%= fieldName %>" #fileInput<% if (fieldTypeBlobContent === 'image') { %> style="display: none"<% } %> (change)="setFileData($event, '<%= fieldName %>', <% if (fieldTypeBlobContent === 'image') { %>true)" accept="image/*"<% } else { %>false)"<% } %>/>
                     <%_ if (fieldTypeBlobContent === 'image') { _%>
                     <ion-button *ngIf="!<%= entityInstance %>?.<%= fieldName %>" (click)="getPicture('<%= fieldName %>')">
                         <ion-icon name="add-circle" slot="start"></ion-icon>
                         {{ 'ITEM_CREATE_CHOOSE_IMAGE' | translate }}
                     </ion-button>
+                    <%_ } else { _%>
+                    <input type="file" data-cy="<%= fieldName %>" #fileInput (change)="setFileData($event, '<%= fieldName %>', false)"/>
                     <%_ } _%>
                 </div>
                 <%_ } else if (['LocalDate', 'Instant', 'ZonedDateTime'].includes(fieldType)) { _%>

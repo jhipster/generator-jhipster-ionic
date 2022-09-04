@@ -26,9 +26,6 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-<%_ if (fieldsContainImageBlob) { _%>
-import { Camera } from '@ionic-native/camera/ngx';
-<%_ } _%>
 import { UserService } from '../../../services/user/user.service';
 import { <%= entityAngularName %>UpdatePage } from './<%= entityFileName %>-update';
 
@@ -60,10 +57,7 @@ const activatedRouteMock = ({ data: of({ data: entityMock }) } as any) as Activa
         providers: [
          { provide: ActivatedRoute, useValue: activatedRouteMock },
          { provide: UserService, useValue:  userServiceMock },
-         <%_ if (fieldsContainImageBlob) { _%>
-         Camera,
-         <%_ } _%>
-       ]
+        ]
     }).compileComponents();
   }));
 
