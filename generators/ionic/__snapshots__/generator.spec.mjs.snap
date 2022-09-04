@@ -41,7 +41,7 @@ Object {
   "capacitor.config.ts": Object {
     "stateCleared": "modified",
   },
-  "cypress.json": Object {
+  "cypress.config.ts": Object {
     "stateCleared": "modified",
   },
   "cypress/fixtures/integration-test.png": Object {
@@ -520,7 +520,7 @@ Object {
   "capacitor.config.ts": Object {
     "stateCleared": "modified",
   },
-  "cypress.json": Object {
+  "cypress.config.ts": Object {
     "stateCleared": "modified",
   },
   "cypress/fixtures/integration-test.png": Object {

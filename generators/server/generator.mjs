@@ -4,7 +4,7 @@ import { PRIORITY_PREFIX, POST_WRITING_PRIORITY } from 'generator-jhipster/esm/p
 
 export default class extends ServerGenerator {
   constructor(args, opts, features) {
-    super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
+    super(args, opts, { priorityArgs: true, taskPrefix: PRIORITY_PREFIX, ...features });
 
     if (this.options.help) return;
 
@@ -17,6 +17,20 @@ export default class extends ServerGenerator {
 
   get [POST_WRITING_PRIORITY]() {
     return {
+      async increaseOauth2Sleep({ application: { authenticationTypeOauth2, serviceDiscoveryEureka } }) {
+        if (authenticationTypeOauth2) {
+          this.editFile(
+            'src/main/docker/app.yml',
+            content => content.replace('JHIPSTER_SLEEP=30', 'JHIPSTER_SLEEP=60')
+          );
+          if (serviceDiscoveryEureka) {
+            this.editFile(
+              'src/main/docker/app.yml',
+              content => content.replace('JHIPSTER_SLEEP=20', 'JHIPSTER_SLEEP=40')
+            );
+          }
+        }
+      },
       async postWritingTemplateTask() {
         this.editFile(
           'src/main/resources/config/application.yml',
@@ -43,13 +57,5 @@ jhipster:
         );
       },
     };
-  }
-
-  editFile(filePath, ...transformCallbacks) {
-    let content = this.readDestination(filePath);
-    for (const cb of transformCallbacks) {
-      content = cb(content);
-    }
-    this.writeDestination(filePath, content);
   }
 }

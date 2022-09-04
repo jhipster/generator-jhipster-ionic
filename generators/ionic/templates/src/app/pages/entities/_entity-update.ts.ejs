@@ -29,7 +29,7 @@ import { JhiDataUtils } from '../../../services/utils/data-util.service';
 <%_ if (fieldsContainImageBlob) { _%>
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 <%_ } _%>
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder as FormBuilder, Validators } from '@angular/forms';
 import { NavController, Platform, ToastController } from '@ionic/angular';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
