@@ -17,6 +17,14 @@ export default class extends ServerGenerator {
 
   get [POST_WRITING_PRIORITY]() {
     return {
+      async increaseOauth2Sleep({ application: { applicationTypeOauth2 } }) {
+        if (applicationTypeOauth2) {
+          this.editFile(
+            'src/main/resources/docker/app.yml',
+            content => content.replace('JHIPSTER_SLEEP=30', 'JHIPSTER_SLEEP=60')
+          );
+        }
+      },
       async postWritingTemplateTask() {
         this.editFile(
           'src/main/resources/config/application.yml',
