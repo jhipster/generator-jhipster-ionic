@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
+import { Capacitor } from '@capacitor/core';
+import { SplashScreen } from '@capacitor/splash-screen';
+import { StatusBar, Style } from '@capacitor/status-bar';
 import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'ionic-appauth';
 
@@ -12,8 +13,6 @@ import { AuthService } from 'ionic-appauth';
 export class AppComponent {
   constructor(
     private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
     private translate: TranslateService,
     private authService: AuthService
   ) {
@@ -23,9 +22,11 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(async () => {
       await this.authService.init();
-      if (this.platform.is('mobile') && !this.platform.is('mobileweb')) {
-        this.statusBar.styleDefault();
-        this.splashScreen.hide();
+      if (Capacitor.isPluginAvailable('StatusBar')) {
+        await StatusBar.setStyle({ style: Style.Default });
+      }
+      if (Capacitor.isPluginAvailable('SplashScreen')) {
+        await SplashScreen.hide();
       }
     });
     this.initTranslate();

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Capacitor } from '@capacitor/core';
+import { SplashScreen } from '@capacitor/splash-screen';
+import { StatusBar, Style } from '@capacitor/status-bar';
 import { Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -11,17 +12,19 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent {
   constructor(
     private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
     private translate: TranslateService
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
+    this.platform.ready().then(async () => {
+      if (Capacitor.isPluginAvailable('StatusBar')) {
+        await StatusBar.setStyle({ style: Style.Default });
+      }
+      if (Capacitor.isPluginAvailable('SplashScreen')) {
+        await SplashScreen.hide();
+      }
     });
     this.initTranslate();
   }
@@ -37,9 +40,5 @@ export class AppComponent {
     } else {
       this.translate.use(enLang); // Set your language here
     }
-
-    // this.translate.get(['BACK_BUTTON_TEXT']).subscribe(values => {
-    //   this.config.set('ios', 'backButtonText', values.BACK_BUTTON_TEXT);
-    // });
   }
 }
