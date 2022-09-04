@@ -14,3 +14,8 @@ updates:
       # generator-jhipster dependency is not fixed, it needs at least it's own yeoman-environment version.
       # Don't update yeoman-environment and let generator-jhipster dependency version be dedupped.
       - dependency-name: 'yeoman-environment'
+
+  - package-ecosystem: 'npm'
+    directory: '/generators/ionic/resources/base/package.json'
+    schedule:
+      interval: 'weekly'
