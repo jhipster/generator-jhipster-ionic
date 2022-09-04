@@ -20,7 +20,7 @@ export default class extends ServerGenerator {
       async increaseOauth2Sleep({ application: { applicationTypeOauth2 } }) {
         if (applicationTypeOauth2) {
           this.editFile(
-            'src/main/resources/docker/app.yml',
+            'src/main/docker/app.yml',
             content => content.replace('JHIPSTER_SLEEP=30', 'JHIPSTER_SLEEP=60')
           );
         }
