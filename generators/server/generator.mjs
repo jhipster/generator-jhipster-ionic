@@ -4,7 +4,7 @@ import { PRIORITY_PREFIX, POST_WRITING_PRIORITY } from 'generator-jhipster/esm/p
 
 export default class extends ServerGenerator {
   constructor(args, opts, features) {
-    super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
+    super(args, opts, { priorityArgs: true, taskPrefix: PRIORITY_PREFIX, ...features });
 
     if (this.options.help) return;
 
