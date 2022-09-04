@@ -106,6 +106,7 @@ jobs:
           cat /etc/hosts
       - name: Launch backend application
         run: npm run docker:app:up
+        timeout-minutes: 5
       - name: Wait for backend to start
         run: npm run ci:server:await
       - name: Launch ionic e2e test
