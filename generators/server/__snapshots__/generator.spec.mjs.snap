@@ -116,6 +116,9 @@ Object {
   "src/main/java/com/mycompany/myapp/config/AsyncConfiguration.java": Object {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/config/CRLFLogConverter.java": Object {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/config/CacheConfiguration.java": Object {
     "stateCleared": "modified",
   },
@@ -401,10 +404,25 @@ Object {
   "src/test/java/com/mycompany/myapp/TechnicalStructureTest.java": Object {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/config/NoOpMailConfiguration.java": Object {
+  "src/test/java/com/mycompany/myapp/config/AsyncSyncConfiguration.java": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/java/com/mycompany/myapp/config/EmbeddedSQL.java": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/java/com/mycompany/myapp/config/PostgreSqlTestContainer.java": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/java/com/mycompany/myapp/config/SpringBootTestClassOrderer.java": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/java/com/mycompany/myapp/config/SqlTestContainer.java": Object {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/config/StaticResourcesWebConfigurerTest.java": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/java/com/mycompany/myapp/config/TestContainersSpringContextCustomizerFactory.java": Object {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/config/WebConfigurerTest.java": Object {
@@ -476,7 +494,13 @@ Object {
   "src/test/java/com/mycompany/myapp/web/rest/errors/ExceptionTranslatorTestController.java": Object {
     "stateCleared": "modified",
   },
-  "src/test/resources/config/application-testcontainers.yml": Object {
+  "src/test/resources/META-INF/spring.factories": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/resources/config/application-testdev.yml": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/resources/config/application-testprod.yml": Object {
     "stateCleared": "modified",
   },
   "src/test/resources/config/application.yml": Object {
@@ -491,7 +515,19 @@ Object {
   "src/test/resources/logback.xml": Object {
     "stateCleared": "modified",
   },
+  "src/test/resources/templates/mail/activationEmail.html": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/resources/templates/mail/creationEmail.html": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/resources/templates/mail/passwordResetEmail.html": Object {
+    "stateCleared": "modified",
+  },
   "src/test/resources/templates/mail/testEmail.html": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/resources/testcontainers.properties": Object {
     "stateCleared": "modified",
   },
 }

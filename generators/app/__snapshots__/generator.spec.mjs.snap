@@ -41,7 +41,7 @@ Object {
   "../ionic4j/capacitor.config.ts": Object {
     "stateCleared": "modified",
   },
-  "../ionic4j/cypress.json": Object {
+  "../ionic4j/cypress.config.ts": Object {
     "stateCleared": "modified",
   },
   "../ionic4j/cypress/fixtures/integration-test.png": Object {
@@ -553,7 +553,7 @@ Object {
   "../ionic-app/capacitor.config.ts": Object {
     "stateCleared": "modified",
   },
-  "../ionic-app/cypress.json": Object {
+  "../ionic-app/cypress.config.ts": Object {
     "stateCleared": "modified",
   },
   "../ionic-app/cypress/fixtures/integration-test.png": Object {

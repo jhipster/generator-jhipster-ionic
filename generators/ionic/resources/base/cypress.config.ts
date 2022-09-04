@@ -1,13 +1,25 @@
-{
-  "baseUrl": "http://localhost:8100/",
-  "retries": 2,
-  "integrationFolder": "cypress/integration",
-  "supportFile": "cypress/support/index.ts",
-  "videosFolder": "cypress/videos",
-  "video": false,
-  "screenshotsFolder": "cypress/screenshots",
-  "pluginsFile": "cypress/plugins/index.ts",
-  "fixturesFolder": "cypress/fixtures",
-  "testFiles": "**/*.e2e-spec.ts",
-  "experimentalSessionAndOrigin": true
-}
+import { defineConfig } from 'cypress';
+
+export const defaultConfig = {
+  video: false,
+  fixturesFilder: 'cypress/fixtures',
+  screenshotsFolder: 'cypress/screenshots',
+  downloadsFolder: 'cypress/downloads',
+  videosFolder: 'cypress/videos',
+  viewportWidth: 1200,
+  viewportHeight: 720,
+  retries: 2,
+  e2e: {
+    // We've imported your old cypress plugins here.
+    // You may want to clean this up later by importing these.
+    async setupNodeEvents(on, config) {
+      return (await import('./cypress/plugins/index')).default(on, config);
+    },
+    baseUrl: 'http://localhost:8100/',
+    specPattern: '**/*.e2e-spec.ts',
+    supportFile: 'cypress/support/index.ts',
+    experimentalSessionAndOrigin: true,
+  },
+};
+
+export default defineConfig(defaultConfig);
