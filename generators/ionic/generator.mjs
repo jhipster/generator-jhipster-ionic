@@ -230,15 +230,8 @@ export default class extends GeneratorBaseEntities {
           this.debug('Removing oauth2 dependencies');
           this.packageJson.set('dependencies', {
             ...this.packageJson.get('dependencies'),
-            '@capacitor/splash-screen': undefined,
-            '@ionic-native/http': undefined,
-            '@ionic-native/secure-storage': undefined,
             '@ionic/storage': undefined,
             '@ionic/storage-angular': undefined,
-            'cordova-plugin-advanced-http': undefined,
-            'cordova-plugin-file': undefined,
-            'cordova-plugin-safariviewcontroller': undefined,
-            'cordova-plugin-secure-storage-echo': undefined,
             'ionic-appauth': undefined,
           });
         }
