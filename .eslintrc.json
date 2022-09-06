@@ -17,6 +17,7 @@
     }
   ],
   "rules": {
+    "class-methods-use-this": "off",
     "mocha/no-mocha-arrows": "off",
     "func-names": "off",
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],

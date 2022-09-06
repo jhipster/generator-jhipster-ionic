@@ -1,4 +1,4 @@
-import expect from 'expect';
+import { expect } from 'expect';
 
 import { helpers, lookups } from '#test-utils';
 
