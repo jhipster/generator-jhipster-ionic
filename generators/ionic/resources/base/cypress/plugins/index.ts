@@ -6,4 +6,4 @@ export default async (on: Cypress.PluginEvents, config: Cypress.PluginConfigOpti
     }
   });
   return config;
-}
+};

@@ -13,11 +13,15 @@ import { environment } from '../../../environments/environment';
 export class HomePage implements OnInit {
   account: Account;
 
-  constructor(public navController: NavController, private accountService: AccountService,
-              private loginService: LoginService, private platform: Platform) {}
+  constructor(
+    public navController: NavController,
+    private accountService: AccountService,
+    private loginService: LoginService,
+    private platform: Platform
+  ) {}
 
   ngOnInit() {
-    this.accountService.identity().then((account) => {
+    this.accountService.identity().then(account => {
       if (account === null) {
         this.goBackToHomePage();
       } else {
@@ -34,8 +38,7 @@ export class HomePage implements OnInit {
     await this.loginService.logout();
     this.goBackToHomePage();
     // special handling for Auth0 and Okta; it breaks logout for Keycloak
-    if (this.platform.is('capacitor') &&
-      !environment.oidcConfig.server_host.includes('jhipster')) {
+    if (this.platform.is('capacitor') && !environment.oidcConfig.server_host.includes('jhipster')) {
       window.location.reload(); // enabling fails with Keycloak and iOS
     }
   }

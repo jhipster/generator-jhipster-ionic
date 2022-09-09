@@ -12,22 +12,20 @@ describe('HomePage', () => {
   let component: HomePage;
   let fixture: ComponentFixture<HomePage>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [HomePage],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA],
-        imports: [
-          TranslateModule.forRoot(),
-          RouterTestingModule,
-          NgxWebstorageModule.forRoot(),
-          HttpClientTestingModule,
-          IonicStorageModule.forRoot(),
-          AuthModule,
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [HomePage],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [
+        TranslateModule.forRoot(),
+        RouterTestingModule,
+        NgxWebstorageModule.forRoot(),
+        HttpClientTestingModule,
+        IonicStorageModule.forRoot(),
+        AuthModule,
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HomePage);

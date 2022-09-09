@@ -12,22 +12,20 @@ describe('WelcomePage', () => {
   let component: WelcomePage;
   let fixture: ComponentFixture<WelcomePage>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [WelcomePage],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA],
-        imports: [
-          TranslateModule.forRoot(),
-          NgxWebstorageModule.forRoot(),
-          HttpClientTestingModule,
-          IonicStorageModule.forRoot(),
-          RouterTestingModule,
-          AuthModule,
-        ],
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [WelcomePage],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [
+        TranslateModule.forRoot(),
+        NgxWebstorageModule.forRoot(),
+        HttpClientTestingModule,
+        IonicStorageModule.forRoot(),
+        RouterTestingModule,
+        AuthModule,
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WelcomePage);

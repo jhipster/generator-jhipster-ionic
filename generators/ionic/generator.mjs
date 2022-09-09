@@ -198,19 +198,21 @@ export default class extends GeneratorBaseEntities {
       async writeEntities({ entities }) {
         const { enableTranslation } = this.application;
         await Promise.all(
-          entities.filter(entity => !entity.builtIn).map(async entity => {
-            await this.writeFiles({
-              sections: entityFiles,
-              context: {
-                ...entity,
-                enableTranslation,
-              },
-            });
-            // write client side files for angular
-            const { entityClassHumanized, entityAngularName, entityFileName, entityFolderName } = entity;
-            this.addEntityToModule({ entityClassHumanized, entityAngularName, entityFileName });
-            this.addEntityRouteToModule({ entityAngularName, entityFolderName, entityFileName });
-          })
+          entities
+            .filter(entity => !entity.builtIn)
+            .map(async entity => {
+              await this.writeFiles({
+                sections: entityFiles,
+                context: {
+                  ...entity,
+                  enableTranslation,
+                },
+              });
+              // write client side files for angular
+              const { entityClassHumanized, entityAngularName, entityFileName, entityFolderName } = entity;
+              this.addEntityToModule({ entityClassHumanized, entityAngularName, entityFileName });
+              this.addEntityRouteToModule({ entityAngularName, entityFolderName, entityFileName });
+            })
         );
       },
     };

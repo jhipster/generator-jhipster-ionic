@@ -13,7 +13,7 @@ export class AuthCallbackPage implements OnInit, OnDestroy {
   constructor(private auth: AuthService, private navCtrl: NavController, private router: Router) {}
 
   ngOnInit() {
-    this.sub = this.auth.events$.subscribe((action) => this.postCallback(action));
+    this.sub = this.auth.events$.subscribe(action => this.postCallback(action));
     this.auth.authorizationCallback(window.location.origin + this.router.url);
   }
 

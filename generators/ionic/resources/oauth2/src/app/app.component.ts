@@ -11,11 +11,7 @@ import { AuthService } from 'ionic-appauth';
   templateUrl: 'app.component.html',
 })
 export class AppComponent {
-  constructor(
-    private platform: Platform,
-    private translate: TranslateService,
-    private authService: AuthService
-  ) {
+  constructor(private platform: Platform, private translate: TranslateService, private authService: AuthService) {
     this.initializeApp();
   }
 

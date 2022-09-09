@@ -19,7 +19,7 @@ export class LoginPage implements OnInit, OnDestroy {
   constructor(private authService: AuthService, private navCtrl: NavController) {}
 
   async ngOnInit() {
-    this.sub = this.authService.events$.subscribe((action) => this.onSignInSuccess(action));
+    this.sub = this.authService.events$.subscribe(action => this.onSignInSuccess(action));
   }
 
   ngOnDestroy() {

@@ -15,7 +15,7 @@ export class HomePage implements OnInit {
   constructor(public navController: NavController, private accountService: AccountService, private loginService: LoginService) {}
 
   ngOnInit() {
-    this.accountService.identity().then((account) => {
+    this.accountService.identity().then(account => {
       if (account === null) {
         this.goBackToHomePage();
       } else {

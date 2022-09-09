@@ -31,10 +31,7 @@
                 "output": "./svg"
               }
             ],
-            "styles": [
-              "src/theme/variables.scss",
-              "src/global.scss"
-            ],
+            "styles": ["src/theme/variables.scss", "src/global.scss"],
             "scripts": [],
             "aot": false,
             "vendorChunk": true,
@@ -99,9 +96,7 @@
           "options": {
             "polyfills": ["src/polyfills.ts"],
             "tsConfig": "tsconfig.spec.json",
-            "testMatch": [
-              "**/?(*.)+(spec).[t]s?(x)"
-            ]
+            "testMatch": ["**/?(*.)+(spec).[t]s?(x)"]
           },
           "configurations": {
             "ci": {
@@ -113,10 +108,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         },
         "e2e": {
@@ -165,7 +157,7 @@
           },
           "configurations": {
             "production": {
-              "devServerTarget": "app:serve:production",
+              "devServerTarget": "app:serve:production"
             }
           }
         },

@@ -27,7 +27,7 @@ export class LoginPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.translateService.get('LOGIN_ERROR').subscribe((value) => {
+    this.translateService.get('LOGIN_ERROR').subscribe(value => {
       this.loginErrorString = value;
     });
   }
@@ -37,7 +37,7 @@ export class LoginPage implements OnInit {
       () => {
         this.navController.navigateRoot('/tabs');
       },
-      async (err) => {
+      async err => {
         // Unable to log in
         this.account.password = '';
         const toast = await this.toastController.create({

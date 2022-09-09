@@ -30,7 +30,7 @@ export class NgHttpService implements Requestor {
     let httpHeaders: HttpHeaders = new HttpHeaders();
 
     if (headers !== undefined) {
-      Object.keys(headers).forEach((key) => {
+      Object.keys(headers).forEach(key => {
         httpHeaders = httpHeaders.append(key, headers[key]);
       });
     }

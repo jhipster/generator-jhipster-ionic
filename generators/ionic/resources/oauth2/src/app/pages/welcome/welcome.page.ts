@@ -18,7 +18,7 @@ export class WelcomePage implements OnInit, OnDestroy {
   constructor(private authService: AuthService, private navController: NavController) {}
 
   ngOnInit() {
-    this.sub = this.authService.events$.subscribe((action) => this.onAction(action));
+    this.sub = this.authService.events$.subscribe(action => this.onAction(action));
   }
 
   ngOnDestroy() {
@@ -26,8 +26,7 @@ export class WelcomePage implements OnInit, OnDestroy {
   }
 
   signIn() {
-    this.authService.signIn({ audience })
-      .catch((error) => console.error(`Sign in error: ${error}`));
+    this.authService.signIn({ audience }).catch(error => console.error(`Sign in error: ${error}`));
   }
 
   private onAction(action: IAuthAction) {

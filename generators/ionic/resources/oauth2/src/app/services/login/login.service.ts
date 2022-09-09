@@ -8,14 +8,18 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class LoginService {
-  constructor(private accountService: AccountService, private authService: AuthService,
-              private translate: TranslateService, private browser: Browser) {}
+  constructor(
+    private accountService: AccountService,
+    private authService: AuthService,
+    private translate: TranslateService,
+    private browser: Browser
+  ) {}
 
   login() {
     this.authService
       .signIn()
-      .then((data) => {
-        this.accountService.identity(true).then((account) => {
+      .then(data => {
+        this.accountService.identity(true).then(account => {
           // After the login the language will be changed to
           // the language selected by the user during his registration
           if (account !== null) {
@@ -23,7 +27,7 @@ export class LoginService {
           }
         });
       })
-      .catch((error) => {
+      .catch(error => {
         console.error(`Sign in error: ${error}`);
       });
   }

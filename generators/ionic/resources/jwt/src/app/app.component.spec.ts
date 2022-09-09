@@ -43,9 +43,7 @@ describe('AppComponent', () => {
       declarations: [AppComponent],
       imports: [TranslateModule.forRoot()],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [
-        { provide: Platform, useValue: platformSpy },
-      ],
+      providers: [{ provide: Platform, useValue: platformSpy }],
     }).compileComponents();
   });
 

@@ -2,7 +2,7 @@ import { Page } from './app.po';
 
 export class EntityComponentsPage extends Page {
   clickOnCreateButton() {
-    cy.get(`${this.pageSelector } ion-fab-button`).click();
+    cy.get(`${this.pageSelector} ion-fab-button`).click();
   }
 }
 
@@ -56,10 +56,10 @@ export class EntityUpdatePage extends Page {
 
 export class EntityDetailPage extends Page {
   edit() {
-    cy.get(`${this.pageSelector } ion-button[color="primary"]`).click();
+    cy.get(`${this.pageSelector} ion-button[color="primary"]`).click();
   }
 
   delete() {
-    cy.get(`${this.pageSelector } ion-button[color="danger"]`).click();
+    cy.get(`${this.pageSelector} ion-button[color="danger"]`).click();
   }
 }

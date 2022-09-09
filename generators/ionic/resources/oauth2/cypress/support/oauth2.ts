@@ -66,7 +66,7 @@ const keycloakLogin = ({ configuration, qs }, username: string, password: string
 
 Cypress.Commands.addAll({
   getOauth2Data,
-  keycloakLogin
+  keycloakLogin,
 });
 
 declare global {

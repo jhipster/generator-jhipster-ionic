@@ -14,7 +14,7 @@ export class AuthConfigService {
     return this.http
       .get(`${environment.apiUrl}/auth-info`)
       .toPromise()
-      .then((data) => {
+      .then(data => {
         this.authConfig = data;
         if (this.authConfig.issuer.endsWith('/')) {
           this.authConfig.issuer = this.authConfig.issuer.substring(0, this.authConfig.issuer.length - 1);
@@ -22,7 +22,7 @@ export class AuthConfigService {
         // Override issuer with value from API. Client ID is configured in environment.
         environment.oidcConfig.server_host = this.authConfig.issuer;
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Failed to fetch remote OIDC configuration.');
         console.error(error);
       });

@@ -128,7 +128,7 @@ export class JhiDataUtils {
         if (isImage && !file.type.startsWith('image/')) {
           reject(`File was expected to be an image but was found to be ${file.type}`);
         } else {
-          this.toBase64(file, (base64Data) => {
+          this.toBase64(file, base64Data => {
             entity[field] = base64Data;
             entity[`${field}ContentType`] = file.type;
             resolve(entity);
