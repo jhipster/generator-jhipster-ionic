@@ -27,10 +27,10 @@ export default class extends ServerGenerator {
       },
       async postWritingTemplateTask() {
         this.editFile('src/main/resources/config/application.yml', content =>
-          content.replace(/allowed-origins: (['"])(.*)['"]/, 'allowed-origins: $1$2,capacitor://localhost$1')
+          content.replace(/allowed-origins: (['"])(.*)['"]/, 'allowed-origins: $1$2,capacitor://localhost,http://localhost$1')
         );
         this.editFile('src/main/resources/config/application-dev.yml', content =>
-          content.replace(/allowed-origins: (['"])(.*)['"]/, 'allowed-origins: $1$2,capacitor://localhost$1')
+          content.replace(/allowed-origins: (['"])(.*)['"]/, 'allowed-origins: $1$2,capacitor://localhost,http://localhost$1')
         );
       },
     };
