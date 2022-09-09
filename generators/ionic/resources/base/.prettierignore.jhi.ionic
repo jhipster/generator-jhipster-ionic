@@ -3,4 +3,7 @@
 .angular
 cypress/screenshots
 cypress/videos
+cypress/downloads
+public
+www
 <&_ } -&>
