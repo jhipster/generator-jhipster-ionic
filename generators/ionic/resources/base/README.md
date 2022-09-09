@@ -64,7 +64,7 @@ npx cap run ios
 
 When adding image fields, you need to add privacy notices to your `ios/App/App/Info.plist`.
 
-```
+```xml
     <key>NSCameraUsageDescription</key>
     <string>Privacy - Camera Usage Description</string>
     <key>NSPhotoLibraryAddUsageDescription</key>
@@ -81,7 +81,7 @@ In order to communicate with your JHipster app, you'll need to modify its CORS s
 
 To run your app in iOS Simulator with hot-reload, run:
 
-```
+```bash
 npx cap run ios -l --external
 ```
 
@@ -89,7 +89,7 @@ You will need to modify your JHipster app to allow your external IP as a trusted
 
 You can also open your project in Xcode and configure code signing.
 
-```
+```bash
 npx cap open ios
 ```
 
@@ -126,13 +126,13 @@ Enable clear text traffic and add `dev.localhost.ionic` as a scheme in `android/
 
 Then, run your project using the Capacitor CLI:
 
-```
+```bash
 npx cap run android
 ```
 
 You'll need to run a couple commands to allow the emulator to communicate with JHipster (and Keycloak if you're using OIDC for authentication).
 
-```
+```bash
 adb reverse tcp:8080 tcp:8080
 adb reverse tcp:9080 tcp:9080
 ```
@@ -143,7 +143,7 @@ In order to communicate with your JHipster app, you'll need to modify its CORS s
 
 To run your app in iOS Simulator with hot-reload, run:
 
-```
+```bash
 npx cap run android -l --external
 ```
 
@@ -151,7 +151,7 @@ You will need to modify your JHipster app to allow your external IP as a trusted
 
 You can also open your project in Android Studio and run your app.
 
-```
+```bash
 npx cap open android
 ```
 
