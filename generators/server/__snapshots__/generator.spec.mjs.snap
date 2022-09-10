@@ -308,6 +308,9 @@ exports[`SubGenerator server of ionic JHipster blueprint run should succeed 1`] 
   "src/main/resources/config/application-dev.yml": {
     "stateCleared": "modified",
   },
+  "src/main/resources/config/application-e2e-cors.yml": {
+    "stateCleared": "modified",
+  },
   "src/main/resources/config/application-prod.yml": {
     "stateCleared": "modified",
   },
