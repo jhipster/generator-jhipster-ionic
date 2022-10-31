@@ -40,7 +40,7 @@
     "update-snapshot": "npm run mocha -- --no-parallel --updateSnapshot"
   },
   "dependencies": {
-    "chalk": "4.1.2",
+    "chalk": "5.1.2",
     "generator-jhipster": "7.9.3"
   },
   "devDependencies": {
