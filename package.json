@@ -52,7 +52,7 @@
     "eslint-plugin-mocha": "10.1.0",
     "eslint-plugin-prettier": "4.2.1",
     "expect": "29.2.2",
-    "husky": "8.0.1",
+    "husky": "8.0.2",
     "lint-staged": "13.0.3",
     "mocha": "10.1.0",
     "mocha-expect-snapshot": "7.0.0",
