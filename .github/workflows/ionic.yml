@@ -111,7 +111,7 @@ jobs:
       - name: Launch ionic e2e test
         id: e2e
         if: ${{ matrix.e2e == 1 }}
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           browser: chrome
           command: npm run e2e:ci
