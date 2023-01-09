@@ -1,4 +1,4 @@
-import { expect } from 'expect';
+import { jestExpect as expect } from 'mocha-expect-snapshot';
 
 import { helpers, lookups } from '#test-utils';
 
