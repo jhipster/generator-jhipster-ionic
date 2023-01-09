@@ -60,13 +60,28 @@ Then, run your project using the Capacitor CLI:
 npx cap run ios
 ```
 
+### Camera capacitor
+
+When adding image fields, you need to add privacy notices to your `ios/App/App/Info.plist`.
+
+```xml
+    <key>NSCameraUsageDescription</key>
+    <string>Privacy - Camera Usage Description</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Privacy - Photo Library Additions Usage Description</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Privacy - Photo Library Usage Description</string>
+```
+
+For more information refer to [@capacitor/camera](https://capacitorjs.com/docs/apis/camera#ios)
+
 ### Modify CORS Settings in JHipster
 
-In order to communicate with your JHipster app, you'll need to modify its CORS settings (in `src/main/resources/config/application-dev.yml`) to allow `capacitor://localhost` as an origin.
+In order to communicate with your JHipster app, you'll need to modify its CORS settings (in `src/main/resources/config/application-dev.yml`) make sure `capacitor://localhost` is allowed as an origin.
 
 To run your app in iOS Simulator with hot-reload, run:
 
-```
+```bash
 npx cap run ios -l --external
 ```
 
@@ -74,7 +89,7 @@ You will need to modify your JHipster app to allow your external IP as a trusted
 
 You can also open your project in Xcode and configure code signing.
 
-```
+```bash
 npx cap open ios
 ```
 
@@ -101,7 +116,7 @@ Enable clear text traffic and add `dev.localhost.ionic` as a scheme in `android/
     <data android:scheme="dev.localhost.ionic" />
     <!--data android:scheme="com.okta.dev-133337" /-->
   </intent-filter>
-  
+
   <intent-filter>
     <action android:name="android.intent.action.MAIN" />
     <category android:name="android.intent.category.LAUNCHER" />
@@ -111,13 +126,13 @@ Enable clear text traffic and add `dev.localhost.ionic` as a scheme in `android/
 
 Then, run your project using the Capacitor CLI:
 
-```
+```bash
 npx cap run android
 ```
 
 You'll need to run a couple commands to allow the emulator to communicate with JHipster (and Keycloak if you're using OIDC for authentication).
 
-```
+```bash
 adb reverse tcp:8080 tcp:8080
 adb reverse tcp:9080 tcp:9080
 ```
@@ -128,7 +143,7 @@ In order to communicate with your JHipster app, you'll need to modify its CORS s
 
 To run your app in iOS Simulator with hot-reload, run:
 
-```
+```bash
 npx cap run android -l --external
 ```
 
@@ -136,7 +151,7 @@ You will need to modify your JHipster app to allow your external IP as a trusted
 
 You can also open your project in Android Studio and run your app.
 
-```
+```bash
 npx cap open android
 ```
 
@@ -174,7 +189,7 @@ This app comes with internationalization (i18n) out of the box with [ngx-transla
 
 ### Adding Languages
 
-To add new languages, add new files to the `src/assets/i18n` directory, following the pattern of LANGCODE.json where LANGCODE is the language/locale  code (ex: en/gb/de/es/etc.).
+To add new languages, add new files to the `src/assets/i18n` directory, following the pattern of LANGCODE.json where LANGCODE is the language/locale code (ex: en/gb/de/es/etc.).
 
 ## Testing
 

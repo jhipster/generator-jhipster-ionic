@@ -38,7 +38,7 @@ export class SignupPage implements OnInit {
     public toastController: ToastController,
     public translateService: TranslateService
   ) {
-    this.translateService.get(['SIGNUP_ERROR', 'SIGNUP_SUCCESS', 'EXISTING_USER_ERROR', 'INVALID_PASSWORD_ERROR']).subscribe((values) => {
+    this.translateService.get(['SIGNUP_ERROR', 'SIGNUP_SUCCESS', 'EXISTING_USER_ERROR', 'INVALID_PASSWORD_ERROR']).subscribe(values => {
       this.signupErrorString = values.SIGNUP_ERROR;
       this.signupSuccessString = values.SIGNUP_SUCCESS;
       this.existingUserError = values.EXISTING_USER_ERROR;
@@ -61,7 +61,7 @@ export class SignupPage implements OnInit {
         });
         toast.present();
       },
-      async (response) => {
+      async response => {
         // Unable to sign up
         const error = JSON.parse(response.error);
         let displayError = this.signupErrorString;

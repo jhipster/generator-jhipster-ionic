@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import ServerGenerator from 'generator-jhipster/esm/generators/server';
-import { PRIORITY_PREFIX, POST_WRITING_PRIORITY } from 'generator-jhipster/esm/priorities';
+import { PRIORITY_PREFIX, WRITING_PRIORITY, POST_WRITING_PRIORITY } from 'generator-jhipster/esm/priorities';
 
 export default class extends ServerGenerator {
   constructor(args, opts, features) {
@@ -15,45 +15,42 @@ export default class extends ServerGenerator {
     this.sbsBlueprint = true;
   }
 
+  get [WRITING_PRIORITY]() {
+    return {
+      async writeConfigFile({ application }) {
+        await this.writeFiles({
+          templates: [
+            {
+              sourceFile: 'src/main/resources/config/application-e2e-cors.yml',
+              destinationFile: 'src/main/resources/config/application-e2e-cors.yml',
+              noEjs: true,
+            },
+          ],
+          context: application,
+        });
+      },
+    };
+  }
+
   get [POST_WRITING_PRIORITY]() {
     return {
       async increaseOauth2Sleep({ application: { authenticationTypeOauth2, serviceDiscoveryEureka } }) {
         if (authenticationTypeOauth2) {
-          this.editFile(
-            'src/main/docker/app.yml',
-            content => content.replace('JHIPSTER_SLEEP=30', 'JHIPSTER_SLEEP=60')
-          );
+          this.editFile('src/main/docker/app.yml', content => content.replace('JHIPSTER_SLEEP=30', 'JHIPSTER_SLEEP=60'));
           if (serviceDiscoveryEureka) {
-            this.editFile(
-              'src/main/docker/app.yml',
-              content => content.replace('JHIPSTER_SLEEP=20', 'JHIPSTER_SLEEP=40')
-            );
+            this.editFile('src/main/docker/app.yml', content => content.replace('JHIPSTER_SLEEP=20', 'JHIPSTER_SLEEP=40'));
           }
         }
       },
       async postWritingTemplateTask() {
-        this.editFile(
-          'src/main/resources/config/application.yml',
-          content =>
-            `${content}
----
-# Enable cors for ionic
-spring:
-  config:
-    activate:
-      on-profile: 'ionic-dev'
-jhipster:
-  cors:
-    allowed-origins: "http://localhost:8100"
-    allowed-methods: "*"
-    allowed-headers: "*"
-    exposed-headers: "Authorization,Link,X-Total-Count,X-\${jhipster.clientApp.name}-alert,X-\${jhipster.clientApp.name}-error,X-\${jhipster.clientApp.name}-params"
-    allow-credentials: true
-    max-age: 1800
-`
-        );
         this.editFile('src/main/docker/app.yml', content =>
-          content.replace('SPRING_PROFILES_ACTIVE=prod,api-docs', 'SPRING_PROFILES_ACTIVE=prod,api-docs,ionic-dev')
+          content.replace('SPRING_PROFILES_ACTIVE=prod,api-docs', 'SPRING_PROFILES_ACTIVE=prod,api-docs,e2e-cors')
+        );
+        this.editFile('src/main/resources/config/application.yml', content =>
+          content.replace(/allowed-origins: (['"])(.*)['"]/, 'allowed-origins: $1$2,capacitor://localhost,http://localhost$1')
+        );
+        this.editFile('src/main/resources/config/application-dev.yml', content =>
+          content.replace(/allowed-origins: (['"])(.*)['"]/, 'allowed-origins: $1$2,capacitor://localhost,http://localhost$1')
         );
       },
     };

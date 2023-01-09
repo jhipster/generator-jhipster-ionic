@@ -1,7 +1,9 @@
 <&_ if (!fragment.section) { -&>
 # Ionic rules:
+.angular
 cypress/screenshots
 cypress/videos
 cypress/downloads
 public
+www
 <&_ } -&>

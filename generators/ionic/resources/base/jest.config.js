@@ -1,5 +1,5 @@
 const config = {
-  coverageDirectory: "./public/coverage"
+  coverageDirectory: './public/coverage',
 };
 
 module.exports = config;

@@ -7,7 +7,6 @@ import { XhrSettings } from 'ionic-appauth/lib/cordova';
   providedIn: 'root',
 })
 export class CapacitorHttpService implements Requestor {
-
   public async xhr<T>(settings: XhrSettings): Promise<T> {
     if (!settings.method) {
       settings.method = 'GET';
@@ -17,7 +16,7 @@ export class CapacitorHttpService implements Requestor {
       method: settings.method,
       url: settings.url,
       headers: settings.headers,
-      data: settings.data
+      data: settings.data,
     });
     return response.data as T;
   }

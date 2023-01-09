@@ -179,7 +179,7 @@ from the main (upstream) repository:
 
 ## <a name="setup"></a> Generator development setup
 
-Ionic for JHipster is a [JHipster Blueprint](https://www.jhipster.tech/modules/creating-a-blueprint/). 
+Ionic for JHipster is a [JHipster Blueprint](https://www.jhipster.tech/modules/creating-a-blueprint/).
 
 Here are the most important steps.
 
