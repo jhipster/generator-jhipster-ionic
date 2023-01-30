@@ -57,7 +57,7 @@
     "mocha": "10.2.0",
     "mocha-expect-snapshot": "7.0.0",
     "prettier": "2.8.3",
-    "prettier-plugin-packagejson": "2.4.0",
+    "prettier-plugin-packagejson": "2.4.2",
     "yeoman-test": "7.3.0"
   },
   "engines": {
