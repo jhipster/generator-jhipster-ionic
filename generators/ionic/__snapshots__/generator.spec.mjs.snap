@@ -44,13 +44,13 @@ exports[`SubGenerator ionic of ionic JHipster blueprint with jwt authentication 
   "cypress.config.ts": {
     "stateCleared": "modified",
   },
+  "cypress/e2e/app.cy.ts": {
+    "stateCleared": "modified",
+  },
+  "cypress/e2e/login.cy.ts": {
+    "stateCleared": "modified",
+  },
   "cypress/fixtures/integration-test.png": {
-    "stateCleared": "modified",
-  },
-  "cypress/integration/app.e2e-spec.ts": {
-    "stateCleared": "modified",
-  },
-  "cypress/integration/login.e2e-spec.ts": {
     "stateCleared": "modified",
   },
   "cypress/plugins/index.ts": {
@@ -523,13 +523,13 @@ exports[`SubGenerator ionic of ionic JHipster blueprint with oauth2 authenticati
   "cypress.config.ts": {
     "stateCleared": "modified",
   },
+  "cypress/e2e/app.cy.ts": {
+    "stateCleared": "modified",
+  },
+  "cypress/e2e/login.cy.ts": {
+    "stateCleared": "modified",
+  },
   "cypress/fixtures/integration-test.png": {
-    "stateCleared": "modified",
-  },
-  "cypress/integration/app.e2e-spec.ts": {
-    "stateCleared": "modified",
-  },
-  "cypress/integration/login.e2e-spec.ts": {
     "stateCleared": "modified",
   },
   "cypress/plugins/index.ts": {

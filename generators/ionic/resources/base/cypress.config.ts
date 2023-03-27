@@ -2,7 +2,7 @@ import { defineConfig } from 'cypress';
 
 export const defaultConfig = {
   video: false,
-  fixturesFilder: 'cypress/fixtures',
+  fixturesFolder: 'cypress/fixtures',
   screenshotsFolder: 'cypress/screenshots',
   downloadsFolder: 'cypress/downloads',
   videosFolder: 'cypress/videos',
@@ -16,7 +16,7 @@ export const defaultConfig = {
       return (await import('./cypress/plugins/index')).default(on, config);
     },
     baseUrl: 'http://localhost:8100/',
-    specPattern: '**/*.e2e-spec.ts',
+    specPattern: '**/*.cy.ts',
     supportFile: 'cypress/support/index.ts',
     experimentalSessionAndOrigin: true,
   },
