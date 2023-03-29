@@ -16,7 +16,6 @@ export const defaultConfig = {
       return (await import('./cypress/plugins/index')).default(on, config);
     },
     baseUrl: 'http://localhost:8100/',
-    specPattern: '**/*.cy.ts',
     supportFile: 'cypress/support/index.ts',
     experimentalSessionAndOrigin: true,
   },
