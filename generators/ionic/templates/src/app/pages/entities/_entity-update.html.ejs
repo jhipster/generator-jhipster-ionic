@@ -99,7 +99,7 @@ _%>
                         {{ 'ITEM_CREATE_CHOOSE_IMAGE' | translate }}
                     </ion-button>
                     <%_ } else { _%>
-                    <input type="file" data-cy="<%= fieldName %>" #fileInput (change)="setFileData($event, '<%= fieldName %>', false)"/>
+                    <input type="file" data-cy="<%= fieldName %>" (change)="setFileData($event, '<%= fieldName %>', false)"/>
                     <%_ } _%>
                 </div>
                 <%_ } else if (['LocalDate', 'Instant', 'ZonedDateTime'].includes(fieldType)) { _%>

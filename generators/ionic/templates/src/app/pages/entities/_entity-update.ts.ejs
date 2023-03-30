@@ -289,8 +289,9 @@ _%>
       Object.assign(this.<%= entityInstance %>, patchValue);
       this.form.patchValue(patchValue);
     }
-<%_ } else if (fieldsContainBlob) { _%>
+<%_ } 
 
+    if (fieldsContainBlob) { _%>
     setFileData(event, field, isImage) {
         this.dataUtils.loadFileToForm(event, this.form, field, isImage).subscribe();
     }
