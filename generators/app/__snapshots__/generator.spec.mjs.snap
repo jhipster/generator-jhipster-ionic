@@ -44,13 +44,13 @@ exports[`SubGenerator app of ionic JHipster blueprint run should succeed 1`] = `
   "../ionic4j/cypress.config.ts": {
     "stateCleared": "modified",
   },
+  "../ionic4j/cypress/e2e/app.cy.ts": {
+    "stateCleared": "modified",
+  },
+  "../ionic4j/cypress/e2e/login.cy.ts": {
+    "stateCleared": "modified",
+  },
   "../ionic4j/cypress/fixtures/integration-test.png": {
-    "stateCleared": "modified",
-  },
-  "../ionic4j/cypress/integration/app.e2e-spec.ts": {
-    "stateCleared": "modified",
-  },
-  "../ionic4j/cypress/integration/login.e2e-spec.ts": {
     "stateCleared": "modified",
   },
   "../ionic4j/cypress/plugins/index.ts": {
@@ -556,13 +556,13 @@ exports[`SubGenerator app of ionic JHipster blueprint with custom ionic path sho
   "../ionic-app/cypress.config.ts": {
     "stateCleared": "modified",
   },
+  "../ionic-app/cypress/e2e/app.cy.ts": {
+    "stateCleared": "modified",
+  },
+  "../ionic-app/cypress/e2e/login.cy.ts": {
+    "stateCleared": "modified",
+  },
   "../ionic-app/cypress/fixtures/integration-test.png": {
-    "stateCleared": "modified",
-  },
-  "../ionic-app/cypress/integration/app.e2e-spec.ts": {
-    "stateCleared": "modified",
-  },
-  "../ionic-app/cypress/integration/login.e2e-spec.ts": {
     "stateCleared": "modified",
   },
   "../ionic-app/cypress/plugins/index.ts": {

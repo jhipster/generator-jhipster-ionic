@@ -18,7 +18,7 @@
  */
 const PAGES_DIR = 'src/app/pages/';
 const E2E_ENTITY_DIR = 'cypress/support/pages/';
-const E2E_TEST_DIR = 'cypress/integration/';
+const E2E_TEST_DIR = 'cypress/e2e/';
 
 export const files = {
   client: [
@@ -116,8 +116,8 @@ export const entityFiles = {
       path: E2E_TEST_DIR,
       templates: [
         {
-          file: 'entities/_entity.e2e-spec.ts',
-          renameTo: ctx => `entities/${ctx.entityFolderName}/${ctx.entityFileName}.e2e-spec.ts`,
+          file: 'entities/_entity.cy.ts',
+          renameTo: ctx => `entities/${ctx.entityFolderName}/${ctx.entityFileName}.cy.ts`,
         },
         {
           file: 'entities/_entity.json',

@@ -232,9 +232,9 @@ See a unit test example at [`src/app/app.component.spec.ts`](src/app/app.compone
 
 The end-to-end (E2E) tests are powered by [Cypress](https://cypress.io).
 
-Add your tests in the `cypress/integration` folder.
+Add your tests in the `cypress/e2e` folder.
 
-See the example end-to-end test in [`cypress/integration/app.e2e-spec.ts`](cypress/integration/app.e2e-spec.ts).
+See the example end-to-end test in [`cypress/e2e/app.cy.ts`](cypress/e2e/app.cy.ts).
 
 To run the e2e tests:
 
