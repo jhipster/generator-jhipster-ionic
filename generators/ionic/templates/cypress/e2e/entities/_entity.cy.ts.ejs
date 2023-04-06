@@ -94,7 +94,7 @@ describe('<%= entityClass %> entity', () => {
       if (<%= entityInstance %>) {
         cy.authenticatedRequest({
           method: 'DELETE',
-          url: `${<%= entityInstance %>ApiUrl}/${<%= entityInstance %>.<%= primaryKey.name %>}`,
+          url: `${<%= entityInstance %>ApiUrl}/${<%= entityInstance %>.<%= primaryKey?.name %>}`,
         }).then(() => {
           <%= entityInstance %> = undefined;
         });
@@ -163,7 +163,7 @@ describe('<%= entityClass %> entity', () => {
       if (<%= entityInstance %>) {
         cy.authenticatedRequest({
           method: 'DELETE',
-          url: `${<%= entityInstance %>ApiUrl}/${<%= entityInstance %>.<%= primaryKey.name %>}`,
+          url: `${<%= entityInstance %>ApiUrl}/${<%= entityInstance %>.<%= primaryKey?.name %>}`,
         }).then(() => {
           <%= entityInstance %> = undefined;
         });

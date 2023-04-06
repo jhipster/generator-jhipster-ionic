@@ -20,7 +20,7 @@
 const variables = {};
 const defaultVariablesValues = {};
 let tsKeyType;
-if (primaryKey.type === 'String') {
+if (primaryKey?.type === 'String') {
     tsKeyType = 'string';
 } else {
     tsKeyType = 'number';
