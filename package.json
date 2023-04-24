@@ -56,7 +56,7 @@
     "lint-staged": "13.2.1",
     "mocha": "10.2.0",
     "mocha-expect-snapshot": "7.0.0",
-    "prettier": "2.8.7",
+    "prettier": "2.8.8",
     "prettier-plugin-packagejson": "2.4.3",
     "yeoman-test": "7.4.0"
   },
