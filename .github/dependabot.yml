@@ -16,6 +16,6 @@ updates:
       - dependency-name: 'yeoman-environment'
 
   - package-ecosystem: 'npm'
-    directory: '/generators/ionic/resources/base/package.json'
+    directory: '/generators/ionic/resources/base'
     schedule:
       interval: 'weekly'
