@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Requestor } from '@openid/appauth';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { XhrSettings } from 'ionic-appauth/lib/cordova';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class NgHttpService implements Requestor {
   constructor(private http: HttpClient) {}
@@ -16,13 +17,13 @@ export class NgHttpService implements Requestor {
 
     switch (settings.method) {
       case 'GET':
-        return this.http.get<T>(settings.url, { headers: this.getHeaders(settings.headers) }).toPromise();
+        return firstValueFrom(this.http.get<T>(settings.url, {headers: this.getHeaders(settings.headers)}));
       case 'POST':
-        return this.http.post<T>(settings.url, settings.data, { headers: this.getHeaders(settings.headers) }).toPromise();
+        return firstValueFrom(this.http.post<T>(settings.url, settings.data, {headers: this.getHeaders(settings.headers)}));
       case 'PUT':
-        return this.http.put<T>(settings.url, settings.data, { headers: this.getHeaders(settings.headers) }).toPromise();
+        return firstValueFrom(this.http.put<T>(settings.url, settings.data, {headers: this.getHeaders(settings.headers)}));
       case 'DELETE':
-        return this.http.delete<T>(settings.url, { headers: this.getHeaders(settings.headers) }).toPromise();
+        return firstValueFrom(this.http.delete<T>(settings.url, {headers: this.getHeaders(settings.headers)}));
     }
   }
 
@@ -30,7 +31,7 @@ export class NgHttpService implements Requestor {
     let httpHeaders: HttpHeaders = new HttpHeaders();
 
     if (headers !== undefined) {
-      Object.keys(headers).forEach(key => {
+      Object.keys(headers).forEach((key) => {
         httpHeaders = httpHeaders.append(key, headers[key]);
       });
     }
