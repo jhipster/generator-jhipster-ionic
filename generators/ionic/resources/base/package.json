@@ -35,7 +35,7 @@
     "@capacitor/keyboard": "4.0.1",
     "@capacitor/preferences": "4.0.2",
     "@capacitor/splash-screen": "4.0.1",
-    "@capacitor/status-bar": "4.0.1",
+    "@capacitor/status-bar": "4.1.1",
     "@fortawesome/angular-fontawesome": "0.11.1",
     "@fortawesome/fontawesome-svg-core": "6.1.2",
     "@fortawesome/free-solid-svg-icons": "6.4.0",
