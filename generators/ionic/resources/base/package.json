@@ -31,7 +31,7 @@
     "@capacitor/browser": "4.1.1",
     "@capacitor/camera": "4.1.0",
     "@capacitor/core": "4.1.0",
-    "@capacitor/haptics": "4.0.1",
+    "@capacitor/haptics": "4.1.0",
     "@capacitor/keyboard": "4.0.1",
     "@capacitor/preferences": "4.0.2",
     "@capacitor/splash-screen": "4.0.1",
