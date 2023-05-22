@@ -68,7 +68,7 @@
     "@ionic/angular-toolkit": "^7.0.0",
     "@ionic/cli": "^6.20.1",
     "@types/jest": "28.1.8",
-    "@types/node": "^18.7.13",
+    "@types/node": "^20.2.3",
     "@typescript-eslint/eslint-plugin": "5.34.0",
     "@typescript-eslint/parser": "5.59.1",
     "cypress": "12.12.0",
