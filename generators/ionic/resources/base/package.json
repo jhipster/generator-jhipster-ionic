@@ -41,7 +41,7 @@
     "@fortawesome/free-solid-svg-icons": "6.4.0",
     "@ionic/angular": "^6.2.4",
     "@ionic/pwa-elements": "^3.1.1",
-    "@ionic/storage": "^3.0.6",
+    "@ionic/storage": "^4.0.0",
     "@ionic/storage-angular": "^3.0.6",
     "@ngx-translate/core": "14.0.0",
     "@ngx-translate/http-loader": "7.0.0",
