@@ -45,7 +45,7 @@
     "@ionic/storage-angular": "^4.0.0",
     "@ngx-translate/core": "14.0.0",
     "@ngx-translate/http-loader": "7.0.0",
-    "capacitor-secure-storage-plugin": "0.8.0",
+    "capacitor-secure-storage-plugin": "0.8.1",
     "ionic-appauth": "2.0.0",
     "ngx-webstorage": "10.0.1",
     "rxjs": "~7.8.1",
