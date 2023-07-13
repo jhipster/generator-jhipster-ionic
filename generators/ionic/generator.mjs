@@ -409,7 +409,7 @@ ${chalk.green(`    npm start`)}
       let query;
       let variableName;
       hasManyToMany = hasManyToMany || relationship.relationshipType === 'many-to-many';
-      if (relationship.relationshipType === 'one-to-one' && relationship.ownerSide === true && relationship.otherEntityName !== 'user') {
+      if (relationship.otherRelationship && relationship.relationshipType === 'one-to-one' && relationship.ownerSide === true) {
         variableName = _.camelCase(relationship.otherEntityNameCapitalizedPlural);
         if (variableName === entityInstance) {
           variableName += 'Collection';
