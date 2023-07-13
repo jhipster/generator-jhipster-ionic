@@ -63,6 +63,9 @@
   "engines": {
     "node": ">=16.13.0"
   },
+  "overrides": {
+    "yeoman-environment": "3.13.0"
+  },
   "cacheDirectories": [
     "node_modules"
   ]
