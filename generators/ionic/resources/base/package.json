@@ -80,7 +80,7 @@
     "jest": "28.1.3",
     "jest-localstorage-mock": "2.4.26",
     "jest-preset-angular": "12.2.6",
-    "prettier": "2.8.8",
+    "prettier": "3.0.1",
     "typescript": "~4.7.4"
   }
 }
