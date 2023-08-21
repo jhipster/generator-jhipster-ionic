@@ -37,7 +37,7 @@
     "@capacitor/splash-screen": "4.2.0",
     "@capacitor/status-bar": "4.1.1",
     "@fortawesome/angular-fontawesome": "0.11.1",
-    "@fortawesome/fontawesome-svg-core": "6.4.0",
+    "@fortawesome/fontawesome-svg-core": "6.4.2",
     "@fortawesome/free-solid-svg-icons": "6.4.0",
     "@ionic/angular": "^7.0.10",
     "@ionic/pwa-elements": "^3.1.1",
