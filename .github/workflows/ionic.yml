@@ -64,18 +64,13 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: ${{ matrix.java_version }}
-      - name: Install latest Chrome
-        run: |
-          sudo apt update
-          sudo apt --only-upgrade install google-chrome-stable
-          google-chrome --version
       - name: Check Version
         run: $JHIPSTER_INSTALL/02-checkVersion.sh
       #----------------------------------------------------------------------
       # Script
       #----------------------------------------------------------------------
       - name: Generate Project
-        run: 'jhipster-ionic jdl "$JHIPSTER_SAMPLES"/"${{ matrix.jdl }}".jdl --force --no-insight --skip-checks --skip-git --skip-commit-hook --skip-install --blueprints ionic --skip-jhipster-dependencies'
+        run: 'jhipster-ionic generate-samples ${{ matrix.jdl }} --force --no-insight --skip-checks --skip-git --skip-commit-hook --skip-install --blueprints ionic --skip-jhipster-dependencies'
       - name: Ionic tests
         run: cat package.json; npm install; npm test
         working-directory: ${{ github.workspace }}/ionic4j
