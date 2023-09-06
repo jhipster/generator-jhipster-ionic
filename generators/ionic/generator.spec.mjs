@@ -1,6 +1,9 @@
-import { jestExpect as expect } from 'mocha-expect-snapshot';
+import { beforeAll, describe, expect, it } from 'vitest';
 
 import { helpers, lookups } from '#test-utils';
+
+const SUB_GENERATOR = 'ionic';
+const SUB_GENERATOR_NAMESPACE = `jhipster-ionic:${SUB_GENERATOR}`;
 
 const expectedJwtFiles = [
   'src/app/services/auth/auth-jwt.service.ts',
@@ -11,14 +14,15 @@ const expectedJwtFiles = [
 describe('SubGenerator ionic of ionic JHipster blueprint', () => {
   describe('with jwt authentication', () => {
     let result;
-    before(async function () {
+    beforeAll(async function () {
       result = await helpers
-        .create('jhipster-ionic:ionic')
+        .create(SUB_GENERATOR_NAMESPACE)
         .withOptions({
           reproducible: true,
           blueprint: 'ionic',
           appDir: false,
           baseName: 'jhipster',
+          ignoreNeedlesError: true,
           authenticationType: 'jwt',
         })
         .withLookups(lookups)
@@ -35,15 +39,16 @@ describe('SubGenerator ionic of ionic JHipster blueprint', () => {
   });
   describe('with oauth2 authentication', () => {
     let result;
-    before(async function () {
+    beforeAll(async function () {
       result = await helpers
-        .create('jhipster-ionic:ionic')
+        .create(SUB_GENERATOR_NAMESPACE)
         .withOptions({
           reproducible: true,
           blueprint: 'ionic',
           appDir: false,
           baseName: 'jhipster',
           authenticationType: 'oauth2',
+          ignoreNeedlesError: true,
         })
         .withLookups(lookups)
         .run();

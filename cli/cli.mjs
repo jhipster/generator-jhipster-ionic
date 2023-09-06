@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { runJHipster, done, logger } from 'generator-jhipster/esm/cli';
+import { runJHipster, done, logger } from 'generator-jhipster/cli';
 import { readFile } from 'fs/promises';
 import { fileURLToPath } from 'url';
 import { dirname, basename, join } from 'path';
@@ -24,7 +24,7 @@ const devBlueprintPath = join(packagePath, '.blueprint');
       [packageFolderName]: version,
     },
     printBlueprintLogo: () => {
-      console.log('===================== JHipster Ionic =====================');
+      console.log('===================== JHipster ionic =====================');
       console.log('');
     },
     lookups: [{ packagePaths: [packagePath], lookups: ['generators'] }],

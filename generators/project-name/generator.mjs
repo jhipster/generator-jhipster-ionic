@@ -1,48 +1,34 @@
 import chalk from 'chalk';
-import ProjectNameGenerator from 'generator-jhipster/esm/generators/project-name';
-import {
-  PRIORITY_PREFIX,
-  INITIALIZING_PRIORITY,
-  PROMPTING_PRIORITY,
-  CONFIGURING_PRIORITY,
-  COMPOSING_PRIORITY,
-  LOADING_PRIORITY,
-  PREPARING_PRIORITY,
-  DEFAULT_PRIORITY,
-  WRITING_PRIORITY,
-  POST_WRITING_PRIORITY,
-  INSTALL_PRIORITY,
-  END_PRIORITY,
-} from 'generator-jhipster/esm/priorities';
-import lodash from 'lodash';
-
-const { startCase } = lodash;
+import ProjectNameGenerator from 'generator-jhipster/generators/project-name';
+import command from './command.mjs';
 
 export default class extends ProjectNameGenerator {
   constructor(args, opts, features) {
-    super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
+    super(args, opts, features);
 
     if (this.options.help) return;
 
-    if (!this.options.jhipsterContext) {
+    if (!this.jhipsterContext) {
       throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints ionic')}`);
     }
   }
 
-  get [INITIALIZING_PRIORITY]() {
-    return {
-      async initializingTemplateTask() {},
-      ...super._initializing(),
-    };
+  get [ProjectNameGenerator.INITIALIZING]() {
+    return this.asInitializingTaskGroup({
+      ...super.initializing,
+      async initializingTemplateTask() {
+        this.parseJHipsterArguments(command.arguments);
+        this.parseJHipsterOptions(command.options);
+      },
+    });
   }
 
-  get [PROMPTING_PRIORITY]() {
-    return {
-      ...super._prompting(),
+  get [ProjectNameGenerator.PROMPTING]() {
+    return this.asPromptingTaskGroup({
+      ...super.prompting,
 
       // Replace prompts with custom questions
       async showPrompts() {
-        if (this.shouldSkipPrompts()) return;
         const appYoRc = `${this.blueprintConfig.appDir}/.yo-rc.json`;
         const backendAppStorage = this.createStorage(appYoRc, 'generator-jhipster', { sorted: true });
         const backendAppConfig = backendAppStorage.getAll();
@@ -68,68 +54,68 @@ export default class extends ProjectNameGenerator {
           this.config
         );
       },
-    };
+    });
   }
 
-  get [CONFIGURING_PRIORITY]() {
-    return {
+  get [ProjectNameGenerator.CONFIGURING]() {
+    return this.asConfiguringTaskGroup({
+      ...super.configuring,
       async configuringTemplateTask() {},
-      ...super._configuring(),
-    };
+    });
   }
 
-  get [COMPOSING_PRIORITY]() {
-    return {
+  get [ProjectNameGenerator.COMPOSING]() {
+    return this.asComposingTaskGroup({
+      ...super.composing,
       async composingTemplateTask() {},
-      ...super._composing(),
-    };
+    });
   }
 
-  get [LOADING_PRIORITY]() {
-    return {
+  get [ProjectNameGenerator.LOADING]() {
+    return this.asLoadingTaskGroup({
+      ...super.loading,
       async loadingTemplateTask() {},
-      ...super._loading(),
-    };
+    });
   }
 
-  get [PREPARING_PRIORITY]() {
-    return {
+  get [ProjectNameGenerator.PREPARING]() {
+    return this.asPreparingTaskGroup({
+      ...super.preparing,
       async preparingTemplateTask() {},
-      ...super._preparing(),
-    };
+    });
   }
 
-  get [DEFAULT_PRIORITY]() {
-    return {
+  get [ProjectNameGenerator.DEFAULT]() {
+    return this.asDefaultTaskGroup({
+      ...super.default,
       async defaultTemplateTask() {},
-      ...super._default(),
-    };
+    });
   }
 
-  get [WRITING_PRIORITY]() {
-    return {
-      ...super._writing(),
-    };
+  get [ProjectNameGenerator.WRITING]() {
+    return this.asWritingTaskGroup({
+      ...super.writing,
+    });
   }
 
-  get [POST_WRITING_PRIORITY]() {
-    return {
+  get [ProjectNameGenerator.POST_WRITING]() {
+    return this.asPostWritingTaskGroup({
+      ...super.postWriting,
       async postWritingTemplateTask() {},
-      ...super._postWriting(),
-    };
+    });
   }
 
-  get [INSTALL_PRIORITY]() {
-    return {
+  get [ProjectNameGenerator.INSTALL]() {
+    return this.asInstallTaskGroup({
+      ...super.install,
       async installTemplateTask() {},
-      ...super._install(),
-    };
+    });
   }
 
-  get [END_PRIORITY]() {
-    return {
+  get [ProjectNameGenerator.END]() {
+    return this.asEndTaskGroup({
+      ...super.end,
       async endTemplateTask() {},
-      ...super._end(),
-    };
+    });
   }
 }

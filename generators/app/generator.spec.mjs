@@ -1,19 +1,24 @@
-import { jestExpect as expect } from 'mocha-expect-snapshot';
+import { beforeAll, describe, expect, it } from 'vitest';
 
 import { helpers, lookups } from '#test-utils';
+
+const SUB_GENERATOR = 'app';
+const BLUEPRINT_NAMESPACE = `jhipster:${SUB_GENERATOR}`;
 
 describe('SubGenerator app of ionic JHipster blueprint', () => {
   describe('run', () => {
     let result;
-    before(async function () {
+    beforeAll(async function () {
       result = await helpers
-        .create('jhipster:app')
+        .create(BLUEPRINT_NAMESPACE)
         .withOptions({
           reproducible: true,
           defaults: true,
           // Skip server and client for speed
+          skipChecks: true,
           skipServer: true,
           skipClient: true,
+          ignoreNeedlesError: true,
           blueprint: 'ionic',
         })
         .withLookups(lookups)
@@ -27,15 +32,17 @@ describe('SubGenerator app of ionic JHipster blueprint', () => {
 
   describe('with custom ionic path', () => {
     let result;
-    before(async function () {
+    beforeAll(async function () {
       result = await helpers
-        .create('jhipster:app')
+        .create(BLUEPRINT_NAMESPACE)
         .withOptions({
           reproducible: true,
           defaults: true,
           // Skip server and client for speed
+          skipChecks: true,
           skipServer: true,
           skipClient: true,
+          ignoreNeedlesError: true,
           blueprint: 'ionic',
           ionicDir: '../ionic-app',
         })

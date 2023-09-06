@@ -1,64 +1,16 @@
+import { relative } from 'node:path';
 import chalk from 'chalk';
-import { relative } from 'path';
-import _ from 'lodash';
-import { GeneratorBaseEntities, utils } from 'generator-jhipster';
-import {
-  PRIORITY_PREFIX,
-  INITIALIZING_PRIORITY,
-  CONFIGURING_PRIORITY,
-  LOADING_PRIORITY,
-  PREPARING_PRIORITY,
-  WRITING_PRIORITY,
-  WRITING_ENTITIES_PRIORITY,
-  POST_WRITING_PRIORITY,
-  INSTALL_PRIORITY,
-  END_PRIORITY,
-} from 'generator-jhipster/esm/priorities';
-
+import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
+import { kebabCase } from 'lodash-es';
+import command from './command.mjs';
 import { DEFAULT_BACKEND_PATH } from '../constants.mjs';
-import { files, entityFiles } from './files.mjs';
+import { files } from './files.mjs';
 
-export default class extends GeneratorBaseEntities {
+export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
-    super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
-
-    this.option('defaults', {
-      desc: 'Use default options',
-      type: String,
-    });
-
-    this.option('authentication-type', {
-      desc: 'Authentication type',
-      type: String,
-    });
-
-    this.option('base-name', {
-      desc: 'Base name',
-      type: String,
-    });
-
-    this.option('app-dir', {
-      desc: 'Directory for JHipster application',
-      type: String,
-    });
-
-    this.option('standalone', {
-      desc: 'Skip backend',
-      type: Boolean,
-    });
-
-    this.jhipsterOptions({
-      skipCommitHook: {
-        desc: 'Skip adding husky commit hooks',
-        type: Boolean,
-        scope: 'storage',
-      },
-    });
+    super(args, opts, { ...features, sbsBlueprint: true });
 
     if (this.options.help) return;
-
-    // Don't show modularized generators hello message
-    this.configOptions.showHello = false;
 
     if (this.blueprintConfig.ionicDir) {
       throw new Error('Ionic generator must run in Ionic application directory');
@@ -90,7 +42,7 @@ export default class extends GeneratorBaseEntities {
     }
   }
 
-  async _postConstruct() {
+  async beforeQueue() {
     await this.prompt(
       [
         {
@@ -100,7 +52,7 @@ export default class extends GeneratorBaseEntities {
           default: DEFAULT_BACKEND_PATH,
         },
       ],
-      this.ionicStorage
+      this.ionicStorage,
     );
     this.ionicStorage.defaults({ appDir: DEFAULT_BACKEND_PATH, ionicDir: null });
 
@@ -113,24 +65,17 @@ export default class extends GeneratorBaseEntities {
     await this.dependsOnJHipster('init');
   }
 
-  get [INITIALIZING_PRIORITY]() {
-    return {
-      loadConfigFromJHipster() {
-        if (this.jhipsterConfig.baseName && !this.localJHipsterConfig.projectName) {
-          this.localJHipsterConfig.projectName = `${_.startCase(this.jhipsterConfig.baseName)}Ionic`;
-        }
-        if (this.jhipsterConfig.authenticationType) {
-          this.localJHipsterConfig.authenticationType = this.jhipsterConfig.authenticationType;
-        }
-        if (this.jhipsterConfig.enableTranslation !== undefined) {
-          this.localJHipsterConfig.enableTranslation = this.jhipsterConfig.enableTranslation;
-        }
+  get [BaseApplicationGenerator.INITIALIZING]() {
+    return this.asInitializingTaskGroup({
+      async initializingTemplateTask() {
+        this.parseJHipsterArguments(command.arguments);
+        this.parseJHipsterOptions(command.options);
       },
-    };
+    });
   }
 
-  get [CONFIGURING_PRIORITY]() {
-    return {
+  get [BaseApplicationGenerator.CONFIGURING]() {
+    return this.asConfiguringTaskGroup({
       configure() {
         // Set default baseName.
         if (this.jhipsterConfig.baseName && !this.localJHipsterConfig.baseName) {
@@ -151,52 +96,34 @@ export default class extends GeneratorBaseEntities {
           this.blueprintConfig.appDir = null;
         }
       },
-    };
+    });
   }
 
-  get [LOADING_PRIORITY]() {
-    return {
-      loadConfig() {
-        this.application = {};
-        this.loadAppConfig(this.localJHipsterConfig, this.application);
-        this.loadTranslationConfig(this.localJHipsterConfig, this.application);
-      },
-    };
-  }
-
-  get [PREPARING_PRIORITY]() {
-    return {
-      prepareApplication() {
-        this.loadDerivedAppConfig(this.application);
-      },
-    };
-  }
-
-  get [WRITING_PRIORITY]() {
-    return {
-      async writingTemplateTask() {
+  get [BaseApplicationGenerator.WRITING]() {
+    return this.asWritingTaskGroup({
+      async writingTemplateTask({ application }) {
         await this.writeFiles({
           sections: files,
-          context: this.application,
+          context: application,
         });
 
         await this.copyTemplateAsync('../resources/base/{**,**/.*}', this.destinationPath());
 
-        if (this.application.authenticationTypeJwt) {
+        if (application.authenticationTypeJwt) {
           await this.copyTemplateAsync('../resources/jwt/{**,**/.*}', this.destinationPath());
         }
 
-        if (this.application.authenticationTypeOauth2) {
+        if (application.authenticationTypeOauth2) {
           await this.copyTemplateAsync('../resources/oauth2/{**,**/.*}', this.destinationPath());
         }
       },
-    };
+    });
   }
 
-  get [WRITING_ENTITIES_PRIORITY]() {
-    return {
-      async writeEntities({ entities }) {
-        const { enableTranslation } = this.application;
+  get [BaseApplicationGenerator.WRITING_ENTITIES]() {
+    return this.asWritingEntitiesTaskGroup({
+      async writeEntities({ application, entities }) {
+        const { enableTranslation } = application;
         await Promise.all(
           entities
             .filter(entity => !entity.builtIn)
@@ -212,23 +139,23 @@ export default class extends GeneratorBaseEntities {
               const { entityClassHumanized, entityAngularName, entityFileName, entityFolderName } = entity;
               this.addEntityToModule({ entityClassHumanized, entityAngularName, entityFileName });
               this.addEntityRouteToModule({ entityAngularName, entityFolderName, entityFileName });
-            })
+            }),
         );
       },
-    };
+    });
   }
 
-  get [POST_WRITING_PRIORITY]() {
-    return {
-      customizePackageJson() {
+  get [BaseApplicationGenerator.POST_WRITING]() {
+    return this.asPostWritingTaskGroup({
+      customizePackageJson({ application }) {
         const { baseName } = this.localJHipsterConfig;
         this.packageJson.merge({
-          name: _.kebabCase(baseName),
+          name: kebabCase(baseName),
           scripts: {
             'backend:start': `cd ${this.ionicConfig.appDir} && npm run app:start`,
           },
         });
-        if (this.application.authenticationTypeJwt) {
+        if (application.authenticationTypeJwt) {
           this.debug('Removing oauth2 dependencies');
           this.packageJson.set('dependencies', {
             ...this.packageJson.get('dependencies'),
@@ -237,7 +164,7 @@ export default class extends GeneratorBaseEntities {
             'ionic-appauth': undefined,
           });
         }
-        if (this.application.authenticationTypeOauth2) {
+        if (application.authenticationTypeOauth2) {
           this.packageJson.merge({
             jest: {
               moduleNameMapper: {
@@ -250,11 +177,11 @@ export default class extends GeneratorBaseEntities {
           });
         }
       },
-    };
+    });
   }
 
-  get [INSTALL_PRIORITY]() {
-    return {
+  get [BaseApplicationGenerator.INSTALL]() {
+    return this.asInstallTaskGroup({
       async install() {
         try {
           if (this.env.sharedFs.get(this.destinationPath('package.json'))?.commited) {
@@ -264,11 +191,11 @@ export default class extends GeneratorBaseEntities {
           this.log.error(`Error executing 'npm install', execute by yourself.`);
         }
       },
-    };
+    });
   }
 
-  get [END_PRIORITY]() {
-    return {
+  get [BaseApplicationGenerator.END]() {
+    return this.asEndTaskGroup({
       afterRunHook() {
         const changeDirMessage = this.options.fromBackend
           ? `
@@ -285,7 +212,7 @@ ${chalk.green(`    npm run backend:start`)}
 ${chalk.green(`    npm start`)}
 `);
       },
-    };
+    });
   }
 
   /**
@@ -326,7 +253,7 @@ ${chalk.green(`    npm start`)}
             needle: 'jhipster-needle-add-entity-page',
             splicable: [this.stripMargin(pageEntry)],
           },
-          this
+          this,
         );
       }
     } catch (e) {
@@ -336,7 +263,7 @@ ${chalk.green(`    npm start`)}
           entityPagePath +
           chalk.yellow(' or missing required jhipster-needle. Reference to ') +
           entityAngularName
-        } ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`
+        } ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`,
       );
       this.debug('Error:', e);
     }
@@ -372,7 +299,7 @@ ${chalk.green(`    npm start`)}
             needle: 'jhipster-needle-add-entity-route',
             splicable: [this.stripMargin(route)],
           },
-          this
+          this,
         );
       }
     } catch (e) {
@@ -382,7 +309,7 @@ ${chalk.green(`    npm start`)}
           entityPagePath +
           chalk.yellow(' or missing required jhipster-needle. Reference to ') +
           entityAngularName
-        } ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`
+        } ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`,
       );
       this.debug('Error:', e);
     }

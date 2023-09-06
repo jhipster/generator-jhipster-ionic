@@ -1,14 +1,13 @@
 {
   "generator-jhipster": {
+    "additionalSubGenerators": "ionic",
     "baseName": "ionic",
     "cli": true,
+    "entities": [],
     "generators": {
       "app": {
         "command": false,
-        "priorities": [
-          "prompting",
-          "composing"
-        ],
+        "priorities": ["prompting", "composing"],
         "sbs": true,
         "written": true
       },
@@ -48,23 +47,17 @@
       },
       "server": {
         "command": false,
-        "priorities": [
-          "postWriting"
-        ],
+        "priorities": ["writing", "postWriting"],
         "sbs": true,
         "written": true
       }
     },
     "jhipsterVersion": "7.8.1",
+    "localBlueprint": false,
     "prettierDefaultIndent": 2,
     "projectName": "JHipster Ionic Blueprint",
+    "sampleWritten": true,
     "skipCommitHook": true,
-    "subGenerators": [
-      "app",
-      "ionic",
-      "project-name",
-      "server"
-    ],
-    "sampleWritten": true
+    "subGenerators": ["app", "ionic", "project-name", "server"]
   }
 }

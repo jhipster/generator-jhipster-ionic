@@ -6,7 +6,7 @@ application {
     packageName org.jhipster.demo.blog
     prodDatabaseType mysql
     buildTool maven
-    clientFramework angularX
+    clientFramework angular
     testFrameworks [cypress]
   }
   entities *
@@ -36,7 +36,7 @@ entity Tag {
 }
 
 relationship ManyToOne {
-  Blog{user(login)} to User
+  Blog{user(login)} to User with builtInEntity
   Post{blog(name)} to Blog
 }
 
