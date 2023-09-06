@@ -79,7 +79,7 @@ jobs:
           echo '127.0.0.1       keycloak' | sudo tee -a /etc/hosts
           cat /etc/hosts
       - name: Launch backend application
-        run: npm run docker:app:up
+        run: npm run app:up
       - name: Wait for backend to start
         run: npm run ci:server:await
       - name: Launch ionic e2e test
