@@ -379,7 +379,7 @@ ${chalk.green(`    npm start`)}
   }
 
   getBackendRoot() {
-    return this.destinationPath(this.ionicConfig.appDir ? this.ionicConfig.appDir : undefined);
+    return this.ionicConfig.appDir ? this.destinationPath(this.ionicConfig.appDir) : this.destinationPath();
   }
 
   /* User backend application */

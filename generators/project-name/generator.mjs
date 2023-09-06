@@ -1,6 +1,4 @@
-import chalk from 'chalk';
 import ProjectNameGenerator from 'generator-jhipster/generators/project-name';
-import { startCase } from 'lodash-es';
 import command from './command.mjs';
 
 export default class extends ProjectNameGenerator {
@@ -22,7 +20,7 @@ export default class extends ProjectNameGenerator {
         this.parseJHipsterOptions(command.options);
       },
       defaults() {
-        if (this.options.defaults) {
+        if (this.options.defaults || this.options.force) {
           this.config.defaults({
             baseName: this.getDefaultIonicName(),
           });

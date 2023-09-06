@@ -70,7 +70,7 @@ jobs:
       # Script
       #----------------------------------------------------------------------
       - name: Generate Project
-        run: 'jhipster-ionic generate-samples ${{ matrix.jdl }} --force --no-insight --skip-checks --skip-git --skip-commit-hook --skip-install --blueprints ionic --skip-jhipster-dependencies'
+        run: 'jhipster-ionic generate-samples ${{ matrix.jdl }} --force --no-insight --skip-checks --skip-git --skip-commit-hook --skip-install --skip-jhipster-dependencies'
       - name: Ionic tests
         run: cat package.json; npm install; npm test
         working-directory: ${{ github.workspace }}/ionic4j
