@@ -20,7 +20,6 @@ export default class extends BaseGenerator {
   get [BaseGenerator.PROMPTING]() {
     return this.asPromptingTaskGroup({
       async askForSample() {
-        console.log(this.sampleName);
         if (!this.sampleName) {
           const answers = await this.prompt({
             type: 'list',
