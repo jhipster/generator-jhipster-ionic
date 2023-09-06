@@ -60,7 +60,7 @@ export default class extends BaseApplicationGenerator {
       this.updateJHipsterStorages();
     }
 
-    let bootstrapOptions = this.ionicConfig.appDir ? { destinationRoot: this.destinationPath(this.ionicConfig.appDir) } : {};
+    let bootstrapOptions = { destinationRoot: this.getBackendRoot() };
     await this.dependsOnJHipster('bootstrap-application', bootstrapOptions);
     await this.dependsOnJHipster('init');
   }
@@ -376,5 +376,14 @@ ${chalk.green(`    npm start`)}
       variables,
       hasManyToMany,
     };
+  }
+
+  getBackendRoot() {
+    return this.destinationPath(this.ionicConfig.appDir ? this.ionicConfig.appDir : undefined);
+  }
+
+  /* User backend application */
+  getSharedApplication(applicationFolder = this.getBackendRoot()) {
+    return this.options.sharedData.applications?.[this.calculateApplicationId(applicationFolder)];
   }
 }

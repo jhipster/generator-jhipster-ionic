@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import ProjectNameGenerator from 'generator-jhipster/generators/project-name';
+import { startCase } from 'lodash-es';
 import command from './command.mjs';
 
 export default class extends ProjectNameGenerator {
@@ -20,6 +21,13 @@ export default class extends ProjectNameGenerator {
         this.parseJHipsterArguments(command.arguments);
         this.parseJHipsterOptions(command.options);
       },
+      defaults() {
+        if (this.options.defaults) {
+          this.config.defaults({
+            baseName: this.getDefaultIonicName(),
+          });
+        }
+      },
     });
   }
 
@@ -29,29 +37,17 @@ export default class extends ProjectNameGenerator {
 
       // Replace prompts with custom questions
       async showPrompts() {
-        const appYoRc = `${this.blueprintConfig.appDir}/.yo-rc.json`;
-        const backendAppStorage = this.createStorage(appYoRc, 'generator-jhipster', { sorted: true });
-        const backendAppConfig = backendAppStorage.getAll();
-        const { baseName: backendAppBaseName = 'hipster' } = backendAppConfig || {};
-        const defaultIonicName = `${backendAppBaseName}Ionic`;
-
         await this.prompt(
           [
             {
               name: 'baseName',
               type: 'input',
-              validate: input => this._validateBaseName(input),
+              validate: input => this.validateBaseName(input),
               message: 'What do you want to name your Ionic application?',
-              default: defaultIonicName,
-            },
-            {
-              name: 'projectName',
-              type: 'input',
-              message: 'What do you want to title your Ionic application?',
-              default: ({ baseName }) => `${baseName ? startCase(baseName) : startCase(defaultIonicName)} Application`,
+              default: this.getDefaultIonicName(),
             },
           ],
-          this.config
+          this.config,
         );
       },
     });
@@ -117,5 +113,13 @@ export default class extends ProjectNameGenerator {
       ...super.end,
       async endTemplateTask() {},
     });
+  }
+
+  getDefaultIonicName() {
+    const appYoRc = `${this.blueprintConfig.appDir}/.yo-rc.json`;
+    const backendAppStorage = this.createStorage(appYoRc, 'generator-jhipster', { sorted: true });
+    const backendAppConfig = backendAppStorage.getAll();
+    const { baseName: backendAppBaseName = 'hipster' } = backendAppConfig || {};
+    return `${backendAppBaseName}Ionic`;
   }
 }
