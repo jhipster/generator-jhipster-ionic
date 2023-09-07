@@ -24,14 +24,6 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
-      async increaseOauth2Sleep({ application: { authenticationTypeOauth2, serviceDiscoveryEureka } }) {
-        if (authenticationTypeOauth2) {
-          this.editFile('src/main/docker/app.yml', content => content.replace('JHIPSTER_SLEEP=30', 'JHIPSTER_SLEEP=60'));
-          if (serviceDiscoveryEureka) {
-            this.editFile('src/main/docker/app.yml', content => content.replace('JHIPSTER_SLEEP=20', 'JHIPSTER_SLEEP=40'));
-          }
-        }
-      },
       async postWritingTemplateTask() {
         this.editFile('src/main/docker/app.yml', content =>
           content.replace('SPRING_PROFILES_ACTIVE=prod,api-docs', 'SPRING_PROFILES_ACTIVE=prod,api-docs,e2e-cors'),
