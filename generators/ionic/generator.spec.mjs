@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 
-import { helpers, lookups } from '#test-utils';
+import { defaultHelpers as helpers, result } from 'generator-jhipster/testing';
 
 const SUB_GENERATOR = 'ionic';
 const SUB_GENERATOR_NAMESPACE = `jhipster-ionic:${SUB_GENERATOR}`;
@@ -13,20 +13,19 @@ const expectedJwtFiles = [
 
 describe('SubGenerator ionic of ionic JHipster blueprint', () => {
   describe('with jwt authentication', () => {
-    let result;
     beforeAll(async function () {
-      result = await helpers
-        .create(SUB_GENERATOR_NAMESPACE)
+      await helpers
+        .run(SUB_GENERATOR_NAMESPACE)
+        .withJHipsterConfig()
         .withOptions({
-          reproducible: true,
           blueprint: 'ionic',
           appDir: false,
           baseName: 'jhipster',
           ignoreNeedlesError: true,
           authenticationType: 'jwt',
         })
-        .withLookups(lookups)
-        .run();
+        .withJHipsterLookup()
+        .withParentBlueprintLookup();
     });
 
     it('should succeed', () => {
@@ -38,20 +37,19 @@ describe('SubGenerator ionic of ionic JHipster blueprint', () => {
     });
   });
   describe('with oauth2 authentication', () => {
-    let result;
     beforeAll(async function () {
-      result = await helpers
-        .create(SUB_GENERATOR_NAMESPACE)
+      await helpers
+        .run(SUB_GENERATOR_NAMESPACE)
+        .withJHipsterConfig()
         .withOptions({
-          reproducible: true,
           blueprint: 'ionic',
           appDir: false,
           baseName: 'jhipster',
           authenticationType: 'oauth2',
           ignoreNeedlesError: true,
         })
-        .withLookups(lookups)
-        .run();
+        .withJHipsterLookup()
+        .withParentBlueprintLookup();
     });
 
     it('should succeed', () => {

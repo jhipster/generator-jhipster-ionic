@@ -1,18 +1,16 @@
 #!/usr/bin/env node
 
-import { runJHipster, done, logger } from 'generator-jhipster/cli';
-import { readFile } from 'fs/promises';
-import { fileURLToPath } from 'url';
-import { dirname, basename, join } from 'path';
+const { dirname, basename, join } = require('path');
+const { version, bin } = require('../package.json');
 
 // Get package name to use as namespace.
 // Allows blueprints to be aliased.
-const packagePath = dirname(dirname(fileURLToPath(import.meta.url)));
+const packagePath = dirname(__dirname);
 const packageFolderName = basename(packagePath);
 const devBlueprintPath = join(packagePath, '.blueprint');
 
 (async () => {
-  const { version, bin } = JSON.parse(await readFile(new URL('../package.json', import.meta.url)));
+  const { runJHipster, done, logger } = await import('generator-jhipster/cli');
   const executableName = Object.keys(bin)[0];
 
   runJHipster({
@@ -29,9 +27,9 @@ const devBlueprintPath = join(packagePath, '.blueprint');
     },
     lookups: [{ packagePaths: [packagePath], lookups: ['generators'] }],
   }).catch(done);
-})();
 
-process.on('unhandledRejection', up => {
-  logger.error('Unhandled promise rejection at:');
-  logger.fatal(up);
-});
+  process.on('unhandledRejection', up => {
+    logger.error('Unhandled promise rejection at:');
+    logger.fatal(up);
+  });
+})();

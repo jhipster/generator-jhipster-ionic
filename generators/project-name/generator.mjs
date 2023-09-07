@@ -3,13 +3,7 @@ import command from './command.mjs';
 
 export default class extends ProjectNameGenerator {
   constructor(args, opts, features) {
-    super(args, opts, features);
-
-    if (this.options.help) return;
-
-    if (!this.jhipsterContext) {
-      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints ionic')}`);
-    }
+    super(args, opts, { checkBlueprint: true, ...features });
   }
 
   get [ProjectNameGenerator.INITIALIZING]() {

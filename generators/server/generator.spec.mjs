@@ -1,25 +1,22 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 
-import { helpers, lookups } from '#test-utils';
+import { defaultHelpers as helpers, result } from 'generator-jhipster/testing';
 
 const SUB_GENERATOR = 'server';
 const BLUEPRINT_NAMESPACE = `jhipster:${SUB_GENERATOR}`;
 
 describe('SubGenerator server of ionic JHipster blueprint', () => {
   describe('run', () => {
-    let result;
     beforeAll(async function () {
-      result = await helpers
-        .create(BLUEPRINT_NAMESPACE)
+      await helpers
+        .run(BLUEPRINT_NAMESPACE)
+        .withJHipsterConfig()
         .withOptions({
-          reproducible: true,
-          defaults: true,
-          baseName: 'jhipster',
           ignoreNeedlesError: true,
           blueprint: 'ionic',
         })
-        .withLookups(lookups)
-        .run();
+        .withJHipsterLookup()
+        .withParentBlueprintLookup();
     });
 
     it('should succeed', () => {

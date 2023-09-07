@@ -13,7 +13,7 @@ export default class extends BaseApplicationGenerator {
     if (this.options.help) return;
 
     if (this.blueprintConfig.ionicDir) {
-      throw new Error('Ionic generator must run in Ionic application directory');
+      throw new Error('Ionic generator must run in Ionic application directory, to regenerate backend execute `jhipster-ionic app`');
     }
 
     this.ionicStorage = this.blueprintStorage;
