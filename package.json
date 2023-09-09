@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "chalk": "5.3.0",
-    "generator-jhipster": "github:mshima/generator-jhipster#skip_ci-blueprint",
+    "generator-jhipster": "github:jhipster/generator-jhipster",
     "lodash-es": "4.17.21"
   },
   "devDependencies": {
