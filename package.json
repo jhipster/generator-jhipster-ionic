@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "chalk": "5.3.0",
-    "generator-jhipster": "7.9.3",
+    "generator-jhipster": "7.9.4",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
