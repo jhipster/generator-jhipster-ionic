@@ -73,14 +73,15 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.CONFIGURING]() {
     return this.asConfiguringTaskGroup({
-      configure() {
-        if (this.blueprintConfig.appDir) {
-          try {
-            this.copyDestination(this.destinationPath(this.blueprintConfig.appDir, '.jhipster', '**'), '.jhipster/');
-          } catch {
-            // No entities.
-          }
+      loadConfigFromBackend() {
+        if (!this.blueprintConfig.appDir) return;
+
+        try {
+          this.copyDestination(this.destinationPath(this.blueprintConfig.appDir, '.jhipster', '**'), '.jhipster/');
+        } catch {
+          // No entities.
         }
+
         if (this.backendConfig?.entities && !this.jhipsterConfig.entities) {
           this.jhipsterConfig.entities = this.backendConfig.entities;
         }
@@ -99,18 +100,19 @@ export default class extends BaseApplicationGenerator {
           this.jhipsterConfig.baseName = `${this.backendConfig.baseName}Ionic`;
         }
 
-        // Add blueprint config to generator-jhipster namespace, so we can omit blueprint parameter when executing jhipster command
-        const ionicBlueprints = this.jhipsterConfig.blueprints;
-        if (!ionicBlueprints || !ionicBlueprints.find(blueprint => blueprint.name === 'generator-jhipster-ionic')) {
-          this.jhipsterConfig.blueprints = [...(localBlueprints || []), { name: 'generator-jhipster-ionic' }];
-        }
-
-        if (this.backendConfig?.baseName && this.ionicConfig.appDir) {
+        if (this.backendConfig?.baseName) {
           const ionicDir = relative(this.destinationPath(this.ionicConfig.appDir), this.destinationPath());
 
           // Add back reference
           this.backendBlueprintConfig.ionicDir = ionicDir;
           this.backendBlueprintConfig.appDir = null;
+        }
+      },
+      blueprint() {
+        // Add blueprint config to generator-jhipster namespace, so we can omit blueprint parameter when executing jhipster command
+        const ionicBlueprints = this.jhipsterConfig.blueprints;
+        if (!ionicBlueprints || !ionicBlueprints.find(blueprint => blueprint.name === 'generator-jhipster-ionic')) {
+          this.jhipsterConfig.blueprints = [...(localBlueprints || []), { name: 'generator-jhipster-ionic' }];
         }
       },
     });
