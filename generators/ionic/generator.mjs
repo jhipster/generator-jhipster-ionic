@@ -1,7 +1,7 @@
 import { relative } from 'node:path';
 import chalk from 'chalk';
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
-import { kebabCase } from 'lodash-es';
+import { kebabCase, startCase } from 'lodash-es';
 import command from './command.mjs';
 import { DEFAULT_BACKEND_PATH } from '../constants.mjs';
 import { files } from './files.mjs';
@@ -60,8 +60,7 @@ export default class extends BaseApplicationGenerator {
       this.updateJHipsterStorages();
     }
 
-    let bootstrapOptions = { destinationRoot: this.getBackendRoot() };
-    await this.dependsOnJHipster('bootstrap-application', bootstrapOptions);
+    await this.dependsOnJHipster('bootstrap-application');
     await this.dependsOnJHipster('init');
   }
 
@@ -76,6 +75,18 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.CONFIGURING]() {
     return this.asConfiguringTaskGroup({
+      loadConfigFromJHipster() {
+        if (this.jhipsterConfig.baseName && !this.localJHipsterConfig.projectName) {
+          this.localJHipsterConfig.projectName = `${startCase(this.jhipsterConfig.baseName)}Ionic`;
+        }
+        if (this.jhipsterConfig.authenticationType) {
+          this.localJHipsterConfig.authenticationType = this.jhipsterConfig.authenticationType;
+        }
+        if (this.jhipsterConfig.enableTranslation !== undefined) {
+          this.localJHipsterConfig.enableTranslation = this.jhipsterConfig.enableTranslation;
+        }
+      },
+
       configure() {
         // Set default baseName.
         if (this.jhipsterConfig.baseName && !this.localJHipsterConfig.baseName) {
@@ -376,14 +387,5 @@ ${chalk.green(`    npm start`)}
       variables,
       hasManyToMany,
     };
-  }
-
-  getBackendRoot() {
-    return this.ionicConfig.appDir ? this.destinationPath(this.ionicConfig.appDir) : this.destinationPath();
-  }
-
-  /* User backend application */
-  getSharedApplication(applicationFolder = this.getBackendRoot()) {
-    return this.options.sharedData.applications?.[this.calculateApplicationId(applicationFolder)];
   }
 }
