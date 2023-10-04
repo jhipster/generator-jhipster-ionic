@@ -75,7 +75,11 @@ export default class extends BaseApplicationGenerator {
     return this.asConfiguringTaskGroup({
       configure() {
         if (this.blueprintConfig.appDir) {
-          this.copyDestination(this.destinationPath(this.blueprintConfig.appDir, '.jhipster', '**'), '.jhipster/');
+          try {
+            this.copyDestination(this.destinationPath(this.blueprintConfig.appDir, '.jhipster', '**'), '.jhipster/');
+          } catch {
+            // No entities.
+          }
         }
         if (this.backendConfig.entities && !this.jhipsterConfig.entities) {
           this.jhipsterConfig.entities = this.backendConfig.entities;
