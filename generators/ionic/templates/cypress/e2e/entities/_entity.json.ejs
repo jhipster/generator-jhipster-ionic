@@ -1,4 +1,4 @@
 <%_
   const sampleFields = fields.filter(f => !f.autoGenerate && !f.nullable);
 _%>
-<%- JSON.stringify(this.generateTypescriptTestEntity(sampleFields.map(field => field.reference))) %>
+<%- JSON.stringify(this.generateTestEntity(sampleFields.map(field => field.reference))) %>

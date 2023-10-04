@@ -1,7 +1,7 @@
 import { relative } from 'node:path';
 import chalk from 'chalk';
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
-import { generateTypescriptTestEntity } from 'generator-jhipster/generators/client/support';
+import { generateTestEntity } from 'generator-jhipster/generators/client/support';
 import { camelCase, kebabCase, startCase } from 'lodash-es';
 import command from './command.mjs';
 import { DEFAULT_BACKEND_PATH } from '../constants.mjs';
@@ -265,8 +265,8 @@ ${chalk.green(`    npm start`)}
    * @param {any} references - references to other entities.
    * @param {any} additionalFields - additional fields to add to the entity or with default values that overrides generated values.
    */
-  generateTypescriptTestEntity(references, additionalFields) {
-    return generateTypescriptTestEntity(references, additionalFields);
+  generateTestEntity(references, additionalFields) {
+    return generateTestEntity(references, additionalFields);
   }
 
   /**
