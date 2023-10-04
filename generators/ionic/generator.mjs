@@ -81,21 +81,21 @@ export default class extends BaseApplicationGenerator {
             // No entities.
           }
         }
-        if (this.backendConfig.entities && !this.jhipsterConfig.entities) {
+        if (this.backendConfig?.entities && !this.jhipsterConfig.entities) {
           this.jhipsterConfig.entities = this.backendConfig.entities;
         }
-        if (this.backendConfig.baseName && !this.jhipsterConfig.projectName) {
+        if (this.backendConfig?.baseName && !this.jhipsterConfig.projectName) {
           this.jhipsterConfig.projectName = `${startCase(this.backendConfig.baseName)}Ionic`;
         }
-        if (this.backendConfig.authenticationType) {
+        if (this.backendConfig?.authenticationType) {
           this.jhipsterConfig.authenticationType = this.backendConfig.authenticationType;
         }
-        if (this.jhipsterConfig.enableTranslation === undefined && this.backendConfig.enableTranslation !== undefined) {
+        if (this.jhipsterConfig.enableTranslation === undefined && this.backendConfig?.enableTranslation !== undefined) {
           this.jhipsterConfig.enableTranslation = this.backendConfig.enableTranslation;
         }
 
         // Set default baseName.
-        if (this.backendConfig.baseName && !this.jhipsterConfig.baseName) {
+        if (this.backendConfig?.baseName && !this.jhipsterConfig.baseName) {
           this.jhipsterConfig.baseName = `${this.backendConfig.baseName}Ionic`;
         }
 
@@ -105,7 +105,7 @@ export default class extends BaseApplicationGenerator {
           this.jhipsterConfig.blueprints = [...(localBlueprints || []), { name: 'generator-jhipster-ionic' }];
         }
 
-        if (this.backendConfig.baseName && this.ionicConfig.appDir) {
+        if (this.backendConfig?.baseName && this.ionicConfig.appDir) {
           const ionicDir = relative(this.destinationPath(this.ionicConfig.appDir), this.destinationPath());
 
           // Add back reference
