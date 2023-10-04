@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "chalk": "5.3.0",
-    "generator-jhipster": "github:jhipster/generator-jhipster",
+    "generator-jhipster": "github:jhipster/generator-jhipster#main",
     "lodash-es": "4.17.21"
   },
   "devDependencies": {
