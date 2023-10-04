@@ -9,6 +9,8 @@ env:
   SPRING_OUTPUT_ANSI_ENABLED: ALWAYS
   SPRING_JPA_SHOW_SQL: false
   NG_CLI_ANALYTICS: false
+  # https://github.com/cypress-io/cypress/issues/27962#issuecomment-1746294247
+  NODE_OPTIONS: --dns-result-order=ipv4first
 jobs:
   build:
     name: ${{ matrix.jdl }}
