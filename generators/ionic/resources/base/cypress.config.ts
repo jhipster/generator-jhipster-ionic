@@ -1,6 +1,6 @@
 import { defineConfig } from 'cypress';
 
-export const defaultConfig = {
+export default defineConfig({
   video: false,
   fixturesFolder: 'cypress/fixtures',
   screenshotsFolder: 'cypress/screenshots',
@@ -18,6 +18,4 @@ export const defaultConfig = {
     baseUrl: 'http://localhost:8100/',
     supportFile: 'cypress/support/index.ts'
   },
-};
-
-export default defineConfig(defaultConfig);
+});

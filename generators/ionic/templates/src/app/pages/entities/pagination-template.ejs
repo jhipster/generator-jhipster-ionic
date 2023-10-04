@@ -51,7 +51,7 @@ currentAccount: any;
         private jhiAlertService: JhiAlertService,
         private principal: Principal,
         private activatedRoute: ActivatedRoute,
-        <%_ if (fieldsContainBlob) { _%>
+        <%_ if (anyFieldIsBlobDerived) { _%>
         private dataUtils: JhiDataUtils,
         <%_ } _%>
         private router: Router,

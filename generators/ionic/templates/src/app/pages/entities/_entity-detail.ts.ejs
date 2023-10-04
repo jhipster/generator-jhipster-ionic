@@ -17,7 +17,7 @@
  limitations under the License.
 -%>
 import { Component, OnInit } from '@angular/core';
-<%_ if (fieldsContainBlob) { _%>
+<%_ if (anyFieldIsBlobDerived) { _%>
 import { JhiDataUtils } from '../../../services/utils/data-util.service';
 <%_ } _%>
 import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
@@ -33,7 +33,7 @@ export class <%= entityAngularName %>DetailPage implements OnInit {
     <%= entityInstance %>: <%= entityAngularName %> = {};
 
     constructor(
-    <%_ if (fieldsContainBlob) { _%>
+    <%_ if (anyFieldIsBlobDerived) { _%>
         private dataUtils: JhiDataUtils,
     <%_ } _%>
         private navController: NavController,
@@ -73,7 +73,7 @@ export class <%= entityAngularName %>DetailPage implements OnInit {
         await alert.present();
     }
 
-<%_ if (fieldsContainBlob) { _%>
+<%_ if (anyFieldIsBlobDerived) { _%>
     byteSize(field) {
         return this.dataUtils.byteSize(field);
     }

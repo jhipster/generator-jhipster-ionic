@@ -42,7 +42,7 @@ _%>
     constructor(
         private <%= entityInstance %>Service: <%= entityAngularName %>Service,
         private jhiAlertService: JhiAlertService,
-        <%_ if (fieldsContainBlob) { _%>
+        <%_ if (anyFieldIsBlobDerived) { _%>
         private dataUtils: JhiDataUtils,
         <%_ } _%>
         private eventManager: JhiEventManager,

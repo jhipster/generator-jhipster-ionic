@@ -23,15 +23,15 @@ const variables = query.variables;
 let hasManyToMany = query.hasManyToMany;
 _%>
 import { Component, OnInit } from '@angular/core';
-<%_ if (fieldsContainBlob) { _%>
+<%_ if (anyFieldIsBlobDerived) { _%>
 import { JhiDataUtils } from '../../../services/utils/data-util.service';
 <%_ } _%>
-<%_ if (fieldsContainImageBlob) { _%>
+<%_ if (anyFieldHasImageContentType) { _%>
 import { Capacitor } from '@capacitor/core';
 import { Camera, ImageOptions, CameraResultType } from '@capacitor/camera';
 <%_ } _%>
 import { UntypedFormBuilder as FormBuilder, Validators } from '@angular/forms';
-import { NavController, Platform, ToastController<% if (fieldsContainImageBlob) { %>, AlertController<% } %> } from '@ionic/angular';
+import { NavController, Platform, ToastController<% if (anyFieldHasImageContentType) { %>, AlertController<% } %> } from '@ionic/angular';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -68,7 +68,7 @@ export class <%= entityAngularName %>UpdatePage implements OnInit {
     <%_ for (const idx in variables) { _%>
     <%- variables[idx] %>
     <%_ } _%>
-    <%_ if (fieldsContainImageBlob) { _%>
+    <%_ if (anyFieldHasImageContentType) { _%>
       imageOptions: ImageOptions;
     <%_ } _%>
     <%_ for ( idx in fields ) {
@@ -122,10 +122,10 @@ export class <%= entityAngularName %>UpdatePage implements OnInit {
         protected formBuilder: FormBuilder,
         public platform: Platform,
         protected toastCtrl: ToastController,
-<%_ if (fieldsContainBlob) { _%>
+<%_ if (anyFieldIsBlobDerived) { _%>
         private dataUtils: JhiDataUtils,
 <%_ } _%>
-<% if (fieldsContainImageBlob) { %>
+<% if (anyFieldHasImageContentType) { %>
         private alertController: AlertController,
 <%_ } _%>
 <%_ Object.keys(differentRelationships).forEach(key => {
@@ -145,7 +145,7 @@ _%>
         this.form.valueChanges.subscribe((v) => {
             this.isReadyToSave = this.form.valid;
         });
-<%_ if (fieldsContainImageBlob) { _%>
+<%_ if (anyFieldHasImageContentType) { _%>
 
         // Set the Camera options
         this.imageOptions = {
@@ -247,13 +247,13 @@ _%>
         const toast = await this.toastCtrl.create({message: 'Failed to load data', duration: 2000, position: 'middle'});
         await toast.present();
     }
-<%_ if (fieldsContainBlob) { _%>
+<%_ if (anyFieldIsBlobDerived) { _%>
 
     byteSize(field) {
         return this.dataUtils.byteSize(field);
     }
 <%_ } _%>
-<%_ if (fieldsContainImageBlob) { _%>
+<%_ if (anyFieldHasImageContentType) { _%>
 
     async getPicture(fieldName) {
       if (Capacitor.isPluginAvailable('Camera')) {
@@ -291,7 +291,7 @@ _%>
     }
 <%_ } 
 
-    if (fieldsContainBlob) { _%>
+    if (anyFieldIsBlobDerived) { _%>
     setFileData(event, field, isImage) {
         this.dataUtils.loadFileToForm(event, this.form, field, isImage).subscribe();
     }
