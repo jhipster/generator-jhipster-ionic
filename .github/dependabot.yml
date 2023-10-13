@@ -19,3 +19,7 @@ updates:
     directory: '/generators/ionic/resources/base'
     schedule:
       interval: 'weekly'
+    groups:
+      angular:
+        patterns:
+          - "@angular/*"
