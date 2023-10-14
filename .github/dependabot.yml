@@ -13,13 +13,13 @@ updates:
     groups:
       angular:
         patterns:
-          - "@angular/*"
-          - "zone.js"
-          - "@angular-devkit/*"
-          - "@angular-builders/*"
+          - '@angular/*'
+          - 'zone.js'
+          - '@angular-devkit/*'
+          - '@angular-builders/*'
       angular-eslint:
         patterns:
-          - "@angular-eslint/*"
+          - '@angular-eslint/*'
       typescript-eslint:
         patterns:
-          - "@typescript-eslint/*"
+          - '@typescript-eslint/*'
