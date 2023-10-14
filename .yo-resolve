@@ -6,3 +6,6 @@ generators/ionic/generator.spec.mjs skip
 generators/app/generator.mjs skip
 generators/ionic/generator.mjs skip
 generators/project-name/generator.mjs skip
+cli/cli.cjs skip
+generators/ionic/command.mjs skip
+generators/server/generator.mjs skip
