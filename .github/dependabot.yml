@@ -20,6 +20,9 @@ updates:
       angular-eslint:
         patterns:
           - "@angular-eslint/*"
+      capacitor:
+        patterns:
+          - '@capacitor/*'
       typescript-eslint:
         patterns:
           - "@typescript-eslint/*"
