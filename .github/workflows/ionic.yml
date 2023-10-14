@@ -1,5 +1,11 @@
 name: Ionic
-on: [push, pull_request]
+on:
+  push:
+    branches-ignore:
+      - 'dependabot/**'
+  pull_request:
+    branches:
+      - "*"
 env:
   JHIPSTER_INSTALL: ${{ github.workspace }}/generator-jhipster-ionic/test-integration/install
   JHIPSTER_SAMPLES: ${{ github.workspace }}/generator-jhipster-ionic/test-integration/jdl
