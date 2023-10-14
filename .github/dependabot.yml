@@ -10,3 +10,13 @@ updates:
     directory: '/generators/ionic/resources/base'
     schedule:
       interval: 'weekly'
+    groups:
+      angular:
+        patterns:
+          - "@angular/*"
+      angular-eslint:
+        patterns:
+          - "@angular-eslint/*"
+      typescript-eslint:
+        patterns:
+          - "@typescript-eslint/*"
