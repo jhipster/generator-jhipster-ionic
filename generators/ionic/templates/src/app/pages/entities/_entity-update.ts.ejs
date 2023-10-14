@@ -274,7 +274,7 @@ _%>
           const contentType = meta.split(':')[1].split(';')[0].trim();
 
           const patchValue = { [fieldName]: imageData, [fieldName + 'ContentType']: contentType };
-          Object.assign(this.attachment, patchValue);
+          Object.assign(this.<%= entityInstance %>, patchValue);
           this.form.patchValue(patchValue);
         } catch (error) {
           console.log(error);
