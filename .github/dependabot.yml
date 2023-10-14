@@ -14,15 +14,22 @@ updates:
       angular:
         patterns:
           - '@angular/*'
-          - 'zone.js'
           - '@angular-devkit/*'
-          - '@angular-builders/*'
+          - '@fortawesome/angular-fontawesome'
+          - 'ngx-webstorage'
+          - 'typescript'
+          - 'zone.js'
+          - '@angular-builders/jest'
+          - 'jest'
+          - 'jest-preset-angular'
+          - '@types/jest'
       angular-eslint:
         patterns:
           - '@angular-eslint/*'
       capacitor:
         patterns:
           - '@capacitor/*'
+          - 'capacitor-secure-storage-plugin'
       typescript-eslint:
         patterns:
           - '@typescript-eslint/*'
