@@ -1,5 +1,8 @@
 application {
   config {
+    baseName Flickr2
+    packageName com.okta.developer
+    testFrameworks [cypress]
   }
   entities *
 }
