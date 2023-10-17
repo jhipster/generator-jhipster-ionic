@@ -36,6 +36,7 @@ jobs:
           - gateway-oauth2
           - reactive-oauth2
           - 21-points
+          - flickr2
         include:
           - jdl: monolith-jwt
             e2e: 1
@@ -46,6 +47,8 @@ jobs:
           - jdl: reactive-oauth2
             e2e: 1
           - jdl: 21-points
+            e2e: 1
+          - jdl: flickr2
             e2e: 1
 
     steps:
