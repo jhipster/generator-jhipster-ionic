@@ -26,7 +26,7 @@ export class <%= entityClass %>UpdatePage extends EntityUpdatePage{
   pageSelector = 'page-<%= entityFileName %>-update';
 <%_ for (field of fields.filter(field => !field.id)) { _%>
 
-  set<%= field.fieldNameCapitalized %>Input(<%= field.fieldName %>: string) {
+  set<%= field.fieldNameCapitalized %>Input(<% if (!field.blobContentTypeImage) { %><%= field.fieldName %>: string<% } %>) {
   <%_ if (field.fieldTypeCharSequence || field.fieldTypeNumeric) { _%>
     this.setInputValue('<%= field.fieldName %>', <%= field.fieldName %>);
   <%_ } else if (field.fieldTypeTimed) { _%>
@@ -37,6 +37,8 @@ export class <%= entityClass %>UpdatePage extends EntityUpdatePage{
     this.setTextAreaContent('<%= field.fieldName %>', <%= field.fieldName %>);
   <%_ } else if (field.fieldTypeBoolean) { _%>
     this.setBoolean('<%= field.fieldName %>', <%= field.fieldName %>);
+  <%_ } else if (field.blobContentTypeImage) { _%>
+    this.takePhoto('<%= field.fieldName %>');
   <%_ } else if (field.fieldTypeBinary) { _%>
     this.setBlob('<%= field.fieldName %>', <%= field.fieldName %>);
   <%_ } else if (field.fieldTypeDuration) { _%>

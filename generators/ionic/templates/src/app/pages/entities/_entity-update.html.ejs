@@ -94,7 +94,7 @@ _%>
                         <%_ } _%>
                     </div>
                     <%_ if (fieldTypeBlobContent === 'image') { _%>
-                    <ion-button *ngIf="!<%= entityInstance %>?.<%= fieldName %>" (click)="getPicture('<%= fieldName %>')">
+                    <ion-button *ngIf="!<%= entityInstance %>?.<%= fieldName %>" (click)="getPicture('<%= fieldName %>')" data-cy="<%= fieldName %>-take-photo">
                         <ion-icon name="add-circle" slot="start"></ion-icon>
                         {{ 'ITEM_CREATE_CHOOSE_IMAGE' | translate }}
                     </ion-button>
