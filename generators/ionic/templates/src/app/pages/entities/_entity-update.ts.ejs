@@ -22,7 +22,7 @@ const queries = query.queries;
 const variables = query.variables;
 let hasManyToMany = query.hasManyToMany;
 _%>
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit<% if (anyFieldHasImageContentType) { %>,ViewChild<% } %> } from '@angular/core';
 <%_ if (anyFieldIsBlobDerived) { _%>
 import { JhiDataUtils } from '../../../services/utils/data-util.service';
 <%_ } _%>
@@ -69,6 +69,7 @@ export class <%= entityAngularName %>UpdatePage implements OnInit {
     <%- variables[idx] %>
     <%_ } _%>
     <%_ if (anyFieldHasImageContentType) { _%>
+      @ViewChild('fileInput', { static: false }) fileInput;
       imageOptions: ImageOptions;
     <%_ } _%>
     <%_ for ( idx in fields ) {
@@ -83,6 +84,9 @@ export class <%= entityAngularName %>UpdatePage implements OnInit {
     isSaving = false;
     isNew = true;
     isReadyToSave: boolean;
+<%_ if (anyFieldHasImageContentType) { _%>
+    useCameraCapacitor: boolean;
+<%_ } _%>
 
     form = this.formBuilder.group({
     <%_ for (idx in fields) {
@@ -170,6 +174,10 @@ _%>
             this.isNew = this.<%= entityInstance %>.id === null || this.<%= entityInstance %>.id === undefined;
             this.updateForm(this.<%= entityInstance %>);
         });
+<%_ if (anyFieldHasImageContentType) { _%>
+
+        this.useCameraCapacitor = Capacitor.isPluginAvailable('Camera');
+<%_ } _%>
     }
 
     updateForm(<%= entityInstance %>: <%= entityAngularName %>) {
@@ -256,13 +264,13 @@ _%>
 <%_ if (anyFieldHasImageContentType) { _%>
 
     async getPicture(fieldName) {
-      if (Capacitor.isPluginAvailable('Camera')) {
+      if (this.useCameraCapacitor) {
         try {
           if (Capacitor.isNativePlatform()) {
             const permissions = await Camera.requestPermissions({ permissions: ['camera', 'photos'] });
             if ([permissions.camera, permissions.photos].every(permission => permission === 'denied')) {
               const alert = await this.alertController.create({
-                header: 'You don\'t have permission',
+                header: "You don't have permission",
                 buttons: [{ text: 'Ok' }],
               });
               return alert.present();
@@ -280,8 +288,24 @@ _%>
           console.log(error);
         }
       } else {
-        console.log('Camera plugin not supported');
+        this.fileInput.nativeElement.click();
       }
+    }
+
+    processWebImage(event, fieldName) {
+      const reader = new FileReader();
+      reader.onload = readerEvent => {
+        let imageData = (readerEvent.target as any).result;
+        const imageType = event.target.files[0].type;
+        imageData = imageData.substring(imageData.indexOf(',') + 1);
+
+        this.form.patchValue({ [fieldName]: imageData });
+        this.form.patchValue({ [fieldName + 'ContentType']: imageType });
+        this.<%= entityInstance %>[fieldName] = imageData;
+        this.<%= entityInstance %>[fieldName + 'ContentType'] = imageType;
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
     }
 
     clearInputImage(field: string) {
@@ -289,11 +313,16 @@ _%>
       Object.assign(this.<%= entityInstance %>, patchValue);
       this.form.patchValue(patchValue);
     }
-<%_ } 
+<%_ } _%>
 
-    if (anyFieldIsBlobDerived) { _%>
+<%_ if (anyFieldIsBlobDerived) { _%>
     setFileData(event, field, isImage) {
         this.dataUtils.loadFileToForm(event, this.form, field, isImage).subscribe();
+  <%_ if (anyFieldHasImageContentType) { _%>
+        if (isImage) {
+            this.processWebImage(event, field);
+        }
+  <%_ } _%>
     }
 <%_ } _%>
 
