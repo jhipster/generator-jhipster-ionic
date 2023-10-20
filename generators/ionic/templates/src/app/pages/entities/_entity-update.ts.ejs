@@ -22,16 +22,16 @@ const queries = query.queries;
 const variables = query.variables;
 let hasManyToMany = query.hasManyToMany;
 _%>
-import { Component, OnInit } from '@angular/core';
-<%_ if (fieldsContainBlob) { _%>
+import { Component, OnInit<% if (anyFieldHasImageContentType) { %>,ViewChild<% } %> } from '@angular/core';
+<%_ if (anyFieldIsBlobDerived) { _%>
 import { JhiDataUtils } from '../../../services/utils/data-util.service';
 <%_ } _%>
-<%_ if (fieldsContainImageBlob) { _%>
+<%_ if (anyFieldHasImageContentType) { _%>
 import { Capacitor } from '@capacitor/core';
 import { Camera, ImageOptions, CameraResultType } from '@capacitor/camera';
 <%_ } _%>
 import { UntypedFormBuilder as FormBuilder, Validators } from '@angular/forms';
-import { NavController, Platform, ToastController<% if (fieldsContainImageBlob) { %>, AlertController<% } %> } from '@ionic/angular';
+import { NavController, Platform, ToastController<% if (anyFieldHasImageContentType) { %>, AlertController<% } %> } from '@ionic/angular';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -68,7 +68,8 @@ export class <%= entityAngularName %>UpdatePage implements OnInit {
     <%_ for (const idx in variables) { _%>
     <%- variables[idx] %>
     <%_ } _%>
-    <%_ if (fieldsContainImageBlob) { _%>
+    <%_ if (anyFieldHasImageContentType) { _%>
+      @ViewChild('fileInput', { static: false }) fileInput;
       imageOptions: ImageOptions;
     <%_ } _%>
     <%_ for ( idx in fields ) {
@@ -83,6 +84,9 @@ export class <%= entityAngularName %>UpdatePage implements OnInit {
     isSaving = false;
     isNew = true;
     isReadyToSave: boolean;
+<%_ if (anyFieldHasImageContentType) { _%>
+    useCameraCapacitor: boolean;
+<%_ } _%>
 
     form = this.formBuilder.group({
     <%_ for (idx in fields) {
@@ -122,10 +126,10 @@ export class <%= entityAngularName %>UpdatePage implements OnInit {
         protected formBuilder: FormBuilder,
         public platform: Platform,
         protected toastCtrl: ToastController,
-<%_ if (fieldsContainBlob) { _%>
+<%_ if (anyFieldIsBlobDerived) { _%>
         private dataUtils: JhiDataUtils,
 <%_ } _%>
-<% if (fieldsContainImageBlob) { %>
+<% if (anyFieldHasImageContentType) { %>
         private alertController: AlertController,
 <%_ } _%>
 <%_ Object.keys(differentRelationships).forEach(key => {
@@ -145,7 +149,7 @@ _%>
         this.form.valueChanges.subscribe((v) => {
             this.isReadyToSave = this.form.valid;
         });
-<%_ if (fieldsContainImageBlob) { _%>
+<%_ if (anyFieldHasImageContentType) { _%>
 
         // Set the Camera options
         this.imageOptions = {
@@ -170,6 +174,10 @@ _%>
             this.isNew = this.<%= entityInstance %>.id === null || this.<%= entityInstance %>.id === undefined;
             this.updateForm(this.<%= entityInstance %>);
         });
+<%_ if (anyFieldHasImageContentType) { _%>
+
+        this.useCameraCapacitor = Capacitor.isPluginAvailable('Camera');
+<%_ } _%>
     }
 
     updateForm(<%= entityInstance %>: <%= entityAngularName %>) {
@@ -247,22 +255,22 @@ _%>
         const toast = await this.toastCtrl.create({message: 'Failed to load data', duration: 2000, position: 'middle'});
         await toast.present();
     }
-<%_ if (fieldsContainBlob) { _%>
+<%_ if (anyFieldIsBlobDerived) { _%>
 
     byteSize(field) {
         return this.dataUtils.byteSize(field);
     }
 <%_ } _%>
-<%_ if (fieldsContainImageBlob) { _%>
+<%_ if (anyFieldHasImageContentType) { _%>
 
     async getPicture(fieldName) {
-      if (Capacitor.isPluginAvailable('Camera')) {
+      if (this.useCameraCapacitor) {
         try {
           if (Capacitor.isNativePlatform()) {
             const permissions = await Camera.requestPermissions({ permissions: ['camera', 'photos'] });
             if ([permissions.camera, permissions.photos].every(permission => permission === 'denied')) {
               const alert = await this.alertController.create({
-                header: 'You don\'t have permission',
+                header: "You don't have permission",
                 buttons: [{ text: 'Ok' }],
               });
               return alert.present();
@@ -274,14 +282,30 @@ _%>
           const contentType = meta.split(':')[1].split(';')[0].trim();
 
           const patchValue = { [fieldName]: imageData, [fieldName + 'ContentType']: contentType };
-          Object.assign(this.attachment, patchValue);
+          Object.assign(this.<%= entityInstance %>, patchValue);
           this.form.patchValue(patchValue);
         } catch (error) {
           console.log(error);
         }
       } else {
-        console.log('Camera plugin not supported');
+        this.fileInput.nativeElement.click();
       }
+    }
+
+    processWebImage(event, fieldName) {
+      const reader = new FileReader();
+      reader.onload = readerEvent => {
+        let imageData = (readerEvent.target as any).result;
+        const imageType = event.target.files[0].type;
+        imageData = imageData.substring(imageData.indexOf(',') + 1);
+
+        this.form.patchValue({ [fieldName]: imageData });
+        this.form.patchValue({ [fieldName + 'ContentType']: imageType });
+        this.<%= entityInstance %>[fieldName] = imageData;
+        this.<%= entityInstance %>[fieldName + 'ContentType'] = imageType;
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
     }
 
     clearInputImage(field: string) {
@@ -289,11 +313,16 @@ _%>
       Object.assign(this.<%= entityInstance %>, patchValue);
       this.form.patchValue(patchValue);
     }
-<%_ } 
+<%_ } _%>
 
-    if (fieldsContainBlob) { _%>
+<%_ if (anyFieldIsBlobDerived) { _%>
     setFileData(event, field, isImage) {
         this.dataUtils.loadFileToForm(event, this.form, field, isImage).subscribe();
+  <%_ if (anyFieldHasImageContentType) { _%>
+        if (isImage) {
+            this.processWebImage(event, field);
+        }
+  <%_ } _%>
     }
 <%_ } _%>
 

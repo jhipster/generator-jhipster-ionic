@@ -1,74 +1,25 @@
+import { relative } from 'node:path';
 import chalk from 'chalk';
-import { relative } from 'path';
-import _ from 'lodash';
-import { GeneratorBaseEntities, utils } from 'generator-jhipster';
-import {
-  PRIORITY_PREFIX,
-  INITIALIZING_PRIORITY,
-  CONFIGURING_PRIORITY,
-  LOADING_PRIORITY,
-  PREPARING_PRIORITY,
-  WRITING_PRIORITY,
-  WRITING_ENTITIES_PRIORITY,
-  POST_WRITING_PRIORITY,
-  INSTALL_PRIORITY,
-  END_PRIORITY,
-} from 'generator-jhipster/esm/priorities';
-
+import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
+import { generateTestEntity } from 'generator-jhipster/generators/client/support';
+import { camelCase, kebabCase, startCase } from 'lodash-es';
+import command from './command.mjs';
 import { DEFAULT_BACKEND_PATH } from '../constants.mjs';
-import { files, entityFiles } from './files.mjs';
+import { entityFiles, files } from './files.mjs';
+import { createNeedleCallback } from 'generator-jhipster/generators/base/support';
 
-export default class extends GeneratorBaseEntities {
+export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
-    super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
-
-    this.option('defaults', {
-      desc: 'Use default options',
-      type: String,
-    });
-
-    this.option('authentication-type', {
-      desc: 'Authentication type',
-      type: String,
-    });
-
-    this.option('base-name', {
-      desc: 'Base name',
-      type: String,
-    });
-
-    this.option('app-dir', {
-      desc: 'Directory for JHipster application',
-      type: String,
-    });
-
-    this.option('standalone', {
-      desc: 'Skip backend',
-      type: Boolean,
-    });
-
-    this.jhipsterOptions({
-      skipCommitHook: {
-        desc: 'Skip adding husky commit hooks',
-        type: Boolean,
-        scope: 'storage',
-      },
-    });
+    super(args, opts, { ...features, sbsBlueprint: true, jhipster7Migration: true });
 
     if (this.options.help) return;
 
-    // Don't show modularized generators hello message
-    this.configOptions.showHello = false;
-
     if (this.blueprintConfig.ionicDir) {
-      throw new Error('Ionic generator must run in Ionic application directory');
+      throw new Error('Ionic generator must run in Ionic application directory, to regenerate backend execute `jhipster-ionic app`');
     }
 
     this.ionicStorage = this.blueprintStorage;
     this.ionicConfig = this.blueprintConfig;
-
-    this.localJHipsterStorage = this._config;
-    this.localJHipsterConfig = this.jhipsterConfig;
 
     // Set defaultIndent to 2 to hide prompt
     this.jhipsterConfig.prettierDefaultIndent = 2;
@@ -80,17 +31,17 @@ export default class extends GeneratorBaseEntities {
       this.ionicConfig.appDir = this.options.appDir;
     }
     if (this.options.baseName !== undefined) {
-      this.localJHipsterConfig.baseName = this.options.baseName;
+      this.jhipsterConfig.baseName = this.options.baseName;
     }
     if (this.options.authenticationType !== undefined) {
-      this.localJHipsterConfig.authenticationType = this.options.authenticationType;
+      this.jhipsterConfig.authenticationType = this.options.authenticationType;
     }
     if (this.options.defaults || this.options.force) {
       this.ionicStorage.defaults({ appDir: DEFAULT_BACKEND_PATH });
     }
   }
 
-  async _postConstruct() {
+  async beforeQueue() {
     await this.prompt(
       [
         {
@@ -100,103 +51,98 @@ export default class extends GeneratorBaseEntities {
           default: DEFAULT_BACKEND_PATH,
         },
       ],
-      this.ionicStorage
+      this.ionicStorage,
     );
     this.ionicStorage.defaults({ appDir: DEFAULT_BACKEND_PATH, ionicDir: null });
 
     if (this.ionicConfig.appDir) {
-      this.updateJHipsterStorages();
+      this.addBackendStorages();
     }
 
-    let bootstrapOptions = this.ionicConfig.appDir ? { destinationRoot: this.destinationPath(this.ionicConfig.appDir) } : {};
-    await this.dependsOnJHipster('bootstrap-application', bootstrapOptions);
+    await this.dependsOnJHipster('bootstrap-application');
     await this.dependsOnJHipster('init');
   }
 
-  get [INITIALIZING_PRIORITY]() {
-    return {
-      loadConfigFromJHipster() {
-        if (this.jhipsterConfig.baseName && !this.localJHipsterConfig.projectName) {
-          this.localJHipsterConfig.projectName = `${_.startCase(this.jhipsterConfig.baseName)}Ionic`;
-        }
-        if (this.jhipsterConfig.authenticationType) {
-          this.localJHipsterConfig.authenticationType = this.jhipsterConfig.authenticationType;
-        }
-        if (this.jhipsterConfig.enableTranslation !== undefined) {
-          this.localJHipsterConfig.enableTranslation = this.jhipsterConfig.enableTranslation;
-        }
+  get [BaseApplicationGenerator.INITIALIZING]() {
+    return this.asInitializingTaskGroup({
+      async initializingTemplateTask() {
+        this.parseJHipsterCommand(command);
       },
-    };
+    });
   }
 
-  get [CONFIGURING_PRIORITY]() {
-    return {
-      configure() {
+  get [BaseApplicationGenerator.CONFIGURING]() {
+    return this.asConfiguringTaskGroup({
+      loadConfigFromBackend() {
+        if (!this.blueprintConfig.appDir) return;
+
+        try {
+          this.copyDestination(this.destinationPath(this.blueprintConfig.appDir, '.jhipster', '**'), '.jhipster/');
+        } catch {
+          // No entities.
+        }
+
+        if (this.backendConfig?.entities && !this.jhipsterConfig.entities) {
+          this.jhipsterConfig.entities = this.backendConfig.entities;
+        }
+        if (this.backendConfig?.baseName && !this.jhipsterConfig.projectName) {
+          this.jhipsterConfig.projectName = `${startCase(this.backendConfig.baseName)}Ionic`;
+        }
+        if (this.backendConfig?.authenticationType) {
+          this.jhipsterConfig.authenticationType = this.backendConfig.authenticationType;
+        }
+        if (this.jhipsterConfig.enableTranslation === undefined && this.backendConfig?.enableTranslation !== undefined) {
+          this.jhipsterConfig.enableTranslation = this.backendConfig.enableTranslation;
+        }
+
         // Set default baseName.
-        if (this.jhipsterConfig.baseName && !this.localJHipsterConfig.baseName) {
-          this.localJHipsterConfig.baseName = `${this.jhipsterConfig.baseName}Ionic`;
+        if (this.backendConfig?.baseName && !this.jhipsterConfig.baseName) {
+          this.jhipsterConfig.baseName = `${this.backendConfig.baseName}Ionic`;
         }
 
-        // Add blueprint config to generator-jhipster namespace, so we can omit blueprint parameter when executing jhipster command
-        const localBlueprints = this.localJHipsterConfig.blueprints;
-        if (!localBlueprints || !localBlueprints.find(blueprint => blueprint.name === 'generator-jhipster-ionic')) {
-          this.localJHipsterConfig.blueprints = [...(localBlueprints || []), { name: 'generator-jhipster-ionic' }];
-        }
-
-        if (this.jhipsterConfig.baseName && this.ionicConfig.appDir) {
+        if (this.backendConfig?.baseName) {
           const ionicDir = relative(this.destinationPath(this.ionicConfig.appDir), this.destinationPath());
 
           // Add back reference
-          this.blueprintConfig.ionicDir = ionicDir;
-          this.blueprintConfig.appDir = null;
+          this.backendBlueprintConfig.ionicDir = ionicDir;
+          this.backendBlueprintConfig.appDir = null;
         }
       },
-    };
-  }
-
-  get [LOADING_PRIORITY]() {
-    return {
-      loadConfig() {
-        this.application = {};
-        this.loadAppConfig(this.localJHipsterConfig, this.application);
-        this.loadTranslationConfig(this.localJHipsterConfig, this.application);
+      blueprint() {
+        // Add blueprint config to generator-jhipster namespace, so we can omit blueprint parameter when executing jhipster command
+        const ionicBlueprints = this.jhipsterConfig.blueprints;
+        if (!ionicBlueprints || !ionicBlueprints.find(blueprint => blueprint.name === 'generator-jhipster-ionic')) {
+          this.jhipsterConfig.blueprints = [...(localBlueprints || []), { name: 'generator-jhipster-ionic' }];
+        }
       },
-    };
+    });
   }
 
-  get [PREPARING_PRIORITY]() {
-    return {
-      prepareApplication() {
-        this.loadDerivedAppConfig(this.application);
-      },
-    };
-  }
-
-  get [WRITING_PRIORITY]() {
-    return {
-      async writingTemplateTask() {
+  get [BaseApplicationGenerator.WRITING]() {
+    return this.asWritingTaskGroup({
+      async writingTemplateTask({ application }) {
         await this.writeFiles({
           sections: files,
-          context: this.application,
+          context: application,
         });
 
         await this.copyTemplateAsync('../resources/base/{**,**/.*}', this.destinationPath());
 
-        if (this.application.authenticationTypeJwt) {
+        if (application.authenticationTypeJwt) {
           await this.copyTemplateAsync('../resources/jwt/{**,**/.*}', this.destinationPath());
         }
 
-        if (this.application.authenticationTypeOauth2) {
+        if (application.authenticationTypeOauth2) {
           await this.copyTemplateAsync('../resources/oauth2/{**,**/.*}', this.destinationPath());
         }
       },
-    };
+    });
   }
 
-  get [WRITING_ENTITIES_PRIORITY]() {
-    return {
-      async writeEntities({ entities }) {
-        const { enableTranslation } = this.application;
+  get [BaseApplicationGenerator.WRITING_ENTITIES]() {
+    return this.asWritingEntitiesTaskGroup({
+      async writeEntities({ application, entities }) {
+        const { enableTranslation } = application;
         await Promise.all(
           entities
             .filter(entity => !entity.builtIn)
@@ -210,25 +156,39 @@ export default class extends GeneratorBaseEntities {
               });
               // write client side files for angular
               const { entityClassHumanized, entityAngularName, entityFileName, entityFolderName } = entity;
-              this.addEntityToModule({ entityClassHumanized, entityAngularName, entityFileName });
-              this.addEntityRouteToModule({ entityAngularName, entityFolderName, entityFileName });
-            })
+              this.editFile(
+                'src/app/pages/entities/entities.page.ts',
+                createNeedleCallback({
+                  needle: 'jhipster-needle-add-entity-page',
+                  contentToAdd: `{ name: '${entityClassHumanized}', component: '${entityAngularName}Page', route: '${entityFileName}' },`,
+                  contentToCheck: `route: '${entityFileName}'`,
+                }),
+              );
+              this.editFile(
+                'src/app/pages/entities/entities.module.ts',
+                createNeedleCallback({
+                  needle: 'jhipster-needle-add-entity-route',
+                  contentToAdd: `{ path: '${entityFileName}', loadChildren: () => import('./${entityFolderName}/${entityFileName}.module').then(m => m.${entityAngularName}PageModule) },`,
+                  contentToCheck: `path: '${entityFileName}'`,
+                }),
+              );
+            }),
         );
       },
-    };
+    });
   }
 
-  get [POST_WRITING_PRIORITY]() {
-    return {
-      customizePackageJson() {
-        const { baseName } = this.localJHipsterConfig;
+  get [BaseApplicationGenerator.POST_WRITING]() {
+    return this.asPostWritingTaskGroup({
+      customizePackageJson({ application }) {
+        const { baseName } = this.jhipsterConfig;
         this.packageJson.merge({
-          name: _.kebabCase(baseName),
+          name: kebabCase(baseName),
           scripts: {
             'backend:start': `cd ${this.ionicConfig.appDir} && npm run app:start`,
           },
         });
-        if (this.application.authenticationTypeJwt) {
+        if (application.authenticationTypeJwt) {
           this.debug('Removing oauth2 dependencies');
           this.packageJson.set('dependencies', {
             ...this.packageJson.get('dependencies'),
@@ -237,7 +197,7 @@ export default class extends GeneratorBaseEntities {
             'ionic-appauth': undefined,
           });
         }
-        if (this.application.authenticationTypeOauth2) {
+        if (application.authenticationTypeOauth2) {
           this.packageJson.merge({
             jest: {
               moduleNameMapper: {
@@ -250,11 +210,11 @@ export default class extends GeneratorBaseEntities {
           });
         }
       },
-    };
+    });
   }
 
-  get [INSTALL_PRIORITY]() {
-    return {
+  get [BaseApplicationGenerator.INSTALL]() {
+    return this.asInstallTaskGroup({
       async install() {
         try {
           if (this.env.sharedFs.get(this.destinationPath('package.json'))?.commited) {
@@ -264,15 +224,15 @@ export default class extends GeneratorBaseEntities {
           this.log.error(`Error executing 'npm install', execute by yourself.`);
         }
       },
-    };
+    });
   }
 
-  get [END_PRIORITY]() {
-    return {
+  get [BaseApplicationGenerator.END]() {
+    return this.asEndTaskGroup({
       afterRunHook() {
         const changeDirMessage = this.options.fromBackend
           ? `
-${chalk.green(`    cd ${this.blueprintConfig.ionicDir}`)}`
+${chalk.green(`    cd ${this.backendBlueprintConfig.ionicDir}`)}`
           : '';
         this.log(`
 Ionic for JHipster App created successfully! 🎉
@@ -285,107 +245,30 @@ ${chalk.green(`    npm run backend:start`)}
 ${chalk.green(`    npm start`)}
 `);
       },
-    };
+    });
   }
 
   /**
    * @private
    * Update Storages for Ionic
    */
-  updateJHipsterStorages() {
+  addBackendStorages() {
     const appYoRc = `${this.blueprintConfig.appDir}/.yo-rc.json`;
-    this._config = this.createStorage(appYoRc, 'generator-jhipster', { sorted: true });
-    this.jhipsterConfig = this.config.createProxy();
-    this.blueprintStorage = this.createStorage(appYoRc, this.rootGeneratorName(), { sorted: true });
-    this.blueprintConfig = this.blueprintStorage.createProxy();
+    this.backendStorage = this.createStorage(appYoRc, 'generator-jhipster', { sorted: true });
+    this.backendConfig = this.backendStorage.createProxy();
+    this.backendBlueprintStorage = this.createStorage(appYoRc, this.rootGeneratorName(), { sorted: true });
+    this.backendBlueprintConfig = this.backendBlueprintStorage.createProxy();
   }
 
   /**
    * @private
-   * Add a new entity in the TS modules file.
+   * Generate a test entity instance with faked values.
    *
-   * @param {string} options - Entity Instance
-   * @param {string} options.entityClassHumanized - Entity Class
-   * @param {string} options.entityAngularName - Entity Angular Name
-   * @param {string} options.entityFileName - Entity File Name
+   * @param {any} references - references to other entities.
+   * @param {any} additionalFields - additional fields to add to the entity or with default values that overrides generated values.
    */
-  addEntityToModule({ entityClassHumanized, entityAngularName, entityFileName }) {
-    // workaround method being called on initialization
-    if (!entityAngularName) {
-      return;
-    }
-    const entityPagePath = 'src/app/pages/entities/entities.page.ts';
-    try {
-      const isSpecificEntityAlreadyGenerated = utils.checkStringInFile(entityPagePath, `route: '${entityFileName}'`, this);
-
-      if (!isSpecificEntityAlreadyGenerated) {
-        const pageEntry = `{ name: '${entityClassHumanized}', component: '${entityAngularName}Page', route: '${entityFileName}' },`;
-        utils.rewriteFile(
-          {
-            file: entityPagePath,
-            needle: 'jhipster-needle-add-entity-page',
-            splicable: [this.stripMargin(pageEntry)],
-          },
-          this
-        );
-      }
-    } catch (e) {
-      this.log(
-        `${
-          chalk.yellow('\nUnable to find ') +
-          entityPagePath +
-          chalk.yellow(' or missing required jhipster-needle. Reference to ') +
-          entityAngularName
-        } ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`
-      );
-      this.debug('Error:', e);
-    }
-  }
-
-  /**
-   * @private
-   * Add a new route in the TS modules file.
-   *
-   * @param {string} entityInstance - Entity Instance
-   * @param {string} entityClass - Entity Class
-   * @param {string} entityAngularName - Entity Angular Name
-   * @param {string} entityFolderName - Entity Folder Name
-   * @param {string} entityFileName - Entity File Name
-   * @param {boolean} enableTranslation - If translations are enabled or not
-   */
-  addEntityRouteToModule({ entityAngularName, entityFolderName, entityFileName }) {
-    // workaround method being called on initialization
-    if (!entityAngularName) {
-      return;
-    }
-    const entityPagePath = 'src/app/pages/entities/entities.module.ts';
-    try {
-      const isSpecificEntityAlreadyGenerated = utils.checkStringInFile(entityPagePath, `path: '${entityFileName}'`, this);
-      if (!isSpecificEntityAlreadyGenerated) {
-        const route = `| {
-                    |    path: '${entityFileName}',
-                    |    loadChildren: () => import('./${entityFolderName}/${entityFileName}.module').then(m => m.${entityAngularName}PageModule)
-                    |  },`;
-        utils.rewriteFile(
-          {
-            file: entityPagePath,
-            needle: 'jhipster-needle-add-entity-route',
-            splicable: [this.stripMargin(route)],
-          },
-          this
-        );
-      }
-    } catch (e) {
-      this.log(
-        `${
-          chalk.yellow('\nUnable to find ') +
-          entityPagePath +
-          chalk.yellow(' or missing required jhipster-needle. Reference to ') +
-          entityAngularName
-        } ${chalk.yellow(`not added to ${entityPagePath}.\n`)}`
-      );
-      this.debug('Error:', e);
-    }
+  generateTestEntity(references, additionalFields) {
+    return generateTestEntity(references, additionalFields);
   }
 
   /**
@@ -410,7 +293,7 @@ ${chalk.green(`    npm start`)}
       let variableName;
       hasManyToMany = hasManyToMany || relationship.relationshipType === 'many-to-many';
       if (relationship.otherRelationship && relationship.relationshipType === 'one-to-one' && relationship.ownerSide === true) {
-        variableName = _.camelCase(relationship.otherEntityNameCapitalizedPlural);
+        variableName = camelCase(relationship.otherEntityNameCapitalizedPlural);
         if (variableName === entityInstance) {
           variableName += 'Collection';
         }
@@ -432,7 +315,7 @@ ${chalk.green(`    npm start`)}
                 }
             }, (error) => this.onError(error));`;
       } else if (relationship.relationshipType !== 'one-to-many') {
-        variableName = _.camelCase(relationship.otherEntityNameCapitalizedPlural);
+        variableName = camelCase(relationship.otherEntityNameCapitalizedPlural);
         if (variableName === entityInstance) {
           variableName += 'Collection';
         }

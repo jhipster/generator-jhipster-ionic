@@ -52,6 +52,15 @@ export class EntityUpdatePage extends Page {
     cy.get('ion-alert div.alert-radio-group button').contains(value).first().click();
     cy.get('ion-alert div.alert-button-group button:not(.alert-button-role-cancel)').click();
   }
+
+  takePhoto(fieldName: string) {
+    cy.get(`${this.pageSelector} ion-button[data-cy="${fieldName}-take-photo"]`).click();
+    const getPwaCamera = () => cy.get('pwa-camera-modal-instance').shadow().find('pwa-camera').shadow();
+    getPwaCamera().find('.shutter-button').should('be.visible');
+    cy.wait(200);
+    getPwaCamera().find('.shutter-button').click();
+    getPwaCamera().find('.accept-use').should('be.visible').click();
+  }
 }
 
 export class EntityDetailPage extends Page {

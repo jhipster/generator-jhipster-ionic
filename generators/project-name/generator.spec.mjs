@@ -1,20 +1,22 @@
-import { jestExpect as expect } from 'mocha-expect-snapshot';
+import { beforeAll, describe, expect, it } from 'vitest';
 
-import { helpers, lookups } from '#test-utils';
+import { defaultHelpers as helpers, result } from 'generator-jhipster/testing';
+
+const SUB_GENERATOR = 'project-name';
+const BLUEPRINT_NAMESPACE = `jhipster:${SUB_GENERATOR}`;
 
 describe('SubGenerator project-name of ionic JHipster blueprint', () => {
   describe('run', () => {
-    let result;
-    before(async function () {
-      result = await helpers
-        .create('jhipster:project-name')
+    beforeAll(async function () {
+      await helpers
+        .run(BLUEPRINT_NAMESPACE)
+        .withJHipsterConfig()
         .withOptions({
-          reproducible: true,
-          defaults: true,
+          ignoreNeedlesError: true,
           blueprint: 'ionic',
         })
-        .withLookups(lookups)
-        .run();
+        .withJHipsterLookup()
+        .withParentBlueprintLookup();
     });
 
     it('should succeed', () => {

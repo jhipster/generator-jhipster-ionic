@@ -1,23 +1,26 @@
-import { jestExpect as expect } from 'mocha-expect-snapshot';
+import { beforeAll, describe, expect, it } from 'vitest';
 
-import { helpers, lookups } from '#test-utils';
+import { defaultHelpers as helpers, result } from 'generator-jhipster/testing';
+
+const SUB_GENERATOR = 'app';
+const BLUEPRINT_NAMESPACE = `jhipster:${SUB_GENERATOR}`;
 
 describe('SubGenerator app of ionic JHipster blueprint', () => {
   describe('run', () => {
-    let result;
-    before(async function () {
-      result = await helpers
-        .create('jhipster:app')
-        .withOptions({
-          reproducible: true,
-          defaults: true,
+    beforeAll(async function () {
+      await helpers
+        .run(BLUEPRINT_NAMESPACE)
+        .withJHipsterConfig({
           // Skip server and client for speed
           skipServer: true,
           skipClient: true,
+        })
+        .withOptions({
+          ignoreNeedlesError: true,
           blueprint: 'ionic',
         })
-        .withLookups(lookups)
-        .run();
+        .withJHipsterLookup()
+        .withParentBlueprintLookup();
     });
 
     it('should succeed', () => {
@@ -26,21 +29,22 @@ describe('SubGenerator app of ionic JHipster blueprint', () => {
   });
 
   describe('with custom ionic path', () => {
-    let result;
-    before(async function () {
-      result = await helpers
-        .create('jhipster:app')
-        .withOptions({
-          reproducible: true,
-          defaults: true,
+    beforeAll(async function () {
+      await helpers
+        .run(BLUEPRINT_NAMESPACE)
+        .withJHipsterConfig({
           // Skip server and client for speed
           skipServer: true,
           skipClient: true,
+        })
+        .withOptions({
+          skipChecks: true,
+          ignoreNeedlesError: true,
           blueprint: 'ionic',
           ionicDir: '../ionic-app',
         })
-        .withLookups(lookups)
-        .run();
+        .withJHipsterLookup()
+        .withParentBlueprintLookup();
     });
 
     it('should succeed', () => {

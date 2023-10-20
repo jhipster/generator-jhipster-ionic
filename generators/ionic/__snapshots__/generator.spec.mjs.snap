@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SubGenerator ionic of ionic JHipster blueprint with jwt authentication should succeed 1`] = `
+exports[`SubGenerator ionic of ionic JHipster blueprint > with jwt authentication > should succeed 1`] = `
 {
   ".browserslistrc": {
     "stateCleared": "modified",
@@ -479,7 +479,7 @@ exports[`SubGenerator ionic of ionic JHipster blueprint with jwt authentication 
 }
 `;
 
-exports[`SubGenerator ionic of ionic JHipster blueprint with oauth2 authentication should succeed 1`] = `
+exports[`SubGenerator ionic of ionic JHipster blueprint > with oauth2 authentication > should succeed 1`] = `
 {
   ".browserslistrc": {
     "stateCleared": "modified",

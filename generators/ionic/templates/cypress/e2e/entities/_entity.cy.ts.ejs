@@ -176,7 +176,11 @@ describe('<%= entityClass %> entity', () => {
       <%= entityInstance %>UpdatePage.getPageTitle().should('have.text', SUBCOMPONENT_TITLE);
 <%_ for (field of fields.filter(field => !field.id)) { _%>
       if (<%= entityInstance %>Sample.<%= field.fieldName %> !== undefined && <%= entityInstance %>Sample.<%= field.fieldName %> !== null) {
+  <%_ if (field.blobContentTypeImage) { _%>
+        <%= entityInstance %>UpdatePage.set<%= field.fieldNameCapitalized %>Input();
+  <%_ } else { _%>
         <%= entityInstance %>UpdatePage.set<%= field.fieldNameCapitalized %>Input(<%= entityInstance %>Sample.<%= field.fieldName %>);
+  <%_ } _%>
       }
 <%_ } _%>
       <%= entityInstance %>UpdatePage.save();

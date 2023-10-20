@@ -1,41 +1,35 @@
-import chalk from 'chalk';
-import { relative } from 'path';
-import AppGenerator from 'generator-jhipster/esm/generators/app';
-import { PRIORITY_PREFIX, PROMPTING_PRIORITY, COMPOSING_PRIORITY } from 'generator-jhipster/esm/priorities';
-
+import { relative } from 'node:path';
+import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
+import command from './command.mjs';
 import { DEFAULT_IONIC_PATH, IONIC_NAMESPACE } from '../constants.mjs';
 
-export default class extends AppGenerator {
+export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
-    super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
+    super(args, opts, { ...features, sbsBlueprint: true });
+  }
 
-    this.option('ionic-dir', {
-      desc: 'Directory of JHipster application',
-      type: String,
-    });
-
-    if (this.options.help) return;
-
-    if (!this.options.jhipsterContext) {
-      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints ionic')}`);
-    }
-
+  beforeQueue() {
     if (this.blueprintConfig.appDir) {
       throw new Error('jhipster-ionic:app generator must run in backend application directory');
     }
-
-    if (this.options.ionicDir) {
-      this.blueprintConfig.ionicDir = this.options.ionicDir;
-    }
-    if (this.options.defaults || this.options.force) {
-      this.blueprintStorage.defaults({ ionicDir: DEFAULT_IONIC_PATH });
-    }
-
-    this.sbsBlueprint = true;
   }
 
-  get [PROMPTING_PRIORITY]() {
-    return {
+  get [BaseApplicationGenerator.INITIALIZING]() {
+    return this.asInitializingTaskGroup({
+      async initializingTemplateTask() {
+        this.parseJHipsterArguments(command.arguments);
+        this.parseJHipsterOptions(command.options);
+      },
+      loadConfigFromJHipster() {
+        if (this.options.defaults || this.options.force) {
+          this.blueprintStorage.defaults({ ionicDir: DEFAULT_IONIC_PATH });
+        }
+      },
+    });
+  }
+
+  get [BaseApplicationGenerator.PROMPTING]() {
+    return this.asPromptingTaskGroup({
       async promptyForIonicDir() {
         await this.prompt(
           [
@@ -46,24 +40,26 @@ export default class extends AppGenerator {
               default: DEFAULT_IONIC_PATH,
             },
           ],
-          this.blueprintStorage
+          this.blueprintStorage,
         );
         this.blueprintStorage.defaults({ ionicDir: DEFAULT_IONIC_PATH });
       },
-    };
+    });
   }
 
-  get [COMPOSING_PRIORITY]() {
-    return {
+  get [BaseApplicationGenerator.COMPOSING]() {
+    return this.asComposingTaskGroup({
       async composeIonic() {
         if (this.jhipsterConfig.applicationType === 'microservice') return;
         const ionicDir = this.destinationPath(this.blueprintConfig.ionicDir);
         const appDir = relative(ionicDir, this.destinationPath());
         await this.composeWithJHipster(`${IONIC_NAMESPACE}:ionic`, {
-          destinationRoot: ionicDir,
-          appDir,
+          generatorOptions: {
+            destinationRoot: ionicDir,
+            appDir,
+          },
         });
       },
-    };
+    });
   }
 }

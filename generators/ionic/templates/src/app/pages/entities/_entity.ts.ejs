@@ -20,7 +20,7 @@ import { Component } from '@angular/core';
 import { NavController, ToastController, Platform, IonItemSliding } from '@ionic/angular';
 import { filter, map } from 'rxjs/operators';
 import { HttpResponse } from '@angular/common/http';
-<%_ if (fieldsContainBlob) { _%>
+<%_ if (anyFieldIsBlobDerived) { _%>
 import { JhiDataUtils } from '../../../services/utils/data-util.service';
 <%_ } _%>
 import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
@@ -36,7 +36,7 @@ export class <%= entityAngularName %>Page {
     // todo: add pagination
 
     constructor(
-<%_ if (fieldsContainBlob) { _%>
+<%_ if (anyFieldIsBlobDerived) { _%>
         private dataUtils: JhiDataUtils,
 <%_ } _%>
         private navController: NavController,
@@ -75,7 +75,7 @@ export class <%= entityAngularName %>Page {
     trackId(index: number, item: <%= entityAngularName %>) {
         return item.id;
     }
-<%_ if (fieldsContainBlob) { _%>
+<%_ if (anyFieldIsBlobDerived) { _%>
 
     byteSize(field) {
         return this.dataUtils.byteSize(field);

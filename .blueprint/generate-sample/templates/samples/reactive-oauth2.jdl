@@ -5,10 +5,7 @@ application {
     applicationType monolith
     authenticationType oauth2
     packageName org.jhipster.demo.blog
-    devDatabaseType mongodb
     databaseType mongodb,
-    devDatabaseType mongodb,
-    prodDatabaseType mongodb,
     buildTool maven
     clientFramework angular
     testFrameworks [cypress]

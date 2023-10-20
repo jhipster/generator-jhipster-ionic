@@ -94,7 +94,9 @@ _%>
                         <%_ } _%>
                     </div>
                     <%_ if (fieldTypeBlobContent === 'image') { _%>
-                    <ion-button *ngIf="!<%= entityInstance %>?.<%= fieldName %>" (click)="getPicture('<%= fieldName %>')">
+                    <input *ngIf="!useCameraCapacitor" type="file" data-cy="<%= fieldName %>" #fileInput style="display: none"
+                           (change)="setFileData($event, '<%= fieldName %>', true)" accept="image/*"/>
+                    <ion-button *ngIf="!<%= entityInstance %>?.<%= fieldName %>" (click)="getPicture('<%= fieldName %>')" data-cy="<%= fieldName %>-take-photo">
                         <ion-icon name="add-circle" slot="start"></ion-icon>
                         {{ 'ITEM_CREATE_CHOOSE_IMAGE' | translate }}
                     </ion-button>

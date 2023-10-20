@@ -2,20 +2,14 @@ application {
   config {
     baseName mono
     applicationType monolith
-    authenticationType jwt
+    authenticationType oauth2
     packageName org.jhipster.demo.blog
-    prodDatabaseType mysql
+    prodDatabaseType postgresql
     buildTool maven
-    clientFramework angularX
+    clientFramework angular
     testFrameworks [cypress]
   }
   entities *
-}
-
-enum Typology {
-  GOSSIP,
-  LIFE,
-  SCIENCE
 }
 
 entity Blog {
@@ -31,12 +25,10 @@ entity Post {
 
 entity Tag {
   name String required minlength(2)
-  received Integer
-  hash Typology required
 }
 
 relationship ManyToOne {
-  Blog{user(login)} to User
+  Blog{user(login)} to User with builtInEntity
   Post{blog(name)} to Blog
 }
 
