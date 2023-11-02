@@ -40,15 +40,15 @@
   },
   "dependencies": {
     "chalk": "5.3.0",
-    "generator-jhipster": "8.0.0-rc.1",
+    "generator-jhipster": "8.0.0",
     "lodash-es": "4.17.21"
   },
   "devDependencies": {
     "ejs-lint": "2.0.0",
-    "eslint": "8.51.0",
+    "eslint": "8.52.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "9.0.0",
-    "eslint-plugin-import": "2.28.1",
+    "eslint-plugin-import": "2.29.0",
     "eslint-plugin-prettier": "5.0.1",
     "husky": "8.0.3",
     "lint-staged": "14.0.1",
@@ -58,7 +58,7 @@
     "yeoman-test": ">=8.0.0-rc.1"
   },
   "engines": {
-    "node": "^18.13.0 || >= 20.2.0"
+    "node": "^18.13.0 || >= 20.6.1"
   },
   "cacheDirectories": [
     "node_modules"

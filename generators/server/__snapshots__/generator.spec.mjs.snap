@@ -20,7 +20,7 @@ exports[`SubGenerator server of ionic JHipster blueprint > run > should succeed 
   ".husky/pre-commit": {
     "stateCleared": "modified",
   },
-  ".lintstagedrc.js": {
+  ".lintstagedrc.cjs": {
     "stateCleared": "modified",
   },
   ".mvn/jvm.config": {
