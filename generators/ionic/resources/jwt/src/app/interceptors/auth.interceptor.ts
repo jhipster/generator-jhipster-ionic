@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from '../services/api/api.service';
 
+const AUTHENTICATION_TOKEN = 'jhi-authenticationtoken';
+
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   private servicesEndpoint = ApiService.API_URL.replace('api', 'services');
@@ -18,7 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
       return next.handle(request);
     }
 
-    const token = JSON.parse(localStorage.getItem('authenticationToken') ?? sessionStorage.getItem('authenticationToken'));
+    const token = JSON.parse(localStorage.getItem(AUTHENTICATION_TOKEN) ?? sessionStorage.getItem(AUTHENTICATION_TOKEN));
     if (!!token) {
       request = request.clone({
         setHeaders: {

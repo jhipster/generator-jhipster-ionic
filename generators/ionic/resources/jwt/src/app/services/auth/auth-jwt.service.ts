@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from '../api/api.service';
 
+const AUTHENTICATION_TOKEN = 'jhi-authenticationtoken';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -11,7 +13,7 @@ export class AuthServerProvider {
   constructor(private http: HttpClient) {}
 
   getToken() {
-    return JSON.parse(localStorage.getItem('authenticationToken') ?? sessionStorage.getItem('authenticationToken'));
+    return JSON.parse(localStorage.getItem(AUTHENTICATION_TOKEN) ?? sessionStorage.getItem(AUTHENTICATION_TOKEN));
   }
 
   login(credentials): Observable<any> {
@@ -45,16 +47,16 @@ export class AuthServerProvider {
   storeAuthenticationToken(jwt, rememberMe) {
     jwt = JSON.stringify(jwt);
     if (rememberMe) {
-      localStorage.setItem('authenticationToken', jwt);
+      localStorage.setItem(AUTHENTICATION_TOKEN, jwt);
     } else {
-      sessionStorage.setItem('authenticationToken', jwt);
+      sessionStorage.setItem(AUTHENTICATION_TOKEN, jwt);
     }
   }
 
   logout(): Observable<any> {
     return new Observable(observer => {
-      localStorage.removeItem('authenticationToken');
-      sessionStorage.removeItem('authenticationToken');
+      localStorage.removeItem(AUTHENTICATION_TOKEN);
+      sessionStorage.removeItem(AUTHENTICATION_TOKEN);
       observer.complete();
     });
   }
