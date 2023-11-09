@@ -4,7 +4,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EntitiesPage } from './entities.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NgxWebstorageModule } from 'ngx-webstorage';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('EntitiesPage', () => {
@@ -15,7 +14,7 @@ describe('EntitiesPage', () => {
     TestBed.configureTestingModule({
       declarations: [EntitiesPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [TranslateModule.forRoot(), RouterTestingModule, NgxWebstorageModule.forRoot(), HttpClientTestingModule],
+      imports: [TranslateModule.forRoot(), RouterTestingModule, HttpClientTestingModule],
     }).compileComponents();
   }));
 

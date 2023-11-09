@@ -1,5 +1,4 @@
 import { IonicStorageModule } from '@ionic/storage-angular';
-import { NgxWebstorageModule } from 'ngx-webstorage';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
@@ -11,7 +10,6 @@ describe('LoginService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        NgxWebstorageModule.forRoot(),
         TranslateModule.forRoot(),
         IonicStorageModule.forRoot(),
         AuthModule,

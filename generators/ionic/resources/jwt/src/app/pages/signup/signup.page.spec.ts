@@ -4,7 +4,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SignupPage } from './signup.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NgxWebstorageModule } from 'ngx-webstorage';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('SignupPage', () => {
@@ -15,7 +14,7 @@ describe('SignupPage', () => {
     TestBed.configureTestingModule({
       declarations: [SignupPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [TranslateModule.forRoot(), RouterTestingModule, NgxWebstorageModule.forRoot(), HttpClientTestingModule],
+      imports: [TranslateModule.forRoot(), RouterTestingModule, HttpClientTestingModule],
     }).compileComponents();
   }));
 

@@ -16,7 +16,6 @@ updates:
           - '@angular/*'
           - '@angular-devkit/*'
           - '@fortawesome/angular-fontawesome'
-          - 'ngx-webstorage'
           - 'typescript'
           - 'zone.js'
           - '@angular-builders/jest'
