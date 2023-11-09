@@ -29,8 +29,8 @@ jest.mock('@capacitor/splash-screen', () => ({
   },
 }));
 
-const mockedStatusBar = jest.mocked(StatusBar, true);
-const mockedSplashScreen = jest.mocked(SplashScreen, true);
+const mockedStatusBar = jest.mocked(StatusBar, { shallow: true });
+const mockedSplashScreen = jest.mocked(SplashScreen, { shallow: true });
 
 describe('AppComponent', () => {
   let isPluginAvailableSpy;
