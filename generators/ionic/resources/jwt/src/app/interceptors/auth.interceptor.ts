@@ -1,14 +1,15 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { Observable } from 'rxjs';
 import { ApiService } from '../services/api/api.service';
+
+const AUTHENTICATION_TOKEN = 'jhi-authenticationtoken';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   private servicesEndpoint = ApiService.API_URL.replace('api', 'services');
 
-  constructor(private localStorage: LocalStorageService, private sessionStorage: SessionStorageService) {}
+  constructor() {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (
@@ -19,7 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
       return next.handle(request);
     }
 
-    const token = this.localStorage.retrieve('authenticationToken') || this.sessionStorage.retrieve('authenticationToken');
+    const token = JSON.parse(localStorage.getItem(AUTHENTICATION_TOKEN) ?? sessionStorage.getItem(AUTHENTICATION_TOKEN));
     if (!!token) {
       request = request.clone({
         setHeaders: {

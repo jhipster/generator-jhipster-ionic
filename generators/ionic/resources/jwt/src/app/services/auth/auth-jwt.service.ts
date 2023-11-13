@@ -1,18 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from '../api/api.service';
+
+const AUTHENTICATION_TOKEN = 'jhi-authenticationtoken';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthServerProvider {
-  constructor(private http: HttpClient, private $localStorage: LocalStorageService, private $sessionStorage: SessionStorageService) {}
+  constructor(private http: HttpClient) {}
 
   getToken() {
-    return this.$localStorage.retrieve('authenticationToken') || this.$sessionStorage.retrieve('authenticationToken');
+    return JSON.parse(localStorage.getItem(AUTHENTICATION_TOKEN) ?? sessionStorage.getItem(AUTHENTICATION_TOKEN));
   }
 
   login(credentials): Observable<any> {
@@ -44,17 +45,18 @@ export class AuthServerProvider {
   }
 
   storeAuthenticationToken(jwt, rememberMe) {
+    jwt = JSON.stringify(jwt);
     if (rememberMe) {
-      this.$localStorage.store('authenticationToken', jwt);
+      localStorage.setItem(AUTHENTICATION_TOKEN, jwt);
     } else {
-      this.$sessionStorage.store('authenticationToken', jwt);
+      sessionStorage.setItem(AUTHENTICATION_TOKEN, jwt);
     }
   }
 
   logout(): Observable<any> {
     return new Observable(observer => {
-      this.$localStorage.clear('authenticationToken');
-      this.$sessionStorage.clear('authenticationToken');
+      localStorage.removeItem(AUTHENTICATION_TOKEN);
+      sessionStorage.removeItem(AUTHENTICATION_TOKEN);
       observer.complete();
     });
   }

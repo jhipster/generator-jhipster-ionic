@@ -1,6 +1,5 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SessionStorageService } from 'ngx-webstorage';
 import { Observable, Subject } from 'rxjs';
 import { Account } from 'src/model/account.model';
 import { ApiService } from '../api/api.service';
@@ -13,7 +12,7 @@ export class AccountService {
   private authenticated = false;
   private authenticationState = new Subject<any>();
 
-  constructor(private sessionStorage: SessionStorageService, private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   fetch(): Observable<HttpResponse<Account>> {
     return this.http.get<Account>(ApiService.API_URL + '/account', { observe: 'response' });
@@ -84,7 +83,7 @@ export class AccountService {
           // After retrieve the account info, the language will be changed to
           // the user's preferred language configured in the account setting
 
-          const langKey = this.sessionStorage.retrieve('locale') || this.userIdentity.langKey;
+          // const langKey = this.sessionStorage.retrieve('locale') || this.userIdentity.langKey;
           // this.languageService.changeLanguage(langKey);
         } else {
           this.userIdentity = null;

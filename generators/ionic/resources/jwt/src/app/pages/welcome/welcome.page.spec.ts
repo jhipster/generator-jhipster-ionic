@@ -4,7 +4,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { WelcomePage } from './welcome.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NgxWebstorageModule } from 'ngx-webstorage';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('WelcomePage', () => {
@@ -15,7 +14,7 @@ describe('WelcomePage', () => {
     TestBed.configureTestingModule({
       declarations: [WelcomePage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [TranslateModule.forRoot(), NgxWebstorageModule.forRoot(), RouterTestingModule, HttpClientTestingModule],
+      imports: [TranslateModule.forRoot(), RouterTestingModule, HttpClientTestingModule],
     }).compileComponents();
   }));
 

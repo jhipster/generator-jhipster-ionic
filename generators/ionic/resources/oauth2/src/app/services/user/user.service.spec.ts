@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { UserService } from './user.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { NgxWebstorageModule } from 'ngx-webstorage';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('UserService', () => {

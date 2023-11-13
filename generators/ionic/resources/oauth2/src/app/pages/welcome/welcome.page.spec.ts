@@ -1,6 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgxWebstorageModule } from 'ngx-webstorage';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -18,7 +17,6 @@ describe('WelcomePage', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [
         TranslateModule.forRoot(),
-        NgxWebstorageModule.forRoot(),
         HttpClientTestingModule,
         IonicStorageModule.forRoot(),
         RouterTestingModule,

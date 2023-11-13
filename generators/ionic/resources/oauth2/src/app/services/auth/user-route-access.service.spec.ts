@@ -2,13 +2,12 @@ import { TestBed } from '@angular/core/testing';
 import { UserRouteAccessService } from './user-route-access.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NgxWebstorageModule } from 'ngx-webstorage';
 import { IonicStorageModule } from '@ionic/storage-angular';
 
 describe('UserRouteAccessService', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule, NgxWebstorageModule.forRoot(), IonicStorageModule.forRoot()],
+      imports: [HttpClientTestingModule, RouterTestingModule, IonicStorageModule.forRoot()],
     })
   );
 

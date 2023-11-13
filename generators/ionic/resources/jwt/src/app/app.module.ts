@@ -5,7 +5,6 @@ import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { NgxWebstorageModule } from 'ngx-webstorage';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -28,7 +27,6 @@ export function createTranslateLoader(http: HttpClient) {
       },
     }),
     IonicModule.forRoot(),
-    NgxWebstorageModule.forRoot({ prefix: 'jhi', separator: '-' }),
     AppRoutingModule,
   ],
   providers: [
