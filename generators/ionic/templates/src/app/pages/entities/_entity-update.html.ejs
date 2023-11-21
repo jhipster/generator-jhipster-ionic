@@ -156,6 +156,7 @@ _%>
                 <%_ } _%>
                 @for (<%=otherEntityName %>Option of <%=otherEntityNamePlural%>; track track<%=otherEntityNameCapitalized %>ById) {
                     <ion-select-option [value]="<%=otherEntityName %>Option">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-select-option>
+                }
                 </ion-select>
                 <%_ } else { _%>
                 <ion-select id="field_<%= relationshipName %>" formControlName="<%= relationshipName %>Id" [compareWith]="compare<%=otherEntityNameCapitalized %>"<% if (relationshipRequired) { %> required<% } %>>

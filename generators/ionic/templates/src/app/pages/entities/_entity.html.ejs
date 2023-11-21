@@ -33,7 +33,7 @@
     </ion-refresher>
 
     <ion-list>
-    @for (<%=entityInstance %> of <%=entityInstancePlural %>; trackBy: trackId) {
+    @for (<%=entityInstance %> of <%=entityInstancePlural %>; track trackId) {
         <ion-item-sliding #slidingItem>
             <ion-item (click)="view(<%= entityInstance %>)">
               <ion-label text-wrap>
@@ -43,11 +43,11 @@
                 const fieldType = fields[idx].fieldType;
                 const fieldTypeBlobContent = fields[idx].fieldTypeBlobContent; _%>
                 <%_ if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'image') { _%>
-              @if (<%= entityInstance %>.<%= fieldName %>) {
+            @if (<%= entityInstance %>.<%= fieldName %>) {
                 <ion-avatar<% if (idx === 0) { %>item-start<% } %>>
                     <img [src]="'data:' + <%=entityInstance %>.<%=fieldName%>ContentType + ';base64,' + <%=entityInstance %>.<%=fieldName%>" />
                 </ion-avatar>
-              }
+            }
                 <%_ } else if (fields[idx].fieldIsEnum) { _%>
                 <!-- todo: special handling for translating enum - {{'<%= fieldType %>.' + <%= entityInstance %>.<%= fieldName %>}}" -->
                 <p>{{<%=entityInstance %>.<%=fieldName%>}}</p>
