@@ -6,7 +6,7 @@
 
 <ion-content class="ion-padding">
   <ion-list>
-  @for (entity of entities; track entity.<%- primaryKey.name %>) {
+  @for (entity of entities; track entity.id) {
     <ion-item (click)="openPage(entity)">
       <h2>{{entity.name}}</h2>
     </ion-item>
