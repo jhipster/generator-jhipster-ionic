@@ -33,7 +33,7 @@
     </ion-refresher>
 
     <ion-list>
-    @for (<%=entityInstance %> of <%=entityInstancePlural %>; track trackId) {
+    @for (<%=entityInstance %> of <%=entityInstancePlural %>; track trackId($index, <%=entityInstance %>)) {
         <ion-item-sliding #slidingItem>
             <ion-item (click)="view(<%= entityInstance %>)">
               <ion-label text-wrap>

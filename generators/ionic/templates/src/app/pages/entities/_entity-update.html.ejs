@@ -154,7 +154,7 @@ _%>
                     <ion-select-option [value]="null" selected></ion-select-option>
                 }
                 <%_ } _%>
-                @for (<%=otherEntityName %>Option of <%=otherEntityNamePlural%>; track track<%=otherEntityNameCapitalized %>ById) {
+                @for (<%=otherEntityName %>Option of <%=otherEntityNamePlural%>; track track<%=otherEntityNameCapitalized %>ById($index, <%=otherEntityName %>Option)) {
                     <ion-select-option [value]="<%=otherEntityName %>Option">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-select-option>
                 }
                 </ion-select>
@@ -167,7 +167,7 @@ _%>
                     <ion-select-option [value]="null" selected></ion-select-option>
                 }
                 <%_ } _%>
-                @for (let <%=otherEntityName %>Option of <%=otherEntityNamePlural%>; track track<%=otherEntityNameCapitalized %>ById) {
+                @for (let <%=otherEntityName %>Option of <%=otherEntityNamePlural%>; track track<%=otherEntityNameCapitalized %>ById($index, <%=otherEntityName %>Option)) {
                     <ion-select-option [value]="<%=otherEntityName %>Option.id">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-select-option>
                 }
                 </ion-select>
@@ -185,7 +185,7 @@ _%>
                     <ion-select-option [value]="null" selected></ion-select-option>
                 }
                 <%_ } _%>
-                @for (<%=otherEntityName %>Option of <%=relationshipFieldNamePlural.toLowerCase() %>; track track<%=otherEntityNameCapitalized %>ById) {
+                @for (<%=otherEntityName %>Option of <%=relationshipFieldNamePlural.toLowerCase() %>; track track<%=otherEntityNameCapitalized %>ById($index, <%=otherEntityName %>Option)) {
                     <ion-select-option [value]="<%=otherEntityName %>Option.id === <%= entityInstance %>.<%=relationshipFieldName %>?.id ? <%= entityInstance %>.<%=relationshipFieldName %> : <%=otherEntityName %>Option">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-select-option>
                 }
                 </ion-select>
@@ -198,7 +198,7 @@ _%>
                     <ion-select-option [value]="null" selected></ion-select-option>
                 }
                 <%_ } _%>
-                @for (<%=otherEntityName %>Option of <%=relationshipFieldNamePlural.toLowerCase() %>; track track<%=otherEntityNameCapitalized %>ById) {
+                @for (<%=otherEntityName %>Option of <%=relationshipFieldNamePlural.toLowerCase() %>; track track<%=otherEntityNameCapitalized %>ById($index, <%=otherEntityName %>Option)) {
                     <ion-select-option [value]="<%=otherEntityName %>Option.id">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-select-option>
                 }
                 </ion-select>
@@ -208,7 +208,7 @@ _%>
             <ion-item>
                 <ion-label><%= relationshipNameHumanized %></ion-label>
                 <ion-select id="field_<%= relationshipName %>" multiple="true" formControlName="<%= relationshipFieldNamePlural %>" [compareWith]="compare<%=otherEntityNameCapitalized %>"<% if (relationshipRequired) { %> required<% } %>>
-                @for (<%=otherEntityName %>Option of <%=otherEntityNamePlural.toLowerCase() %>; track track<%=otherEntityNameCapitalized %>ById) {
+                @for (<%=otherEntityName %>Option of <%=otherEntityNamePlural.toLowerCase() %>; track track<%=otherEntityNameCapitalized %>ById($index, <%=otherEntityName %>Option)) {
                     <ion-select-option [value]="<%=otherEntityName %>Option">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-select-option>
                 }
                 </ion-select>
