@@ -30,7 +30,7 @@ _%>
             <ion-button [disabled]="!isReadyToSave" (click)="save()" color="primary">
             @if (platform.is('ios')) {
                 <span>{{'DONE_BUTTON' | translate}}</span>
-            } else {
+            } @else {
                 <ion-icon name="checkmark"></ion-icon>
             }
             </ion-button>
@@ -163,11 +163,11 @@ _%>
                 <%_ if (!relationshipRequired) { _%>
                     <ion-select-option [value]="null"></ion-select-option>
                 <%_ } else { _%>
-                @if (!form.value.<%= relationshipName %>Id) }
+                @if (!form.value.<%= relationshipName %>Id) {
                     <ion-select-option [value]="null" selected></ion-select-option>
                 }
                 <%_ } _%>
-                @for (let <%=otherEntityName %>Option of <%=otherEntityNamePlural%>; track track<%=otherEntityNameCapitalized %>ById($index, <%=otherEntityName %>Option)) {
+                @for (<%=otherEntityName %>Option of <%=otherEntityNamePlural%>; track track<%=otherEntityNameCapitalized %>ById($index, <%=otherEntityName %>Option)) {
                     <ion-select-option [value]="<%=otherEntityName %>Option.id">{{<%=otherEntityName %>Option.<%=otherEntityField %>}}</ion-select-option>
                 }
                 </ion-select>
