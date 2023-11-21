@@ -488,7 +488,7 @@ exports[`SubGenerator app of ionic JHipster blueprint > run > should succeed 1`]
   ".husky/pre-commit": {
     "stateCleared": "modified",
   },
-  ".lintstagedrc.cjs": {
+  ".lintstagedrc.js": {
     "stateCleared": "modified",
   },
   ".prettierignore": {
@@ -1000,7 +1000,7 @@ exports[`SubGenerator app of ionic JHipster blueprint > with custom ionic path >
   ".husky/pre-commit": {
     "stateCleared": "modified",
   },
-  ".lintstagedrc.cjs": {
+  ".lintstagedrc.js": {
     "stateCleared": "modified",
   },
   ".prettierignore": {

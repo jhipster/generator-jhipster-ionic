@@ -33,7 +33,8 @@
     </ion-refresher>
 
     <ion-list>
-        <ion-item-sliding *ngFor="let <%=entityInstance %> of <%=entityInstancePlural %>; trackBy: trackId" #slidingItem>
+    @for (<%=entityInstance %> of <%=entityInstancePlural %>; trackBy: trackId) {
+        <ion-item-sliding #slidingItem>
             <ion-item (click)="view(<%= entityInstance %>)">
               <ion-label text-wrap>
               <%_ for (idx in fields) {
@@ -42,9 +43,11 @@
                 const fieldType = fields[idx].fieldType;
                 const fieldTypeBlobContent = fields[idx].fieldTypeBlobContent; _%>
                 <%_ if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'image') { _%>
-                <ion-avatar<% if (idx === 0) { %>item-start<% } %> *ngIf="<%= entityInstance %>.<%= fieldName %>">
+              @if (<%= entityInstance %>.<%= fieldName %>) {
+                <ion-avatar<% if (idx === 0) { %>item-start<% } %>>
                     <img [src]="'data:' + <%=entityInstance %>.<%=fieldName%>ContentType + ';base64,' + <%=entityInstance %>.<%=fieldName%>" />
                 </ion-avatar>
+              }
                 <%_ } else if (fields[idx].fieldIsEnum) { _%>
                 <!-- todo: special handling for translating enum - {{'<%= fieldType %>.' + <%= entityInstance %>.<%= fieldName %>}}" -->
                 <p>{{<%=entityInstance %>.<%=fieldName%>}}</p>
@@ -71,12 +74,15 @@
                 </ion-item-option>
             </ion-item-options>
         </ion-item-sliding>
+    }
     </ion-list>
-    <ion-item *ngIf="!<%=entityInstancePlural %>?.length">
+@if (!<%=entityInstancePlural %>?.length) {
+    <ion-item>
         <ion-label>
             No <%= entityClassPluralHumanized %> found.
         </ion-label>
     </ion-item>
+}
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button (click)="new()">
