@@ -98,7 +98,7 @@
             <%_ } else { _%>
                 <%_ if (relationshipType === 'many-to-many') { _%>
             <div item-content>
-            @for (<%= relationshipFieldName %> of <%= entityInstance %>.<%= relationshipFieldNamePlural %>; track <%= relationshipFieldName %>.<%= otherEntity.primaryKey.name %>; let last = $last) {
+            @for (<%= relationshipFieldName %> of <%= entityInstance %>.<%= relationshipFieldNamePlural %>; track <%= relationshipFieldName %>.<%= relationship.otherEntity.primaryKey.name %>; let last = $last) {
                 <span>
                     <a>{{<%= relationshipFieldName %>.<%= otherEntityField %>}}</a>{{last ? '' : ', '}}
                 </span>
