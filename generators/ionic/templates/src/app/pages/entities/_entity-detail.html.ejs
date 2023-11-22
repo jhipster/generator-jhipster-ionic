@@ -38,21 +38,25 @@
                 <%_ if (fields[idx].fieldIsEnum) { _%>
                 <span id="<%= fieldName %>-content">{{<%= entityInstance %>.<%= fieldName %>}}</span>
                 <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'image') { _%>
-                <div id="<%= fieldName %>-content" *ngIf="<%= entityInstance %>.<%= fieldName %>">
+            @if (<%= entityInstance %>.<%= fieldName %>) {
+                <div id="<%= fieldName %>-content">
                     <a (click)="openFile(<%= entityInstance %>.<%= fieldName %>ContentType, <%= entityInstance %>.<%= fieldName %>)">
                         <img [src]="'data:' + <%=entityInstance %>.<%= fieldName %>ContentType + ';base64,' + <%= entityInstance %>.<%= fieldName %>" style="max-width: 100%;" alt="<%=entityInstance %> image"/>
                     </a>
                     {{<%= entityInstance %>.<%= fieldName %>ContentType}}, {{byteSize(<%= entityInstance %>.<%= fieldName %>)}}
                 </div>
+            }
                 <%_ } else if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
                 <span id="<%= fieldName %>-content">{{<%=entityInstance %>.<%= fieldName %> | date:'medium'}}</span>
                 <%_ } else if (fieldType === 'LocalDate') { _%>
                 <span id="<%= fieldName %>-content">{{<%=entityInstance %>.<%= fieldName %> | date:'mediumDate'}}</span>
                 <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'any') { _%>
-                <div id="<%= fieldName %>-content" *ngIf="<%= entityInstance %>.<%= fieldName %>">
+            @if (<%= entityInstance %>.<%= fieldName %>) {
+                <div id="<%= fieldName %>-content">
                     <a (click)="openFile(<%= entityInstance %>.<%= fieldName %>ContentType, <%= entityInstance %>.<%= fieldName %>)" jhiTranslate="entity.action.open">open</a>
                     {{<%= entityInstance %>.<%= fieldName %>ContentType}}, {{byteSize(<%= entityInstance %>.<%= fieldName %>)}}
                 </div>
+            }
                 <%_ } else { _%>
                 <span id="<%= fieldName %>-content">{{<%= entityInstance %>.<%= fieldName %>}}</span>
                 <%_ } _%>
@@ -78,9 +82,11 @@
             <%_ if (otherEntityName === 'user') { _%>
                 <%_ if (relationshipType === 'many-to-many') { _%>
             <div item-content>
-                <span *ngFor="let <%= relationshipFieldName %> of <%= entityInstance %>.<%= relationshipFieldNamePlural %>; let last = last">
+            @for (<%= relationshipFieldName %> of <%= entityInstance %>.<%= relationshipFieldNamePlural %>; track track<%=otherEntityNameCapitalized %>ById($index, <%= relationshipFieldName %>); let last = $last) {
+                <span>
                     {{<%= relationshipFieldName %>.<%= otherEntityField %>}}{{last ? '' : ', '}}
                 </span>
+            }
             </div>
                 <%_ } else { _%>
                     <%_ if (dto === 'no') { _%>
@@ -92,19 +98,25 @@
             <%_ } else { _%>
                 <%_ if (relationshipType === 'many-to-many') { _%>
             <div item-content>
-                <span *ngFor="let <%= relationshipFieldName %> of <%= entityInstance %>.<%= relationshipFieldNamePlural %>; let last = last">
+            @for (<%= relationshipFieldName %> of <%= entityInstance %>.<%= relationshipFieldNamePlural %>; track <%= relationshipFieldName %>.<%= relationship.otherEntity.primaryKey.name %>; let last = $last) {
+                <span>
                     <a>{{<%= relationshipFieldName %>.<%= otherEntityField %>}}</a>{{last ? '' : ', '}}
                 </span>
+            }
             </div>
                 <%_ } else { _%>
                     <%_ if (dto === 'no') { _%>
-            <div item-content *ngIf="<%= entityInstance + '.' + relationshipFieldName %>">
+        @if (<%= entityInstance + '.' + relationshipFieldName %>) {
+            <div item-content>
                 <a>{{<%= entityInstance + "." + relationshipFieldName + "?." + otherEntityField %>}}</a>
             </div>
+        }
                     <%_ } else { _%>
-            <div item-content *ngIf="<%= entityInstance + '.' + relationshipFieldName + "Id" %>">
+        @if (<%= entityInstance + '.' + relationshipFieldName + "Id" %>) {
+            <div item-content>
                 <a>{{<%= entityInstance + "." + relationshipFieldName + otherEntityFieldCapitalized %>}}</a>
             </div>
+        }
                     <%_ } _%>
                 <%_ } _%>
             <%_ } _%>

@@ -6,10 +6,14 @@
 
 <ion-content class="ion-padding">
   <ion-list>
-    <ion-item *ngFor="let entity of entities" (click)="openPage(entity)">
+  @for (entity of entities; track entity.id) {
+    <ion-item (click)="openPage(entity)">
       <h2>{{entity.name}}</h2>
     </ion-item>
+  }
   </ion-list>
 
-  <div *ngIf="entities.length === 0">{{ 'EMPTY_ENTITIES_MESSAGE' | translate }}</div>
+@if (entities.length === 0) {
+  <div>{{ 'EMPTY_ENTITIES_MESSAGE' | translate }}</div>
+}
 </ion-content>
