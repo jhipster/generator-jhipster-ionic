@@ -102,13 +102,13 @@ jobs:
           command: npm run e2e:ci
           working-directory: ${{ github.workspace }}/ionic4j
       - name: 'E2E: Store failure screenshots'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always() && steps.e2e.outcome == 'failure'
         with:
           name: screenshots-${{ matrix.jdl }}
           path: ${{ github.workspace }}/ionic4j/cypress/screenshots
       - name: 'E2E: Store failure videos'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always() && steps.e2e.outcome == 'failure'
         with:
           name: videos-${{ matrix.jdl }}
