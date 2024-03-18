@@ -19,13 +19,13 @@
     "test:watch": "ng test --watch"
   },
   "dependencies": {
-    "@angular/common": "~17.2.1",
-    "@angular/core": "~17.2.1",
-    "@angular/forms": "~17.2.1",
-    "@angular/localize": "~17.2.1",
-    "@angular/platform-browser": "~17.2.1",
-    "@angular/platform-browser-dynamic": "~17.2.1",
-    "@angular/router": "~17.2.1",
+    "@angular/common": "~17.3.0",
+    "@angular/core": "~17.3.0",
+    "@angular/forms": "~17.3.0",
+    "@angular/localize": "~17.3.0",
+    "@angular/platform-browser": "~17.3.0",
+    "@angular/platform-browser-dynamic": "~17.3.0",
+    "@angular/router": "~17.3.0",
     "@capacitor-community/http": "1.4.1",
     "@capacitor/app": "5.0.7",
     "@capacitor/browser": "5.2.0",
@@ -53,15 +53,15 @@
   },
   "devDependencies": {
     "@angular-builders/jest": "~17.0.0",
-    "@angular-devkit/build-angular": "~17.2.0",
+    "@angular-devkit/build-angular": "~17.3.0",
     "@angular-eslint/builder": "~17.3.0",
     "@angular-eslint/eslint-plugin": "~17.3.0",
     "@angular-eslint/eslint-plugin-template": "~17.3.0",
     "@angular-eslint/template-parser": "~17.3.0",
-    "@angular/cli": "~17.2.0",
-    "@angular/compiler": "~17.2.1",
-    "@angular/compiler-cli": "~17.2.1",
-    "@angular/language-service": "~17.2.1",
+    "@angular/cli": "~17.3.0",
+    "@angular/compiler": "~17.3.0",
+    "@angular/compiler-cli": "~17.3.0",
+    "@angular/language-service": "~17.3.0",
     "@capacitor/cli": "5.7.3",
     "@cypress/schematic": "^2.0.3",
     "@ionic/angular-toolkit": "^11.0.1",
@@ -80,6 +80,6 @@
     "jest-localstorage-mock": "2.4.26",
     "jest-preset-angular": "14.0.3",
     "prettier": "3.2.5",
-    "typescript": "~5.2.2"
+    "typescript": "~5.4.2"
   }
 }
