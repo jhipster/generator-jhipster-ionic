@@ -52,6 +52,9 @@ jobs:
             e2e: 1
 
     steps:
+      - uses: jhipster/actions/create-app-path@v0
+        with:
+          path: ${{ github.workspace }}/backend
       - uses: jhipster/actions/setup-runner@v0
         with:
           node-version: 20
