@@ -72,10 +72,12 @@ jobs:
       - name: Check Version
         run: $JHIPSTER_INSTALL/02-checkVersion.sh
       - run: cli.cjs generate-sample ${{ matrix.jdl }} --force --no-insight --skip-checks --skip-commit-hook --skip-install --skip-jhipster-dependencies
-      - uses: jhipster/actions/compare-sample@v0
+      - uses: jhipster/actions/compare-sample@73f728caa18771ced95db395600e6e0af643f49c
         id: compare
         if: github.event.pull_request
         with:
+          application-folder: backend
+          compare-folder: ionic4j
           generator-path: generator-jhipster-ionic
           cmd: cli.cjs generate-sample ${{ matrix.jdl }} --force --no-insight --skip-checks --skip-git --skip-commit-hook --skip-install --skip-jhipster-dependencies
       - name: Ionic tests
