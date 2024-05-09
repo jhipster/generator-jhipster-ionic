@@ -143,9 +143,6 @@ exports[`SubGenerator server of ionic JHipster blueprint > run > should succeed 
   "src/main/java/com/mycompany/myapp/config/LiquibaseConfiguration.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/config/LocaleConfiguration.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/config/LoggingAspectConfiguration.java": {
     "stateCleared": "modified",
   },
@@ -263,6 +260,9 @@ exports[`SubGenerator server of ionic JHipster blueprint > run > should succeed 
   "src/main/java/com/mycompany/myapp/web/rest/AuthenticateController.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/web/rest/AuthorityResource.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/web/rest/PublicUserResource.java": {
     "stateCleared": "modified",
   },
@@ -341,13 +341,13 @@ exports[`SubGenerator server of ionic JHipster blueprint > run > should succeed 
   "src/main/resources/config/liquibase/master.xml": {
     "stateCleared": "modified",
   },
+  "src/main/resources/config/tls/keystore.p12": {
+    "stateCleared": "modified",
+  },
   "src/main/resources/i18n/messages.properties": {
     "stateCleared": "modified",
   },
   "src/main/resources/i18n/messages_en.properties": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/i18n/messages_fr.properties": {
     "stateCleared": "modified",
   },
   "src/main/resources/logback-spring.xml": {
@@ -366,6 +366,9 @@ exports[`SubGenerator server of ionic JHipster blueprint > run > should succeed 
     "stateCleared": "modified",
   },
   "src/main/webapp/i18n/en/activate.json": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/i18n/en/adminAuthority.json": {
     "stateCleared": "modified",
   },
   "src/main/webapp/i18n/en/configuration.json": {
@@ -410,51 +413,6 @@ exports[`SubGenerator server of ionic JHipster blueprint > run > should succeed 
   "src/main/webapp/i18n/en/user-management.json": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/i18n/fr/activate.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/configuration.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/error.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/global.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/health.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/home.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/login.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/logs.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/metrics.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/password.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/register.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/reset.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/sessions.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/settings.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/user-management.json": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/IntegrationTest.java": {
     "stateCleared": "modified",
   },
@@ -462,6 +420,9 @@ exports[`SubGenerator server of ionic JHipster blueprint > run > should succeed 
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/config/AsyncSyncConfiguration.java": {
+    "stateCleared": "modified",
+  },
+  "src/test/java/com/mycompany/myapp/config/CRLFLogConverterTest.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/config/EmbeddedSQL.java": {
@@ -489,6 +450,18 @@ exports[`SubGenerator server of ionic JHipster blueprint > run > should succeed 
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/config/timezone/HibernateTimeZoneIT.java": {
+    "stateCleared": "modified",
+  },
+  "src/test/java/com/mycompany/myapp/domain/AssertUtils.java": {
+    "stateCleared": "modified",
+  },
+  "src/test/java/com/mycompany/myapp/domain/AuthorityAsserts.java": {
+    "stateCleared": "modified",
+  },
+  "src/test/java/com/mycompany/myapp/domain/AuthorityTest.java": {
+    "stateCleared": "modified",
+  },
+  "src/test/java/com/mycompany/myapp/domain/AuthorityTestSamples.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/management/SecurityMetersServiceTests.java": {
@@ -536,6 +509,9 @@ exports[`SubGenerator server of ionic JHipster blueprint > run > should succeed 
   "src/test/java/com/mycompany/myapp/web/rest/AuthenticateControllerIT.java": {
     "stateCleared": "modified",
   },
+  "src/test/java/com/mycompany/myapp/web/rest/AuthorityResourceIT.java": {
+    "stateCleared": "modified",
+  },
   "src/test/java/com/mycompany/myapp/web/rest/PublicUserResourceIT.java": {
     "stateCleared": "modified",
   },
@@ -567,9 +543,6 @@ exports[`SubGenerator server of ionic JHipster blueprint > run > should succeed 
     "stateCleared": "modified",
   },
   "src/test/resources/i18n/messages_en.properties": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/i18n/messages_fr.properties": {
     "stateCleared": "modified",
   },
   "src/test/resources/junit-platform.properties": {

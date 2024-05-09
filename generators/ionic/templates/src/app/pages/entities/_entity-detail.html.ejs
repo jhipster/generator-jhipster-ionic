@@ -70,6 +70,7 @@
         const relationshipFieldName = relationships[idx].relationshipFieldName;
         const relationshipFieldNamePlural = relationships[idx].relationshipFieldNamePlural;
         const relationshipNameHumanized = relationships[idx].relationshipNameHumanized;
+        const otherEntity = relationships[idx].otherEntity;
         const otherEntityName = relationships[idx].otherEntityName;
         const otherEntityStateName = relationships[idx].otherEntityStateName;
         const otherEntityField = relationships[idx].otherEntityField;
@@ -98,7 +99,7 @@
             <%_ } else { _%>
                 <%_ if (relationshipType === 'many-to-many') { _%>
             <div item-content>
-            @for (<%= relationshipFieldName %> of <%= entityInstance %>.<%= relationshipFieldNamePlural %>; track <%= relationshipFieldName %>.<%= relationship.otherEntity.primaryKey.name %>; let last = $last) {
+            @for (<%= relationshipFieldName %> of <%= entityInstance %>.<%= relationshipFieldNamePlural %>; track <%= relationshipFieldName %>.<%= otherEntity.primaryKey.name %>; let last = $last) {
                 <span>
                     <a>{{<%= relationshipFieldName %>.<%= otherEntityField %>}}</a>{{last ? '' : ', '}}
                 </span>
