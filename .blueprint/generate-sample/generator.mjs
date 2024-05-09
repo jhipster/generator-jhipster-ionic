@@ -1,18 +1,24 @@
 import { readdir } from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
 import BaseGenerator from 'generator-jhipster/generators/base';
 import command from './command.mjs';
 
 export default class extends BaseGenerator {
   sampleName;
 
+  constructor(args, opts, features) {
+    super(args, opts, { ...features, jhipsterBootstrap: false });
+  }
+
   get [BaseGenerator.INITIALIZING]() {
     return this.asInitializingTaskGroup({
+      async parseCommand() {
+        await this.parseCurrentJHipsterCommand();
+      },
       async initializeOptions() {
-        this.parseJHipsterArguments(command.arguments);
         if (this.sampleName && !this.sampleName.endsWith('.jdl')) {
           this.sampleName += '.jdl';
         }
-        this.parseJHipsterOptions(command.options);
       },
     });
   }
@@ -44,6 +50,9 @@ export default class extends BaseGenerator {
   get [BaseGenerator.END]() {
     return this.asEndTaskGroup({
       async generateSample() {
+        const packageJson = JSON.parse(readFileSync(new URL('../../package.json', import.meta.url)));
+        const projectVersion = `${packageJson.version}-git`;
+
         await this.composeWithJHipster('jdl', {
           generatorArgs: [this.sampleName],
           generatorOptions: {
@@ -51,6 +60,7 @@ export default class extends BaseGenerator {
             insight: false,
             skipChecks: true,
             skipInstall: true,
+            projectVersion,
           },
         });
       },
