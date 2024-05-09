@@ -72,7 +72,7 @@ jobs:
       - name: Check Version
         run: $JHIPSTER_INSTALL/02-checkVersion.sh
       - run: cli.cjs generate-sample ${{ matrix.jdl }} --force --no-insight --skip-checks --skip-commit-hook --skip-install --skip-jhipster-dependencies
-      - uses: jhipster/actions/compare-sample@016cfe4e05d7011e4c07b8dd4fe0e4f5d252ffeb
+      - uses: jhipster/actions/compare-sample@b0ecf4d84af9afbc1885d951b109876521412615
         id: compare
         if: github.event.pull_request
         with:
