@@ -71,13 +71,13 @@ jobs:
         working-directory: ${{ github.workspace }}/generator-jhipster-ionic
       - name: Check Version
         run: $JHIPSTER_INSTALL/02-checkVersion.sh
-      - run: cli.cjs generate-sample ${{ matrix.jdl }} --force --no-insight --skip-checks --skip-commit-hook --skip-install --skip-jhipster-dependencies'
+      - run: cli.cjs generate-sample ${{ matrix.jdl }} --force --no-insight --skip-checks --skip-commit-hook --skip-install --skip-jhipster-dependencies
       - uses: jhipster/actions/compare-sample@v0
         id: compare
         if: github.event.pull_request
         with:
           generator-path: generator-jhipster-ionic
-          cmd: cli.cjs generate-sample ${{ matrix.jdl }} --force --no-insight --skip-checks --skip-git --skip-commit-hook --skip-install --skip-jhipster-dependencies'
+          cmd: cli.cjs generate-sample ${{ matrix.jdl }} --force --no-insight --skip-checks --skip-git --skip-commit-hook --skip-install --skip-jhipster-dependencies
       - name: Ionic tests
         run: cat package.json; npm install; npm test
         working-directory: ${{ github.workspace }}/ionic4j
