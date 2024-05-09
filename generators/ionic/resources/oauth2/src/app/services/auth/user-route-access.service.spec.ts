@@ -8,7 +8,7 @@ describe('UserRouteAccessService', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule, IonicStorageModule.forRoot()],
-    })
+    }),
   );
 
   it('should be created', () => {

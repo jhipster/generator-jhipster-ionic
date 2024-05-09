@@ -15,7 +15,10 @@ export class WelcomePage implements OnInit, OnDestroy {
   action: IAuthAction;
   sub: Subscription;
 
-  constructor(private authService: AuthService, private navController: NavController) {}
+  constructor(
+    private authService: AuthService,
+    private navController: NavController,
+  ) {}
 
   ngOnInit() {
     this.sub = this.authService.events$.subscribe(action => this.onAction(action));

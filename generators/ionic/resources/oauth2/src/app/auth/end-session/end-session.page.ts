@@ -6,7 +6,10 @@ import { AuthService } from 'ionic-appauth';
   template: '<p style="margin-left: 10px">Signing out...</p>',
 })
 export class EndSessionPage implements OnInit {
-  constructor(private auth: AuthService, private navCtrl: NavController) {}
+  constructor(
+    private auth: AuthService,
+    private navCtrl: NavController,
+  ) {}
 
   async ngOnInit() {
     this.auth.endSessionCallback();

@@ -8,7 +8,10 @@ import { AccountService } from '../../services/auth/account.service';
   styleUrls: ['welcome.page.scss'],
 })
 export class WelcomePage implements OnInit {
-  constructor(private accountService: AccountService, private navController: NavController) {}
+  constructor(
+    private accountService: AccountService,
+    private navController: NavController,
+  ) {}
 
   ngOnInit() {
     this.accountService.identity().then(account => {

@@ -17,7 +17,7 @@ export class HomePage implements OnInit {
     public navController: NavController,
     private accountService: AccountService,
     private loginService: LoginService,
-    private platform: Platform
+    private platform: Platform,
   ) {}
 
   ngOnInit() {

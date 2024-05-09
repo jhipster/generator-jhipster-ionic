@@ -10,7 +10,10 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: 'app.component.html',
 })
 export class AppComponent {
-  constructor(private platform: Platform, private translate: TranslateService) {
+  constructor(
+    private platform: Platform,
+    private translate: TranslateService,
+  ) {
     this.initializeApp();
   }
 

@@ -36,7 +36,7 @@ export class SignupPage implements OnInit {
     public navController: NavController,
     public userService: UserService,
     public toastController: ToastController,
-    public translateService: TranslateService
+    public translateService: TranslateService,
   ) {
     this.translateService.get(['SIGNUP_ERROR', 'SIGNUP_SUCCESS', 'EXISTING_USER_ERROR', 'INVALID_PASSWORD_ERROR']).subscribe(values => {
       this.signupErrorString = values.SIGNUP_ERROR;
@@ -81,7 +81,7 @@ export class SignupPage implements OnInit {
           position: 'middle',
         });
         toast.present();
-      }
+      },
     );
   }
 }

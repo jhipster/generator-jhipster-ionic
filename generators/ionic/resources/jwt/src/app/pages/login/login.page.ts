@@ -23,7 +23,7 @@ export class LoginPage implements OnInit {
     public translateService: TranslateService,
     public loginService: LoginService,
     public toastController: ToastController,
-    public navController: NavController
+    public navController: NavController,
   ) {}
 
   ngOnInit() {
@@ -46,7 +46,7 @@ export class LoginPage implements OnInit {
           position: 'top',
         });
         toast.present();
-      }
+      },
     );
   }
 }

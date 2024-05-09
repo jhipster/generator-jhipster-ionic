@@ -6,7 +6,10 @@ import { AuthService } from 'ionic-appauth';
   providedIn: 'root',
 })
 export class AuthHttpService {
-  constructor(private requestor: Requestor, private auth: AuthService) {}
+  constructor(
+    private requestor: Requestor,
+    private auth: AuthService,
+  ) {}
 
   public async request<T>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url: string, body?: any) {
     const token: TokenResponse = await this.auth.getValidToken();

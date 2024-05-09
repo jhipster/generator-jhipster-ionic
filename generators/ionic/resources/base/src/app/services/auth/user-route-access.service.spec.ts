@@ -7,7 +7,7 @@ describe('UserRouteAccessService', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule],
-    })
+    }),
   );
 
   it('should be created', () => {

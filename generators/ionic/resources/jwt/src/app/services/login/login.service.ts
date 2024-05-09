@@ -10,7 +10,7 @@ export class LoginService {
   constructor(
     private accountService: AccountService,
     private authServerProvider: AuthServerProvider,
-    private translate: TranslateService
+    private translate: TranslateService,
   ) {}
 
   login(credentials, callback?) {
@@ -33,7 +33,7 @@ export class LoginService {
           this.logout();
           reject(err);
           return cb(err);
-        }
+        },
       );
     });
   }

@@ -12,7 +12,7 @@ export class LoginService {
     private accountService: AccountService,
     private authService: AuthService,
     private translate: TranslateService,
-    private browser: Browser
+    private browser: Browser,
   ) {}
 
   login() {
