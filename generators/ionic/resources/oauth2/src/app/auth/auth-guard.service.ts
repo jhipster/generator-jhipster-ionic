@@ -9,7 +9,10 @@ import { filter, switchMap, tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthGuardService implements CanActivate {
-  constructor(private auth: AuthService, private navCtrl: NavController) {}
+  constructor(
+    private auth: AuthService,
+    private navCtrl: NavController,
+  ) {}
 
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
     return this.auth.initComplete$.pipe(
@@ -19,7 +22,7 @@ export class AuthGuardService implements CanActivate {
         if (!isAuthenticated) {
           this.navCtrl.navigateRoot('login');
         }
-      })
+      }),
     );
   }
 }

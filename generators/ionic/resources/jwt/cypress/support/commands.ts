@@ -72,7 +72,7 @@ Cypress.Commands.addAll({
         validate: () => {
           cy.authenticatedRequest({ url: '/api/account' }).its('status').should('eq', 200);
         },
-      }
+      },
     );
   },
 });

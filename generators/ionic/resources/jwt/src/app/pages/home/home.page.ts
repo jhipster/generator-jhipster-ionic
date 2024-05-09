@@ -12,7 +12,11 @@ import { LoginService } from '../../services/login/login.service';
 export class HomePage implements OnInit {
   account: Account;
 
-  constructor(public navController: NavController, private accountService: AccountService, private loginService: LoginService) {}
+  constructor(
+    public navController: NavController,
+    private accountService: AccountService,
+    private loginService: LoginService,
+  ) {}
 
   ngOnInit() {
     this.accountService.identity().then(account => {

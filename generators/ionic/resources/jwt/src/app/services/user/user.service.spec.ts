@@ -7,7 +7,7 @@ describe('UserService', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, TranslateModule.forRoot()],
-    })
+    }),
   );
 
   it('should be created', () => {

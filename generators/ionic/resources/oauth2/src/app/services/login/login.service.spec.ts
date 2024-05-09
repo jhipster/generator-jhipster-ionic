@@ -8,13 +8,8 @@ import { AuthModule } from '../../auth/auth.module';
 describe('LoginService', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        TranslateModule.forRoot(),
-        IonicStorageModule.forRoot(),
-        AuthModule,
-      ],
-    })
+      imports: [HttpClientTestingModule, TranslateModule.forRoot(), IonicStorageModule.forRoot(), AuthModule],
+    }),
   );
 
   it('should be created', () => {

@@ -57,7 +57,7 @@ export class AccountService {
       },
       () => {
         return Promise.resolve(false);
-      }
+      },
     );
   }
 

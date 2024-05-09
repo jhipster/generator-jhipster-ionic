@@ -10,7 +10,11 @@ import { Subscription } from 'rxjs';
 export class AuthCallbackPage implements OnInit, OnDestroy {
   sub: Subscription;
 
-  constructor(private auth: AuthService, private navCtrl: NavController, private router: Router) {}
+  constructor(
+    private auth: AuthService,
+    private navCtrl: NavController,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     this.sub = this.auth.events$.subscribe(action => this.postCallback(action));

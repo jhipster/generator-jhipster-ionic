@@ -10,7 +10,7 @@ export class UserRouteAccessService implements CanActivate {
   constructor(
     private router: Router,
     private navController: NavController,
-    private accountService: AccountService // private stateStorageService: StateStorageService
+    private accountService: AccountService, // private stateStorageService: StateStorageService
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {

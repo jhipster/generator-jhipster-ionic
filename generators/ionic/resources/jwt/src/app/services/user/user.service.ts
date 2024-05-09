@@ -10,7 +10,10 @@ import { LoginService } from '../login/login.service';
 export class UserService {
   private user: any;
 
-  constructor(public apiService: ApiService, public loginService: LoginService) {}
+  constructor(
+    public apiService: ApiService,
+    public loginService: LoginService,
+  ) {}
 
   /**
    * Send a POST request to our login endpoint with the data

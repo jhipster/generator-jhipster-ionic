@@ -6,7 +6,7 @@ describe('AuthServerProvider', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-    })
+    }),
   );
 
   it('should be created', () => {

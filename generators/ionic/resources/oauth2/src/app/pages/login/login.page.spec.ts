@@ -15,13 +15,7 @@ describe('LoginPage', () => {
     TestBed.configureTestingModule({
       declarations: [LoginPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        TranslateModule.forRoot(),
-        RouterTestingModule,
-        HttpClientTestingModule,
-        IonicStorageModule.forRoot(),
-        AuthModule,
-      ],
+      imports: [TranslateModule.forRoot(), RouterTestingModule, HttpClientTestingModule, IonicStorageModule.forRoot(), AuthModule],
     }).compileComponents();
   }));
 
