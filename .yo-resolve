@@ -1,1 +1,3 @@
-!package.json skip
+.github/workflows/** skip
+generators/** skip
+README.md skip
