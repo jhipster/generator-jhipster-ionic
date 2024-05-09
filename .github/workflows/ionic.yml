@@ -87,14 +87,13 @@ jobs:
         run: npm run java:docker:prod
       - name: Launch backend application
         run: npm run app:up
-        # if: steps.compare.outputs.equals != 'true'
+        if: steps.compare.outputs.equals != 'true'
       - name: Wait for backend to start
         run: npm run ci:server:await
-        # if: steps.compare.outputs.equals != 'true'
+        if: steps.compare.outputs.equals != 'true'
       - name: Launch ionic e2e test
         id: e2e
-        if: ${{ matrix.e2e == 1 }}
-        # if: steps.compare.outputs.equals != 'true'
+        if: matrix.e2e == 1 && steps.compare.outputs.equals != 'true'
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
