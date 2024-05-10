@@ -5,8 +5,8 @@ concurrency:
   cancel-in-progress: true
 on:
   push:
-    branches-ignore:
-      - 'dependabot/**'
+    branches:
+      - main
   pull_request:
     branches:
       - '*'
