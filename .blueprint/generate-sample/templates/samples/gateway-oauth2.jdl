@@ -3,6 +3,7 @@ application {
     baseName gateway
     applicationType gateway
     authenticationType oauth2
+    creationTimestamp 1632872179205
     packageName org.jhipster.demo.blog
     prodDatabaseType postgresql
     buildTool maven
