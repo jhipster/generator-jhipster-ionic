@@ -84,6 +84,14 @@ jobs:
           compare-folder: ionic4j
           generator-path: generator-jhipster-ionic
           cmd: cli.cjs generate-sample ${{ matrix.jdl }} --force --no-insight --skip-checks --skip-git --skip-commit-hook --skip-install --skip-jhipster-dependencies
+      - uses: jhipster/actions/compare-sample@v0
+        if: github.event.pull_request
+        with:
+          application-base-path: ${{ github.workspace }}/backend-base
+          application-folder: backend
+          compare-folder: backend
+          generator-path: generator-jhipster-ionic
+          cmd: cli.cjs generate-sample ${{ matrix.jdl }} --force --no-insight --skip-checks --skip-git --skip-commit-hook --skip-install --skip-jhipster-dependencies
       - name: Ionic tests
         run: cat package.json; npm install; npm test
         working-directory: ${{ github.workspace }}/ionic4j
