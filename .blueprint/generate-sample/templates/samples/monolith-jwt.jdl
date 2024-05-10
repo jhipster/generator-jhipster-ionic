@@ -3,6 +3,7 @@ application {
     baseName mono
     applicationType monolith
     authenticationType jwt
+    creationTimestamp 1632872179205
     packageName org.jhipster.demo.blog
     prodDatabaseType mysql
     buildTool maven
