@@ -23,7 +23,7 @@ const blueprint = packageFolderName.startsWith('jhipster-') ? `generator-${packa
       [blueprint]: version,
     },
     printBlueprintLogo: () => {
-      console.log('===================== JHipster ionic =====================');
+      console.log('===================== JHipster Ionic =====================');
       console.log('');
     },
     lookups: [{ packagePaths: [packagePath] }],
