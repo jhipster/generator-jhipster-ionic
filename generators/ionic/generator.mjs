@@ -118,6 +118,14 @@ export default class extends BaseApplicationGenerator {
     });
   }
 
+  get [BaseApplicationGenerator.COMPOSING]() {
+    return this.asComposingTaskGroup({
+      async composeGit() {
+        this.composeWithJHipster('git');
+      },
+    });
+  }
+
   get [BaseApplicationGenerator.WRITING]() {
     return this.asWritingTaskGroup({
       async writingTemplateTask({ application }) {
