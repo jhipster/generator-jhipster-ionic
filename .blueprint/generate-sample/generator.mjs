@@ -60,7 +60,6 @@ export default class extends BaseGenerator {
             insight: false,
             skipChecks: true,
             skipInstall: true,
-            reproducible: true,
             projectVersion,
           },
         });
