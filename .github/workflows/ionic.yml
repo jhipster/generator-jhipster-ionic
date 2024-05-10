@@ -89,7 +89,7 @@ jobs:
       - uses: jhipster/actions/compare-sample@v0
         if: >-
           github.event.pull_request &&
-          !contains(github.event.pull_request.labels.*.name, 'pr: compare-backend')
+          contains(github.event.pull_request.labels.*.name, 'pr: compare-backend')
         with:
           application-base-path: ${{ github.workspace }}/backend-base
           application-folder: backend
