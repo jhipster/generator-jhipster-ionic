@@ -92,7 +92,7 @@ jobs:
         if: >-
           github.event.pull_request &&
           !contains(github.event.pull_request.labels.*.name, 'pr: disable-compare') &&
-          steps.compare-backend.outputs.equals != 'false'
+          steps.compare-backend.outputs.equals != 'true'
         with:
           application-folder: backend
           compare-folder: ionic4j
