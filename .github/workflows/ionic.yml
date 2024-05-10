@@ -88,6 +88,7 @@ jobs:
         run: cat package.json; npm install; npm test
         working-directory: ${{ github.workspace }}/ionic4j
       - name: Build application docker image
+        if: steps.compare.outputs.equals != 'true'
         run: npm run java:docker:prod
       - name: Launch backend application
         run: npm run app:up
