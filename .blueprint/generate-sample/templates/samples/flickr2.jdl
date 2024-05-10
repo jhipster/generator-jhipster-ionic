@@ -1,6 +1,7 @@
 application {
   config {
     baseName Flickr2
+    creationTimestamp 1632872179205
     packageName com.okta.developer
     testFrameworks [cypress]
   }
