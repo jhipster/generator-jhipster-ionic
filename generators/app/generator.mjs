@@ -47,8 +47,9 @@ export default class extends BaseApplicationGenerator {
     });
   }
 
-  get [BaseApplicationGenerator.COMPOSING]() {
-    return this.asComposingTaskGroup({
+  get [BaseApplicationGenerator.DEFAULT]() {
+    return this.asDefaultTaskGroup({
+      // We need to wait for the entire entity configuration to be in place. Which happens in configuringEachEntity priority.
       async composeIonic() {
         if (this.jhipsterConfig.applicationType === 'microservice') return;
         const ionicDir = this.destinationPath(this.blueprintConfig.ionicDir);
