@@ -45,7 +45,7 @@
         "sbs": false,
         "written": true
       },
-      "server": {
+      "spring-boot": {
         "command": false,
         "priorities": ["writing", "postWriting"],
         "sbs": true,
@@ -54,11 +54,12 @@
     },
     "githubWorkflows": true,
     "jhipsterVersion": "7.8.1",
+    "js": false,
     "localBlueprint": false,
     "prettierDefaultIndent": 2,
     "projectName": "JHipster Ionic Blueprint",
     "sampleWritten": true,
     "skipCommitHook": true,
-    "subGenerators": ["app", "ionic", "project-name", "server"]
+    "subGenerators": ["app", "ionic", "project-name", "spring-boot"]
   }
 }
