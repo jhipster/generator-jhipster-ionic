@@ -16,7 +16,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import { async, inject, TestBed } from '@angular/core/testing';
+import { waitForAsync, inject, TestBed } from '@angular/core/testing';
 
 import { JhiDataUtils } from './data-util.service';
 
@@ -65,7 +65,7 @@ describe('Data Utils Service Test', () => {
     expect(tempLink.click).toHaveBeenCalledWith();
   }));
 
-  it('should return a promise that rejects with an error message when image is passed but file type is not image', async(
+  it('should return a promise that rejects with an error message when image is passed but file type is not image', waitForAsync(
     inject([JhiDataUtils], (service: JhiDataUtils) => {
       const eventSake = {
         target: {
@@ -80,7 +80,7 @@ describe('Data Utils Service Test', () => {
     }),
   ));
 
-  it('should return a promise that resolves to the modified entity', async(
+  it('should return a promise that resolves to the modified entity', waitForAsync(
     inject([JhiDataUtils], (service: JhiDataUtils) => {
       const eventSake = {
         target: {
@@ -94,7 +94,7 @@ describe('Data Utils Service Test', () => {
     }),
   ));
 
-  it('should return a promise that rejects with an error message when passed event does not contain a file', async(
+  it('should return a promise that rejects with an error message when passed event does not contain a file', waitForAsync(
     inject([JhiDataUtils], (service: JhiDataUtils) => {
       service.setFileData(null, null, null, false).then(
         () => fail('Should not resolve'),

@@ -143,6 +143,9 @@ exports[`SubGenerator server of ionic JHipster blueprint > run > should succeed 
   "src/main/java/com/mycompany/myapp/config/LiquibaseConfiguration.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/config/LocaleConfiguration.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/config/LoggingAspectConfiguration.java": {
     "stateCleared": "modified",
   },
