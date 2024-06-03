@@ -77,8 +77,22 @@ jobs:
         run: $JHIPSTER_INSTALL/02-checkVersion.sh
       - run: cli.cjs generate-sample ${{ matrix.jdl }} --force --no-insight --skip-checks --skip-commit-hook --skip-install --skip-jhipster-dependencies
       - uses: jhipster/actions/compare-sample@v0
+        id: compare-backend
+        if: >-
+          github.event.pull_request &&
+          contains(github.event.pull_request.labels.*.name, 'pr: compare-backend')
+        with:
+          application-base-path: ${{ github.workspace }}/backend-base
+          application-folder: backend
+          compare-folder: backend
+          generator-path: generator-jhipster-ionic
+          cmd: cli.cjs generate-sample ${{ matrix.jdl }} --force --no-insight --skip-checks --skip-git --skip-commit-hook --skip-install --skip-jhipster-dependencies
+      - uses: jhipster/actions/compare-sample@v0
         id: compare
-        if: github.event.pull_request
+        if: >-
+          github.event.pull_request &&
+          !contains(github.event.pull_request.labels.*.name, 'pr: disable-compare') &&
+          steps.compare-backend.outputs.has-changes != 'true'
         with:
           application-folder: backend
           compare-folder: ionic4j

@@ -10,6 +10,5 @@ application {
     buildTool maven
     clientFramework angular
     testFrameworks [cypress]
-    syncUserWithIdp true
   }
 }
