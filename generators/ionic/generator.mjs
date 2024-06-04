@@ -1,12 +1,12 @@
-import { relative } from "node:path";
-import chalk from "chalk";
-import BaseApplicationGenerator from "generator-jhipster/generators/base-application";
-import { generateTestEntity } from "generator-jhipster/generators/client/support";
-import { camelCase, kebabCase, startCase } from "lodash-es";
-import command from "./command.mjs";
-import { DEFAULT_BACKEND_PATH } from "../constants.mjs";
-import { entityFiles, files } from "./files.mjs";
-import { createNeedleCallback } from "generator-jhipster/generators/base/support";
+import { relative } from 'node:path';
+import chalk from 'chalk';
+import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
+import { generateTestEntity } from 'generator-jhipster/generators/client/support';
+import { camelCase, kebabCase, startCase } from 'lodash-es';
+import command from './command.mjs';
+import { DEFAULT_BACKEND_PATH } from '../constants.mjs';
+import { entityFiles, files } from './files.mjs';
+import { createNeedleCallback } from 'generator-jhipster/generators/base/support';
 
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
@@ -101,8 +101,10 @@ export default class extends BaseApplicationGenerator {
         }
 
         if (this.backendConfig?.baseName) {
+          const ionicDir = relative(this.destinationPath(this.ionicConfig.appDir), this.destinationPath());
+
           // Add back reference
-          this.backendBlueprintConfig.ionicDir = relative(this.destinationPath(this.ionicConfig.appDir), this.destinationPath());
+          this.backendBlueprintConfig.ionicDir = ionicDir;
           this.backendBlueprintConfig.appDir = null;
         }
       },
@@ -242,8 +244,7 @@ ${chalk.green(`    cd ${this.backendBlueprintConfig.ionicDir}`)}`
           : '';
         this.log(`
 Ionic for JHipster App created successfully! 🎉
-${chalk.yellowBright("You will need to update your JHipster app's CORS settings when running this app. ⚠️\n")}
-${chalk.yellowBright('    Web: http://localhost:8081')}
+${chalk.yellowBright("You will need to update your JHipster app's CORS settings when running this app on an emulator or device. ⚠️\n")}
 ${chalk.yellowBright('    iOS: capacitor://localhost')}
 ${chalk.yellowBright('    Android: http://localhost')}
 
