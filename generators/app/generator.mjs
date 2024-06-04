@@ -30,7 +30,7 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.PROMPTING]() {
     return this.asPromptingTaskGroup({
-      async promptyForIonicDir() {
+      async promptForIonicDir() {
         await this.prompt(
           [
             {
