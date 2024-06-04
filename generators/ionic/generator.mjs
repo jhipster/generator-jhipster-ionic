@@ -244,7 +244,7 @@ ${chalk.green(`    cd ${this.backendBlueprintConfig.ionicDir}`)}`
           : '';
         this.log(`
 Ionic for JHipster App created successfully! 🎉
-${chalk.yellowBright("You will need to update your JHipster app's CORS settings when running this app on an emulator or device. ⚠️\n")}
+${chalk.yellowBright("\nYou will need to update your JHipster app's CORS settings when running this app on an emulator or device. ⚠️\n")}
 ${chalk.yellowBright('    iOS: capacitor://localhost')}
 ${chalk.yellowBright('    Android: http://localhost')}
 
