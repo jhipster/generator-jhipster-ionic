@@ -38,7 +38,7 @@ Create a directory alongside your JHipster app, and run `jhipster-ionic` in it.
 You can also create a JHipster app and an Ionic app at the same time using the following command:
 
 ```bash
-jhipster jdl bug-tracker.jh --blueprints ionic
+jhipster jdl bug-tracker.jdl --blueprints ionic
 ```
 
 For available options, you can run:

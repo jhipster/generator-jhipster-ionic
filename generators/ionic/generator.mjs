@@ -77,7 +77,7 @@ export default class extends BaseApplicationGenerator {
         if (!this.blueprintConfig.appDir) return;
 
         try {
-          this.copyDestination(this.destinationPath(this.blueprintConfig.appDir, '.jhipster', '**'), '.jhipster/');
+          this.copyDestination('.jhipster/**', '', { fromBasePath: this.destinationPath(this.blueprintConfig.appDir) });
         } catch {
           // No entities.
         }
@@ -244,11 +244,11 @@ ${chalk.green(`    cd ${this.backendBlueprintConfig.ionicDir}`)}`
           : '';
         this.log(`
 Ionic for JHipster App created successfully! 🎉
-${chalk.yellowBright("You will need to update your JHipster app's CORS settings when running this app on an emulator or device. ⚠️\n")}
+${chalk.yellowBright("\nYou will need to update your JHipster app's CORS settings when running this app on an emulator or device. ⚠️\n")}
 ${chalk.yellowBright('    iOS: capacitor://localhost')}
 ${chalk.yellowBright('    Android: http://localhost')}
 
-Run the following commands (in separate terminal window) to see everything working:${changeDirMessage}
+Run the following commands (in separate terminal windows) to see everything working:${changeDirMessage}
 ${chalk.green(`    npm run backend:start`)}
 ${chalk.green(`    npm start`)}
 `);
