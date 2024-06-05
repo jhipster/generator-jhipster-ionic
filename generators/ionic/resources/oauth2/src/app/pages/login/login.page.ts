@@ -13,7 +13,6 @@ const { audience } = environment;
 })
 export class LoginPage implements OnInit, OnDestroy {
   action: IAuthAction;
-  events$ = this.authService.events$;
   sub: Subscription;
 
   constructor(
