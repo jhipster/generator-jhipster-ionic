@@ -225,7 +225,7 @@ export default class extends BaseApplicationGenerator {
     return this.asInstallTaskGroup({
       async install() {
         try {
-          if (this.env.sharedFs.get(this.destinationPath('package.json'))?.commited) {
+          if (this.env.sharedFs.get(this.destinationPath('package.json'))?.committed) {
             await this.spawnCommand('npm', ['install']);
           }
         } catch (error) {
