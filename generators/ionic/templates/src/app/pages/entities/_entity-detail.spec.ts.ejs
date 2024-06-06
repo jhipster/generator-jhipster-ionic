@@ -41,7 +41,7 @@ describe('<%= entityAngularName %>DetailPage', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [TranslateModule.forRoot()],
       providers: [
-        { provide: ActivatedRoute, useValue: activatedRouteMock }
+        { provide: ActivatedRoute, useValue: activatedRouteMock },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
       ]
