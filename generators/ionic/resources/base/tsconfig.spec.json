@@ -5,6 +5,7 @@
     "allowJs": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
+    "target": "es2015",
     "types": ["node", "jest"]
   },
   "files": ["src/polyfills.ts"],

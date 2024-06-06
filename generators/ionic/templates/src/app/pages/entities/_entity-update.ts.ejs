@@ -22,7 +22,7 @@ const queries = query.queries;
 const variables = query.variables;
 let hasManyToMany = query.hasManyToMany;
 _%>
-import { Component, OnInit<% if (anyFieldHasImageContentType) { %>,ViewChild<% } %> } from '@angular/core';
+import { Component, OnInit<% if (anyFieldHasImageContentType) { %>, ViewChild<% } %>, inject } from '@angular/core';
 <%_ if (anyFieldIsBlobDerived) { _%>
 import { JhiDataUtils } from '../../../services/utils/data-util.service';
 <%_ } _%>
@@ -88,7 +88,7 @@ export class <%= entityAngularName %>UpdatePage implements OnInit {
     useCameraCapacitor: boolean;
 <%_ } _%>
 
-    form = this.formBuilder.group({
+    form = inject(FormBuilder).group({
     <%_ for (idx in fields) {
         const fieldName = fields[idx].fieldName;
         const fieldType = fields[idx].fieldType;
@@ -123,7 +123,6 @@ export class <%= entityAngularName %>UpdatePage implements OnInit {
     constructor(
         protected activatedRoute: ActivatedRoute,
         protected navController: NavController,
-        protected formBuilder: FormBuilder,
         public platform: Platform,
         protected toastCtrl: ToastController,
 <%_ if (anyFieldIsBlobDerived) { _%>

@@ -19,8 +19,9 @@
         <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label>{{ 'REMEMBER_ME' | translate }}</ion-label>
-        <ion-toggle [(ngModel)]="account.rememberMe" name="rememberMe"></ion-toggle>
+        <ion-toggle [(ngModel)]="account.rememberMe" name="rememberMe">
+          <ion-label>{{ 'REMEMBER_ME' | translate }}</ion-label>
+        </ion-toggle>
       </ion-item>
       <ion-row class="ion-padding">
         <ion-col>
