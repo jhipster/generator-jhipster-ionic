@@ -22,7 +22,7 @@ const queries = query.queries;
 const variables = query.variables;
 let hasManyToMany = query.hasManyToMany;
 _%>
-import { Component, OnInit<% if (anyFieldHasImageContentType) { %>,ViewChild<% } %>,inject } from '@angular/core';
+import { Component, OnInit<% if (anyFieldHasImageContentType) { %>, ViewChild<% } %>, inject } from '@angular/core';
 <%_ if (anyFieldIsBlobDerived) { _%>
 import { JhiDataUtils } from '../../../services/utils/data-util.service';
 <%_ } _%>
