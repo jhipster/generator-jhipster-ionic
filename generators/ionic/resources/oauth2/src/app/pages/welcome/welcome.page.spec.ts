@@ -2,8 +2,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { WelcomePage } from './welcome.page';
 import { AuthModule } from '../../auth/auth.module';
 
@@ -15,7 +15,8 @@ describe('WelcomePage', () => {
     TestBed.configureTestingModule({
       declarations: [WelcomePage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [TranslateModule.forRoot(), HttpClientTestingModule, IonicStorageModule.forRoot(), RouterTestingModule, AuthModule],
+      imports: [TranslateModule.forRoot(), IonicStorageModule.forRoot(), AuthModule],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     }).compileComponents();
   }));
 

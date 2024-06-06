@@ -3,8 +3,8 @@ import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SignupPage } from './signup.page';
 import { TranslateModule } from '@ngx-translate/core';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('SignupPage', () => {
   let component: SignupPage;
@@ -14,7 +14,8 @@ describe('SignupPage', () => {
     TestBed.configureTestingModule({
       declarations: [SignupPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [TranslateModule.forRoot(), RouterTestingModule, HttpClientTestingModule],
+      imports: [TranslateModule.forRoot()],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     }).compileComponents();
   }));
 
