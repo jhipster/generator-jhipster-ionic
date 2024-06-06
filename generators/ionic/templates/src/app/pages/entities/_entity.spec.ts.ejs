@@ -32,7 +32,7 @@ describe('<%= entityAngularName %>Page', () => {
       declarations: [<%= entityAngularName %>Page],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [TranslateModule.forRoot()],
-      provides: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     }).compileComponents();
   }));
 
