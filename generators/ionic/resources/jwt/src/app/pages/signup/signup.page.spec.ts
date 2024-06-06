@@ -14,7 +14,7 @@ describe('SignupPage', () => {
     TestBed.configureTestingModule({
       declarations: [SignupPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-	    imports: [TranslateModule.forRoot()],
+      imports: [TranslateModule.forRoot()],
       providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     }).compileComponents();
   }));

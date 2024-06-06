@@ -53,7 +53,7 @@ describe('AppComponent', () => {
         { provide: Platform, useValue: platformSpy },
         { provide: AuthService, useValue: authServiceSpy },
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   });

@@ -14,7 +14,7 @@ describe('WelcomePage', () => {
     TestBed.configureTestingModule({
       declarations: [WelcomePage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-	    imports: [TranslateModule.forRoot()],
+      imports: [TranslateModule.forRoot()],
       providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     }).compileComponents();
   }));
