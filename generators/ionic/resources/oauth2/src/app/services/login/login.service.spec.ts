@@ -1,6 +1,7 @@
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { TranslateModule } from '@ngx-translate/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { LoginService } from './login.service';
 import { AuthModule } from '../../auth/auth.module';
@@ -8,7 +9,8 @@ import { AuthModule } from '../../auth/auth.module';
 describe('LoginService', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, TranslateModule.forRoot(), IonicStorageModule.forRoot(), AuthModule],
+      imports: [TranslateModule.forRoot(), IonicStorageModule.forRoot(), AuthModule],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     }),
   );
 
