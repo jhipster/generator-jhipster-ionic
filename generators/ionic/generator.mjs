@@ -126,6 +126,15 @@ export default class extends BaseApplicationGenerator {
     });
   }
 
+  get [BaseApplicationGenerator.PREPARING]() {
+    return this.asPreparingTaskGroup({
+      husky({ application }) {
+        application.nodeDependencies.husky = '9.0.11';
+        application.nodeDependencies['lint-staged'] = '15.2.5';
+      },
+    });
+  }
+
   get [BaseApplicationGenerator.WRITING]() {
     return this.asWritingTaskGroup({
       async writingTemplateTask({ application }) {
