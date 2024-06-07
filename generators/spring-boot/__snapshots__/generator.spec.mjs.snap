@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SubGenerator server of ionic JHipster blueprint > run > should succeed 1`] = `
+exports[`SubGenerator spring-boot of ionic JHipster blueprint > run > should succeed 1`] = `
 {
   ".devcontainer/Dockerfile": {
     "stateCleared": "modified",
