@@ -35,12 +35,12 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         jdl:
-          - monolith-jwt
-          - monolith-oauth2
-          - gateway-oauth2
-          - reactive-oauth2
-          - 21-points
-          - flickr2
+          - monolith-jwt.jdl
+          - monolith-oauth2.jdl
+          - gateway-oauth2.jdl
+          - reactive-oauth2.jdl
+          - 21-points.jdl
+          - flickr2.jdl
         include:
           - jdl: monolith-jwt
             e2e: 1
