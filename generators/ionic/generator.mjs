@@ -112,7 +112,7 @@ export default class extends BaseApplicationGenerator {
         // Add blueprint config to generator-jhipster namespace, so we can omit blueprint parameter when executing jhipster command
         const ionicBlueprints = this.jhipsterConfig.blueprints;
         if (!ionicBlueprints || !ionicBlueprints.find(blueprint => blueprint.name === 'generator-jhipster-ionic')) {
-          this.jhipsterConfig.blueprints = [...(localBlueprints || []), { name: 'generator-jhipster-ionic' }];
+          this.jhipsterConfig.blueprints = [...(this.jhipsterConfig.blueprints || []), { name: 'generator-jhipster-ionic' }];
         }
       },
     });
