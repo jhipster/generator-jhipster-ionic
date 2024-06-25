@@ -52,6 +52,7 @@
         "written": true
       }
     },
+    "githubWorkflows": true,
     "jhipsterVersion": "7.8.1",
     "localBlueprint": false,
     "prettierDefaultIndent": 2,

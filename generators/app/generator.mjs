@@ -1,7 +1,7 @@
 import { relative } from 'node:path';
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
-import command from './command.mjs';
 import { DEFAULT_IONIC_PATH, IONIC_NAMESPACE } from '../constants.mjs';
+import command from './command.mjs';
 
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
