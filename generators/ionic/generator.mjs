@@ -3,10 +3,10 @@ import chalk from 'chalk';
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
 import { generateTestEntity } from 'generator-jhipster/generators/client/support';
 import { camelCase, kebabCase, startCase } from 'lodash-es';
-import command from './command.mjs';
-import { DEFAULT_BACKEND_PATH } from '../constants.mjs';
-import { entityFiles, files } from './files.mjs';
 import { createNeedleCallback } from 'generator-jhipster/generators/base/support';
+import { DEFAULT_BACKEND_PATH } from '../constants.mjs';
+import command from './command.mjs';
+import { entityFiles, files } from './files.mjs';
 
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {

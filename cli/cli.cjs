@@ -17,13 +17,13 @@ const blueprint = packageFolderName.startsWith('jhipster-') ? `generator-${packa
   runJHipster({
     executableName,
     executableVersion: version,
-    defaultCommand: 'ionic',
+    defaultCommand: 'app',
     devBlueprintPath,
     blueprints: {
       [blueprint]: version,
     },
     printBlueprintLogo: () => {
-      console.log('===================== JHipster Ionic =====================');
+      console.log('===================== JHipster ionic =====================');
       console.log('');
     },
     lookups: [{ packagePaths: [packagePath] }],
