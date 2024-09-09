@@ -70,7 +70,7 @@
     "@types/node": "^22.1.0",
     "@typescript-eslint/eslint-plugin": "8.3.0",
     "@typescript-eslint/parser": "8.3.0",
-    "cypress": "13.14.1",
+    "cypress": "13.14.2",
     "eslint": "^8.22.0",
     "eslint-plugin-import": "2.29.1",
     "eslint-plugin-jsdoc": "50.2.2",
