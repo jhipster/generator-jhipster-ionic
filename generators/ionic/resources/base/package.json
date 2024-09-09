@@ -49,7 +49,7 @@
     "ionic-appauth": "2.1.0",
     "rxjs": "~7.8.1",
     "tslib": "^2.6.2",
-    "zone.js": "~0.14.6"
+    "zone.js": "~0.15.0"
   },
   "devDependencies": {
     "@angular-builders/jest": "~18.0.0-beta.3",
