@@ -86,7 +86,7 @@ jobs:
           application-folder: backend
           compare-folder: backend
           generator-path: generator-jhipster-ionic
-          cmd: cli.cjs generate-sample ${{ matrix.jdl }} --skip-jhipster-dependencies
+          cmd: cli.cjs generate-sample ${{ matrix.jdl }} --skip-git --skip-jhipster-dependencies
       - uses: jhipster/actions/compare-sample@v0
         id: compare
         if: >-
