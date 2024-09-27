@@ -7,7 +7,7 @@ index 7b4565a..8953acd 100644
                              commitMsg += ` with blueprints ${bpInfo}`;
                          }
 -                        await git.add(['.']).commit(commitMsg, { '--allow-empty': null });
-+                        await git.add(['.']).commit(commitMsg, { '--allow-empty': null, 'no-verify': null });
++                        await git.add(['.']).commit(commitMsg, { '--allow-empty': null, '--no-verify': null });
                          this.log.ok(`Application successfully committed to Git from ${repositoryRoot}.`);
                      }
                      catch (e) {
