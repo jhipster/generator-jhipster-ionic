@@ -75,7 +75,7 @@ jobs:
         working-directory: ${{ github.workspace }}/generator-jhipster-ionic
       - name: Check Version
         run: $JHIPSTER_INSTALL/02-checkVersion.sh
-      - run: cli.cjs generate-sample ${{ matrix.jdl }} --force --no-insight --skip-checks --skip-install
+      - run: cli.cjs generate-sample ${{ matrix.jdl }} --skip-jhipster-dependencies
       - uses: jhipster/actions/compare-sample@v0
         id: compare-backend
         if: >-
@@ -86,7 +86,7 @@ jobs:
           application-folder: backend
           compare-folder: backend
           generator-path: generator-jhipster-ionic
-          cmd: cli.cjs generate-sample ${{ matrix.jdl }} --force --no-insight --skip-checks --skip-git --skip-install
+          cmd: cli.cjs generate-sample ${{ matrix.jdl }} --skip-jhipster-dependencies
       - uses: jhipster/actions/compare-sample@v0
         id: compare
         if: >-
