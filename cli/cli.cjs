@@ -17,7 +17,7 @@ const blueprint = packageFolderName.startsWith('jhipster-') ? `generator-${packa
   runJHipster({
     executableName,
     executableVersion: version,
-    defaultCommand: 'ionic',
+    defaultCommand: 'app',
     devBlueprintPath,
     blueprints: {
       [blueprint]: version,
@@ -27,6 +27,8 @@ const blueprint = packageFolderName.startsWith('jhipster-') ? `generator-${packa
       console.log('');
     },
     lookups: [{ packagePaths: [packagePath] }],
+    commands: require('./commands.cjs'),
+    ...require('./cli-customizations.cjs'),
   }).catch(done);
 
   process.on('unhandledRejection', up => {

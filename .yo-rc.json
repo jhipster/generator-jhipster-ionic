@@ -53,9 +53,10 @@
       }
     },
     "githubWorkflows": true,
-    "jhipsterVersion": "7.8.1",
+    "jhipsterVersion": "8.7.1",
     "js": false,
     "localBlueprint": false,
+    "packageJsonType": "module",
     "prettierDefaultIndent": 2,
     "projectName": "JHipster Ionic Blueprint",
     "sampleWritten": true,

@@ -1,7 +1,6 @@
-/**
- * @type {import('generator-jhipster').JHipsterCommandDefinition}
- */
-const command = {
+import { asCommand } from 'generator-jhipster';
+
+export default asCommand({
   options: {
     skipCommitHook: {
       desc: 'Skip adding husky commit hooks',
@@ -29,6 +28,4 @@ const command = {
       type: Boolean,
     },
   },
-};
-
-export default command;
+});

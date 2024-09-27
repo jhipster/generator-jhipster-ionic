@@ -8,40 +8,17 @@ export default class extends BaseGenerator {
   samplesFolder;
 
   constructor(args, opts, features) {
-    super(args, opts, { ...features, jhipsterBootstrap: false });
-  }
-
-  get [BaseGenerator.INITIALIZING]() {
-    return this.asInitializingTaskGroup({
-      async parseCommand() {
-        await this.parseCurrentJHipsterCommand();
-      },
-    });
-  }
-
-  get [BaseGenerator.PROMPTING]() {
-    return this.asPromptingTaskGroup({
-      async askForSample() {
-        await this.promptCurrentJHipsterCommand();
-      },
-    });
-  }
-
-  get [BaseGenerator.LOADING]() {
-    return this.asLoadingTaskGroup({
-      async loadCommand() {
-        await this.loadCurrentJHipsterCommandConfig(this);
-      },
-    });
+    super(args, opts, { ...features, queueCommandTasks: true, jhipsterBootstrap: false });
   }
 
   get [BaseGenerator.WRITING]() {
     return this.asWritingTaskGroup({
       async copySample() {
+        const samplesFolder = `${this.samplesFolder ?? 'samples'}/`;
         if (this.all) {
-          this.copyTemplate(`${this.samplesFolder}/*.jdl`, '');
+          this.copyTemplate(`${samplesFolder}*.jdl`, '');
         } else {
-          this.copyTemplate(`${this.samplesFolder}/${this.sampleName}`, this.sampleName, { noGlob: true });
+          this.copyTemplate(`${samplesFolder}${this.sampleName}`, this.sampleName, { noGlob: true });
         }
       },
     });

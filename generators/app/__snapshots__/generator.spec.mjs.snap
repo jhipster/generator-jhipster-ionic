@@ -77,6 +77,9 @@ exports[`SubGenerator app of ionic JHipster blueprint > run > should succeed 1`]
   "../ionic4j/cypress/tsconfig.json": {
     "stateCleared": "modified",
   },
+  "../ionic4j/eslint.config.mjs": {
+    "stateCleared": "modified",
+  },
   "../ionic4j/ionic.config.json": {
     "stateCleared": "modified",
   },
@@ -587,6 +590,9 @@ exports[`SubGenerator app of ionic JHipster blueprint > with custom ionic path >
     "stateCleared": "modified",
   },
   "../ionic-app/cypress/tsconfig.json": {
+    "stateCleared": "modified",
+  },
+  "../ionic-app/eslint.config.mjs": {
     "stateCleared": "modified",
   },
   "../ionic-app/ionic.config.json": {
