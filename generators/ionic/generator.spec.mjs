@@ -18,7 +18,7 @@ describe('SubGenerator ionic of ionic JHipster blueprint', () => {
         .run(SUB_GENERATOR_NAMESPACE)
         .withJHipsterConfig()
         .withOptions({
-          blueprint: 'ionic',
+          blueprint: ['ionic'],
           appDir: false,
           baseName: 'jhipster',
           ignoreNeedlesError: true,
@@ -42,7 +42,7 @@ describe('SubGenerator ionic of ionic JHipster blueprint', () => {
         .run(SUB_GENERATOR_NAMESPACE)
         .withJHipsterConfig()
         .withOptions({
-          blueprint: 'ionic',
+          blueprint: ['ionic'],
           appDir: false,
           baseName: 'jhipster',
           authenticationType: 'oauth2',

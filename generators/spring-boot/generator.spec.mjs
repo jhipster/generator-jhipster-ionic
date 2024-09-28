@@ -13,7 +13,7 @@ describe('SubGenerator spring-boot of ionic JHipster blueprint', () => {
         .withJHipsterConfig()
         .withOptions({
           ignoreNeedlesError: true,
-          blueprint: 'ionic',
+          blueprint: ['ionic'],
         })
         .withJHipsterLookup()
         .withParentBlueprintLookup();

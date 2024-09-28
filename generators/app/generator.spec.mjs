@@ -17,7 +17,7 @@ describe('SubGenerator app of ionic JHipster blueprint', () => {
         })
         .withOptions({
           ignoreNeedlesError: true,
-          blueprint: 'ionic',
+          blueprint: ['ionic'],
         })
         .withJHipsterLookup()
         .withParentBlueprintLookup();
@@ -40,7 +40,7 @@ describe('SubGenerator app of ionic JHipster blueprint', () => {
         .withOptions({
           skipChecks: true,
           ignoreNeedlesError: true,
-          blueprint: 'ionic',
+          blueprint: ['ionic'],
           ionicDir: '../ionic-app',
         })
         .withJHipsterLookup()

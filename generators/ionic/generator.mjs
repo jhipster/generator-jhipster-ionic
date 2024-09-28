@@ -126,15 +126,6 @@ export default class extends BaseApplicationGenerator {
     });
   }
 
-  get [BaseApplicationGenerator.PREPARING]() {
-    return this.asPreparingTaskGroup({
-      husky({ application }) {
-        application.nodeDependencies.husky = '9.0.11';
-        application.nodeDependencies['lint-staged'] = '15.2.5';
-      },
-    });
-  }
-
   get [BaseApplicationGenerator.WRITING]() {
     return this.asWritingTaskGroup({
       async writingTemplateTask({ application }) {
@@ -197,6 +188,12 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
+      ignoreEslint9ConfigFile({ application }) {
+        const eslintConfigFile = this.env.sharedFs.get(this.destinationPath(application.eslintConfigFile));
+        if (eslintConfigFile) {
+          delete eslintConfigFile.state;
+        }
+      },
       customizePackageJson({ application }) {
         const { baseName } = this.jhipsterConfig;
         this.packageJson.merge({
@@ -235,9 +232,9 @@ export default class extends BaseApplicationGenerator {
       async install() {
         try {
           if (this.env.sharedFs.get(this.destinationPath('package.json'))?.committed) {
-            await this.spawnCommand('npm', ['install']);
+            await this.spawnCommand('npm install');
           }
-        } catch (error) {
+        } catch {
           this.log.error(`Error executing 'npm install', execute by yourself.`);
         }
       },

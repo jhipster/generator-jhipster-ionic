@@ -1,6 +1,10 @@
 import globals from 'globals';
-import prettierRecommended from 'eslint-plugin-prettier/recommended';
-import jhipsterRecommended from 'generator-jhipster/eslint/recommended';
+import prettier from 'eslint-plugin-prettier/recommended';
+import jhipster from 'generator-jhipster/eslint/recommended';
+
+// Workaround for jhipster export issue.
+delete jhipster.recommended.recommended;
+// jhipster-needle-eslint-add-import - JHipster will add additional import here
 
 export default [
   {
@@ -10,6 +14,8 @@ export default [
       },
     },
   },
-  jhipsterRecommended,
-  prettierRecommended,
+  { ignores: ['coverage/**'] },
+  jhipster.recommended,
+  // jhipster-needle-eslint-add-config - JHipster will add additional config here
+  prettier,
 ];
