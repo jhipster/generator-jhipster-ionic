@@ -16,6 +16,7 @@ entity Album {
 }
 
 entity Photo {
+  id UUID
   title String required
   description TextBlob
   image ImageBlob required
