@@ -29,7 +29,7 @@
     "@capacitor-community/http": "1.4.1",
     "@capacitor/app": "6.0.1",
     "@capacitor/browser": "6.0.3",
-    "@capacitor/camera": "6.0.2",
+    "@capacitor/camera": "6.1.0",
     "@capacitor/core": "6.1.2",
     "@capacitor/haptics": "6.0.1",
     "@capacitor/keyboard": "6.0.2",
