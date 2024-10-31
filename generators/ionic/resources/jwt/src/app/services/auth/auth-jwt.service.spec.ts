@@ -1,11 +1,13 @@
 import { TestBed } from '@angular/core/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+
 import { AuthServerProvider } from './auth-jwt.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AuthServerProvider', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      providers: [provideHttpClient(), provideHttpClientTesting()],
     }),
   );
 
