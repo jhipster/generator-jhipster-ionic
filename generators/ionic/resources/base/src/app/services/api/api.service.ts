@@ -20,7 +20,7 @@ export class ApiService {
     // Support easy query params for GET requests
     if (params) {
       reqOpts.params = new HttpParams();
-      for (let k in params) {
+      for (const k in params) {
         reqOpts.params.set(k, params[k]);
       }
     }

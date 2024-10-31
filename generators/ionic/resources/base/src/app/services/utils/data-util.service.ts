@@ -35,8 +35,6 @@ export interface JhiFileLoadError {
   providedIn: 'root',
 })
 export class JhiDataUtils {
-  constructor() {}
-
   /**
    * Method to abbreviate the text given
    */
