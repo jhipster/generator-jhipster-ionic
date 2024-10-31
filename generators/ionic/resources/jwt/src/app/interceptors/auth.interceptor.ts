@@ -9,8 +9,6 @@ const AUTHENTICATION_TOKEN = 'jhi-authenticationtoken';
 export class AuthInterceptor implements HttpInterceptor {
   private servicesEndpoint = ApiService.API_URL.replace('api', 'services');
 
-  constructor() {}
-
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (
       !request ||
@@ -21,7 +19,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     const token = JSON.parse(localStorage.getItem(AUTHENTICATION_TOKEN) ?? sessionStorage.getItem(AUTHENTICATION_TOKEN));
-    if (!!token) {
+    if (token) {
       request = request.clone({
         setHeaders: {
           Authorization: 'Bearer ' + token,

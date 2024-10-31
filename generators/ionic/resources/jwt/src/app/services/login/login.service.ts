@@ -14,8 +14,6 @@ export class LoginService {
   ) {}
 
   login(credentials, callback?) {
-    const cb = callback || function () {};
-
     return new Promise((resolve, reject) => {
       this.authServerProvider.login(credentials).subscribe(
         data => {
@@ -27,12 +25,12 @@ export class LoginService {
             }
             resolve(data);
           });
-          return cb();
+          return callback?.();
         },
         err => {
           this.logout();
           reject(err);
-          return cb(err);
+          return callback?.(err);
         },
       );
     });
