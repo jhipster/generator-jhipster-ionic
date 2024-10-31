@@ -196,6 +196,11 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
+      addPrettierConfig({ source }) {
+        source.mergePrettierConfig({
+          overrides: [{ files: '*.html', options: { parser: 'angular' } }],
+        });
+      },
       customizePackageJson({ application }) {
         const { baseName } = this.jhipsterConfig;
         this.packageJson.merge({
