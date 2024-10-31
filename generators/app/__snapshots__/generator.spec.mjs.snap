@@ -8,9 +8,6 @@ exports[`SubGenerator app of ionic JHipster blueprint > run > should succeed 1`]
   "../ionic4j/.editorconfig": {
     "stateCleared": "modified",
   },
-  "../ionic4j/.eslintrc.json": {
-    "stateCleared": "modified",
-  },
   "../ionic4j/.gitattributes": {
     "stateCleared": "modified",
   },
@@ -75,6 +72,9 @@ exports[`SubGenerator app of ionic JHipster blueprint > run > should succeed 1`]
     "stateCleared": "modified",
   },
   "../ionic4j/cypress/tsconfig.json": {
+    "stateCleared": "modified",
+  },
+  "../ionic4j/eslint.config.mjs": {
     "stateCleared": "modified",
   },
   "../ionic4j/ionic.config.json": {
@@ -473,9 +473,6 @@ exports[`SubGenerator app of ionic JHipster blueprint > run > should succeed 1`]
   "../ionic4j/tsconfig.spec.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/tslint.json": {
-    "stateCleared": "modified",
-  },
   ".editorconfig": {
     "stateCleared": "modified",
   },
@@ -518,9 +515,6 @@ exports[`SubGenerator app of ionic JHipster blueprint > with custom ionic path >
     "stateCleared": "modified",
   },
   "../ionic-app/.editorconfig": {
-    "stateCleared": "modified",
-  },
-  "../ionic-app/.eslintrc.json": {
     "stateCleared": "modified",
   },
   "../ionic-app/.gitattributes": {
@@ -587,6 +581,9 @@ exports[`SubGenerator app of ionic JHipster blueprint > with custom ionic path >
     "stateCleared": "modified",
   },
   "../ionic-app/cypress/tsconfig.json": {
+    "stateCleared": "modified",
+  },
+  "../ionic-app/eslint.config.mjs": {
     "stateCleared": "modified",
   },
   "../ionic-app/ionic.config.json": {
@@ -983,9 +980,6 @@ exports[`SubGenerator app of ionic JHipster blueprint > with custom ionic path >
     "stateCleared": "modified",
   },
   "../ionic-app/tsconfig.spec.json": {
-    "stateCleared": "modified",
-  },
-  "../ionic-app/tslint.json": {
     "stateCleared": "modified",
   },
   ".editorconfig": {

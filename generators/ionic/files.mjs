@@ -25,6 +25,7 @@ export const files = {
     {
       templates: [
         'capacitor.config.ts',
+        'eslint.config.js.jhi.ionic',
         'ionic.config.json',
         'src/app/interceptors/auth.interceptor.ts',
         'src/app/pages/home/home.page.scss',
