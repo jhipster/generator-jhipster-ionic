@@ -60,7 +60,7 @@ export default class extends BaseApplicationGenerator {
     }
 
     await this.dependsOnJHipster('bootstrap-application');
-    await this.dependsOnJHipster('init', { typescriptEslint: true });
+    await this.dependsOnJHipster('init');
   }
 
   get [BaseApplicationGenerator.INITIALIZING]() {
@@ -122,6 +122,14 @@ export default class extends BaseApplicationGenerator {
     return this.asComposingTaskGroup({
       async composeGit() {
         await this.composeWithJHipster('git');
+      },
+    });
+  }
+
+  get [BaseApplicationGenerator.LOADING]() {
+    return this.asLoadingTaskGroup({
+      loading({ application }) {
+        application.typescriptEslint = true;
       },
     });
   }
