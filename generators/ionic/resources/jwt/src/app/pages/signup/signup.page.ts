@@ -8,7 +8,7 @@ import { UserService } from '../../services/user/user.service';
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
 })
-export class SignupPage implements OnInit {
+export class SignupPage {
   // The account fields for the signup form
   account: {
     login: string;
@@ -45,8 +45,6 @@ export class SignupPage implements OnInit {
       this.invalidPasswordError = values.INVALID_PASSWORD_ERROR;
     });
   }
-
-  ngOnInit() {}
 
   doSignup() {
     // set login to same as email
