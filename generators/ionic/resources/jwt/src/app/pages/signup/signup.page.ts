@@ -27,10 +27,10 @@ export class SignupPage implements OnInit {
   };
 
   // Our translated text strings
-  private signupErrorString: string;
-  private signupSuccessString: string;
-  private existingUserError: string;
-  private invalidPasswordError: string;
+  private signupErrorString!: string;
+  private signupSuccessString!: string;
+  private existingUserError!: string;
+  private invalidPasswordError!: string;
 
   constructor(
     public navController: NavController,
