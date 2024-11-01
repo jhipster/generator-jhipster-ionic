@@ -20,6 +20,7 @@
 import eslint from '@eslint/js';
 // For a detailed explanation, visit: https://github.com/angular-eslint/angular-eslint/blob/main/docs/CONFIGURING_FLAT_CONFIG.md
 import angular from 'angular-eslint';
+import cypress from 'eslint-plugin-cypress/flat';
 <&_ } -&>
 <&_ if (fragment.configSection) { -&>
   { ignores: ['www', 'projects'] },
@@ -98,6 +99,23 @@ import angular from 'angular-eslint';
       '@angular-eslint/template/click-events-have-key-events': 'off',
       '@angular-eslint/template/interactive-supports-focus': 'off',
       '@angular-eslint/template/alt-text': 'off',
+    },
+  },
+  {
+    files: ['cypress/**/*.ts'],
+    extends: [...tseslint.configs.recommendedTypeChecked, cypress.configs.recommended],
+    languageOptions: {
+      parserOptions: {
+        "project": ["cypress/tsconfig.json"],
+      },
+    },
+    rules: {
+      // '@typescript-eslint/no-explicit-any': 'off',
+      // '@typescript-eslint/no-unsafe-argument': 'off',
+      // '@typescript-eslint/no-unsafe-assignment': 'off',
+      // '@typescript-eslint/no-unsafe-call': 'off',
+      // '@typescript-eslint/no-unsafe-member-access': 'off',
+      // '@typescript-eslint/unbound-method': 'off',
     },
   },
 <&_ } -&>
