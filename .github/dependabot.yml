@@ -29,6 +29,9 @@ updates:
         patterns:
           - '@capacitor/*'
           - 'capacitor-secure-storage-plugin'
+      ngx-translate:
+        patterns:
+          - '@ngx-translate/*'
       typescript-eslint:
         patterns:
           - '@typescript-eslint/*'

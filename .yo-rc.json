@@ -27,24 +27,6 @@
         "sbs": true,
         "written": true
       },
-      "project-name": {
-        "command": false,
-        "priorities": [
-          "initializing",
-          "prompting",
-          "configuring",
-          "composing",
-          "loading",
-          "preparing",
-          "default",
-          "writing",
-          "postWriting",
-          "install",
-          "end"
-        ],
-        "sbs": false,
-        "written": true
-      },
       "spring-boot": {
         "command": false,
         "priorities": ["writing", "postWriting"],
@@ -61,6 +43,6 @@
     "projectName": "JHipster Ionic Blueprint",
     "sampleWritten": true,
     "skipCommitHook": true,
-    "subGenerators": ["app", "ionic", "project-name", "spring-boot"]
+    "subGenerators": ["app", "ionic", "spring-boot"]
   }
 }
