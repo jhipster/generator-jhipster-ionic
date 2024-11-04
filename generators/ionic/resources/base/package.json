@@ -65,7 +65,7 @@
     "@ionic/cli": "^7.2.0",
     "@types/jest": "29.5.14",
     "@types/node": "^22.1.0",
-    "angular-eslint": "8.12.2",
+    "angular-eslint": "18.4.0",
     "cypress": "13.15.1",
     "eslint": "^9.12.0",
     "eslint-plugin-cypress": "4.0.0",
@@ -79,6 +79,6 @@
     "jest-preset-angular": "14.2.4",
     "prettier": "3.3.3",
     "typescript": "~5.5.3",
-    "typescript-eslint": "8.11.0"
+    "typescript-eslint": "8.12.2"
   }
 }
