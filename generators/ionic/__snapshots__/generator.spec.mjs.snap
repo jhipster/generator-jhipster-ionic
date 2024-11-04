@@ -8,9 +8,6 @@ exports[`SubGenerator ionic of ionic JHipster blueprint > with jwt authenticatio
   ".editorconfig": {
     "stateCleared": "modified",
   },
-  ".eslintrc.json": {
-    "stateCleared": "modified",
-  },
   ".gitattributes": {
     "stateCleared": "modified",
   },
@@ -75,6 +72,9 @@ exports[`SubGenerator ionic of ionic JHipster blueprint > with jwt authenticatio
     "stateCleared": "modified",
   },
   "cypress/tsconfig.json": {
+    "stateCleared": "modified",
+  },
+  "eslint.config.mjs": {
     "stateCleared": "modified",
   },
   "ionic.config.json": {
@@ -473,9 +473,6 @@ exports[`SubGenerator ionic of ionic JHipster blueprint > with jwt authenticatio
   "tsconfig.spec.json": {
     "stateCleared": "modified",
   },
-  "tslint.json": {
-    "stateCleared": "modified",
-  },
 }
 `;
 
@@ -485,9 +482,6 @@ exports[`SubGenerator ionic of ionic JHipster blueprint > with oauth2 authentica
     "stateCleared": "modified",
   },
   ".editorconfig": {
-    "stateCleared": "modified",
-  },
-  ".eslintrc.json": {
     "stateCleared": "modified",
   },
   ".gitattributes": {
@@ -557,6 +551,9 @@ exports[`SubGenerator ionic of ionic JHipster blueprint > with oauth2 authentica
     "stateCleared": "modified",
   },
   "cypress/tsconfig.json": {
+    "stateCleared": "modified",
+  },
+  "eslint.config.mjs": {
     "stateCleared": "modified",
   },
   "ionic.config.json": {
@@ -977,9 +974,6 @@ exports[`SubGenerator ionic of ionic JHipster blueprint > with oauth2 authentica
     "stateCleared": "modified",
   },
   "tsconfig.spec.json": {
-    "stateCleared": "modified",
-  },
-  "tslint.json": {
     "stateCleared": "modified",
   },
 }

@@ -35,8 +35,6 @@ export interface JhiFileLoadError {
   providedIn: 'root',
 })
 export class JhiDataUtils {
-  constructor() {}
-
   /**
    * Method to abbreviate the text given
    */
@@ -85,7 +83,7 @@ export class JhiDataUtils {
   /**
    * Method to convert the file to base64
    */
-  toBase64(file: File, cb: Function): void {
+  toBase64(file: File, cb: (data: string) => void): void {
     const fileReader: FileReader = new FileReader();
     fileReader.onload = function (e: any) {
       const base64Data: string = e.target.result.substr(e.target.result.indexOf('base64,') + 'base64,'.length);

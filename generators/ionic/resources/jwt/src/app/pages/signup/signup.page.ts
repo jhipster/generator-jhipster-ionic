@@ -8,7 +8,7 @@ import { UserService } from '../../services/user/user.service';
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
 })
-export class SignupPage implements OnInit {
+export class SignupPage {
   // The account fields for the signup form
   account: {
     login: string;
@@ -27,10 +27,10 @@ export class SignupPage implements OnInit {
   };
 
   // Our translated text strings
-  private signupErrorString: string;
-  private signupSuccessString: string;
-  private existingUserError: string;
-  private invalidPasswordError: string;
+  private signupErrorString!: string;
+  private signupSuccessString!: string;
+  private existingUserError!: string;
+  private invalidPasswordError!: string;
 
   constructor(
     public navController: NavController,
@@ -45,8 +45,6 @@ export class SignupPage implements OnInit {
       this.invalidPasswordError = values.INVALID_PASSWORD_ERROR;
     });
   }
-
-  ngOnInit() {}
 
   doSignup() {
     // set login to same as email

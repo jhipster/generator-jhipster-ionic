@@ -23,7 +23,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     try {
       const token = await this.authService.getValidToken();
-      if (!!token) {
+      if (token) {
         request = request.clone({
           setHeaders: {
             Authorization: `Bearer ${token.accessToken}`,

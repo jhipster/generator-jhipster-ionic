@@ -1,9 +1,10 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateModule, TranslateStore } from '@ngx-translate/core';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
 
 import { TabsPage } from './tabs.page';
-import { TranslateModule, TranslateStore } from '@ngx-translate/core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('TabsPage', () => {
   let component: TabsPage;
@@ -13,8 +14,8 @@ describe('TabsPage', () => {
     TestBed.configureTestingModule({
       declarations: [TabsPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [HttpClientTestingModule, TranslateModule.forChild()],
-      providers: [TranslateStore],
+      imports: [TranslateModule.forChild()],
+      providers: [TranslateStore, provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents();
   }));
 

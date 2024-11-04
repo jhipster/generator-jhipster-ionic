@@ -7,7 +7,7 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['entities.page.scss'],
 })
 export class EntitiesPage {
-  entities: Array<any> = [
+  entities: any[] = [
     /* jhipster-needle-add-entity-page - JHipster will add entity pages here */
   ];
 

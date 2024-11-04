@@ -20,7 +20,7 @@ import { NgModule, Injectable } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { Routes, RouterModule, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Routes, RouterModule, Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { UserRouteAccessService } from '../../../services/auth/user-route-access.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
@@ -35,7 +35,7 @@ import { <%= entityAngularName %>, <%= entityAngularName %>Service, <%= entityAn
 export class <%= entityAngularName %>Resolve implements Resolve<<%= entityAngularName %>> {
   constructor(private service: <%= entityAngularName %>Service) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<<%= entityAngularName %>> {
+  resolve(route: ActivatedRouteSnapshot): Observable<<%= entityAngularName %>> {
     const id = route.params.id ? route.params.id : null;
     if (id) {
       return this.service.find(id).pipe(

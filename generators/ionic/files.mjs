@@ -20,11 +20,17 @@ const PAGES_DIR = 'src/app/pages/';
 const E2E_ENTITY_DIR = 'cypress/support/pages/';
 const E2E_TEST_DIR = 'cypress/e2e/';
 
+const eslintConfigTemplate = sourceFile => ({
+  sourceFile,
+  destinationFile: ctx => sourceFile.replace('eslint.config.js', ctx.eslintConfigFile),
+});
+
 export const files = {
   client: [
     {
       templates: [
         'capacitor.config.ts',
+        eslintConfigTemplate('eslint.config.js.jhi.ionic'),
         'ionic.config.json',
         'src/app/interceptors/auth.interceptor.ts',
         'src/app/pages/home/home.page.scss',

@@ -134,6 +134,14 @@ export default class extends BaseApplicationGenerator {
     });
   }
 
+  get [BaseApplicationGenerator.LOADING]() {
+    return this.asLoadingTaskGroup({
+      loading({ application }) {
+        application.typescriptEslint = true;
+      },
+    });
+  }
+
   get [BaseApplicationGenerator.WRITING]() {
     return this.asWritingTaskGroup({
       async writingTemplateTask({ application }) {
@@ -196,11 +204,10 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
-      ignoreEslint9ConfigFile({ application }) {
-        const eslintConfigFile = this.env.sharedFs.get(this.destinationPath(application.eslintConfigFile));
-        if (eslintConfigFile) {
-          delete eslintConfigFile.state;
-        }
+      addPrettierConfig({ source }) {
+        source.mergePrettierConfig({
+          overrides: [{ files: '*.html', options: { parser: 'angular' } }],
+        });
       },
       customizePackageJson({ application }) {
         const { baseName } = this.jhipsterConfig;
