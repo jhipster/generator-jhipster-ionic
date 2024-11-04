@@ -59,7 +59,15 @@ export default class extends BaseApplicationGenerator {
       this.addBackendStorages();
     }
 
-    await this.dependsOnJHipster('bootstrap-application');
+    await this.dependsOnJHipster('bootstrap-application', {
+      generatorOptions: {
+        defaultBaseName: () => {
+          const appYoRc = `${this.blueprintConfig.appDir}/.yo-rc.json`;
+          const backendAppBaseName = this.readDestinationJSON(appYoRc)?.['generator-jhipster']?.baseName ?? 'hipster';
+          return `${backendAppBaseName}Ionic`;
+        },
+      },
+    });
     await this.dependsOnJHipster('init');
   }
 
