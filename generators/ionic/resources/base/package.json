@@ -29,7 +29,7 @@
     "@angular/router": "~18.2.0",
     "@capacitor-community/http": "1.4.1",
     "@capacitor/app": "6.0.2",
-    "@capacitor/browser": "6.0.4",
+    "@capacitor/browser": "6.0.5",
     "@capacitor/camera": "6.1.2",
     "@capacitor/core": "6.2.0",
     "@capacitor/haptics": "6.0.2",
