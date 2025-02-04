@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { AccountService } from '../../services/auth/account.service';
+import { AccountService } from '#app/services/auth/account.service';
 
 @Component({
   selector: 'app-welcome',

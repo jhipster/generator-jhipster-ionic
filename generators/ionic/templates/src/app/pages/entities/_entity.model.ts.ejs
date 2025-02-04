@@ -94,9 +94,9 @@ relationships.forEach(relationship => {
         const importType = `${otherEntityAngularName}`;
         let importPath;
         if (otherEntityAngularName === 'User') {
-            importPath = '../../../services/user/user.model';
+            importPath = '#app/services/user/user.model';
         } else {
-            importPath = `../${relationship.otherEntityFileName}/${relationship.otherEntityFileName}.model`;
+            importPath = `#app/pages/entities/${relationship.otherEntityFileName}/${relationship.otherEntityFileName}.model`;
         }
         typeImports.set(importType, importPath);
     }
