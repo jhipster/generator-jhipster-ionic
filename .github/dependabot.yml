@@ -28,7 +28,6 @@ updates:
       capacitor:
         patterns:
           - '@capacitor/*'
-          - 'capacitor-secure-storage-plugin'
       ngx-translate:
         patterns:
           - '@ngx-translate/*'
