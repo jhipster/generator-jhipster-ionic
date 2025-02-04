@@ -233,7 +233,7 @@ export default class extends BaseApplicationGenerator {
                 '^@ionic/storage$': '<rootDir>/node_modules/@ionic/storage/dist/ionic-storage.cjs.js',
               },
               transformIgnorePatterns: [
-                'node_modules/(?!.*\\.mjs$|@ngrx|@ionic-native|@ionic|ionic-appauth|capacitor-secure-storage-plugin)',
+                'node_modules/(?!.*\\.mjs$|@ngrx|@ionic-native|@ionic|ionic-appauth)',
               ],
             },
           });
