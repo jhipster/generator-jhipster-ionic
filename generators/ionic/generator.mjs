@@ -232,9 +232,7 @@ export default class extends BaseApplicationGenerator {
               moduleNameMapper: {
                 '^@ionic/storage$': '<rootDir>/node_modules/@ionic/storage/dist/ionic-storage.cjs.js',
               },
-              transformIgnorePatterns: [
-                'node_modules/(?!.*\\.mjs$|@ngrx|@ionic-native|@ionic|ionic-appauth)',
-              ],
+              transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$|@ngrx|@ionic-native|@ionic|ionic-appauth)'],
             },
           });
         }
