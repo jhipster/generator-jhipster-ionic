@@ -115,6 +115,7 @@ jobs:
         if: matrix.e2e == 1 && steps.compare.outputs.equals != 'true'
         uses: cypress-io/github-action@v6
         with:
+          install: false
           browser: chrome
           command: npm run e2e:ci
           working-directory: ${{ github.workspace }}/ionic4j

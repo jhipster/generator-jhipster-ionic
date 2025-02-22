@@ -142,6 +142,17 @@ export default class extends BaseApplicationGenerator {
     });
   }
 
+  get [BaseApplicationGenerator.DEFAULT]() {
+    return this.asLoadingTaskGroup({
+      npmInstall() {
+        this.env.watchForPackageManagerInstall({
+          cwd: this.destinationPath(),
+          installTask: 'Ionic install task',
+        });
+      },
+    });
+  }
+
   get [BaseApplicationGenerator.WRITING]() {
     return this.asWritingTaskGroup({
       async writingTemplateTask({ application }) {
@@ -235,20 +246,6 @@ export default class extends BaseApplicationGenerator {
               transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$|@ngrx|@ionic-native|@ionic|ionic-appauth)'],
             },
           });
-        }
-      },
-    });
-  }
-
-  get [BaseApplicationGenerator.INSTALL]() {
-    return this.asInstallTaskGroup({
-      async install() {
-        try {
-          if (this.env.sharedFs.get(this.destinationPath('package.json'))?.committed) {
-            await this.spawnCommand('npm install');
-          }
-        } catch {
-          this.log.error(`Error executing 'npm install', execute by yourself.`);
         }
       },
     });

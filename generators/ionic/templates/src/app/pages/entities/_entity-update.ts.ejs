@@ -24,7 +24,7 @@ let hasManyToMany = query.hasManyToMany;
 _%>
 import { Component, OnInit<% if (anyFieldHasImageContentType) { %>, ViewChild<% } %>, inject } from '@angular/core';
 <%_ if (anyFieldIsBlobDerived) { _%>
-import { JhiDataUtils } from '../../../services/utils/data-util.service';
+import { JhiDataUtils } from '#app/services/utils/data-util.service';
 <%_ } _%>
 <%_ if (anyFieldHasImageContentType) { _%>
 import { Capacitor } from '@capacitor/core';
@@ -50,8 +50,8 @@ Object.keys(differentRelationships).forEach(key => {
     if (differentRelationships[key].some(rel => rel.relationshipType !== 'one-to-many')) {
         const uniqueRel = differentRelationships[key][0];
         if (uniqueRel.otherEntityAngularName === 'User') { _%>
-import { User } from '../../../services/user/user.model';
-import { UserService } from '../../../services/user/user.service';
+import { User } from '#app/services/user/user.model';
+import { UserService } from '#app/services/user/user.service';
     <%_ } else if (uniqueRel.otherEntityAngularName !== entityAngularName) { _%>
 import { <%= uniqueRel.otherEntityAngularName %>, <%= uniqueRel.otherEntityAngularName%>Service } from '../<%= uniqueRel.otherEntityModulePath %>';
     <%_}
