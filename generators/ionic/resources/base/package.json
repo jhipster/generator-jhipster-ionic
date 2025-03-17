@@ -40,7 +40,7 @@
     "@fortawesome/angular-fontawesome": "0.15.0",
     "@fortawesome/fontawesome-svg-core": "6.7.2",
     "@fortawesome/free-solid-svg-icons": "6.7.2",
-    "@ionic/angular": "8.4.3",
+    "@ionic/angular": "8.5.0",
     "@ionic/pwa-elements": "^3.3.0",
     "@ionic/storage": "^4.0.0",
     "@ionic/storage-angular": "^4.0.0",
