@@ -78,6 +78,6 @@
     "jest-preset-angular": "14.2.4",
     "prettier": "3.6.0",
     "typescript": "~5.5.3",
-    "typescript-eslint": "8.34.1"
+    "typescript-eslint": "8.35.0"
   }
 }
