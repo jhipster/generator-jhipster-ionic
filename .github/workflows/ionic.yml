@@ -113,7 +113,7 @@ jobs:
       - name: Launch ionic e2e test
         id: e2e
         if: matrix.e2e == 1 && steps.compare.outputs.equals != 'true'
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           install: false
           browser: chrome
