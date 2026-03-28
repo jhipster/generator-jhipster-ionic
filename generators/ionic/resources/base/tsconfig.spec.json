@@ -5,6 +5,7 @@
     "allowJs": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
+    "moduleResolution": "node",
     "target": "es2015",
     "types": ["node", "jest"]
   },
