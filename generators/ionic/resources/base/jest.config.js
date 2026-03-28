@@ -4,6 +4,7 @@ const config = {
   moduleNameMapper: {
     '#app/(.*)': '<rootDir>/src/app/$1',
   },
+  setupFilesAfterEnv: ['<rootDir>/src/polyfills.ts'],
 };
 
 module.exports = config;
