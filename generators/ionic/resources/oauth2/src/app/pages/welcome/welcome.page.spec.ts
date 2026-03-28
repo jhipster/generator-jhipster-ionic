@@ -13,9 +13,8 @@ describe('WelcomePage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [WelcomePage],
+      imports: [WelcomePage, TranslateModule.forRoot(), IonicStorageModule.forRoot(), AuthModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [TranslateModule.forRoot(), IonicStorageModule.forRoot(), AuthModule],
       providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     }).compileComponents();
   }));

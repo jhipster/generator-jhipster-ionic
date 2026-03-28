@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem } from '@ionic/angular/standalone';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-entities',
   templateUrl: 'entities.page.html',
   styleUrls: ['entities.page.scss'],
+  standalone: true,
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, TranslateModule],
 })
 export class EntitiesPage {
   entities: any[] = [

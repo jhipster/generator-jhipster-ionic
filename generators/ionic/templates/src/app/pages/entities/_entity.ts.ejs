@@ -17,9 +17,10 @@
  limitations under the License.
 -%>
 import { Component } from '@angular/core';
-import { NavController, ToastController, Platform, IonItemSliding } from '@ionic/angular';
+import { NavController, ToastController, Platform, IonItemSliding, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonItemOptions, IonItemOption, IonIcon, IonFab, IonFabButton } from '@ionic/angular/standalone';
 import { filter, map } from 'rxjs/operators';
 import { HttpResponse } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 <%_ if (anyFieldIsBlobDerived) { _%>
 import { JhiDataUtils } from '#app/services/utils/data-util.service';
 <%_ } _%>
@@ -28,7 +29,9 @@ import { <%= entityAngularName %>Service } from './<%= entityFileName %>.service
 
 @Component({
     selector: 'page-<%= entityFileName %>',
-    templateUrl: '<%= entityFileName %>.html'
+    templateUrl: '<%= entityFileName %>.html',
+    standalone: true,
+    imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, IonIcon, IonFab, IonFabButton, TranslateModule],
 })
 export class <%= entityAngularName %>Page {
     <%= entityInstancePlural %>: <%= entityAngularName %>[];

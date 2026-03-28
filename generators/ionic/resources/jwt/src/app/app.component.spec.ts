@@ -40,8 +40,7 @@ describe('AppComponent', () => {
     platformSpy = createSpyObj('Platform', [{ ready: platformReadySpy }]);
 
     TestBed.configureTestingModule({
-      declarations: [AppComponent],
-      imports: [TranslateModule.forRoot()],
+      imports: [AppComponent, TranslateModule.forRoot()],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [{ provide: Platform, useValue: platformSpy }],
     }).compileComponents();

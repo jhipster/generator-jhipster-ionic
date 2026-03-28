@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
   template: '<p style="margin-left: 10px">Authorizing...</p>',
+  standalone: true,
 })
 export class AuthCallbackPage implements OnInit, OnDestroy {
   sub: Subscription;

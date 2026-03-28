@@ -4,6 +4,7 @@ import { AuthService } from 'ionic-appauth';
 
 @Component({
   template: '<p style="margin-left: 10px">Signing out...</p>',
+  standalone: true,
 })
 export class EndSessionPage implements OnInit {
   constructor(

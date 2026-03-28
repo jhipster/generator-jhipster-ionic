@@ -203,7 +203,7 @@ export default class extends BaseApplicationGenerator {
                 'src/app/pages/entities/entities.module.ts',
                 createNeedleCallback({
                   needle: 'jhipster-needle-add-entity-route',
-                  contentToAdd: `{ path: '${entityFileName}', loadChildren: () => import('./${entityFolderName}/${entityFileName}.module').then(m => m.${entityAngularName}PageModule) },`,
+                  contentToAdd: `{ path: '${entityFileName}', loadChildren: () => import('./${entityFolderName}/${entityFileName}.module').then(m => m.default) },`,
                   contentToCheck: `path: '${entityFileName}'`,
                 }),
               );

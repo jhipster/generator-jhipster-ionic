@@ -1,12 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, ToastController } from '@ionic/angular';
-import { TranslateService } from '@ngx-translate/core';
+import { Component } from '@angular/core';
+import { NavController, ToastController, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonList, IonItem, IonLabel, IonInput, IonRow, IonCol, IonButton } from '@ionic/angular/standalone';
+import { FormsModule } from '@angular/forms';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { UserService } from '#app/services/user/user.service';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
+  standalone: true,
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonTitle,
+    IonContent,
+    IonList,
+    IonItem,
+    IonLabel,
+    IonInput,
+    IonRow,
+    IonCol,
+    IonButton,
+    FormsModule,
+    TranslateModule,
+  ],
 })
 export class SignupPage {
   // The account fields for the signup form

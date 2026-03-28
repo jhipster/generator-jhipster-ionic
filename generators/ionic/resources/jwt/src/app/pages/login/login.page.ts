@@ -1,12 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ToastController } from '@ionic/angular';
-import { TranslateService } from '@ngx-translate/core';
+import { NavController, ToastController, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonList, IonItem, IonLabel, IonInput, IonToggle, IonRow, IonCol, IonButton } from '@ionic/angular/standalone';
+import { FormsModule } from '@angular/forms';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LoginService } from '#app/services/login/login.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+  standalone: true,
+  imports: [
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonTitle,
+    IonContent,
+    IonList,
+    IonItem,
+    IonLabel,
+    IonInput,
+    IonToggle,
+    IonRow,
+    IonCol,
+    IonButton,
+    FormsModule,
+    TranslateModule,
+  ],
 })
 export class LoginPage implements OnInit {
   // The account fields for the login form.

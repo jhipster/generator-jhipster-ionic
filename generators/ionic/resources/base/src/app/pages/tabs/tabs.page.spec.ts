@@ -12,9 +12,8 @@ describe('TabsPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [TabsPage],
+      imports: [TabsPage, TranslateModule.forRoot()],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [TranslateModule.forChild()],
       providers: [TranslateStore, provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents();
   }));

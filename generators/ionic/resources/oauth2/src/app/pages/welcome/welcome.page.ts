@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, IonHeader, IonToolbar, IonTitle, IonContent, IonButton } from '@ionic/angular/standalone';
+import { TranslateModule } from '@ngx-translate/core';
 import { AuthActions, AuthService, IAuthAction } from 'ionic-appauth';
 import { Subscription } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -10,6 +11,8 @@ const { audience } = environment;
   selector: 'app-welcome',
   templateUrl: 'welcome.page.html',
   styleUrls: ['welcome.page.scss'],
+  standalone: true,
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton, TranslateModule],
 })
 export class WelcomePage implements OnInit, OnDestroy {
   action: IAuthAction;
