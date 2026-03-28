@@ -74,6 +74,7 @@
     "globals": "16.5.0",
     "ionic-mocks-jest": "1.3.3",
     "jest": "30.3.0",
+    "jest-environment-jsdom": "~30.3.0",
     "jest-localstorage-mock": "2.4.26",
     "jest-preset-angular": "16.1.1",
     "prettier": "3.7.4",
