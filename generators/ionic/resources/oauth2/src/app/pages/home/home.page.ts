@@ -1,5 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, Platform, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon } from '@ionic/angular/standalone';
+import {
+  NavController,
+  Platform,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonButtons,
+  IonButton,
+  IonIcon,
+} from '@ionic/angular/standalone';
 import { TranslateModule } from '@ngx-translate/core';
 import { Account } from 'src/model/account.model';
 import { AccountService } from '#app/services/auth/account.service';
