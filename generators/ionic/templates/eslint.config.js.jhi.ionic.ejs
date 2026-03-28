@@ -92,6 +92,10 @@ import cypress from 'eslint-plugin-cypress/flat';
       '@typescript-eslint/return-await': 'off',
       '@typescript-eslint/no-unnecessary-boolean-literal-compare': 'off',
       '@typescript-eslint/no-misused-spread': 'off',
+      // Requires strictNullChecks to be enabled in tsconfig
+      '@typescript-eslint/no-useless-default-assignment': 'off',
+      // Constructor injection is still widely used; prefer-inject is opt-in
+      '@angular-eslint/prefer-inject': 'off',
     },
   },
   {
