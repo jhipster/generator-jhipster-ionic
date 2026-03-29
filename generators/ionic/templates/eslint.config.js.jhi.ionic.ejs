@@ -44,6 +44,7 @@ import cypress from 'eslint-plugin-cypress/flat';
     },
     processor: angular.processInlineTemplates,
     rules: {
+            '@angular-eslint/prefer-inject': 'off',
       '@angular-eslint/component-class-suffix': [
         'error',
         { 'suffixes': ['Page', 'Component'] }
