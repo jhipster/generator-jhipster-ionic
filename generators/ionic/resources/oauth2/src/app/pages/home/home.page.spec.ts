@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { AuthService } from 'ionic-appauth';
+import { AuthService, Browser } from 'ionic-appauth';
 import { Subject } from 'rxjs';
 import { HomePage } from './home.page';
 
@@ -18,12 +18,18 @@ describe('HomePage', () => {
     events$: new Subject(),
   };
 
+  const mockBrowser = {
+    showWindow: jest.fn().mockResolvedValue({}),
+    closeWindow: jest.fn().mockResolvedValue({}),
+  };
+
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [HomePage, TranslateModule.forRoot(), IonicStorageModule.forRoot()],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: AuthService, useValue: mockAuthService },
+        { provide: Browser, useValue: mockBrowser },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
       ],

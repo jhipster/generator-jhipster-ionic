@@ -39,6 +39,7 @@ describe('AppComponent', () => {
     isPluginAvailableSpy = jest.spyOn(Capacitor, 'isPluginAvailable');
     platformReadySpy = Promise.resolve();
     platformSpy = createSpyObj('Platform', [{ ready: platformReadySpy }]);
+    platformSpy.backButton = { subscribeWithPriority: jest.fn() };
 
     TestBed.configureTestingModule({
       imports: [AppComponent, TranslateModule.forRoot()],

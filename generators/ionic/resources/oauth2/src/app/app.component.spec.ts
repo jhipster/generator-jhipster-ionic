@@ -44,6 +44,7 @@ describe('AppComponent', () => {
     isPluginAvailableSpy = jest.spyOn(Capacitor, 'isPluginAvailable');
     platformReadySpy = Promise.resolve();
     platformSpy = createSpyObj('Platform', [{ ready: platformReadySpy }]);
+    platformSpy.backButton = { subscribeWithPriority: jest.fn() };
     authServiceSpy = createSpyObj('AuthService', [{ init: Promise.resolve() }]);
 
     TestBed.configureTestingModule({
