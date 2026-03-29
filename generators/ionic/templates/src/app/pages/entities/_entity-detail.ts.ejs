@@ -17,6 +17,7 @@
  limitations under the License.
 -%>
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 <%_ if (anyFieldIsBlobDerived) { _%>
 import { JhiDataUtils } from '#app/services/utils/data-util.service';
 <%_ } _%>
@@ -30,7 +31,7 @@ import { ActivatedRoute } from '@angular/router';
     selector: 'page-<%= entityFileName %>-detail',
     templateUrl: '<%= entityFileName %>-detail.html',
     standalone: true,
-    imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonButton, IonButtons, IonBackButton, TranslateModule],
+    imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonButton, IonButtons, IonBackButton, TranslateModule, DatePipe],
 })
 export class <%= entityAngularName %>DetailPage implements OnInit {
     <%= entityInstance %>: <%= entityAngularName %> = {};

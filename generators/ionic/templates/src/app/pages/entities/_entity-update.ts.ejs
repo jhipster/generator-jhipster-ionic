@@ -31,10 +31,11 @@ import { Capacitor } from '@capacitor/core';
 import { Camera, ImageOptions, CameraResultType } from '@capacitor/camera';
 <%_ } _%>
 import { UntypedFormBuilder as FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { NavController, Platform, ToastController<% if (anyFieldHasImageContentType) { %>, AlertController<% } %>, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonDatetime, IonCheckbox, IonButton, IonButtons, IonBackButton } from '@ionic/angular/standalone';
+import { NavController, Platform, ToastController<% if (anyFieldHasImageContentType) { %>, AlertController<% } %>, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonDatetime, IonCheckbox, IonButton, IonButtons, IonBackButton } from '@ionic/angular/standalone';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
 import { <%= entityAngularName %>Service } from './<%= entityFileName %>.service';
 <%_
@@ -62,7 +63,7 @@ import { <%= uniqueRel.otherEntityAngularName %>, <%= uniqueRel.otherEntityAngul
     selector: 'page-<%= entityFileName %>-update',
     templateUrl: '<%= entityFileName %>-update.html',
     standalone: true,
-    imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonDatetime, IonCheckbox, IonButton, IonButtons, IonBackButton, ReactiveFormsModule],
+    imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonDatetime, IonCheckbox, IonButton, IonButtons, IonBackButton, ReactiveFormsModule, TranslateModule],
 })
 export class <%= entityAngularName %>UpdatePage implements OnInit {
 

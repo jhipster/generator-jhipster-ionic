@@ -6,6 +6,7 @@ import { Capacitor } from '@capacitor/core';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { TranslateModule } from '@ngx-translate/core';
+import { provideRouter } from '@angular/router';
 
 import { AppComponent } from './app.component';
 
@@ -42,7 +43,7 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       imports: [AppComponent, TranslateModule.forRoot()],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [{ provide: Platform, useValue: platformSpy }],
+      providers: [{ provide: Platform, useValue: platformSpy }, provideRouter([])],
     }).compileComponents();
   });
 

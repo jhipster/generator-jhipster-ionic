@@ -2,6 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
 
 import { Platform } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage-angular';
@@ -53,6 +54,7 @@ describe('AppComponent', () => {
         { provide: AuthService, useValue: authServiceSpy },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
+        provideRouter([]),
       ],
     }).compileComponents();
   });
