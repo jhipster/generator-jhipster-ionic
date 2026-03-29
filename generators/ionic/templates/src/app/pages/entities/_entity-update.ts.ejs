@@ -30,8 +30,8 @@ import { JhiDataUtils } from '#app/services/utils/data-util.service';
 import { Capacitor } from '@capacitor/core';
 import { Camera, ImageOptions, CameraResultType } from '@capacitor/camera';
 <%_ } _%>
-import { UntypedFormBuilder as FormBuilder, Validators } from '@angular/forms';
-import { NavController, Platform, ToastController<% if (anyFieldHasImageContentType) { %>, AlertController<% } %> } from '@ionic/angular';
+import { UntypedFormBuilder as FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { NavController, Platform, ToastController<% if (anyFieldHasImageContentType) { %>, AlertController<% } %>, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonDatetime, IonCheckbox, IonButton, IonButtons, IonBackButton } from '@ionic/angular/standalone';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -60,7 +60,9 @@ import { <%= uniqueRel.otherEntityAngularName %>, <%= uniqueRel.otherEntityAngul
 
 @Component({
     selector: 'page-<%= entityFileName %>-update',
-    templateUrl: '<%= entityFileName %>-update.html'
+    templateUrl: '<%= entityFileName %>-update.html',
+    standalone: true,
+    imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonDatetime, IonCheckbox, IonButton, IonButtons, IonBackButton, ReactiveFormsModule],
 })
 export class <%= entityAngularName %>UpdatePage implements OnInit {
 

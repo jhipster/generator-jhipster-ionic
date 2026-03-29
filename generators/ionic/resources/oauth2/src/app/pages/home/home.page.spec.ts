@@ -5,7 +5,6 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { HomePage } from './home.page';
-import { AuthModule } from '../../auth/auth.module';
 
 describe('HomePage', () => {
   let component: HomePage;
@@ -13,9 +12,8 @@ describe('HomePage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [HomePage],
+      imports: [HomePage, TranslateModule.forRoot(), IonicStorageModule.forRoot()],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [TranslateModule.forRoot(), IonicStorageModule.forRoot(), AuthModule],
       providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     }).compileComponents();
   }));

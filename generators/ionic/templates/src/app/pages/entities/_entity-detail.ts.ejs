@@ -22,12 +22,15 @@ import { JhiDataUtils } from '#app/services/utils/data-util.service';
 <%_ } _%>
 import { <%= entityAngularName %> } from './<%= entityFileName %>.model';
 import { <%= entityAngularName %>Service } from './<%= entityFileName %>.service';
-import { NavController, AlertController } from '@ionic/angular';
+import { NavController, AlertController, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonButton, IonButtons, IonBackButton } from '@ionic/angular/standalone';
+import { TranslateModule } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'page-<%= entityFileName %>-detail',
-    templateUrl: '<%= entityFileName %>-detail.html'
+    templateUrl: '<%= entityFileName %>-detail.html',
+    standalone: true,
+    imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonButton, IonButtons, IonBackButton, TranslateModule],
 })
 export class <%= entityAngularName %>DetailPage implements OnInit {
     <%= entityInstance %>: <%= entityAngularName %> = {};

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { TranslateModule } from '@ngx-translate/core';
 import { Account } from 'src/model/account.model';
 import { AccountService } from '#app/services/auth/account.service';
 import { LoginService } from '#app/services/login/login.service';
@@ -8,6 +9,8 @@ import { LoginService } from '#app/services/login/login.service';
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
+  standalone: true,
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, TranslateModule],
 })
 export class HomePage implements OnInit {
   account: Account;

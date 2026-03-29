@@ -86,9 +86,6 @@ exports[`SubGenerator app of ionic JHipster blueprint > run > should succeed 1`]
   "../ionic4j/package.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/app-routing.module.ts": {
-    "stateCleared": "modified",
-  },
   "../ionic4j/src/app/app.component.html": {
     "stateCleared": "modified",
   },
@@ -101,16 +98,16 @@ exports[`SubGenerator app of ionic JHipster blueprint > run > should succeed 1`]
   "../ionic4j/src/app/app.component.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/app.module.ts": {
+  "../ionic4j/src/app/app.config.ts": {
+    "stateCleared": "modified",
+  },
+  "../ionic4j/src/app/app.routes.ts": {
     "stateCleared": "modified",
   },
   "../ionic4j/src/app/interceptors/auth-expired.interceptor.ts": {
     "stateCleared": "modified",
   },
   "../ionic4j/src/app/interceptors/auth.interceptor.ts": {
-    "stateCleared": "modified",
-  },
-  "../ionic4j/src/app/pages/account/account.module.ts": {
     "stateCleared": "modified",
   },
   "../ionic4j/src/app/pages/account/account.page.html": {
@@ -140,9 +137,6 @@ exports[`SubGenerator app of ionic JHipster blueprint > run > should succeed 1`]
   "../ionic4j/src/app/pages/entities/entities.page.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/home/home.module.ts": {
-    "stateCleared": "modified",
-  },
   "../ionic4j/src/app/pages/home/home.page.html": {
     "stateCleared": "modified",
   },
@@ -153,9 +147,6 @@ exports[`SubGenerator app of ionic JHipster blueprint > run > should succeed 1`]
     "stateCleared": "modified",
   },
   "../ionic4j/src/app/pages/home/home.page.ts": {
-    "stateCleared": "modified",
-  },
-  "../ionic4j/src/app/pages/login/login.module.ts": {
     "stateCleared": "modified",
   },
   "../ionic4j/src/app/pages/login/login.page.html": {
@@ -170,9 +161,6 @@ exports[`SubGenerator app of ionic JHipster blueprint > run > should succeed 1`]
   "../ionic4j/src/app/pages/login/login.page.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/signup/signup.module.ts": {
-    "stateCleared": "modified",
-  },
   "../ionic4j/src/app/pages/signup/signup.page.html": {
     "stateCleared": "modified",
   },
@@ -185,9 +173,6 @@ exports[`SubGenerator app of ionic JHipster blueprint > run > should succeed 1`]
   "../ionic4j/src/app/pages/signup/signup.page.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/tabs/tabs.module.ts": {
-    "stateCleared": "modified",
-  },
   "../ionic4j/src/app/pages/tabs/tabs.page.html": {
     "stateCleared": "modified",
   },
@@ -198,12 +183,6 @@ exports[`SubGenerator app of ionic JHipster blueprint > run > should succeed 1`]
     "stateCleared": "modified",
   },
   "../ionic4j/src/app/pages/tabs/tabs.page.ts": {
-    "stateCleared": "modified",
-  },
-  "../ionic4j/src/app/pages/tabs/tabs.router.module.ts": {
-    "stateCleared": "modified",
-  },
-  "../ionic4j/src/app/pages/welcome/welcome.module.ts": {
     "stateCleared": "modified",
   },
   "../ionic4j/src/app/pages/welcome/welcome.page.html": {
@@ -595,9 +574,6 @@ exports[`SubGenerator app of ionic JHipster blueprint > with custom ionic path >
   "../ionic-app/package.json": {
     "stateCleared": "modified",
   },
-  "../ionic-app/src/app/app-routing.module.ts": {
-    "stateCleared": "modified",
-  },
   "../ionic-app/src/app/app.component.html": {
     "stateCleared": "modified",
   },
@@ -610,16 +586,16 @@ exports[`SubGenerator app of ionic JHipster blueprint > with custom ionic path >
   "../ionic-app/src/app/app.component.ts": {
     "stateCleared": "modified",
   },
-  "../ionic-app/src/app/app.module.ts": {
+  "../ionic-app/src/app/app.config.ts": {
+    "stateCleared": "modified",
+  },
+  "../ionic-app/src/app/app.routes.ts": {
     "stateCleared": "modified",
   },
   "../ionic-app/src/app/interceptors/auth-expired.interceptor.ts": {
     "stateCleared": "modified",
   },
   "../ionic-app/src/app/interceptors/auth.interceptor.ts": {
-    "stateCleared": "modified",
-  },
-  "../ionic-app/src/app/pages/account/account.module.ts": {
     "stateCleared": "modified",
   },
   "../ionic-app/src/app/pages/account/account.page.html": {
@@ -649,9 +625,6 @@ exports[`SubGenerator app of ionic JHipster blueprint > with custom ionic path >
   "../ionic-app/src/app/pages/entities/entities.page.ts": {
     "stateCleared": "modified",
   },
-  "../ionic-app/src/app/pages/home/home.module.ts": {
-    "stateCleared": "modified",
-  },
   "../ionic-app/src/app/pages/home/home.page.html": {
     "stateCleared": "modified",
   },
@@ -662,9 +635,6 @@ exports[`SubGenerator app of ionic JHipster blueprint > with custom ionic path >
     "stateCleared": "modified",
   },
   "../ionic-app/src/app/pages/home/home.page.ts": {
-    "stateCleared": "modified",
-  },
-  "../ionic-app/src/app/pages/login/login.module.ts": {
     "stateCleared": "modified",
   },
   "../ionic-app/src/app/pages/login/login.page.html": {
@@ -679,9 +649,6 @@ exports[`SubGenerator app of ionic JHipster blueprint > with custom ionic path >
   "../ionic-app/src/app/pages/login/login.page.ts": {
     "stateCleared": "modified",
   },
-  "../ionic-app/src/app/pages/signup/signup.module.ts": {
-    "stateCleared": "modified",
-  },
   "../ionic-app/src/app/pages/signup/signup.page.html": {
     "stateCleared": "modified",
   },
@@ -694,9 +661,6 @@ exports[`SubGenerator app of ionic JHipster blueprint > with custom ionic path >
   "../ionic-app/src/app/pages/signup/signup.page.ts": {
     "stateCleared": "modified",
   },
-  "../ionic-app/src/app/pages/tabs/tabs.module.ts": {
-    "stateCleared": "modified",
-  },
   "../ionic-app/src/app/pages/tabs/tabs.page.html": {
     "stateCleared": "modified",
   },
@@ -707,12 +671,6 @@ exports[`SubGenerator app of ionic JHipster blueprint > with custom ionic path >
     "stateCleared": "modified",
   },
   "../ionic-app/src/app/pages/tabs/tabs.page.ts": {
-    "stateCleared": "modified",
-  },
-  "../ionic-app/src/app/pages/tabs/tabs.router.module.ts": {
-    "stateCleared": "modified",
-  },
-  "../ionic-app/src/app/pages/welcome/welcome.module.ts": {
     "stateCleared": "modified",
   },
   "../ionic-app/src/app/pages/welcome/welcome.page.html": {

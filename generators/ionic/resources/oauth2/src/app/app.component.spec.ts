@@ -46,9 +46,8 @@ describe('AppComponent', () => {
     authServiceSpy = createSpyObj('AuthService', [{ init: Promise.resolve() }]);
 
     TestBed.configureTestingModule({
-      declarations: [AppComponent],
+      imports: [AppComponent, TranslateModule.forRoot(), IonicStorageModule.forRoot()],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [TranslateModule.forRoot(), IonicStorageModule.forRoot()],
       providers: [
         { provide: Platform, useValue: platformSpy },
         { provide: AuthService, useValue: authServiceSpy },

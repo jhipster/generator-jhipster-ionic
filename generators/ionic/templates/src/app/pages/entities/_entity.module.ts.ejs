@@ -16,13 +16,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-import { NgModule, Injectable } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { IonicModule } from '@ionic/angular';
-import { CommonModule } from '@angular/common';
-import { Routes, RouterModule, Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { Routes, Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { UserRouteAccessService } from '#app/services/auth/user-route-access.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { filter, map } from 'rxjs/operators';
@@ -91,20 +87,4 @@ const routes: Routes = [
     }
   ];
 
-@NgModule({
-    declarations: [
-        <%= entityAngularName %>Page,
-        <%= entityAngularName %>UpdatePage,
-        <%= entityAngularName %>DetailPage
-    ],
-    imports: [
-        IonicModule,
-        FormsModule,
-        ReactiveFormsModule,
-        CommonModule,
-        TranslateModule,
-        RouterModule.forChild(routes)
-    ],
-})
-export class <%= entityAngularName %>PageModule {
-}
+export default routes;
