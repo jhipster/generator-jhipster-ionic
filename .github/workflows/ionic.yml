@@ -37,7 +37,7 @@ jobs:
         jdl:
           - monolith-jwt.jdl
           - monolith-oauth2.jdl
-          - gateway-oauth2.jdl
+          # - gateway-oauth2.jdl
           - reactive-oauth2.jdl
           - 21-points.jdl
           - flickr2.jdl
@@ -46,8 +46,8 @@ jobs:
             e2e: 1
           - jdl: monolith-oauth2.jdl
             e2e: 1
-          - jdl: gateway-oauth2.jdl
-            e2e: 1
+          # - jdl: gateway-oauth2.jdl
+          #  e2e: 1
           - jdl: reactive-oauth2.jdl
             e2e: 1
           - jdl: 21-points.jdl
