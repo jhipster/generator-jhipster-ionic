@@ -3,7 +3,9 @@ const config = {
   coverageDirectory: './public/coverage',
   moduleNameMapper: {
     '#app/(.*)': '<rootDir>/src/app/$1',
+    '^ionicons/components/ion-icon.js$': '@ionic/core/components/ion-icon.js',
   },
+  setupFilesAfterEnv: ['<rootDir>/src/polyfills.ts'],
 };
 
 module.exports = config;

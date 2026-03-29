@@ -4,19 +4,29 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { AuthService } from 'ionic-appauth';
+import { Subject } from 'rxjs';
 import { WelcomePage } from './welcome.page';
-import { AuthModule } from '../../auth/auth.module';
 
 describe('WelcomePage', () => {
   let component: WelcomePage;
   let fixture: ComponentFixture<WelcomePage>;
 
+  const mockAuthService = {
+    signIn: jest.fn().mockResolvedValue({}),
+    signOut: jest.fn().mockResolvedValue({}),
+    events$: new Subject(),
+  };
+
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [WelcomePage],
+      imports: [WelcomePage, TranslateModule.forRoot(), IonicStorageModule.forRoot()],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [TranslateModule.forRoot(), IonicStorageModule.forRoot(), AuthModule],
-      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
+      providers: [
+        { provide: AuthService, useValue: mockAuthService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+      ],
     }).compileComponents();
   }));
 

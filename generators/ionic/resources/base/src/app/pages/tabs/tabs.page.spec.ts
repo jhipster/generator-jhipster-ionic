@@ -3,6 +3,7 @@ import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule, TranslateStore } from '@ngx-translate/core';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
 
 import { TabsPage } from './tabs.page';
 
@@ -12,10 +13,9 @@ describe('TabsPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [TabsPage],
+      imports: [TabsPage, TranslateModule.forRoot()],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [TranslateModule.forChild()],
-      providers: [TranslateStore, provideHttpClient(), provideHttpClientTesting()],
+      providers: [TranslateStore, provideHttpClient(), provideHttpClientTesting(), provideRouter([])],
     }).compileComponents();
   }));
 

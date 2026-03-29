@@ -37,9 +37,8 @@ describe('<%= entityAngularName %>DetailPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [<%= entityAngularName %>DetailPage],
+      imports: [<%= entityAngularName %>DetailPage, TranslateModule.forRoot()],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [TranslateModule.forRoot()],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteMock },
         provideHttpClient(withInterceptorsFromDi()),
