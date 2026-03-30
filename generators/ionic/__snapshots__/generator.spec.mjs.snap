@@ -452,9 +452,6 @@ exports[`SubGenerator ionic of ionic JHipster blueprint > with jwt authenticatio
   "tsconfig.spec.json": {
     "stateCleared": "modified",
   },
-  "vitest.config.ts": {
-    "stateCleared": "modified",
-  },
 }
 `;
 
@@ -929,9 +926,6 @@ exports[`SubGenerator ionic of ionic JHipster blueprint > with oauth2 authentica
     "stateCleared": "modified",
   },
   "tsconfig.spec.json": {
-    "stateCleared": "modified",
-  },
-  "vitest.config.ts": {
     "stateCleared": "modified",
   },
 }
