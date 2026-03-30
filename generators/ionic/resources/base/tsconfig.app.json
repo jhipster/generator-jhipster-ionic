@@ -4,7 +4,7 @@
     "outDir": "./out-tsc/app",
     "types": []
   },
-  "files": ["src/main.ts", "src/zone-flags.ts"],
+  "files": ["src/main.ts", "src/polyfills.ts"],
   "include": ["src/**/*.ts", "src/**/*.d.ts"],
   "exclude": ["src/*.ts", "src/**/*.spec.ts"]
 }
