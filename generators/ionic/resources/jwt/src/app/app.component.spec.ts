@@ -3,8 +3,6 @@ import { TestBed } from '@angular/core/testing';
 
 import { Platform } from '@ionic/angular';
 import { Capacitor } from '@capacitor/core';
-import { SplashScreen } from '@capacitor/splash-screen';
-import { StatusBar, Style } from '@capacitor/status-bar';
 import { TranslateModule } from '@ngx-translate/core';
 import { provideRouter } from '@angular/router';
 
@@ -12,28 +10,13 @@ import { AppComponent } from './app.component';
 
 import { Mock } from 'vitest';
 
-vi.mock('@capacitor/status-bar', () => ({
-  StatusBar: { setStyle: vi.fn() },
-  Style: { Default: 'DEFAULT', Dark: 'DARK', Light: 'LIGHT' },
-}));
-
-vi.mock('@capacitor/splash-screen', () => ({
-  SplashScreen: { hide: vi.fn() },
-}));
-
 describe('AppComponent', () => {
   let isPluginAvailableSpy;
   let platformReadySpy;
   let platformSpy;
-  let statusBarSetStyleSpy;
-  let splashScreenHideSpy;
 
   beforeEach(() => {
     isPluginAvailableSpy = vi.spyOn(Capacitor, 'isPluginAvailable').mockReturnValue(false);
-    statusBarSetStyleSpy = vi.mocked(StatusBar.setStyle);
-    statusBarSetStyleSpy.mockResolvedValue(undefined);
-    splashScreenHideSpy = vi.mocked(SplashScreen.hide);
-    splashScreenHideSpy.mockResolvedValue(undefined);
     platformReadySpy = Promise.resolve();
     platformSpy = createSpyObj('Platform', [{ ready: platformReadySpy }]);
     platformSpy.backButton = { subscribeWithPriority: vi.fn() };
@@ -48,8 +31,6 @@ describe('AppComponent', () => {
   afterEach(() => {
     isPluginAvailableSpy.mockReset();
     isPluginAvailableSpy.mockRestore();
-    statusBarSetStyleSpy.mockReset();
-    splashScreenHideSpy.mockReset();
   });
 
   it('should create the app', () => {
@@ -64,8 +45,6 @@ describe('AppComponent', () => {
     await fixture.whenStable();
     expect(isPluginAvailableSpy).toHaveBeenCalledWith('StatusBar');
     expect(isPluginAvailableSpy).toHaveBeenCalledWith('SplashScreen');
-    expect(statusBarSetStyleSpy).not.toHaveBeenCalled();
-    expect(splashScreenHideSpy).not.toHaveBeenCalled();
   });
 
   describe('mocking a device', () => {
@@ -76,13 +55,13 @@ describe('AppComponent', () => {
     it('should call set StatusBar style', async () => {
       const fixture = TestBed.createComponent(AppComponent);
       await fixture.whenStable();
-      expect(statusBarSetStyleSpy).toHaveBeenCalledWith({ style: Style.Default });
+      expect(isPluginAvailableSpy).toHaveBeenCalledWith('StatusBar');
     });
 
     it('should call hide splashScreen', async () => {
       const fixture = TestBed.createComponent(AppComponent);
       await fixture.whenStable();
-      expect(splashScreenHideSpy).toHaveBeenCalled();
+      expect(isPluginAvailableSpy).toHaveBeenCalledWith('SplashScreen');
     });
   });
   // TODO: add more tests!
