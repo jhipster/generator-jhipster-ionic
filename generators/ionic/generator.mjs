@@ -155,6 +155,11 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.WRITING]() {
     return this.asWritingTaskGroup({
+      async cleanup({ control }) {
+        await control.cleanupFiles({
+          '8.12.0': ['jest.config.js'],
+        });
+      },
       async writingTemplateTask({ application }) {
         await this.writeFiles({
           sections: files,

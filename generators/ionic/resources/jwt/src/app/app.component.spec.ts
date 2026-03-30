@@ -39,9 +39,12 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should initialize the app', () => {
-    TestBed.createComponent(AppComponent);
+  it('should initialize the app', async () => {
+    const fixture = TestBed.createComponent(AppComponent);
     expect(platformSpy.ready).toHaveBeenCalled();
+    await fixture.whenStable();
+    expect(isPluginAvailableSpy).toHaveBeenCalledWith('StatusBar');
+    expect(isPluginAvailableSpy).toHaveBeenCalledWith('SplashScreen');
   });
   // TODO: add more tests!
 });

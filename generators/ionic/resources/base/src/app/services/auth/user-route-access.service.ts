@@ -1,6 +1,5 @@
 import { Injectable, isDevMode } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { AccountService } from './account.service';
 
 @Injectable({
@@ -9,11 +8,10 @@ import { AccountService } from './account.service';
 export class UserRouteAccessService implements CanActivate {
   constructor(
     private router: Router,
-    private navController: NavController,
     private accountService: AccountService, // private stateStorageService: StateStorageService
   ) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean | UrlTree> {
     const authorities = route.data['authorities'];
     // We need to call the checkLogin / and so the accountService.identity() function, to ensure,
     // that the client has a principal too, if they already logged in by the server.
@@ -21,7 +19,7 @@ export class UserRouteAccessService implements CanActivate {
     return this.checkLogin(authorities, state.url);
   }
 
-  checkLogin(authorities: string[], url: string): Promise<boolean> {
+  checkLogin(authorities: string[], url: string): Promise<boolean | UrlTree> {
     return this.accountService.identity().then(account => {
       if (!authorities || authorities.length === 0) {
         return true;
@@ -38,17 +36,7 @@ export class UserRouteAccessService implements CanActivate {
         return false;
       }
 
-      // this.stateStorageService.storeUrl(url);
-      // this.router.navigate(['accessdenied']).then(() => {
-      //     // only show the login dialog, if the user hasn't logged in yet
-      //     if (!account) {
-      //         // this.loginModalService.open();
-      //         console.log('go to login page');
-      //     }
-      // });
-      this.navController.navigateRoot('/accessdenied');
-
-      return false;
+      return this.router.createUrlTree(['']);
     });
   }
 }
