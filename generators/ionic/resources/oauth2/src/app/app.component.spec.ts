@@ -7,6 +7,8 @@ import { provideRouter } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { Capacitor } from '@capacitor/core';
+import { SplashScreen } from '@capacitor/splash-screen';
+import { StatusBar, Style } from '@capacitor/status-bar';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from 'ionic-appauth';
 
@@ -19,9 +21,13 @@ describe('AppComponent', () => {
   let platformReadySpy;
   let platformSpy;
   let authServiceSpy;
+  let statusBarSetStyleSpy;
+  let splashScreenHideSpy;
 
   beforeEach(() => {
     isPluginAvailableSpy = vi.spyOn(Capacitor, 'isPluginAvailable').mockReturnValue(false);
+    statusBarSetStyleSpy = vi.spyOn(StatusBar, 'setStyle').mockResolvedValue(undefined);
+    splashScreenHideSpy = vi.spyOn(SplashScreen, 'hide').mockResolvedValue(undefined);
     platformReadySpy = Promise.resolve();
     platformSpy = createSpyObj('Platform', [{ ready: platformReadySpy }]);
     platformSpy.backButton = { subscribeWithPriority: vi.fn() };
@@ -43,6 +49,8 @@ describe('AppComponent', () => {
   afterEach(() => {
     isPluginAvailableSpy.mockReset();
     isPluginAvailableSpy.mockRestore();
+    statusBarSetStyleSpy.mockRestore();
+    splashScreenHideSpy.mockRestore();
   });
 
   it('should create the app', () => {
@@ -57,6 +65,26 @@ describe('AppComponent', () => {
     await fixture.whenStable();
     expect(isPluginAvailableSpy).toHaveBeenCalledWith('StatusBar');
     expect(isPluginAvailableSpy).toHaveBeenCalledWith('SplashScreen');
+    expect(statusBarSetStyleSpy).not.toHaveBeenCalled();
+    expect(splashScreenHideSpy).not.toHaveBeenCalled();
+  });
+
+  describe('mocking a device', () => {
+    beforeEach(() => {
+      isPluginAvailableSpy.mockReturnValue(true);
+    });
+
+    it('should call set StatusBar style', async () => {
+      const fixture = TestBed.createComponent(AppComponent);
+      await fixture.whenStable();
+      expect(statusBarSetStyleSpy).toHaveBeenCalledWith({ style: Style.Default });
+    });
+
+    it('should call hide splashScreen', async () => {
+      const fixture = TestBed.createComponent(AppComponent);
+      await fixture.whenStable();
+      expect(splashScreenHideSpy).toHaveBeenCalled();
+    });
   });
   // TODO: add more tests!
 });
