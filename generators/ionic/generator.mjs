@@ -179,7 +179,7 @@ export default class extends BaseApplicationGenerator {
         const oldBlueprintVersion = (this.getBlueprintOldVersion() ?? control.jhipsterOldVersion) ? '8.7.0' : undefined;
         await control.cleanupFiles(oldBlueprintVersion, {
           '8.7.1': [
-            'jest.config.js'
+            'jest.config.js',
             'src/app/pages/account/account.module.ts',
             'src/app/pages/tabs/tabs.module.ts',
             'src/app/pages/tabs/tabs.router.module.ts',
