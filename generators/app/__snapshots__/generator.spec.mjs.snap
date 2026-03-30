@@ -434,6 +434,9 @@ exports[`SubGenerator app of ionic JHipster blueprint > run > should succeed 1`]
   "../ionic4j/src/polyfills.ts": {
     "stateCleared": "modified",
   },
+  "../ionic4j/src/test-setup.ts": {
+    "stateCleared": "modified",
+  },
   "../ionic4j/src/theme/variables.scss": {
     "stateCleared": "modified",
   },
@@ -920,6 +923,9 @@ exports[`SubGenerator app of ionic JHipster blueprint > with custom ionic path >
     "stateCleared": "modified",
   },
   "../ionic-app/src/polyfills.ts": {
+    "stateCleared": "modified",
+  },
+  "../ionic-app/src/test-setup.ts": {
     "stateCleared": "modified",
   },
   "../ionic-app/src/theme/variables.scss": {
