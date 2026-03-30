@@ -18,7 +18,7 @@
 -%>
 import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { NavController, ToastController, Platform, IonItemSliding, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonItemOptions, IonItemOption, IonIcon, IonFab, IonFabButton, IonRefresher, IonRefresherContent, IonText } from '@ionic/angular/standalone';
+import { NavController, ToastController, Platform, IonItemSliding, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonItemOptions, IonItemOption, IonIcon, IonFab, IonFabButton, IonRefresher, IonRefresherContent, IonText, IonButtons, IonBackButton<%_ if (anyFieldHasImageContentType) { _%>, IonAvatar<%_ } _%> } from '@ionic/angular/standalone';
 import { filter, map } from 'rxjs/operators';
 import { HttpResponse } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
@@ -32,7 +32,7 @@ import { <%= entityAngularName %>Service } from './<%= entityFileName %>.service
     selector: 'page-<%= entityFileName %>',
     templateUrl: '<%= entityFileName %>.html',
     standalone: true,
-    imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, IonIcon, IonFab, IonFabButton, IonRefresher, IonRefresherContent, IonText, TranslateModule, DatePipe],
+    imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItemSliding, IonItem, IonLabel, IonItemOptions, IonItemOption, IonIcon, IonFab, IonFabButton, IonRefresher, IonRefresherContent, IonText, IonButtons, IonBackButton<%_ if (anyFieldHasImageContentType) { _%>, IonAvatar<%_ } _%>, TranslateModule, DatePipe],
 })
 export class <%= entityAngularName %>Page {
     <%= entityInstancePlural %>: <%= entityAngularName %>[];
