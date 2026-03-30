@@ -10,9 +10,14 @@ import { entityFiles, files } from './files.mjs';
 
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
-    super(args, opts, { ...features, sbsBlueprint: true, jhipster7Migration: true });
+    super(args, opts, { ...features, storeBlueprintVersion: true, sbsBlueprint: true, jhipster7Migration: true });
 
     if (this.options.help) return;
+
+    // Added to generator-jhipster 9.0.1
+    if (this.blueprintConfig.blueprintVersion) {
+      this.getContextData(this.getBlueprintOldVersionKey(), { factory: () => this.blueprintConfig.blueprintVersion });
+    }
 
     if (this.blueprintConfig.ionicDir) {
       throw new Error('Ionic generator must run in Ionic application directory, to regenerate backend execute `jhipster-ionic app`');
@@ -38,6 +43,20 @@ export default class extends BaseApplicationGenerator {
     }
     if (this.options.defaults || this.options.force) {
       this.ionicStorage.defaults({ appDir: DEFAULT_BACKEND_PATH });
+    }
+  }
+
+  // Added to generator-jhipster 9.0.1
+  getBlueprintOldVersionKey() {
+    return `oldVersion:${this.rootGeneratorName()}`;
+  }
+
+  // Added to generator-jhipster 9.0.1
+  getBlueprintOldVersion() {
+    try {
+      return this.getContextData(this.getBlueprintOldVersionKey());
+    } catch {
+      return undefined;
     }
   }
 
@@ -155,6 +174,22 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.WRITING]() {
     return this.asWritingTaskGroup({
+      async cleanup({ application, control }) {
+        // Consider version 8.7.0 as initial version
+        const oldBlueprintVersion = (this.getBlueprintOldVersion() ?? control.jhipsterOldVersion) ? '8.7.0' : undefined;
+        await control.cleanupFiles(oldBlueprintVersion, {
+          '8.7.1': [
+            'src/app/pages/account/account.module.ts',
+            'src/app/pages/tabs/tabs.module.ts',
+            'src/app/pages/tabs/tabs.router.module.ts',
+            [application.authenticationTypeJwt, 'src/app/app-routing.module.ts'],
+            [application.authenticationTypeJwt, 'src/app/app.module.ts'],
+            [application.authenticationTypeJwt, 'src/app/pages/home/home.module.ts'],
+            [application.authenticationTypeJwt, 'src/app/pages/login/login.module.ts'],
+            [application.authenticationTypeOauth2, 'src/app/auth/auth-callback/auth-callback.module.ts'],
+          ],
+        });
+      },
       async writingTemplateTask({ application }) {
         await this.writeFiles({
           sections: files,
