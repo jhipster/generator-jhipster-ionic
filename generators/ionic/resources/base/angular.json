@@ -95,7 +95,8 @@
           "options": {
             "buildTarget": "app:build",
             "runner": "vitest",
-            "tsConfig": "tsconfig.spec.json"
+            "tsConfig": "tsconfig.spec.json",
+            "setupFiles": ["src/test-setup.ts"]
           }
         },
         "lint": {
