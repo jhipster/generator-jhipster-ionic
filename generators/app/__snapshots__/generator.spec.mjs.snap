@@ -80,9 +80,6 @@ exports[`SubGenerator app of ionic JHipster blueprint > run > should succeed 1`]
   "../ionic4j/ionic.config.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/jest.config.js": {
-    "stateCleared": "modified",
-  },
   "../ionic4j/package.json": {
     "stateCleared": "modified",
   },
@@ -437,6 +434,9 @@ exports[`SubGenerator app of ionic JHipster blueprint > run > should succeed 1`]
   "../ionic4j/src/polyfills.ts": {
     "stateCleared": "modified",
   },
+  "../ionic4j/src/test-setup.ts": {
+    "stateCleared": "modified",
+  },
   "../ionic4j/src/theme/variables.scss": {
     "stateCleared": "modified",
   },
@@ -450,6 +450,9 @@ exports[`SubGenerator app of ionic JHipster blueprint > run > should succeed 1`]
     "stateCleared": "modified",
   },
   "../ionic4j/tsconfig.spec.json": {
+    "stateCleared": "modified",
+  },
+  "../ionic4j/vitest.config.ts": {
     "stateCleared": "modified",
   },
   ".editorconfig": {
@@ -566,9 +569,6 @@ exports[`SubGenerator app of ionic JHipster blueprint > with custom ionic path >
     "stateCleared": "modified",
   },
   "../ionic-app/ionic.config.json": {
-    "stateCleared": "modified",
-  },
-  "../ionic-app/jest.config.js": {
     "stateCleared": "modified",
   },
   "../ionic-app/package.json": {
@@ -925,6 +925,9 @@ exports[`SubGenerator app of ionic JHipster blueprint > with custom ionic path >
   "../ionic-app/src/polyfills.ts": {
     "stateCleared": "modified",
   },
+  "../ionic-app/src/test-setup.ts": {
+    "stateCleared": "modified",
+  },
   "../ionic-app/src/theme/variables.scss": {
     "stateCleared": "modified",
   },
@@ -938,6 +941,9 @@ exports[`SubGenerator app of ionic JHipster blueprint > with custom ionic path >
     "stateCleared": "modified",
   },
   "../ionic-app/tsconfig.spec.json": {
+    "stateCleared": "modified",
+  },
+  "../ionic-app/vitest.config.ts": {
     "stateCleared": "modified",
   },
   ".editorconfig": {

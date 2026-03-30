@@ -80,9 +80,6 @@ exports[`SubGenerator ionic of ionic JHipster blueprint > with jwt authenticatio
   "ionic.config.json": {
     "stateCleared": "modified",
   },
-  "jest.config.js": {
-    "stateCleared": "modified",
-  },
   "package.json": {
     "stateCleared": "modified",
   },
@@ -437,6 +434,9 @@ exports[`SubGenerator ionic of ionic JHipster blueprint > with jwt authenticatio
   "src/polyfills.ts": {
     "stateCleared": "modified",
   },
+  "src/test-setup.ts": {
+    "stateCleared": "modified",
+  },
   "src/theme/variables.scss": {
     "stateCleared": "modified",
   },
@@ -450,6 +450,9 @@ exports[`SubGenerator ionic of ionic JHipster blueprint > with jwt authenticatio
     "stateCleared": "modified",
   },
   "tsconfig.spec.json": {
+    "stateCleared": "modified",
+  },
+  "vitest.config.ts": {
     "stateCleared": "modified",
   },
 }
@@ -536,9 +539,6 @@ exports[`SubGenerator ionic of ionic JHipster blueprint > with oauth2 authentica
     "stateCleared": "modified",
   },
   "ionic.config.json": {
-    "stateCleared": "modified",
-  },
-  "jest.config.js": {
     "stateCleared": "modified",
   },
   "package.json": {
@@ -913,6 +913,9 @@ exports[`SubGenerator ionic of ionic JHipster blueprint > with oauth2 authentica
   "src/polyfills.ts": {
     "stateCleared": "modified",
   },
+  "src/test-setup.ts": {
+    "stateCleared": "modified",
+  },
   "src/theme/variables.scss": {
     "stateCleared": "modified",
   },
@@ -926,6 +929,9 @@ exports[`SubGenerator ionic of ionic JHipster blueprint > with oauth2 authentica
     "stateCleared": "modified",
   },
   "tsconfig.spec.json": {
+    "stateCleared": "modified",
+  },
+  "vitest.config.ts": {
     "stateCleared": "modified",
   },
 }

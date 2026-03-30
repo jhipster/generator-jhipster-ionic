@@ -6,8 +6,8 @@
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "target": "es2015",
-    "types": ["node", "jest"]
+    "types": ["node", "vitest/globals"]
   },
-  "files": ["src/polyfills.ts"],
+  "files": ["src/polyfills.ts", "src/test-setup.ts"],
   "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
 }

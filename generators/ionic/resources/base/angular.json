@@ -91,16 +91,12 @@
           }
         },
         "test": {
-          "builder": "@angular-builders/jest:run",
+          "builder": "@angular/build:unit-test",
           "options": {
+            "buildTarget": "app:build",
+            "runner": "vitest",
             "tsConfig": "tsconfig.spec.json",
-            "testMatch": ["**/?(*.)+(spec).[t]s?(x)"]
-          },
-          "configurations": {
-            "ci": {
-              "progress": false,
-              "watch": false
-            }
+            "setupFiles": ["src/test-setup.ts"]
           }
         },
         "lint": {

@@ -45,9 +45,9 @@ describe('Data Utils Service Test', () => {
 
   it('should download the csv file', inject([JhiDataUtils], (service: JhiDataUtils) => {
     const tempLink = document.createElement('a');
-    jest.spyOn(tempLink, 'click');
-    jest.spyOn(document, 'createElement').mockReturnValue(tempLink);
-    window.URL.createObjectURL = jest.fn();
+    vi.spyOn(tempLink, 'click');
+    vi.spyOn(document, 'createElement').mockReturnValue(tempLink);
+    window.URL.createObjectURL = vi.fn();
 
     // call downloadFile function
     // csv content:
@@ -74,7 +74,9 @@ describe('Data Utils Service Test', () => {
       };
 
       service.setFileData(eventSake, null, null, true).then(
-        () => fail('Should not resolve'),
+        () => {
+          throw new Error('Should not resolve');
+        },
         error => expect(error).toMatch(/^File was expected to be an image but was found to be /),
       );
     }),
@@ -97,7 +99,9 @@ describe('Data Utils Service Test', () => {
   it('should return a promise that rejects with an error message when passed event does not contain a file', waitForAsync(
     inject([JhiDataUtils], (service: JhiDataUtils) => {
       service.setFileData(null, null, null, false).then(
-        () => fail('Should not resolve'),
+        () => {
+          throw new Error('Should not resolve');
+        },
         error => expect(error).toMatch(/^Base64 data was not set as file could not be extracted from passed parameter: /),
       );
     }),
