@@ -16,8 +16,8 @@
     "prettier": "prettier --write \"{,e2e/**/,src/**/}*.{js,json,html,md,ts,css,scss,yml}\" --loglevel silent",
     "start": "ionic serve",
     "pretest": "npm run lint",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "ng test",
+    "test:watch": "ng test --watch"
   },
   "dependencies": {
     "@angular/common": "~20.3.18",
@@ -52,7 +52,6 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@analogjs/vitest-angular": "~1.18.0",
     "@angular-devkit/build-angular": "~20.3.18",
     "@angular/cli": "~20.3.18",
     "@angular/compiler": "~20.3.18",
