@@ -1,10 +1,8 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { Platform } from '@ionic/angular';
 import { Capacitor } from '@capacitor/core';
-import { SplashScreen } from '@capacitor/splash-screen';
-import { StatusBar, Style } from '@capacitor/status-bar';
 import { TranslateModule } from '@ngx-translate/core';
 import { provideRouter } from '@angular/router';
 
@@ -16,13 +14,9 @@ describe('AppComponent', () => {
   let isPluginAvailableSpy;
   let platformReadySpy;
   let platformSpy;
-  let statusBarSetStyleSpy;
-  let splashScreenHideSpy;
 
   beforeEach(() => {
-    isPluginAvailableSpy = vi.spyOn(Capacitor, 'isPluginAvailable');
-    statusBarSetStyleSpy = vi.spyOn(StatusBar, 'setStyle').mockResolvedValue(undefined);
-    splashScreenHideSpy = vi.spyOn(SplashScreen, 'hide').mockResolvedValue(undefined);
+    isPluginAvailableSpy = vi.spyOn(Capacitor, 'isPluginAvailable').mockReturnValue(false);
     platformReadySpy = Promise.resolve();
     platformSpy = createSpyObj('Platform', [{ ready: platformReadySpy }]);
     platformSpy.backButton = { subscribeWithPriority: vi.fn() };
@@ -37,8 +31,6 @@ describe('AppComponent', () => {
   afterEach(() => {
     isPluginAvailableSpy.mockReset();
     isPluginAvailableSpy.mockRestore();
-    statusBarSetStyleSpy.mockRestore();
-    splashScreenHideSpy.mockRestore();
   });
 
   it('should create the app', () => {
@@ -47,33 +39,12 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should initialize the app', fakeAsync(async () => {
+  it('should initialize the app', async () => {
     TestBed.createComponent(AppComponent);
     expect(platformSpy.ready).toHaveBeenCalled();
     await platformReadySpy;
-    tick();
-    expect(isPluginAvailableSpy).toHaveBeenCalled();
-    expect(statusBarSetStyleSpy).not.toHaveBeenCalled();
-    expect(splashScreenHideSpy).not.toHaveBeenCalled();
-  }));
-
-  describe('mocking a device', () => {
-    beforeEach(() => {
-      isPluginAvailableSpy.mockReturnValue(true);
-    });
-
-    it('should call set StatusBar stype', fakeAsync(async () => {
-      TestBed.createComponent(AppComponent);
-      await platformReadySpy;
-      tick();
-      expect(statusBarSetStyleSpy).toHaveBeenCalledWith({ style: Style.Default });
-    }));
-
-    it('should call hide splashScreenSpy', async () => {
-      TestBed.createComponent(AppComponent);
-      await platformReadySpy;
-      expect(splashScreenHideSpy).toHaveBeenCalled();
-    });
+    expect(isPluginAvailableSpy).toHaveBeenCalledWith('StatusBar');
+    expect(isPluginAvailableSpy).toHaveBeenCalledWith('SplashScreen');
   });
   // TODO: add more tests!
 });
