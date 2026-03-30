@@ -45,9 +45,9 @@ describe('Data Utils Service Test', () => {
 
   it('should download the csv file', inject([JhiDataUtils], (service: JhiDataUtils) => {
     const tempLink = document.createElement('a');
-    jest.spyOn(tempLink, 'click');
-    jest.spyOn(document, 'createElement').mockReturnValue(tempLink);
-    window.URL.createObjectURL = jest.fn();
+    vi.spyOn(tempLink, 'click');
+    vi.spyOn(document, 'createElement').mockReturnValue(tempLink);
+    window.URL.createObjectURL = vi.fn();
 
     // call downloadFile function
     // csv content:

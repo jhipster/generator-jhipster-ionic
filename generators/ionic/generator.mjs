@@ -237,16 +237,6 @@ export default class extends BaseApplicationGenerator {
             'ionic-appauth': undefined,
           });
         }
-        if (application.authenticationTypeOauth2) {
-          this.packageJson.merge({
-            jest: {
-              moduleNameMapper: {
-                '^@ionic/storage$': '<rootDir>/node_modules/@ionic/storage/dist/ionic-storage.cjs.js',
-              },
-              transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$|@ngrx|@ionic-native|@ionic|ionic-appauth)'],
-            },
-          });
-        }
       },
     });
   }

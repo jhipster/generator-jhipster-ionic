@@ -13,8 +13,8 @@ describe('LoginPage', () => {
   let fixture: ComponentFixture<LoginPage>;
 
   const mockAuthService = {
-    signIn: jest.fn().mockResolvedValue({}),
-    signOut: jest.fn().mockResolvedValue({}),
+    signIn: vi.fn().mockResolvedValue({}),
+    signOut: vi.fn().mockResolvedValue({}),
     events$: new Subject(),
   };
 

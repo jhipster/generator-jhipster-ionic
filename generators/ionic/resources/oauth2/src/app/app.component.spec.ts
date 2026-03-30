@@ -14,25 +14,25 @@ import { AuthService } from 'ionic-appauth';
 
 import { AppComponent } from './app.component';
 
-import Mock = jest.Mock;
+import { Mock } from 'vitest';
 
-jest.mock('@capacitor/status-bar', () => ({
+vi.mock('@capacitor/status-bar', () => ({
   StatusBar: {
-    setStyle: jest.fn(),
+    setStyle: vi.fn(),
   },
   Style: {
     Default: 'DEFAULT',
   },
 }));
 
-jest.mock('@capacitor/splash-screen', () => ({
+vi.mock('@capacitor/splash-screen', () => ({
   SplashScreen: {
-    hide: jest.fn(),
+    hide: vi.fn(),
   },
 }));
 
-const mockedStatusBar = jest.mocked(StatusBar, { shallow: true });
-const mockedSplashScreen = jest.mocked(SplashScreen, { shallow: true });
+const mockedStatusBar = vi.mocked(StatusBar, { shallow: true });
+const mockedSplashScreen = vi.mocked(SplashScreen, { shallow: true });
 
 describe('AppComponent', () => {
   let isPluginAvailableSpy;
@@ -41,10 +41,10 @@ describe('AppComponent', () => {
   let authServiceSpy;
 
   beforeEach(() => {
-    isPluginAvailableSpy = jest.spyOn(Capacitor, 'isPluginAvailable');
+    isPluginAvailableSpy = vi.spyOn(Capacitor, 'isPluginAvailable');
     platformReadySpy = Promise.resolve();
     platformSpy = createSpyObj('Platform', [{ ready: platformReadySpy }]);
-    platformSpy.backButton = { subscribeWithPriority: jest.fn() };
+    platformSpy.backButton = { subscribeWithPriority: vi.fn() };
     authServiceSpy = createSpyObj('AuthService', [{ init: Promise.resolve() }]);
 
     TestBed.configureTestingModule({
@@ -107,10 +107,10 @@ export const createSpyObj = (baseName, methodNames): { [key: string]: Mock<any> 
 
   for (const m of methodNames) {
     if (typeof m === 'string') {
-      obj[m] = jest.fn();
+      obj[m] = vi.fn();
     } else {
       Object.entries(m).forEach(([key, value]) => {
-        obj[key] = jest.fn().mockImplementation(() => value);
+        obj[key] = vi.fn().mockImplementation(() => value);
       });
     }
   }

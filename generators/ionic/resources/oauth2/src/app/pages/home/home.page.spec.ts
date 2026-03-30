@@ -13,14 +13,14 @@ describe('HomePage', () => {
   let fixture: ComponentFixture<HomePage>;
 
   const mockAuthService = {
-    signIn: jest.fn().mockResolvedValue({}),
-    signOut: jest.fn().mockResolvedValue({}),
+    signIn: vi.fn().mockResolvedValue({}),
+    signOut: vi.fn().mockResolvedValue({}),
     events$: new Subject(),
   };
 
   const mockBrowser = {
-    showWindow: jest.fn().mockResolvedValue({}),
-    closeWindow: jest.fn().mockResolvedValue({}),
+    showWindow: vi.fn().mockResolvedValue({}),
+    closeWindow: vi.fn().mockResolvedValue({}),
   };
 
   beforeEach(waitForAsync(() => {
