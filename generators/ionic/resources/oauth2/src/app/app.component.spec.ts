@@ -31,8 +31,8 @@ vi.mock('@capacitor/splash-screen', () => ({
   },
 }));
 
-const mockedStatusBar = vi.mocked(StatusBar, { shallow: true });
-const mockedSplashScreen = vi.mocked(SplashScreen, { shallow: true });
+const mockedStatusBar = vi.mocked(StatusBar);
+const mockedSplashScreen = vi.mocked(SplashScreen);
 
 describe('AppComponent', () => {
   let isPluginAvailableSpy;
