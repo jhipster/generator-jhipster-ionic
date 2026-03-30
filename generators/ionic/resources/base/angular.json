@@ -93,6 +93,7 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
+            "buildTarget": "app:build",
             "runner": "vitest",
             "tsConfig": "tsconfig.spec.json"
           }
