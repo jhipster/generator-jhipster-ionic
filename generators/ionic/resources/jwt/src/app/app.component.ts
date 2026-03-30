@@ -25,12 +25,16 @@ export class AppComponent {
       if (Capacitor.isPluginAvailable('StatusBar')) {
         try {
           await StatusBar.setStyle({ style: Style.Default });
-        } catch {} // StatusBar has no web implementation; errors are expected in non-native environments
+        } catch {
+          // StatusBar has no web implementation; errors are expected in non-native environments
+        }
       }
       if (Capacitor.isPluginAvailable('SplashScreen')) {
         try {
           await SplashScreen.hide();
-        } catch {} // SplashScreen errors are ignored gracefully
+        } catch {  
+          // SplashScreen errors are ignored gracefully
+        }
       }
     });
     this.initTranslate();
