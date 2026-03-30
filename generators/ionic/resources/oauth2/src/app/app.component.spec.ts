@@ -16,6 +16,15 @@ import { AppComponent } from './app.component';
 
 import { Mock } from 'vitest';
 
+vi.mock('@capacitor/status-bar', () => ({
+  StatusBar: { setStyle: vi.fn() },
+  Style: { Default: 'DEFAULT', Dark: 'DARK', Light: 'LIGHT' },
+}));
+
+vi.mock('@capacitor/splash-screen', () => ({
+  SplashScreen: { hide: vi.fn() },
+}));
+
 describe('AppComponent', () => {
   let isPluginAvailableSpy;
   let platformReadySpy;
@@ -26,8 +35,10 @@ describe('AppComponent', () => {
 
   beforeEach(() => {
     isPluginAvailableSpy = vi.spyOn(Capacitor, 'isPluginAvailable').mockReturnValue(false);
-    statusBarSetStyleSpy = vi.spyOn(StatusBar, 'setStyle').mockResolvedValue(undefined);
-    splashScreenHideSpy = vi.spyOn(SplashScreen, 'hide').mockResolvedValue(undefined);
+    statusBarSetStyleSpy = vi.mocked(StatusBar.setStyle);
+    statusBarSetStyleSpy.mockResolvedValue(undefined);
+    splashScreenHideSpy = vi.mocked(SplashScreen.hide);
+    splashScreenHideSpy.mockResolvedValue(undefined);
     platformReadySpy = Promise.resolve();
     platformSpy = createSpyObj('Platform', [{ ready: platformReadySpy }]);
     platformSpy.backButton = { subscribeWithPriority: vi.fn() };
@@ -49,8 +60,8 @@ describe('AppComponent', () => {
   afterEach(() => {
     isPluginAvailableSpy.mockReset();
     isPluginAvailableSpy.mockRestore();
-    statusBarSetStyleSpy.mockRestore();
-    splashScreenHideSpy.mockRestore();
+    statusBarSetStyleSpy.mockReset();
+    splashScreenHideSpy.mockReset();
   });
 
   it('should create the app', () => {
