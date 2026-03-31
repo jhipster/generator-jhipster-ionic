@@ -32,7 +32,7 @@ export class AppComponent {
       if (Capacitor.isPluginAvailable('SplashScreen')) {
         try {
           await SplashScreen.hide();
-        } catch {  
+        } catch {
           // SplashScreen errors are ignored gracefully
         }
       }
