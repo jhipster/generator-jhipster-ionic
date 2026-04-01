@@ -16,7 +16,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import { waitForAsync, inject, TestBed } from '@angular/core/testing';
+import { inject, TestBed } from '@angular/core/testing';
 
 import { JhiDataUtils } from './data-util.service';
 
@@ -45,9 +45,9 @@ describe('Data Utils Service Test', () => {
 
   it('should download the csv file', inject([JhiDataUtils], (service: JhiDataUtils) => {
     const tempLink = document.createElement('a');
-    jest.spyOn(tempLink, 'click');
-    jest.spyOn(document, 'createElement').mockReturnValue(tempLink);
-    window.URL.createObjectURL = jest.fn();
+    vi.spyOn(tempLink, 'click');
+    vi.spyOn(document, 'createElement').mockReturnValue(tempLink);
+    window.URL.createObjectURL = vi.fn();
 
     // call downloadFile function
     // csv content:
@@ -65,41 +65,42 @@ describe('Data Utils Service Test', () => {
     expect(tempLink.click).toHaveBeenCalledWith();
   }));
 
-  it('should return a promise that rejects with an error message when image is passed but file type is not image', waitForAsync(
-    inject([JhiDataUtils], (service: JhiDataUtils) => {
-      const eventSake = {
-        target: {
-          files: [{ type: 'text/plain' }],
-        },
-      };
+  it('should return a promise that rejects with an error message when image is passed but file type is not image', async () => {
+    const service = TestBed.inject(JhiDataUtils);
+    const eventSake = {
+      target: {
+        files: [{ type: 'text/plain' }],
+      },
+    };
 
-      service.setFileData(eventSake, null, null, true).then(
-        () => fail('Should not resolve'),
-        error => expect(error).toMatch(/^File was expected to be an image but was found to be /),
-      );
-    }),
-  ));
+    await service.setFileData(eventSake, null, null, true).then(
+      () => {
+        throw new Error('Should not resolve');
+      },
+      error => expect(error).toMatch(/^File was expected to be an image but was found to be /),
+    );
+  });
 
-  it('should return a promise that resolves to the modified entity', waitForAsync(
-    inject([JhiDataUtils], (service: JhiDataUtils) => {
-      const eventSake = {
-        target: {
-          files: [new File(['file content'], 'test-file.txt')],
-        },
-      };
+  it('should return a promise that resolves to the modified entity', async () => {
+    const service = TestBed.inject(JhiDataUtils);
+    const eventSake = {
+      target: {
+        files: [new File(['file content'], 'test-file.txt')],
+      },
+    };
 
-      service
-        .setFileData(eventSake, {}, 'document', false)
-        .then(modifiedEntity => expect(modifiedEntity).toEqual({ document: 'ZmlsZSBjb250ZW50', documentContentType: '' }));
-    }),
-  ));
+    await service
+      .setFileData(eventSake, {}, 'document', false)
+      .then(modifiedEntity => expect(modifiedEntity).toEqual({ document: 'ZmlsZSBjb250ZW50', documentContentType: '' }));
+  });
 
-  it('should return a promise that rejects with an error message when passed event does not contain a file', waitForAsync(
-    inject([JhiDataUtils], (service: JhiDataUtils) => {
-      service.setFileData(null, null, null, false).then(
-        () => fail('Should not resolve'),
-        error => expect(error).toMatch(/^Base64 data was not set as file could not be extracted from passed parameter: /),
-      );
-    }),
-  ));
+  it('should return a promise that rejects with an error message when passed event does not contain a file', async () => {
+    const service = TestBed.inject(JhiDataUtils);
+    await service.setFileData(null, null, null, false).then(
+      () => {
+        throw new Error('Should not resolve');
+      },
+      error => expect(error).toMatch(/^Base64 data was not set as file could not be extracted from passed parameter: /),
+    );
+  });
 });

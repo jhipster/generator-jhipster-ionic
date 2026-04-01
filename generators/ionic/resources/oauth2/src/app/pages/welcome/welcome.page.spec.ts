@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { IonicStorageModule } from '@ionic/storage-angular';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { AuthService } from 'ionic-appauth';
@@ -13,13 +13,13 @@ describe('WelcomePage', () => {
   let fixture: ComponentFixture<WelcomePage>;
 
   const mockAuthService = {
-    signIn: jest.fn().mockResolvedValue({}),
-    signOut: jest.fn().mockResolvedValue({}),
+    signIn: vi.fn().mockResolvedValue({}),
+    signOut: vi.fn().mockResolvedValue({}),
     events$: new Subject(),
   };
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [WelcomePage, TranslateModule.forRoot(), IonicStorageModule.forRoot()],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
@@ -28,7 +28,7 @@ describe('WelcomePage', () => {
         provideHttpClientTesting(),
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WelcomePage);

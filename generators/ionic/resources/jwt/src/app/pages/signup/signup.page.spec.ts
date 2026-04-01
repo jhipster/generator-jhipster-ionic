@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SignupPage } from './signup.page';
 import { TranslateModule } from '@ngx-translate/core';
@@ -10,13 +10,13 @@ describe('SignupPage', () => {
   let component: SignupPage;
   let fixture: ComponentFixture<SignupPage>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [SignupPage, TranslateModule.forRoot()],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SignupPage);

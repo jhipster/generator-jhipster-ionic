@@ -43,7 +43,7 @@ _%>
 @if (form) {
     <form name="form" [formGroup]="form" (ngSubmit)="save()">
         <ion-list>
-            <ion-item [hidden]="!form.id">
+            <ion-item [hidden]="isNew">
                 <ion-label>ID</ion-label>
                 <ion-input type="hidden" id="id" formControlName="id" readonly></ion-input>
             </ion-item>
@@ -91,7 +91,7 @@ _%>
                     <div>
                         <p>{{<%= entityInstance %>.<%= fieldName %>ContentType}}, {{byteSize(<%= entityInstance %>.<%= fieldName %>)}}</p>
                         <%_ if (fieldTypeBlobContent === 'image') { _%>
-                        <ion-button color="danger" (click)="clearInputImage('<%= fieldName %>', '<%= fieldName %>ContentType', 'fileImage')">
+                        <ion-button color="danger" (click)="clearInputImage('<%= fieldName %>')">
                             <ion-icon name="trash" slot="icon-only"></ion-icon>
                         </ion-button>
                         <%_ } else { _%>

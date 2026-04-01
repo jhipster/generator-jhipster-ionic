@@ -26,10 +26,18 @@ export class AppComponent {
     this.platform.ready().then(async () => {
       await this.authService.init();
       if (Capacitor.isPluginAvailable('StatusBar')) {
-        await StatusBar.setStyle({ style: Style.Default });
+        try {
+          await StatusBar.setStyle({ style: Style.Default });
+        } catch {
+          // StatusBar has no web implementation; errors are expected in non-native environments
+        }
       }
       if (Capacitor.isPluginAvailable('SplashScreen')) {
-        await SplashScreen.hide();
+        try {
+          await SplashScreen.hide();
+        } catch {
+          // SplashScreen errors are ignored gracefully
+        }
       }
     });
     this.initTranslate();

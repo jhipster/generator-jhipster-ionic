@@ -179,6 +179,7 @@ export default class extends BaseApplicationGenerator {
         const oldBlueprintVersion = (this.getBlueprintOldVersion() ?? control.jhipsterOldVersion) ? '8.7.0' : undefined;
         await control.cleanupFiles(oldBlueprintVersion, {
           '8.7.1': [
+            'jest.config.js',
             'src/app/pages/account/account.module.ts',
             'src/app/pages/tabs/tabs.module.ts',
             'src/app/pages/tabs/tabs.router.module.ts',
@@ -277,16 +278,6 @@ export default class extends BaseApplicationGenerator {
             '@ionic/storage': undefined,
             '@ionic/storage-angular': undefined,
             'ionic-appauth': undefined,
-          });
-        }
-        if (application.authenticationTypeOauth2) {
-          this.packageJson.merge({
-            jest: {
-              moduleNameMapper: {
-                '^@ionic/storage$': '<rootDir>/node_modules/@ionic/storage/dist/ionic-storage.cjs.js',
-              },
-              transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$|@ngrx|@ionic-native|@ionic|ionic-appauth)'],
-            },
           });
         }
       },
