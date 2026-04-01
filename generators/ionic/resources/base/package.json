@@ -58,7 +58,7 @@
     "@angular/compiler-cli": "~20.3.18",
     "@angular/language-service": "~20.3.18",
     "@capacitor/cli": "8.3.0",
-    "@cypress/schematic": "^4.0.0",
+    "@cypress/schematic": "^5.0.0",
     "@ionic/angular-toolkit": "^12.1.1",
     "@ionic/cli": "^7.2.0",
     "@types/node": "^25.0.6",
