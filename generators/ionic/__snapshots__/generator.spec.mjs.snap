@@ -2,9 +2,6 @@
 
 exports[`SubGenerator ionic of ionic JHipster blueprint > with jwt authentication > should succeed 1`] = `
 {
-  ".browserslistrc": {
-    "stateCleared": "modified",
-  },
   ".editorconfig": {
     "stateCleared": "modified",
   },
@@ -74,7 +71,7 @@ exports[`SubGenerator ionic of ionic JHipster blueprint > with jwt authenticatio
   "cypress/tsconfig.json": {
     "stateCleared": "modified",
   },
-  "eslint.config.mjs": {
+  "eslint.config.ts": {
     "stateCleared": "modified",
   },
   "ionic.config.json": {
@@ -457,9 +454,6 @@ exports[`SubGenerator ionic of ionic JHipster blueprint > with jwt authenticatio
 
 exports[`SubGenerator ionic of ionic JHipster blueprint > with oauth2 authentication > should succeed 1`] = `
 {
-  ".browserslistrc": {
-    "stateCleared": "modified",
-  },
   ".editorconfig": {
     "stateCleared": "modified",
   },
@@ -532,7 +526,7 @@ exports[`SubGenerator ionic of ionic JHipster blueprint > with oauth2 authentica
   "cypress/tsconfig.json": {
     "stateCleared": "modified",
   },
-  "eslint.config.mjs": {
+  "eslint.config.ts": {
     "stateCleared": "modified",
   },
   "ionic.config.json": {

@@ -1,7 +1,8 @@
 import { relative } from 'node:path';
+
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
+
 import { DEFAULT_IONIC_PATH, IONIC_NAMESPACE } from '../constants.mjs';
-import command from './command.mjs';
 
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
@@ -16,10 +17,6 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.INITIALIZING]() {
     return this.asInitializingTaskGroup({
-      async initializingTemplateTask() {
-        this.parseJHipsterArguments(command.arguments);
-        this.parseJHipsterOptions(command.options);
-      },
       loadConfigFromJHipster() {
         if (this.options.defaults || this.options.force) {
           this.blueprintStorage.defaults({ ionicDir: DEFAULT_IONIC_PATH });

@@ -18,14 +18,14 @@ describe('SubGenerator ionic of ionic JHipster blueprint', () => {
         .run(SUB_GENERATOR_NAMESPACE)
         .withJHipsterConfig()
         .withOptions({
-          blueprint: ['ionic'],
           appDir: false,
           baseName: 'jhipster',
           ignoreNeedlesError: true,
           authenticationType: 'jwt',
         })
-        .withJHipsterLookup()
-        .withParentBlueprintLookup();
+        .withJHipsterGenerators()
+        .withConfiguredBlueprint()
+        .withBlueprintConfig();
     });
 
     it('should succeed', () => {
@@ -42,14 +42,14 @@ describe('SubGenerator ionic of ionic JHipster blueprint', () => {
         .run(SUB_GENERATOR_NAMESPACE)
         .withJHipsterConfig()
         .withOptions({
-          blueprint: ['ionic'],
           appDir: false,
           baseName: 'jhipster',
           authenticationType: 'oauth2',
           ignoreNeedlesError: true,
         })
-        .withJHipsterLookup()
-        .withParentBlueprintLookup();
+        .withJHipsterGenerators()
+        .withConfiguredBlueprint()
+        .withBlueprintConfig();
     });
 
     it('should succeed', () => {

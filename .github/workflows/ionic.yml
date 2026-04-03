@@ -61,7 +61,7 @@ jobs:
           path: ${{ github.workspace }}/backend
       - uses: jhipster/actions/setup-runner@v1
         with:
-          node-version: 20
+          node-version: 24
           java-version: 17
           maven-cache: true
           gradle-cache: true
