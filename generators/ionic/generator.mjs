@@ -1,11 +1,13 @@
 import { relative } from 'node:path';
+
 import chalk from 'chalk';
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
+import { createNeedleCallback } from 'generator-jhipster/generators/base-core/support';
 import { generateTestEntity } from 'generator-jhipster/generators/client/support';
 import { camelCase, kebabCase, startCase } from 'lodash-es';
-import { createNeedleCallback } from 'generator-jhipster/generators/base/support';
+
 import { DEFAULT_BACKEND_PATH } from '../constants.mjs';
-import command from './command.mjs';
+
 import { entityFiles, files } from './files.mjs';
 
 export default class extends BaseApplicationGenerator {
@@ -78,7 +80,7 @@ export default class extends BaseApplicationGenerator {
       this.addBackendStorages();
     }
 
-    await this.dependsOnJHipster('bootstrap-application', {
+    await this.dependsOnBootstrap('base-application', {
       generatorOptions: {
         defaultBaseName: () => {
           const appYoRc = `${this.blueprintConfig.appDir}/.yo-rc.json`;
@@ -88,14 +90,6 @@ export default class extends BaseApplicationGenerator {
       },
     });
     await this.dependsOnJHipster('init');
-  }
-
-  get [BaseApplicationGenerator.INITIALIZING]() {
-    return this.asInitializingTaskGroup({
-      async initializingTemplateTask() {
-        this.parseJHipsterCommand(command);
-      },
-    });
   }
 
   get [BaseApplicationGenerator.CONFIGURING]() {
