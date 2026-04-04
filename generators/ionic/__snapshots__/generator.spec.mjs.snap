@@ -1,5 +1,19 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`SubGenerator ionic of ionic JHipster blueprint > with backend > should copy entities config 1`] = `
+{
+  "../backend/.yo-rc.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/Customer.json": {
+    "stateCleared": "modified",
+  },
+  ".yo-rc.json": {
+    "stateCleared": "modified",
+  },
+}
+`;
+
 exports[`SubGenerator ionic of ionic JHipster blueprint > with jwt authentication > should succeed 1`] = `
 {
   ".editorconfig": {
