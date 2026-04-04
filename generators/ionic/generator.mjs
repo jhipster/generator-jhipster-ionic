@@ -348,7 +348,7 @@ ${chalk.green(`    npm start`)}
       let variableName;
       hasManyToMany = hasManyToMany || relationship.relationshipType === 'many-to-many';
       if (relationship.otherRelationship && relationship.relationshipType === 'one-to-one' && relationship.ownerSide === true) {
-        variableName = camelCase(relationship.otherEntityNameCapitalizedPlural);
+        variableName = camelCase(relationship.otherEntity.entityNameCapitalizedPlural);
         if (variableName === entityInstance) {
           variableName += 'Collection';
         }
@@ -356,30 +356,30 @@ ${chalk.green(`    npm start`)}
         const relationshipFieldNameIdCheck =
           dto === 'no' ? `!${relationshipFieldName} || !${relationshipFieldName}.id` : `!${relationshipFieldName}Id`;
 
-        query = `this.${relationship.otherEntityName}Service
-            .query({filter: '${relationship.otherEntityRelationshipName.toLowerCase()}-is-null'})
+        query = `this.${relationship.otherEntity.entityName}Service
+            .query({filter: '${relationship.otherEntity.entityRelationshipName.toLowerCase()}-is-null'})
             .subscribe(data => {
                 if (${relationshipFieldNameIdCheck}) {
                     this.${variableName} = data.body;
                 } else {
-                    this.${relationship.otherEntityName}Service
+                    this.${relationship.otherEntity.entityName}Service
                         .find(${relationshipFieldName}${dto === 'no' ? '.id' : 'Id'})
-                        .subscribe((subData: HttpResponse<${relationship.otherEntityAngularName}>) => {
+                        .subscribe((subData: HttpResponse<${relationship.otherEntity.entityAngularName}>) => {
                             this.${variableName} = [subData.body].concat(subData.body);
                         }, (error) => this.onError(error));
                 }
             }, (error) => this.onError(error));`;
       } else if (relationship.relationshipType !== 'one-to-many') {
-        variableName = camelCase(relationship.otherEntityNameCapitalizedPlural);
+        variableName = camelCase(relationship.otherEntity.entityNameCapitalizedPlural);
         if (variableName === entityInstance) {
           variableName += 'Collection';
         }
-        query = `this.${relationship.otherEntityName}Service.query()
+        query = `this.${relationship.otherEntity.entityName}Service.query()
             .subscribe(data => { this.${variableName} = data.body; }, (error) => this.onError(error));`;
       }
       if (variableName && !queries.includes(query)) {
         queries.push(query);
-        variables.push(`${variableName}: ${relationship.otherEntityAngularName}[];`);
+        variables.push(`${variableName}: ${relationship.otherEntity.entityAngularName}[];`);
       }
     });
     return {

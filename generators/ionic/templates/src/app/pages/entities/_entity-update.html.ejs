@@ -133,9 +133,9 @@ _%>
             <%_ for (idx in relationships) {
             const relationshipType = relationships[idx].relationshipType;
             const ownerSide = relationships[idx].ownerSide;
-            const otherEntityName = relationships[idx].otherEntityName;
-            const otherEntityNamePlural = relationships[idx].otherEntityNamePlural;
-            const otherEntityNameCapitalized = relationships[idx].otherEntityNameCapitalized;
+            const otherEntityName = relationships[idx].otherEntity.entityName;
+            const otherEntityNamePlural = relationships[idx].otherEntity.entityNamePlural;
+            const otherEntityNameCapitalized = relationships[idx].otherEntity.entityNameCapitalized;
             const relationshipName = relationships[idx].relationshipName;
             const relationshipNameHumanized = relationships[idx].relationshipNameHumanized;
             const relationshipFieldName = relationships[idx].relationshipFieldName;
