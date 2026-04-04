@@ -138,7 +138,7 @@ export class <%= entityAngularName %>UpdatePage implements OnInit {
         if (differentRelationships[key].some(rel => rel.relationshipType !== 'one-to-many')) {
             const uniqueRel = differentRelationships[key][0];
             if (uniqueRel.otherEntity.entityAngularName !== entityAngularName) { _%>
-        private <%= uniqueRel.otherEntity.entityName %>Service: <%= uniqueRel.otherEntity.entityAngularName %>Service,
+        private <%= uniqueRel.otherEntity.entityInstance %>Service: <%= uniqueRel.otherEntity.entityAngularName %>Service,
             <%_
             }
         }
