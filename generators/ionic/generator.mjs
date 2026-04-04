@@ -155,6 +155,7 @@ export default class extends BaseApplicationGenerator {
     return this.asLoadingTaskGroup({
       loading({ application }) {
         application.typescriptEslint = true;
+        application.clientFramework = 'ionic';
       },
     });
   }
@@ -202,14 +203,20 @@ export default class extends BaseApplicationGenerator {
           context: application,
         });
 
-        await this.copyTemplateAsync('../resources/base/{**,**/.*}', this.destinationPath());
+        await this.copyTemplateAsync('../resources/base/{**,**/.*}', this.destinationPath(), {
+          globOptions: { dot: true },
+        });
 
         if (application.authenticationTypeJwt) {
-          await this.copyTemplateAsync('../resources/jwt/{**,**/.*}', this.destinationPath());
+          await this.copyTemplateAsync('../resources/jwt/{**,**/.*}', this.destinationPath(), {
+          globOptions: { dot: true },
+        });
         }
 
         if (application.authenticationTypeOauth2) {
-          await this.copyTemplateAsync('../resources/oauth2/{**,**/.*}', this.destinationPath());
+          await this.copyTemplateAsync('../resources/oauth2/{**,**/.*}', this.destinationPath(), {
+          globOptions: { dot: true },
+        });
         }
       },
     });

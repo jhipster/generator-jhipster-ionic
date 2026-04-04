@@ -2,6 +2,9 @@
 
 exports[`SubGenerator app of ionic JHipster blueprint > run > should succeed 1`] = `
 {
+  "../ionic4j/.browserslistrc": {
+    "stateCleared": "modified",
+  },
   "../ionic4j/.editorconfig": {
     "stateCleared": "modified",
   },
@@ -487,6 +490,9 @@ exports[`SubGenerator app of ionic JHipster blueprint > run > should succeed 1`]
 
 exports[`SubGenerator app of ionic JHipster blueprint > with custom ionic path > should succeed 1`] = `
 {
+  "../ionic-app/.browserslistrc": {
+    "stateCleared": "modified",
+  },
   "../ionic-app/.editorconfig": {
     "stateCleared": "modified",
   },
