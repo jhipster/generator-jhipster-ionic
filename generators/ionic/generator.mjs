@@ -105,6 +105,16 @@ export default class extends BaseApplicationGenerator {
         } catch {
           // No entities.
         }
+        try {
+          // TODO workaround mem-fs-editor bug copying from memmory using glob pattern.
+          this.copyDestination(this.destinationPath(this.blueprintConfig.appDir, '.jhipster/**'), '', {
+            fromBasePath: this.destinationPath(this.blueprintConfig.appDir),
+            globOptions: { dot: true },
+            storeMatchOptions: { dot: true },
+          });
+        } catch {
+          // No entities.
+        }
 
         if (this.backendConfig?.entities && !this.jhipsterConfig.entities) {
           this.jhipsterConfig.entities = this.backendConfig.entities;

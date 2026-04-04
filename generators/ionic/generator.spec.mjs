@@ -63,12 +63,13 @@ describe('SubGenerator ionic of ionic JHipster blueprint', () => {
     });
   });
   describe('with backend', () => {
-    let rootTargetDirectory;
+    describe('copy entities config from disk', () => {
+      let rootTargetDirectory;
 
-    beforeAll(async function () {
-      await basicHelpers
-        .runJDL(
-          `
+      beforeAll(async function () {
+        await basicHelpers
+          .runJDL(
+            `
 application {
   config {
     baseName jhipster
@@ -79,36 +80,87 @@ entity Customer {
     original String
 }
 `,
-        )
-        .onTargetDirectory(function (targetDirectory) {
-          rootTargetDirectory = targetDirectory;
-          this.targetDirectory = path.join(targetDirectory, 'backend');
-          this.settings.tmpdir = false;
-        })
-        .withSkipWritingPriorities();
+          )
+          .onTargetDirectory(function (targetDirectory) {
+            rootTargetDirectory = targetDirectory;
+            this.targetDirectory = path.join(targetDirectory, 'backend');
+            this.settings.tmpdir = false;
+          })
+          .withSkipWritingPriorities();
 
-      await result
-        .createJHipster(SUB_GENERATOR_NAMESPACE, { memFs: undefined })
-        .onTargetDirectory(function (targetDirectory) {
-          this.targetDirectory = path.join(targetDirectory, '../frontend');
-          this.settings.tmpdir = false;
-        })
-        .withOptions({
-          appDir: '../backend',
-          ignoreNeedlesError: true,
-        })
-        .withJHipsterGenerators()
-        .withConfiguredBlueprint()
-        .withBlueprintConfig()
-        .withSkipWritingPriorities();
+        await result
+          .createJHipster(SUB_GENERATOR_NAMESPACE, { memFs: undefined })
+          .onTargetDirectory(function (targetDirectory) {
+            this.targetDirectory = path.join(targetDirectory, '../frontend');
+            this.settings.tmpdir = false;
+          })
+          .withOptions({
+            appDir: '../backend',
+            ignoreNeedlesError: true,
+          })
+          .withJHipsterGenerators()
+          .withConfiguredBlueprint()
+          .withBlueprintConfig()
+          .withSkipWritingPriorities();
+      });
+
+      afterAll(() => {
+        rmSync(rootTargetDirectory, { recursive: true });
+      });
+
+      it('should copy entities config', () => {
+        expect(result.getStateSnapshot()).toMatchSnapshot();
+      });
     });
 
-    afterAll(() => {
-      rmSync(rootTargetDirectory, { recursive: true });
-    });
+    describe('copy entities config from memory', () => {
+      let rootTargetDirectory;
 
-    it('should copy entities config', () => {
-      expect(result.getStateSnapshot()).toMatchSnapshot();
+      beforeAll(async function () {
+        await helpers
+          .runJDL(
+            `
+application {
+  config {
+    baseName jhipster
+  }
+  entities *
+}
+entity Customer {
+    original String
+}
+`,
+          )
+          .onTargetDirectory(function (targetDirectory) {
+            rootTargetDirectory = targetDirectory;
+            this.targetDirectory = path.join(targetDirectory, 'backend');
+            this.settings.tmpdir = false;
+          })
+          .withSkipWritingPriorities();
+
+        await result
+          .createJHipster(SUB_GENERATOR_NAMESPACE, { memFs: undefined })
+          .onTargetDirectory(function (targetDirectory) {
+            this.targetDirectory = path.join(targetDirectory, '../frontend');
+            this.settings.tmpdir = false;
+          })
+          .withOptions({
+            appDir: '../backend',
+            ignoreNeedlesError: true,
+          })
+          .withJHipsterGenerators()
+          .withConfiguredBlueprint()
+          .withBlueprintConfig()
+          .withSkipWritingPriorities();
+      });
+
+      afterAll(() => {
+        rmSync(rootTargetDirectory, { recursive: true });
+      });
+
+      it('should copy entities config', () => {
+        expect(result.getStateSnapshot()).toMatchSnapshot();
+      });
     });
   });
 });
