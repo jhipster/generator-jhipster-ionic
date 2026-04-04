@@ -231,12 +231,12 @@ export default class extends BaseApplicationGenerator {
                 },
               });
               // write client side files for angular
-              const { entityClassHumanized, entityAngularName, entityFileName, entityFolderName } = entity;
+              const { entityNameHumanized, entityAngularName, entityFileName, entityFolderName } = entity;
               this.editFile(
                 'src/app/pages/entities/entities.page.ts',
                 createNeedleCallback({
                   needle: 'jhipster-needle-add-entity-page',
-                  contentToAdd: `{ name: '${entityClassHumanized}', component: '${entityAngularName}Page', route: '${entityFileName}' },`,
+                  contentToAdd: `{ name: '${entityNameHumanized}', component: '${entityAngularName}Page', route: '${entityFileName}' },`,
                   contentToCheck: `route: '${entityFileName}'`,
                 }),
               );
