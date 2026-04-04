@@ -80,7 +80,7 @@ export default class extends BaseApplicationGenerator {
       this.addBackendStorages();
     }
 
-    await this.dependsOnBootstrap('base-application', {
+    await this.dependsOnBootstrap('client', {
       generatorOptions: {
         defaultBaseName: () => {
           const appYoRc = `${this.blueprintConfig.appDir}/.yo-rc.json`;
