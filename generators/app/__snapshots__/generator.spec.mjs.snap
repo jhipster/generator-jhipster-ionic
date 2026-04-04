@@ -487,451 +487,451 @@ exports[`SubGenerator app of ionic JHipster blueprint > run > should succeed 1`]
 
 exports[`SubGenerator app of ionic JHipster blueprint > with custom ionic path > should succeed 1`] = `
 {
-  "../ionic4j/.editorconfig": {
+  "../ionic-app/.editorconfig": {
     "stateCleared": "modified",
   },
-  "../ionic4j/.gitattributes": {
+  "../ionic-app/.gitattributes": {
     "stateCleared": "modified",
   },
-  "../ionic4j/.gitignore": {
+  "../ionic-app/.gitignore": {
     "stateCleared": "modified",
   },
-  "../ionic4j/.husky/pre-commit": {
+  "../ionic-app/.husky/pre-commit": {
     "stateCleared": "modified",
   },
-  "../ionic4j/.lintstagedrc.cjs": {
+  "../ionic-app/.lintstagedrc.cjs": {
     "stateCleared": "modified",
   },
-  "../ionic4j/.prettierignore": {
+  "../ionic-app/.prettierignore": {
     "stateCleared": "modified",
   },
-  "../ionic4j/.prettierrc.yml": {
+  "../ionic-app/.prettierrc.yml": {
     "stateCleared": "modified",
   },
-  "../ionic4j/.yo-rc.json": {
+  "../ionic-app/.yo-rc.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/README.md": {
+  "../ionic-app/README.md": {
     "stateCleared": "modified",
   },
-  "../ionic4j/angular.json": {
+  "../ionic-app/angular.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/capacitor.config.ts": {
+  "../ionic-app/capacitor.config.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/cypress.config.ts": {
+  "../ionic-app/cypress.config.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/cypress/e2e/app.cy.ts": {
+  "../ionic-app/cypress/e2e/app.cy.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/cypress/e2e/login.cy.ts": {
+  "../ionic-app/cypress/e2e/login.cy.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/cypress/fixtures/integration-test.png": {
+  "../ionic-app/cypress/fixtures/integration-test.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/cypress/plugins/index.ts": {
+  "../ionic-app/cypress/plugins/index.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/cypress/support/commands.ts": {
+  "../ionic-app/cypress/support/commands.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/cypress/support/config.ts": {
+  "../ionic-app/cypress/support/config.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/cypress/support/index.ts": {
+  "../ionic-app/cypress/support/index.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/cypress/support/pages/app.po.ts": {
+  "../ionic-app/cypress/support/pages/app.po.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/cypress/support/pages/entity.po.ts": {
+  "../ionic-app/cypress/support/pages/entity.po.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/cypress/support/pages/login.po.ts": {
+  "../ionic-app/cypress/support/pages/login.po.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/cypress/tsconfig.json": {
+  "../ionic-app/cypress/tsconfig.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/eslint.config.ts": {
+  "../ionic-app/eslint.config.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/ionic.config.json": {
+  "../ionic-app/ionic.config.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/package.json": {
+  "../ionic-app/package.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/app.component.html": {
+  "../ionic-app/src/app/app.component.html": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/app.component.scss": {
+  "../ionic-app/src/app/app.component.scss": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/app.component.spec.ts": {
+  "../ionic-app/src/app/app.component.spec.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/app.component.ts": {
+  "../ionic-app/src/app/app.component.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/app.config.ts": {
+  "../ionic-app/src/app/app.config.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/app.routes.ts": {
+  "../ionic-app/src/app/app.routes.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/interceptors/auth-expired.interceptor.ts": {
+  "../ionic-app/src/app/interceptors/auth-expired.interceptor.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/interceptors/auth.interceptor.ts": {
+  "../ionic-app/src/app/interceptors/auth.interceptor.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/account/account.page.html": {
+  "../ionic-app/src/app/pages/account/account.page.html": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/account/account.page.scss": {
+  "../ionic-app/src/app/pages/account/account.page.scss": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/account/account.page.spec.ts": {
+  "../ionic-app/src/app/pages/account/account.page.spec.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/account/account.page.ts": {
+  "../ionic-app/src/app/pages/account/account.page.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/entities/entities.module.ts": {
+  "../ionic-app/src/app/pages/entities/entities.module.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/entities/entities.page.html": {
+  "../ionic-app/src/app/pages/entities/entities.page.html": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/entities/entities.page.scss": {
+  "../ionic-app/src/app/pages/entities/entities.page.scss": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/entities/entities.page.spec.ts": {
+  "../ionic-app/src/app/pages/entities/entities.page.spec.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/entities/entities.page.ts": {
+  "../ionic-app/src/app/pages/entities/entities.page.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/home/home.page.html": {
+  "../ionic-app/src/app/pages/home/home.page.html": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/home/home.page.scss": {
+  "../ionic-app/src/app/pages/home/home.page.scss": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/home/home.page.spec.ts": {
+  "../ionic-app/src/app/pages/home/home.page.spec.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/home/home.page.ts": {
+  "../ionic-app/src/app/pages/home/home.page.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/login/login.page.html": {
+  "../ionic-app/src/app/pages/login/login.page.html": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/login/login.page.scss": {
+  "../ionic-app/src/app/pages/login/login.page.scss": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/login/login.page.spec.ts": {
+  "../ionic-app/src/app/pages/login/login.page.spec.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/login/login.page.ts": {
+  "../ionic-app/src/app/pages/login/login.page.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/signup/signup.page.html": {
+  "../ionic-app/src/app/pages/signup/signup.page.html": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/signup/signup.page.scss": {
+  "../ionic-app/src/app/pages/signup/signup.page.scss": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/signup/signup.page.spec.ts": {
+  "../ionic-app/src/app/pages/signup/signup.page.spec.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/signup/signup.page.ts": {
+  "../ionic-app/src/app/pages/signup/signup.page.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/tabs/tabs.page.html": {
+  "../ionic-app/src/app/pages/tabs/tabs.page.html": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/tabs/tabs.page.scss": {
+  "../ionic-app/src/app/pages/tabs/tabs.page.scss": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/tabs/tabs.page.spec.ts": {
+  "../ionic-app/src/app/pages/tabs/tabs.page.spec.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/tabs/tabs.page.ts": {
+  "../ionic-app/src/app/pages/tabs/tabs.page.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/welcome/welcome.page.html": {
+  "../ionic-app/src/app/pages/welcome/welcome.page.html": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/welcome/welcome.page.scss": {
+  "../ionic-app/src/app/pages/welcome/welcome.page.scss": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/welcome/welcome.page.spec.ts": {
+  "../ionic-app/src/app/pages/welcome/welcome.page.spec.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/pages/welcome/welcome.page.ts": {
+  "../ionic-app/src/app/pages/welcome/welcome.page.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/services/api/api.service.spec.ts": {
+  "../ionic-app/src/app/services/api/api.service.spec.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/services/api/api.service.ts": {
+  "../ionic-app/src/app/services/api/api.service.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/services/auth/account.service.spec.ts": {
+  "../ionic-app/src/app/services/auth/account.service.spec.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/services/auth/account.service.ts": {
+  "../ionic-app/src/app/services/auth/account.service.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/services/auth/auth-jwt.service.spec.ts": {
+  "../ionic-app/src/app/services/auth/auth-jwt.service.spec.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/services/auth/auth-jwt.service.ts": {
+  "../ionic-app/src/app/services/auth/auth-jwt.service.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/services/auth/user-route-access.service.spec.ts": {
+  "../ionic-app/src/app/services/auth/user-route-access.service.spec.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/services/auth/user-route-access.service.ts": {
+  "../ionic-app/src/app/services/auth/user-route-access.service.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/services/login/login.service.spec.ts": {
+  "../ionic-app/src/app/services/login/login.service.spec.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/services/login/login.service.ts": {
+  "../ionic-app/src/app/services/login/login.service.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/services/user/user.model.ts": {
+  "../ionic-app/src/app/services/user/user.model.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/services/user/user.service.spec.ts": {
+  "../ionic-app/src/app/services/user/user.service.spec.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/services/user/user.service.ts": {
+  "../ionic-app/src/app/services/user/user.service.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/services/utils/data-util.service.spec.ts": {
+  "../ionic-app/src/app/services/utils/data-util.service.spec.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/services/utils/data-util.service.ts": {
+  "../ionic-app/src/app/services/utils/data-util.service.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/shared/index.ts": {
+  "../ionic-app/src/app/shared/index.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/app/shared/util/request-util.ts": {
+  "../ionic-app/src/app/shared/util/request-util.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/ar.json": {
+  "../ionic-app/src/assets/i18n/ar.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/bs.json": {
+  "../ionic-app/src/assets/i18n/bs.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/by.json": {
+  "../ionic-app/src/assets/i18n/by.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/da.json": {
+  "../ionic-app/src/assets/i18n/da.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/de.json": {
+  "../ionic-app/src/assets/i18n/de.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/el.json": {
+  "../ionic-app/src/assets/i18n/el.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/en.json": {
+  "../ionic-app/src/assets/i18n/en.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/es-eu.json": {
+  "../ionic-app/src/assets/i18n/es-eu.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/es.json": {
+  "../ionic-app/src/assets/i18n/es.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/fil.json": {
+  "../ionic-app/src/assets/i18n/fil.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/fr.json": {
+  "../ionic-app/src/assets/i18n/fr.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/he.json": {
+  "../ionic-app/src/assets/i18n/he.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/it.json": {
+  "../ionic-app/src/assets/i18n/it.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/ja.json": {
+  "../ionic-app/src/assets/i18n/ja.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/nb.json": {
+  "../ionic-app/src/assets/i18n/nb.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/nl.json": {
+  "../ionic-app/src/assets/i18n/nl.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/pl.json": {
+  "../ionic-app/src/assets/i18n/pl.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/pt-PT.json": {
+  "../ionic-app/src/assets/i18n/pt-PT.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/pt-br.json": {
+  "../ionic-app/src/assets/i18n/pt-br.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/ru.json": {
+  "../ionic-app/src/assets/i18n/ru.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/sk.json": {
+  "../ionic-app/src/assets/i18n/sk.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/sl.json": {
+  "../ionic-app/src/assets/i18n/sl.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/sn.json": {
+  "../ionic-app/src/assets/i18n/sn.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/sv.json": {
+  "../ionic-app/src/assets/i18n/sv.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/th.json": {
+  "../ionic-app/src/assets/i18n/th.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/tr.json": {
+  "../ionic-app/src/assets/i18n/tr.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/i18n/ua.json": {
+  "../ionic-app/src/assets/i18n/ua.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/icon/favicon.png": {
+  "../ionic-app/src/assets/icon/favicon.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/appicon.png": {
+  "../ionic-app/src/assets/img/appicon.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/hipster.png": {
+  "../ionic-app/src/assets/img/hipster.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/hipster2x.png": {
+  "../ionic-app/src/assets/img/hipster2x.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/ionic-logo.png": {
+  "../ionic-app/src/assets/img/ionic-logo.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster-logo.png": {
+  "../ionic-app/src/assets/img/jhipster-logo.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster_family_member_0.svg": {
+  "../ionic-app/src/assets/img/jhipster_family_member_0.svg": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster_family_member_0_head-192.png": {
+  "../ionic-app/src/assets/img/jhipster_family_member_0_head-192.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster_family_member_0_head-256.png": {
+  "../ionic-app/src/assets/img/jhipster_family_member_0_head-256.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster_family_member_0_head-384.png": {
+  "../ionic-app/src/assets/img/jhipster_family_member_0_head-384.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster_family_member_0_head-512.png": {
+  "../ionic-app/src/assets/img/jhipster_family_member_0_head-512.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster_family_member_1.svg": {
+  "../ionic-app/src/assets/img/jhipster_family_member_1.svg": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster_family_member_1_head-192.png": {
+  "../ionic-app/src/assets/img/jhipster_family_member_1_head-192.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster_family_member_1_head-256.png": {
+  "../ionic-app/src/assets/img/jhipster_family_member_1_head-256.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster_family_member_1_head-384.png": {
+  "../ionic-app/src/assets/img/jhipster_family_member_1_head-384.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster_family_member_1_head-512.png": {
+  "../ionic-app/src/assets/img/jhipster_family_member_1_head-512.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster_family_member_2.svg": {
+  "../ionic-app/src/assets/img/jhipster_family_member_2.svg": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster_family_member_2_head-192.png": {
+  "../ionic-app/src/assets/img/jhipster_family_member_2_head-192.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster_family_member_2_head-256.png": {
+  "../ionic-app/src/assets/img/jhipster_family_member_2_head-256.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster_family_member_2_head-384.png": {
+  "../ionic-app/src/assets/img/jhipster_family_member_2_head-384.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster_family_member_2_head-512.png": {
+  "../ionic-app/src/assets/img/jhipster_family_member_2_head-512.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster_family_member_3.svg": {
+  "../ionic-app/src/assets/img/jhipster_family_member_3.svg": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster_family_member_3_head-192.png": {
+  "../ionic-app/src/assets/img/jhipster_family_member_3_head-192.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster_family_member_3_head-256.png": {
+  "../ionic-app/src/assets/img/jhipster_family_member_3_head-256.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster_family_member_3_head-384.png": {
+  "../ionic-app/src/assets/img/jhipster_family_member_3_head-384.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/jhipster_family_member_3_head-512.png": {
+  "../ionic-app/src/assets/img/jhipster_family_member_3_head-512.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/img/logo.png": {
+  "../ionic-app/src/assets/img/logo.png": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/assets/shapes.svg": {
+  "../ionic-app/src/assets/shapes.svg": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/environments/environment.prod.ts": {
+  "../ionic-app/src/environments/environment.prod.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/environments/environment.ts": {
+  "../ionic-app/src/environments/environment.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/global.scss": {
+  "../ionic-app/src/global.scss": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/index.html": {
+  "../ionic-app/src/index.html": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/main.ts": {
+  "../ionic-app/src/main.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/model/account.model.ts": {
+  "../ionic-app/src/model/account.model.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/model/base-entity.ts": {
+  "../ionic-app/src/model/base-entity.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/polyfills.ts": {
+  "../ionic-app/src/polyfills.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/test-setup.ts": {
+  "../ionic-app/src/test-setup.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/theme/variables.scss": {
+  "../ionic-app/src/theme/variables.scss": {
     "stateCleared": "modified",
   },
-  "../ionic4j/src/zone-flags.ts": {
+  "../ionic-app/src/zone-flags.ts": {
     "stateCleared": "modified",
   },
-  "../ionic4j/tsconfig.app.json": {
+  "../ionic-app/tsconfig.app.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/tsconfig.json": {
+  "../ionic-app/tsconfig.json": {
     "stateCleared": "modified",
   },
-  "../ionic4j/tsconfig.spec.json": {
+  "../ionic-app/tsconfig.spec.json": {
     "stateCleared": "modified",
   },
   ".editorconfig": {

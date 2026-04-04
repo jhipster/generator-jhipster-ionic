@@ -34,15 +34,6 @@ export default class extends BaseApplicationGenerator {
     if (this.options.standalone) {
       this.ionicConfig.appDir = false;
     }
-    if (this.options.appDir !== undefined) {
-      this.ionicConfig.appDir = this.options.appDir;
-    }
-    if (this.options.baseName !== undefined) {
-      this.jhipsterConfig.baseName = this.options.baseName;
-    }
-    if (this.options.authenticationType !== undefined) {
-      this.jhipsterConfig.authenticationType = this.options.authenticationType;
-    }
     if (this.options.defaults || this.options.force) {
       this.ionicStorage.defaults({ appDir: DEFAULT_BACKEND_PATH });
     }
