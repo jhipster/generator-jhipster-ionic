@@ -54,7 +54,7 @@ Object.keys(differentRelationships).forEach(key => {
 import { User } from '#app/services/user/user.model';
 import { UserService } from '#app/services/user/user.service';
     <%_ } else if (uniqueRel.otherEntity.entityAngularName !== entityAngularName) { _%>
-import { <%= uniqueRel.otherEntity.entityAngularName %>, <%= uniqueRel.otherEntity.entityAngularName%>Service } from '../<%= uniqueRel.otherEntity.entityModulePathotherEntityModulePath %>';
+import { <%= uniqueRel.otherEntity.entityAngularName %>, <%= uniqueRel.otherEntity.entityAngularName%>Service } from '../<%= uniqueRel.otherEntity.entityFolderName %>';
     <%_}
     }
 }); _%>
