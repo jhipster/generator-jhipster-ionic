@@ -47,26 +47,18 @@ export const entityFiles = {
       templates: [
         {
           file: 'entities/_entity.html',
-          method: 'processHtml',
-          template: true,
           renameTo: ctx => `entities/${ctx.entityFolderName}/${ctx.entityFileName}.html`,
         },
         {
           file: 'entities/_entity.model.ts',
-          method: 'processHtml',
-          template: true,
           renameTo: ctx => `entities/${ctx.entityFolderName}/${ctx.entityFileName}.model.ts`,
         },
         {
           file: 'entities/_entity.module.ts',
-          method: 'processHtml',
-          template: true,
           renameTo: ctx => `entities/${ctx.entityFolderName}/${ctx.entityFileName}.module.ts`,
         },
         {
           file: 'entities/_entity.service.ts',
-          method: 'processHtml',
-          template: true,
           renameTo: ctx => `entities/${ctx.entityFolderName}/${ctx.entityFileName}.service.ts`,
         },
         {

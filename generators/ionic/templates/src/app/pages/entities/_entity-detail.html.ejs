@@ -22,7 +22,7 @@
         <ion-buttons slot="start">
             <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title><%= entityClassHumanized %></ion-title>
+        <ion-title><%= entityNameHumanized %></ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -71,10 +71,10 @@
         const relationshipFieldNamePlural = relationships[idx].relationshipFieldNamePlural;
         const relationshipNameHumanized = relationships[idx].relationshipNameHumanized;
         const otherEntity = relationships[idx].otherEntity;
-        const otherEntityName = relationships[idx].otherEntityName;
-        const otherEntityStateName = relationships[idx].otherEntityStateName;
+        const otherEntityName = relationships[idx].otherEntity.entityInstance;
+        const otherEntityStateName = relationships[idx].otherEntity.entityUrl;
         const otherEntityField = relationships[idx].otherEntityField;
-        const otherEntityFieldCapitalized = relationships[idx].otherEntityFieldCapitalized;
+        const otherEntityFieldCapitalized = relationships[idx].relatedField.fieldNameCapitalized;
         if (relationshipType === 'many-to-one'
         || (relationshipType === 'one-to-one' && ownerSide === true)
         || (relationshipType === 'many-to-many' && ownerSide === true)) { _%>

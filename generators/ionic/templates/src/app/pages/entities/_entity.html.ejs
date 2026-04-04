@@ -22,7 +22,7 @@
         <ion-buttons slot="start">
             <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title><%= entityClassPluralHumanized %></ion-title>
+        <ion-title><%= entityNamePluralHumanized %></ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -79,7 +79,7 @@
 @if (!<%=entityInstancePlural %>?.length) {
     <ion-item>
         <ion-label>
-            No <%= entityClassPluralHumanized %> found.
+            No <%= entityNamePluralHumanized %> found.
         </ion-label>
     </ion-item>
 }

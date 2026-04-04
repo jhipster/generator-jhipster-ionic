@@ -1,5 +1,33 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`SubGenerator ionic of ionic JHipster blueprint > with backend > copy entities config from disk > should copy entities config 1`] = `
+{
+  "../backend/.yo-rc.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/Customer.json": {
+    "stateCleared": "modified",
+  },
+  ".yo-rc.json": {
+    "stateCleared": "modified",
+  },
+}
+`;
+
+exports[`SubGenerator ionic of ionic JHipster blueprint > with backend > copy entities config from memory > should copy entities config 1`] = `
+{
+  "../backend/.yo-rc.json": {
+    "stateCleared": "modified",
+  },
+  ".jhipster/Customer.json": {
+    "stateCleared": "modified",
+  },
+  ".yo-rc.json": {
+    "stateCleared": "modified",
+  },
+}
+`;
+
 exports[`SubGenerator ionic of ionic JHipster blueprint > with jwt authentication > should succeed 1`] = `
 {
   ".browserslistrc": {
@@ -74,7 +102,7 @@ exports[`SubGenerator ionic of ionic JHipster blueprint > with jwt authenticatio
   "cypress/tsconfig.json": {
     "stateCleared": "modified",
   },
-  "eslint.config.mjs": {
+  "eslint.config.ts": {
     "stateCleared": "modified",
   },
   "ionic.config.json": {
@@ -532,7 +560,7 @@ exports[`SubGenerator ionic of ionic JHipster blueprint > with oauth2 authentica
   "cypress/tsconfig.json": {
     "stateCleared": "modified",
   },
-  "eslint.config.mjs": {
+  "eslint.config.ts": {
     "stateCleared": "modified",
   },
   "ionic.config.json": {

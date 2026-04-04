@@ -1,11 +1,13 @@
 import { relative } from 'node:path';
+
 import chalk from 'chalk';
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
+import { createNeedleCallback } from 'generator-jhipster/generators/base-core/support';
 import { generateTestEntity } from 'generator-jhipster/generators/client/support';
 import { camelCase, kebabCase, startCase } from 'lodash-es';
-import { createNeedleCallback } from 'generator-jhipster/generators/base/support';
+
 import { DEFAULT_BACKEND_PATH } from '../constants.mjs';
-import command from './command.mjs';
+
 import { entityFiles, files } from './files.mjs';
 
 export default class extends BaseApplicationGenerator {
@@ -31,15 +33,6 @@ export default class extends BaseApplicationGenerator {
 
     if (this.options.standalone) {
       this.ionicConfig.appDir = false;
-    }
-    if (this.options.appDir !== undefined) {
-      this.ionicConfig.appDir = this.options.appDir;
-    }
-    if (this.options.baseName !== undefined) {
-      this.jhipsterConfig.baseName = this.options.baseName;
-    }
-    if (this.options.authenticationType !== undefined) {
-      this.jhipsterConfig.authenticationType = this.options.authenticationType;
     }
     if (this.options.defaults || this.options.force) {
       this.ionicStorage.defaults({ appDir: DEFAULT_BACKEND_PATH });
@@ -78,7 +71,7 @@ export default class extends BaseApplicationGenerator {
       this.addBackendStorages();
     }
 
-    await this.dependsOnJHipster('bootstrap-application', {
+    await this.dependsOnBootstrap('client', {
       generatorOptions: {
         defaultBaseName: () => {
           const appYoRc = `${this.blueprintConfig.appDir}/.yo-rc.json`;
@@ -90,21 +83,26 @@ export default class extends BaseApplicationGenerator {
     await this.dependsOnJHipster('init');
   }
 
-  get [BaseApplicationGenerator.INITIALIZING]() {
-    return this.asInitializingTaskGroup({
-      async initializingTemplateTask() {
-        this.parseJHipsterCommand(command);
-      },
-    });
-  }
-
   get [BaseApplicationGenerator.CONFIGURING]() {
     return this.asConfiguringTaskGroup({
       loadConfigFromBackend() {
         if (!this.blueprintConfig.appDir) return;
 
         try {
-          this.copyDestination('.jhipster/**', '', { fromBasePath: this.destinationPath(this.blueprintConfig.appDir) });
+          this.copyDestination('.jhipster/**', '', {
+            fromBasePath: this.destinationPath(this.blueprintConfig.appDir),
+            globOptions: { dot: true },
+          });
+        } catch {
+          // No entities.
+        }
+        try {
+          // TODO workaround mem-fs-editor bug copying from memmory using glob pattern.
+          this.copyDestination(this.destinationPath(this.blueprintConfig.appDir, '.jhipster/**'), '', {
+            fromBasePath: this.destinationPath(this.blueprintConfig.appDir),
+            globOptions: { dot: true },
+            storeMatchOptions: { dot: true },
+          });
         } catch {
           // No entities.
         }
@@ -157,6 +155,7 @@ export default class extends BaseApplicationGenerator {
     return this.asLoadingTaskGroup({
       loading({ application }) {
         application.typescriptEslint = true;
+        application.clientFramework = 'ionic';
       },
     });
   }
@@ -204,14 +203,20 @@ export default class extends BaseApplicationGenerator {
           context: application,
         });
 
-        await this.copyTemplateAsync('../resources/base/{**,**/.*}', this.destinationPath());
+        await this.copyTemplateAsync('../resources/base/{**,**/.*}', this.destinationPath(), {
+          globOptions: { dot: true },
+        });
 
         if (application.authenticationTypeJwt) {
-          await this.copyTemplateAsync('../resources/jwt/{**,**/.*}', this.destinationPath());
+          await this.copyTemplateAsync('../resources/jwt/{**,**/.*}', this.destinationPath(), {
+          globOptions: { dot: true },
+        });
         }
 
         if (application.authenticationTypeOauth2) {
-          await this.copyTemplateAsync('../resources/oauth2/{**,**/.*}', this.destinationPath());
+          await this.copyTemplateAsync('../resources/oauth2/{**,**/.*}', this.destinationPath(), {
+          globOptions: { dot: true },
+        });
         }
       },
     });
@@ -233,12 +238,12 @@ export default class extends BaseApplicationGenerator {
                 },
               });
               // write client side files for angular
-              const { entityClassHumanized, entityAngularName, entityFileName, entityFolderName } = entity;
+              const { entityNameHumanized, entityAngularName, entityFileName, entityFolderName } = entity;
               this.editFile(
                 'src/app/pages/entities/entities.page.ts',
                 createNeedleCallback({
                   needle: 'jhipster-needle-add-entity-page',
-                  contentToAdd: `{ name: '${entityClassHumanized}', component: '${entityAngularName}Page', route: '${entityFileName}' },`,
+                  contentToAdd: `{ name: '${entityNameHumanized}', component: '${entityAngularName}Page', route: '${entityFileName}' },`,
                   contentToCheck: `route: '${entityFileName}'`,
                 }),
               );
@@ -350,7 +355,7 @@ ${chalk.green(`    npm start`)}
       let variableName;
       hasManyToMany = hasManyToMany || relationship.relationshipType === 'many-to-many';
       if (relationship.otherRelationship && relationship.relationshipType === 'one-to-one' && relationship.ownerSide === true) {
-        variableName = camelCase(relationship.otherEntityNameCapitalizedPlural);
+        variableName = camelCase(relationship.otherEntity.entityInstancePlural);
         if (variableName === entityInstance) {
           variableName += 'Collection';
         }
@@ -358,30 +363,30 @@ ${chalk.green(`    npm start`)}
         const relationshipFieldNameIdCheck =
           dto === 'no' ? `!${relationshipFieldName} || !${relationshipFieldName}.id` : `!${relationshipFieldName}Id`;
 
-        query = `this.${relationship.otherEntityName}Service
-            .query({filter: '${relationship.otherEntityRelationshipName.toLowerCase()}-is-null'})
+        query = `this.${relationship.otherEntity.entityInstance}Service
+            .query({filter: '${relationship.otherEntity.entityRelationshipName.toLowerCase()}-is-null'})
             .subscribe(data => {
                 if (${relationshipFieldNameIdCheck}) {
                     this.${variableName} = data.body;
                 } else {
-                    this.${relationship.otherEntityName}Service
+                    this.${relationship.otherEntity.entityInstance}Service
                         .find(${relationshipFieldName}${dto === 'no' ? '.id' : 'Id'})
-                        .subscribe((subData: HttpResponse<${relationship.otherEntityAngularName}>) => {
+                        .subscribe((subData: HttpResponse<${relationship.otherEntity.entityAngularName}>) => {
                             this.${variableName} = [subData.body].concat(subData.body);
                         }, (error) => this.onError(error));
                 }
             }, (error) => this.onError(error));`;
       } else if (relationship.relationshipType !== 'one-to-many') {
-        variableName = camelCase(relationship.otherEntityNameCapitalizedPlural);
+        variableName = camelCase(relationship.otherEntity.entityInstancePlural);
         if (variableName === entityInstance) {
           variableName += 'Collection';
         }
-        query = `this.${relationship.otherEntityName}Service.query()
+        query = `this.${relationship.otherEntity.entityInstance}Service.query()
             .subscribe(data => { this.${variableName} = data.body; }, (error) => this.onError(error));`;
       }
       if (variableName && !queries.includes(query)) {
         queries.push(query);
-        variables.push(`${variableName}: ${relationship.otherEntityAngularName}[];`);
+        variables.push(`${variableName}: ${relationship.otherEntity.entityAngularName}[];`);
       }
     });
     return {

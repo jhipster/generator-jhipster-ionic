@@ -18,11 +18,11 @@
 -%>
 import { EntityComponentsPage, EntityDetailPage, EntityUpdatePage } from '../../entity.po';
 
-export class <%= entityClass %>ComponentsPage extends EntityComponentsPage {
+export class <%= entityTsName %>ComponentsPage extends EntityComponentsPage {
   pageSelector = 'page-<%= entityFileName %>';
 }
 
-export class <%= entityClass %>UpdatePage extends EntityUpdatePage{
+export class <%= entityTsName %>UpdatePage extends EntityUpdatePage{
   pageSelector = 'page-<%= entityFileName %>-update';
 <%_ for (field of fields.filter(field => !field.id)) { _%>
 
@@ -52,7 +52,7 @@ export class <%= entityClass %>UpdatePage extends EntityUpdatePage{
 <%_ } _%>
 }
 
-export class <%= entityClass %>DetailPage extends EntityDetailPage {
+export class <%= entityTsName %>DetailPage extends EntityDetailPage {
   pageSelector = 'page-<%= entityFileName %>-detail';
 <%_ for (field of fields.filter(field => !field.id)) { _%>
 

@@ -42,7 +42,7 @@ import { <%= entityAngularName %>Service } from './<%= entityFileName %>.service
 let hasRelationshipQuery = false;
 Object.keys(differentRelationships).forEach(key => {
     const hasAnyRelationshipQuery = differentRelationships[key].some(rel =>
-        (rel.relationshipType === 'one-to-one' && rel.ownerSide === true && rel.otherEntityName !== 'user')
+        (rel.relationshipType === 'one-to-one' && rel.ownerSide === true && !rel.otherEntity.builtInUser)
         || rel.relationshipType !== 'one-to-many'
     );
     if (hasAnyRelationshipQuery) {
@@ -50,11 +50,11 @@ Object.keys(differentRelationships).forEach(key => {
     }
     if (differentRelationships[key].some(rel => rel.relationshipType !== 'one-to-many')) {
         const uniqueRel = differentRelationships[key][0];
-        if (uniqueRel.otherEntityAngularName === 'User') { _%>
+        if (uniqueRel.otherEntity.builtInUser) { _%>
 import { User } from '#app/services/user/user.model';
 import { UserService } from '#app/services/user/user.service';
-    <%_ } else if (uniqueRel.otherEntityAngularName !== entityAngularName) { _%>
-import { <%= uniqueRel.otherEntityAngularName %>, <%= uniqueRel.otherEntityAngularName%>Service } from '../<%= uniqueRel.otherEntityModulePath %>';
+    <%_ } else if (uniqueRel.otherEntity.entityAngularName !== entityAngularName) { _%>
+import { <%= uniqueRel.otherEntity.entityAngularName %>, <%= uniqueRel.otherEntity.entityAngularName%>Service } from '../<%= uniqueRel.otherEntity.entityFolderName %>';
     <%_}
     }
 }); _%>
@@ -137,8 +137,8 @@ export class <%= entityAngularName %>UpdatePage implements OnInit {
 <%_ Object.keys(differentRelationships).forEach(key => {
         if (differentRelationships[key].some(rel => rel.relationshipType !== 'one-to-many')) {
             const uniqueRel = differentRelationships[key][0];
-            if (uniqueRel.otherEntityAngularName !== entityAngularName) { _%>
-        private <%= uniqueRel.otherEntityName %>Service: <%= uniqueRel.otherEntityAngularName %>Service,
+            if (uniqueRel.otherEntity.entityAngularName !== entityAngularName) { _%>
+        private <%= uniqueRel.otherEntity.entityInstance %>Service: <%= uniqueRel.otherEntity.entityAngularName %>Service,
             <%_
             }
         }
@@ -331,14 +331,14 @@ _%>
 <%_
   const entitiesSeen = [];
   for (idx in relationships) {
-    const otherEntityNameCapitalized = relationships[idx].otherEntityNameCapitalized;
+    const otherEntityNameCapitalized = relationships[idx].otherEntity.entityNameCapitalized;
     if(relationships[idx].relationshipType !== 'one-to-many' && !entitiesSeen.includes(otherEntityNameCapitalized)) {
 _%>
-    compare<%- otherEntityNameCapitalized -%>(first: <%- relationships[idx].otherEntityAngularName -%>, second: <%- relationships[idx].otherEntityAngularName -%>): boolean {
+    compare<%- otherEntityNameCapitalized -%>(first: <%- relationships[idx].otherEntity.entityAngularName -%>, second: <%- relationships[idx].otherEntity.entityAngularName -%>): boolean {
         return first && first.id && second && second.id ? first.id === second.id : first === second;
     }
 
-    track<%- otherEntityNameCapitalized -%>ById(index: number, item: <%- relationships[idx].otherEntityAngularName -%>) {
+    track<%- otherEntityNameCapitalized -%>ById(index: number, item: <%- relationships[idx].otherEntity.entityAngularName -%>) {
         return item.id;
     }
 <%_
