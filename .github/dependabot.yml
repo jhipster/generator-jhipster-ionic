@@ -22,15 +22,11 @@ updates:
           - 'jest'
           - 'jest-preset-angular'
           - '@types/jest'
-      angular-eslint:
-        patterns:
           - '@angular-eslint/*'
+          - '@ngx-translate/*'
       capacitor:
         patterns:
           - '@capacitor/*'
-      ngx-translate:
-        patterns:
-          - '@ngx-translate/*'
       typescript-eslint:
         patterns:
           - '@typescript-eslint/*'
