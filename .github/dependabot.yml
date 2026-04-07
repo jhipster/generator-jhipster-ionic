@@ -24,6 +24,8 @@ updates:
           - '@types/jest'
           - '@angular-eslint/*'
           - '@ngx-translate/*'
+          - 'vitest'
+          - '@vitest/*'
       capacitor:
         patterns:
           - '@capacitor/*'
