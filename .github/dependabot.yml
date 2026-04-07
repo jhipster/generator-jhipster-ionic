@@ -8,6 +8,7 @@ updates:
 
   - package-ecosystem: 'npm'
     directory: '/generators/ionic/resources/base'
+    open-pull-requests-limit: 10
     schedule:
       interval: 'weekly'
     groups:
