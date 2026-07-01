@@ -61,7 +61,7 @@
     "@cypress/schematic": "^5.0.0",
     "@ionic/angular-toolkit": "^12.1.1",
     "@ionic/cli": "^7.2.0",
-    "@types/node": "^25.0.6",
+    "@types/node": "^26.0.1",
     "@vitest/coverage-v8": "~3.2.0",
     "angular-eslint": "20.0.0",
     "cypress": "15.18.0",
