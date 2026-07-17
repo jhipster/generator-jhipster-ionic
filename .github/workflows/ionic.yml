@@ -62,7 +62,7 @@ jobs:
       - uses: jhipster/actions/setup-runner@v1
         with:
           node-version: 24
-          java-version: 17
+          java-version: 21
           maven-cache: true
           gradle-cache: true
           binary-dir: ${{ github.workspace }}/generator-jhipster-ionic/cli/

@@ -1,31 +1,48 @@
 import { asCommand } from 'generator-jhipster';
 
 export default asCommand({
-  options: {
+  configs: {
     skipCommitHook: {
       desc: 'Skip adding husky commit hooks',
-      type: Boolean,
+      cli: {
+        type: Boolean,
+      },
       scope: 'storage',
     },
     defaults: {
       desc: 'Use default options',
-      type: String,
+      cli: {
+        type: Boolean,
+      },
+      scope: 'none',
     },
     authenticationType: {
       desc: 'Authentication type',
-      type: String,
+      cli: {
+        type: String,
+      },
+      scope: 'storage',
     },
     baseName: {
       desc: 'Base name',
-      type: String,
+      cli: {
+        type: String,
+      },
+      scope: 'storage',
     },
     appDir: {
       desc: 'Directory for JHipster application',
-      type: String,
+      cli: {
+        type: String,
+      },
+      scope: 'blueprint',
     },
     standalone: {
       desc: 'Skip backend',
-      type: Boolean,
+      cli: {
+        type: Boolean,
+      },
+      scope: 'none',
     },
   },
 });
