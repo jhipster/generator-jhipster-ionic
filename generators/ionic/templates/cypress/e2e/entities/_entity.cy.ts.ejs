@@ -18,22 +18,22 @@
 -%>
 import { USER_USERNAME, USER_PASSWORD } from '../../../support/config';
 import {
-  <%= entityClass %>ComponentsPage,
-  <%= entityClass %>DetailPage,
-  <%= entityClass %>UpdatePage
+  <%= entityTsName %>ComponentsPage,
+  <%= entityTsName %>DetailPage,
+  <%= entityTsName %>UpdatePage
 } from '../../../support/pages/entities/<%= entityFileName %>/<%= entityFileName %>.po';
 import <%= entityInstance %>Sample from './<%= entityFileName %>.json';
 
-describe('<%= entityClass %> entity', () => {
-  const COMPONENT_TITLE = '<%= entityClassPluralHumanized %>';
-  const SUBCOMPONENT_TITLE = '<%= entityClassHumanized %>';
+describe('<%= entityTsName %> entity', () => {
+  const COMPONENT_TITLE = '<%= entityNamePluralHumanized %>';
+  const SUBCOMPONENT_TITLE = '<%= entityNameHumanized %>';
 
   const <%= entityInstance %>PageUrl = '/tabs/entities/<%= entityFileName %>';
   const <%= entityInstance %>ApiUrl = '/<%= entityApi %>api/<%= entityApiUrl %>';
 
-  const <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
-  const <%= entityInstance %>UpdatePage = new <%= entityClass %>UpdatePage();
-  const <%= entityInstance %>DetailPage = new <%= entityClass %>DetailPage();
+  const <%= entityInstance %>ComponentsPage = new <%= entityTsName %>ComponentsPage();
+  const <%= entityInstance %>UpdatePage = new <%= entityTsName %>UpdatePage();
+  const <%= entityInstance %>DetailPage = new <%= entityTsName %>DetailPage();
 
   let <%= entityInstance %>: any;
 
@@ -43,7 +43,7 @@ describe('<%= entityClass %> entity', () => {
   });
 
   describe('navigation test', () => {
-    it('should load <%= entityClassPlural %> page using menu and go back', () => {
+    it('should load <%= entityNamePlural %> page using menu and go back', () => {
       cy.visit('/tabs/home');
       // go to entity component page
       cy.get('ion-tab-button[tab="entities"]').click();
@@ -56,7 +56,7 @@ describe('<%= entityClass %> entity', () => {
       cy.url().should('include', '/tabs/entities');
     });
 
-    it('should load create <%= entityClass %> page and go back', () => {
+    it('should load create <%= entityTsName %> page and go back', () => {
       cy.visit(<%= entityInstance %>PageUrl);
       <%= entityInstance %>ComponentsPage.clickOnCreateButton();
 
@@ -101,7 +101,7 @@ describe('<%= entityClass %> entity', () => {
       }
     });
 
-    it('should open <%= entityClass %> view, open <%= entityClass %> edit and go back', () => {
+    it('should open <%= entityTsName %> view, open <%= entityTsName %> edit and go back', () => {
       cy.visit(<%= entityInstance %>PageUrl);
       <%= entityInstance %>ComponentsPage.getPageTitle().should('be.visible');
 
@@ -121,7 +121,7 @@ describe('<%= entityClass %> entity', () => {
       cy.url().should('include', <%= entityInstance %>PageUrl);
     });
 
-    it('should open <%= entityClass %> view, open <%= entityClass %> edit and save', () => {
+    it('should open <%= entityTsName %> view, open <%= entityTsName %> edit and save', () => {
       cy.visit(<%= entityInstance %>PageUrl);
       <%= entityInstance %>ComponentsPage.getPageTitle().should('be.visible');
 
@@ -135,7 +135,7 @@ describe('<%= entityClass %> entity', () => {
       cy.url().should('include', <%= entityInstance %>PageUrl);
     });
 
-    it('should delete <%= entityClass %>', () => {
+    it('should delete <%= entityTsName %>', () => {
       cy.visit(<%= entityInstance %>PageUrl);
       <%= entityInstance %>ComponentsPage.getPageTitle().should('be.visible');
 
@@ -170,7 +170,7 @@ describe('<%= entityClass %> entity', () => {
       }
     });
 
-    it('should create <%= entityClass %>', () => {
+    it('should create <%= entityTsName %>', () => {
       cy.visit(<%= entityInstance %>PageUrl + '/new');
 
       <%= entityInstance %>UpdatePage.getPageTitle().should('have.text', SUBCOMPONENT_TITLE);
