@@ -1,2 +1,9 @@
 README.md skip
 .github/workflows/samples.yml skip
+generators/app/command.mjs skip
+generators/ionic/generator.spec.mjs skip
+generators/ionic/command.mjs skip
+generators/spring-boot/generator.mjs skip
+generators/app/generator.mjs skip
+generators/app/generator.spec.mjs skip
+generators/ionic/generator.mjs skip

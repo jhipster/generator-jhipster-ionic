@@ -26,11 +26,11 @@
     "generators",
     "!**/__*",
     "!**/*.snap",
-    "!**/*.spec.?(c|m)js"
+    "!**/*.spec.?(c|m)?(j|t)s"
   ],
   "scripts": {
     "ejslint": "ejslint generators/**/*.ejs",
-    "lint": "eslint .",
+    "lint": "eslint",
     "lint-fix": "npm run ejslint && npm run lint -- --fix",
     "prettier-check": "prettier --check \"{,**/}*.{md,json,yml,html,cjs,mjs,js,cts,mts,ts,tsx,css,scss,vue,java}\"",
     "prettier-format": "prettier --write \"{,**/}*.{md,json,yml,html,cjs,mjs,js,cts,mts,ts,tsx,css,scss,vue,java}\"",
@@ -46,16 +46,16 @@
   },
   "devDependencies": {
     "ejs-lint": "2.0.1",
-    "eslint": "9.39.2",
+    "eslint": "10.6.0",
     "eslint-config-prettier": "10.1.8",
-    "eslint-plugin-prettier": "5.5.5",
-    "globals": "17.4.0",
+    "eslint-plugin-prettier": "5.5.6",
+    "globals": "17.7.0",
     "husky": "8.0.3",
-    "jiti": "2.6.1",
+    "jiti": "2.7.0",
     "lint-staged": "15.2.9",
-    "prettier": "3.8.1",
+    "prettier": "3.9.5",
     "prettier-plugin-packagejson": "3.0.2",
-    "vitest": "4.1.0",
+    "vitest": "4.1.10",
     "yeoman-test": ">=10"
   },
   "engines": {

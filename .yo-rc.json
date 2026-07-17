@@ -3,6 +3,7 @@
     "additionalSubGenerators": "ionic",
     "baseName": "ionic",
     "cli": true,
+    "creationTimestamp": 1784316589800,
     "defaultCommand": "generate-blueprint",
     "entities": [],
     "generators": {
@@ -36,7 +37,8 @@
       }
     },
     "githubWorkflows": true,
-    "jhipsterVersion": "9.0.0",
+    "javascriptBlueprint": true,
+    "jhipsterVersion": "9.2.0",
     "js": false,
     "localBlueprint": false,
     "packageJsonType": "module",

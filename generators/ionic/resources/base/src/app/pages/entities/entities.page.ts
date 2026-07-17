@@ -11,7 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class EntitiesPage {
   entities: any[] = [
-    /* jhipster-needle-add-entity-page - JHipster will add entity pages here */
+    // jhipster-needle-add-entity-page - JHipster will add entity pages here
   ];
 
   constructor(public navController: NavController) {}
