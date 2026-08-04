@@ -105,7 +105,6 @@ Before you submit your pull request consider the following guidelines:
 
 - In GitHub, send a pull request to `jhipster/generator-jhipster-ionic:main`.
 - If we suggest changes then
-
   - Make the required updates.
   - Re-run the JHipster tests on your sample generated project to ensure tests are still passing.
   - Rebase your branch and force push to your GitHub repository (this will update your Pull Request):

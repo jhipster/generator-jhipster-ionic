@@ -55,17 +55,17 @@ relationships.forEach(relationship => {
     const relationshipType = relationship.relationshipType;
     if (relationshipType === 'one-to-many' || relationshipType === 'many-to-many') {
         toBeImported = true;
-        fieldType = `${relationship.otherEntityAngularName}[]`;
+        fieldType = `${relationship.otherEntity.entityAngularName}[]`;
         fieldName = relationship.relationshipFieldNamePlural;
     } else if (dto === 'no') {
         toBeImported = true;
-        fieldType = `${relationship.otherEntityAngularName}`;
+        fieldType = `${relationship.otherEntity.entityAngularName}`;
         fieldName = relationship.relationshipFieldName;
     } else {
         const relationshipFieldName = relationship.relationshipFieldName;
         const relationshipFieldNamePlural = relationship.relationshipFieldNamePlural;
         const relationshipType = relationship.relationshipType;
-        const otherEntityFieldCapitalized = relationship.otherEntityFieldCapitalized;
+        const otherEntityFieldCapitalized = relationship.relatedField.fieldNameCapitalized;
         const ownerSide = relationship.ownerSide;
 
         if (relationshipType === 'many-to-many' && ownerSide === true) {
@@ -90,13 +90,13 @@ relationships.forEach(relationship => {
     }
 
     if (toBeImported) {
-        const otherEntityAngularName = relationship.otherEntityAngularName;
+        const otherEntityAngularName = relationship.otherEntity.entityAngularName;
         const importType = `${otherEntityAngularName}`;
         let importPath;
         if (otherEntityAngularName === 'User') {
             importPath = '#app/services/user/user.model';
         } else {
-            importPath = `#app/pages/entities/${relationship.otherEntityFileName}/${relationship.otherEntityFileName}.model`;
+            importPath = `#app/pages/entities/${relationship.otherEntity.entityFileName}/${relationship.otherEntity.entityFileName}.model`;
         }
         typeImports.set(importType, importPath);
     }

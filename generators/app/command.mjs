@@ -1,10 +1,12 @@
 import { asCommand } from 'generator-jhipster';
 
 export default asCommand({
-  options: {
+  configs: {
     ionicDir: {
       desc: 'Directory of JHipster application',
-      type: String,
+      cli: {
+        type: String,
+      },
       scope: 'blueprint',
     },
   },
